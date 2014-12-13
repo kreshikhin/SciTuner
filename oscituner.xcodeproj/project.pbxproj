@@ -13,10 +13,11 @@
 		92C4EF191A3A11C800ECD2C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92C4EF181A3A11C800ECD2C7 /* Images.xcassets */; };
 		92C4EF1C1A3A11C800ECD2C7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92C4EF1A1A3A11C800ECD2C7 /* LaunchScreen.xib */; };
 		92C4EF281A3A11C800ECD2C7 /* oscitunerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF271A3A11C800ECD2C7 /* oscitunerTests.swift */; };
-		92C4EF321A3A1C1F00ECD2C7 /* Processing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF311A3A1C1F00ECD2C7 /* Processing.swift */; };
+		92C4EF321A3A1C1F00ECD2C7 /* Spectrum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF311A3A1C1F00ECD2C7 /* Spectrum.swift */; };
 		92C4EF351A3BFB6300ECD2C7 /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF331A3BFB6300ECD2C7 /* Source.swift */; };
 		92C4EF361A3BFB6300ECD2C7 /* TubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF341A3BFB6300ECD2C7 /* TubeView.swift */; };
 		92C4EF381A3C3FB800ECD2C7 /* PanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF371A3C3FB800ECD2C7 /* PanelView.swift */; };
+		92C4EF3A1A3C8FD200ECD2C7 /* Processing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF391A3C8FD200ECD2C7 /* Processing.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,10 +41,11 @@
 		92C4EF211A3A11C800ECD2C7 /* oscitunerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = oscitunerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		92C4EF261A3A11C800ECD2C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92C4EF271A3A11C800ECD2C7 /* oscitunerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = oscitunerTests.swift; sourceTree = "<group>"; };
-		92C4EF311A3A1C1F00ECD2C7 /* Processing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Processing.swift; sourceTree = "<group>"; };
+		92C4EF311A3A1C1F00ECD2C7 /* Spectrum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spectrum.swift; sourceTree = "<group>"; };
 		92C4EF331A3BFB6300ECD2C7 /* Source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
 		92C4EF341A3BFB6300ECD2C7 /* TubeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TubeView.swift; sourceTree = "<group>"; };
 		92C4EF371A3C3FB800ECD2C7 /* PanelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanelView.swift; sourceTree = "<group>"; };
+		92C4EF391A3C8FD200ECD2C7 /* Processing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Processing.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,8 +95,9 @@
 				92C4EF181A3A11C800ECD2C7 /* Images.xcassets */,
 				92C4EF1A1A3A11C800ECD2C7 /* LaunchScreen.xib */,
 				92C4EF0F1A3A11C800ECD2C7 /* Supporting Files */,
-				92C4EF311A3A1C1F00ECD2C7 /* Processing.swift */,
+				92C4EF311A3A1C1F00ECD2C7 /* Spectrum.swift */,
 				92C4EF371A3C3FB800ECD2C7 /* PanelView.swift */,
+				92C4EF391A3C8FD200ECD2C7 /* Processing.swift */,
 			);
 			path = oscituner;
 			sourceTree = "<group>";
@@ -226,10 +229,11 @@
 			files = (
 				92C4EF351A3BFB6300ECD2C7 /* Source.swift in Sources */,
 				92C4EF141A3A11C800ECD2C7 /* ViewController.swift in Sources */,
-				92C4EF321A3A1C1F00ECD2C7 /* Processing.swift in Sources */,
+				92C4EF321A3A1C1F00ECD2C7 /* Spectrum.swift in Sources */,
 				92C4EF381A3C3FB800ECD2C7 /* PanelView.swift in Sources */,
 				92C4EF361A3BFB6300ECD2C7 /* TubeView.swift in Sources */,
 				92C4EF121A3A11C800ECD2C7 /* AppDelegate.swift in Sources */,
+				92C4EF3A1A3C8FD200ECD2C7 /* Processing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,6 +425,7 @@
 				92C4EF2D1A3A11C800ECD2C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		92C4EF2E1A3A11C800ECD2C7 /* Build configuration list for PBXNativeTarget "oscitunerTests" */ = {
 			isa = XCConfigurationList;
@@ -429,6 +434,7 @@
 				92C4EF301A3A11C800ECD2C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

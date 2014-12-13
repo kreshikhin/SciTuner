@@ -9,7 +9,9 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    var wavePoints: [Double] = [Double](count: 512, repeatedValue: 0)
+    var spectrumPoints: [Double] = [Double](count: 512, repeatedValue: 0)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -19,11 +21,31 @@ class ViewController: UIViewController {
         
         var source = Source()
         // var source = MicSource()
+        var processing = Processing()
         
         let tubeFrame = getOptimalTubeFrame(self.view.frame.size)
         var tube = TubeView(frame: tubeFrame)
         
-        
+        source.OnData = { (sample: [Double]) -> () in
+            processing.Push(sample)
+            
+            var spectrum = processing.BuildSpectrumForFrequency()
+            var wave = processing.BuidStandingWaveForFrequency(200)
+            
+            var i = 0
+            for w in wave {
+                self.wavePoints[i] = (Double(i) / Double(self.wavePoints.count) - 0.5) * 1.9
+                self.wavePoints[i+1] = Double(w) / 20.0 - 0.4
+                i += 2
+            }
+            
+            i = 0
+            for s in spectrum {
+                self.spectrumPoints[i] = (Double(i) / Double(self.spectrumPoints.count) - 0.5) * 1.9
+                self.spectrumPoints[i+1] = Double(s) / 2.0 + 0.4
+                i += 2
+            }
+        }
         
         
         self.view.addSubview(tube)
