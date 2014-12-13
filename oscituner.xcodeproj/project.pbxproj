@@ -16,6 +16,7 @@
 		92C4EF321A3A1C1F00ECD2C7 /* Processing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF311A3A1C1F00ECD2C7 /* Processing.swift */; };
 		92C4EF351A3BFB6300ECD2C7 /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF331A3BFB6300ECD2C7 /* Source.swift */; };
 		92C4EF361A3BFB6300ECD2C7 /* TubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF341A3BFB6300ECD2C7 /* TubeView.swift */; };
+		92C4EF381A3C3FB800ECD2C7 /* PanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF371A3C3FB800ECD2C7 /* PanelView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		92C4EF311A3A1C1F00ECD2C7 /* Processing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Processing.swift; sourceTree = "<group>"; };
 		92C4EF331A3BFB6300ECD2C7 /* Source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
 		92C4EF341A3BFB6300ECD2C7 /* TubeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TubeView.swift; sourceTree = "<group>"; };
+		92C4EF371A3C3FB800ECD2C7 /* PanelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanelView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 				92C4EF1A1A3A11C800ECD2C7 /* LaunchScreen.xib */,
 				92C4EF0F1A3A11C800ECD2C7 /* Supporting Files */,
 				92C4EF311A3A1C1F00ECD2C7 /* Processing.swift */,
+				92C4EF371A3C3FB800ECD2C7 /* PanelView.swift */,
 			);
 			path = oscituner;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 				92C4EF351A3BFB6300ECD2C7 /* Source.swift in Sources */,
 				92C4EF141A3A11C800ECD2C7 /* ViewController.swift in Sources */,
 				92C4EF321A3A1C1F00ECD2C7 /* Processing.swift in Sources */,
+				92C4EF381A3C3FB800ECD2C7 /* PanelView.swift in Sources */,
 				92C4EF361A3BFB6300ECD2C7 /* TubeView.swift in Sources */,
 				92C4EF121A3A11C800ECD2C7 /* AppDelegate.swift in Sources */,
 			);

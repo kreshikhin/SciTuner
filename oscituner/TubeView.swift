@@ -1,6 +1,37 @@
+//
+//  TubeView.swift
+//  oscituner
+//
+//  Created by Denis Kreshikhin on 13.12.14.
+//  Copyright (c) 2014 Denis Kreshikhin. All rights reserved.
+//
+
 import UIKit
 import GLKit
 import OpenGLES
+
+class TubeView: GLKView{
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        self.context = EAGLContext(API: EAGLRenderingAPI.OpenGLES2)
+        EAGLContext.setCurrentContext(self.context)
+        
+        glClearColor(0.5, 0.5, 0.5, 0.5)
+    }
+    
+    override func drawRect(rect: CGRect) {
+        glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
+    }
+}
+
+/*
+
+
 
 class GLEditorView: GLKView {
     var blured: Int
@@ -118,3 +149,5 @@ class GLEditorView: GLKView {
         table[" "] = []
     }
 }
+
+*/

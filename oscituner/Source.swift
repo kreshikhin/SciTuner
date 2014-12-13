@@ -1,4 +1,5 @@
 
+/*
 class Source struct{
     OnData func(sample []float64)
     Freq float64
@@ -39,3 +40,5 @@ class Source struct{
         return fmt.Sprintf("%6.2f Hz", s.Freq)
     }
 }
+
+*/
