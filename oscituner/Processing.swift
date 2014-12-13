@@ -10,9 +10,40 @@ import Foundation
 
 
 struct Complex{
-    var image = 0
-    var real = 0
+    var real: Double = 0
+    var image: Double = 0
 }
+
+func *(left: Double, right: Complex) -> Complex {
+    return Complex(real: left * right.real, image: left * right.image)
+}
+
+func *(left: Complex, right: Double) -> Complex {
+    return Complex(real: right * left.real, image: right * left.image)
+}
+
+func *(left: Complex, right: Complex) -> Complex {
+    return Complex(
+        real: left.real * right.real - left.image * right.image,
+        image: left.real * right.image + left.image * right.real)
+}
+
+func +(left: Complex, right: Complex) -> Complex {
+    return Complex(
+        real: left.real + right.real,
+        image: left.image + right.image)
+}
+
+func -(left: Complex, right: Complex) -> Complex {
+    return Complex(
+        real: left.real - right.real,
+        image: left.image -  right.image)
+}
+
+func /(left: Complex, right: Double) -> Complex {
+    return Complex(real: left.real / right, image: left.image / right)
+}
+
 
 //
 // Computes the discrete Fourier transform (DFT) of the given complex vector, storing the result back into the vector.
@@ -43,7 +74,7 @@ func InverseTransform(sequence: [Complex]) -> [Complex] {
 // Computes the discrete Fourier transform (DFT) of the given complex vector, storing the result back into the vector.
 // The vector's length must be a power of 2. Uses the Cooley-Tukey decimation-in-time radix-2 algorithm.
 //
-func TransformRadix2(sequence: [Complex]) -> [Complex] {
+func TransformRadix2(var sequence: [Complex]) -> [Complex] {
     var n = sequence.count
 
     if n == 1 { // Trivial transform
@@ -52,7 +83,7 @@ func TransformRadix2(sequence: [Complex]) -> [Complex] {
 
     var levels = -1
 
-    for i in 0..32 {
+    for i in 0 ..< 32 {
         if (1 << i == n) {
             levels = i;  // Equal to log2(n)
         }
@@ -62,21 +93,23 @@ func TransformRadix2(sequence: [Complex]) -> [Complex] {
         //panic("Length is not a power of 2")
     }
 
-    var cosTable = [] //, n / 2)
-    var sinTable = [] //n / 2)
+    var cosTable = [Double](count: n/2, repeatedValue: 0)
+    var sinTable = [Double](count: n/2, repeatedValue: 0)
 
-    for i in 0 .. n / 2 {
-        phi = Float(i) / n
+    for i in 0 ..< n/2 {
+        var phi: Double = Double(i) / Double(n)
+        
         cosTable[i] = cos(M_2_PI * phi)
         sinTable[i] = sin(M_2_PI * phi)
     }
 
     // Bit-reversed addressing permutation
-    for i in 0 .. n {
+    for i in 0 ..< n {
         var j = reverseBits(i, levels)
         if j > i {
-            //swap(&sequence[j], &sequence[i])
-            (sequence[j], sequence[i]) = sequence[i], sequence[j]
+            var tmp = sequence[i]
+            sequence[i] = sequence[j]
+            sequence[j] = tmp
         }
     }
 
@@ -101,7 +134,7 @@ func TransformRadix2(sequence: [Complex]) -> [Complex] {
                 //imag[j] += tpim;
 
                 sequence[j+h] = sequence[j] - t
-                sequence[j] += t
+                sequence[j] = sequence[j] + t
 
                 k += tablestep
             }
@@ -112,12 +145,14 @@ func TransformRadix2(sequence: [Complex]) -> [Complex] {
 }
 
 // Returns the integer whose value is the reverse of the lowest 'bits' bits of the integer 'x'.
-func reverseBits(x: Int, bits: Int)  -> Int {
-    var y int = 0
-    for i in 0..bits; i++ {
+func reverseBits(var x: Int, bits: Int)  -> Int {
+    var y: Int = 0
+    
+    for i in 0 ..< bits {
         y = (y << 1) | (x & 1)
         x /= 2
     }
+    
     return y
 }
 
@@ -129,70 +164,70 @@ func reverseBits(x: Int, bits: Int)  -> Int {
 //
 func TransformBluestein(sequence: [Complex]) -> [Complex] {
     // Find a power-of-2 convolution length m such that m >= n * 2 + 1
-    n := len(sequence)
-    m := 1
+    var n = sequence.count
+    var m: Int = 1
 
     while m < n * 2 + 1 {
         m *= 2
     }
 
     // Trignometric tables
-    var cosTable: [Float] // n)
-    var sinTable: [Float] // n)
+    var cosTable = [Double](count: n, repeatedValue: 0) // n)
+    var sinTable = [Double](count: n, repeatedValue: 0) // n)
 
-    for i in 0 .. n {
+    for i in 0 ..< n {
         var j = i * i % (n * 2)  // This is more accurate than j = i * i
-        phi = Float(j) / n
-        cosTable[i] = cos(M_PI * phi)
-        sinTable[i] = sin(M_PI * phi)
+        var phi = Double(j) / Double(n)
+        cosTable[i] = cos(M_1_PI * phi)
+        sinTable[i] = sin(M_1_PI * phi)
     }
 
     // Temporary vectors and preprocessing
     //var areal = new Array(m);
     //var aimag = new Array(m);
 
-    var a = [Complex] // m
+    var a = [Complex](count: m, repeatedValue: Complex()) // m
 
-    for i in 0 .. n {
+    for i in 0 ..< n {
         //areal[i] =  real[i] * cosTable[i] + imag[i] * sinTable[i];
         //aimag[i] = -real[i] * sinTable[i] + imag[i] * cosTable[i];
 
-        a[i] = sequence[i] * Complex(real: cosTable[i], image: - sinTable[i])
+        a[i] = sequence[i] * Complex(real: cosTable[i], image: -sinTable[i])
     }
 
-    for i in n .. m {
-        a[i] = 0
+    for i in n ..< m {
+        a[i] = Complex()
     }
 
     //var breal = new Array(m);
     //var bimag = new Array(m);
-    var b = make([Complex]  // m
+    var b = [Complex](count: m, repeatedValue: Complex())  // m
 
     //breal[0] = cosTable[0];
     //bimag[0] = sinTable[0];
-    b[0] = complex(cosTable[0], sinTable[0])
+    b[0] = Complex(real: cosTable[0], image: sinTable[0])
 
-    for i in 1..n {
+    for i in 1 ..< n {
         //breal[i] = breal[m - i] = cosTable[i];
         //bimag[i] = bimag[m - i] = sinTable[i];
-        b[m-i] = complex(cosTable[i], sinTable[i])
+        b[m-i] = Complex(real: cosTable[i], image: sinTable[i])
         b[i] = b[n-i]
     }
 
-    for i in n..(m - n + 1) {
-        b[i] = 0
+    for i in n ..< m - n + 1 {
+        b[i] = Complex()
     }
 
     // Convolution
-    var c = ConvolveComplex(a, b)
+    var c: [Complex] = ConvolveComplex(a, b)
 
     // Postprocessing
-    result = [Complex] // n)
+    var result = [Complex](count: n, repeatedValue: Complex())
 
-    for i in 0..n {
+    for i in 0 ..< n {
         //real[i] =  creal[i] * cosTable[i] - cimag[i] * ( -sinTable[i]);
         //imag[i] = creal[i] * (- sinTable[i]) + cimag[i] * cosTable[i];
-        result[i] = c[i] * complex(real: cosTable[i], image: - sinTable[i])
+        result[i] = c[i] * Complex(real: cosTable[i], image: -sinTable[i])
     }
 
     return result
@@ -216,12 +251,12 @@ func TransformBluestein(sequence: [Complex]) -> [Complex] {
 func ConvolveComplex(x: [Complex], y: [Complex]) -> [Complex]{
     var n = x.count
 
-    var result = [Complex] // n)
+    var result = [Complex](count: n, repeatedValue: Complex()) // n)
 
     var X = Transform(x)
     var Y = Transform(y)
 
-    for i in 0..n {
+    for i in 0 ..< n {
         //var temp = xreal[i] * yreal[i] - ximag[i] * yimag[i];
         //ximag[i] = ximag[i] * yreal[i] + xreal[i] * yimag[i];
         //xreal[i] = temp;
@@ -230,20 +265,22 @@ func ConvolveComplex(x: [Complex], y: [Complex]) -> [Complex]{
 
     InverseTransform(X)
 
-    for i in 0..n {  // Scaling (because this FFT implementation omits it)
+    for i in 0 ..< n {  // Scaling (because this FFT implementation omits it)
         //outreal[i] = xreal[i] / n;
         //outimag[i] = ximag[i] / n;
-        result[i] = X[i] / Complex(real:n, 0)
+        result[i] = X[i] / Double(n)
     }
 
     return result
 }
 
-func Complicate(sequence: [Float]) -> [Complex] {
-    var result: [Complex128] //, len(sequence))
-
-    for i, r in sequence {
-        result[i] = complex(r, 0)
+func Complicate(sequence: [Double]) -> [Complex] {
+    var result = [Complex](count: sequence.count, repeatedValue: Complex()) //, len(sequence))
+    var i = 0
+    
+    for r in sequence {
+        result[i] = Complex(real: r, image: 0)
+        i = i + 1
     }
 
     return result
