@@ -11,32 +11,19 @@ import GLKit
 import OpenGLES
 
 class TubeView: GLKView{
-    let table: [Character: [[Float]]] =  [
-        "1": [[1, 0, 1, 1]],
-        "2": [[1, 0, 0, 0, 0, 0.5, 1.0, 0.5, 1.0, 1.0, 0, 1.0]],
-        "3": [[0, 0, 1, 0, 1, 1, 0, 1], [0, 0.5, 1, 0.5]],
-        "4": [[1, 0, 1, 1], [0, 1, 0, 0.5, 1, 0.5]],
-        "5": [[0, 0, 1, 0, 1, 0.5, 0, 0.5, 0, 1, 1, 1]],
-        "6": [[0, 0.5, 0, 0, 1, 0, 1, 0.5, 0, 0.5, 0, 1, 1, 1]],
-        "7": [[0, 1, 1, 1, 1, 0]],
-        "8": [[0, 0, 0, 1, 1, 1, 1, 0, 0, 0], [0, 0.5, 1, 0.5]],
-        "9": [[0, 0, 1, 0, 1, 0.5, 0, 0.5, 0, 1, 1, 1, 1, 0.5]],
-        "0": [[0, 0, 0, 1, 1, 1, 1, 0, 0, 0]],
-        ",": [[0.6, 0.1, 0.4, -0.1]],
-        ".": [[0.6, 0.1, 0.4, -0.1]],
-        "H": [[0, 0, 0, 1], [1, 0, 1, 1], [0, 0.5, 1, 0.5]],
-        "z": [[1, 0, 0, 0, 1, 0.5, 0, 0.5]],
-        "3": [[0, 0, 1, 0, 1, 1, 0, 1], [0, 0.5, 1, 0.5]],
-        "_": [[0, 0, 1, 0]],
-        " ": []
-    ]
-
+    var fb: GLuint = 0
+    var rb: GLuint = 0
+    var blured: GLuint = 0
+    var table: [Character: [[Float]]] = [Character: [[Float]]]()
+    
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        prepareTable()
         
         self.context = EAGLContext(API: EAGLRenderingAPI.OpenGLES2)
         EAGLContext.setCurrentContext(self.context)
@@ -53,7 +40,6 @@ class TubeView: GLKView{
         var height: GLsizei = 512
         var pixels = [Byte](count: Int(width * height * 4), repeatedValue: 0)
 
-        var blured: GLuint
         glGenTextures(1, &blured);
         glActiveTexture(GLenum(GL_TEXTURE0))
         glBindTexture(GLenum(GL_TEXTURE_2D), blured)
@@ -61,13 +47,11 @@ class TubeView: GLKView{
         glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MAG_FILTER), GL_LINEAR)
         glTexImage2D(GLenum(GL_TEXTURE_2D), 0, GL_RGBA, width, height, 0, GLenum(GL_RGBA), GLenum(GL_UNSIGNED_BYTE), &pixels)
 
-        var rb: GLuint
         glGenRenderbuffers(1, &rb)
         glBindRenderbuffer(GLenum(GL_RENDERBUFFER), rb)
         glRenderbufferStorage(GLenum(GL_RENDERBUFFER), GLenum(GL_DEPTH_COMPONENT16), width, height)
         glBindRenderbuffer(GLenum(GL_RENDERBUFFER), 0) // unbind
 
-        var fb: GLuint
         glGenFramebuffers(1, &fb)
         glBindFramebuffer(GLenum(GL_FRAMEBUFFER), fb)
         glFramebufferTexture2D(GLenum(GL_FRAMEBUFFER), GLenum(GL_COLOR_ATTACHMENT0), GLenum(GL_TEXTURE_2D), blured, 0);
@@ -77,9 +61,9 @@ class TubeView: GLKView{
 
         if status != GLenum(GL_FRAMEBUFFER_COMPLETE) {
             NSLog("failed to make complete framebuffer object @", status);
-            switch status {
+            /*switch status {
             case GLenum(GL_FRAMEBUFFER_COMPLETE):
-                NSLog("failed to make complete framebuffer object");
+                NSLog("failed to make complete framebuffer object")
             case GLenum(GL_FRAMEBUFFER_UNDEFINED):
                 NSLog("target is the default framebuffer, but the default framebuffer does not exist.")
             case GLenum(GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT):
@@ -97,7 +81,9 @@ class TubeView: GLKView{
                 NSLog("the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not the same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not GL_TRUE for all attached textures.")
             //case GLenum(GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS):
             //    NSLog("is returned if any framebuffer attachment is layered, and any populated attachment is not layered, or if all populated color attachments are not from textures of the same target.")
-            }
+            default:
+                NSLog("unknown framebuffer error")
+            }*/
         }
 
         glBindFramebuffer(GLenum(GL_FRAMEBUFFER), 0)
@@ -111,7 +97,7 @@ class TubeView: GLKView{
 
 
     func GenerateTextPolyline(x0: Float, y0: Float, width: Float, height: Float, step: Float, text: String) -> [[Float]] {
-        var result: [[Float]]
+        var result = [[Float]]()
         var x = x0
         for s in text {
             var glyph = table[s]
@@ -120,15 +106,15 @@ class TubeView: GLKView{
                 glyph = table["_"]
             }
 
-            for line in glyph {
-                var resizedLine = [Float](count: line.count)
+            for line in glyph! {
+                var resizedLine = [Float](count: line.count, repeatedValue: 0)
 
                 for var j = 0; j < line.count; j += 2 {
                     resizedLine[j] = x + width * line[j]
                     resizedLine[j+1] = y0 + height * line[j+1]
                 }
-
-                result = append(result, resizedLine)
+                
+                result.append(resizedLine)
             }
 
             x += step
@@ -137,5 +123,24 @@ class TubeView: GLKView{
         return result
     }
 
+    func prepareTable() {
+        table["1"] = [[1, 0, 1, 1]]
+        table["2"] = [[1, 0, 0, 0, 0, 0.5, 1.0, 0.5, 1.0, 1.0, 0, 1.0]]
+        table["3"] = [[0, 0, 1, 0, 1, 1, 0, 1], [0, 0.5, 1, 0.5]]
+        table["4"] = [[1, 0, 1, 1], [0, 1, 0, 0.5, 1, 0.5]]
+        table["5"] = [[0, 0, 1, 0, 1, 0.5, 0, 0.5, 0, 1, 1, 1]]
+        table["6"] = [[0, 0.5, 0, 0, 1, 0, 1, 0.5, 0, 0.5, 0, 1, 1, 1]]
+        table["7"] = [[0, 1, 1, 1, 1, 0]]
+        table["8"] = [[0, 0, 0, 1, 1, 1, 1, 0, 0, 0], [0, 0.5, 1, 0.5]]
+        table["9"] = [[0, 0, 1, 0, 1, 0.5, 0, 0.5, 0, 1, 1, 1, 1, 0.5]]
+        table["0"] = [[0, 0, 0, 1, 1, 1, 1, 0, 0, 0]]
+        table[","] = [[0.6, 0.1, 0.4, -0.1]]
+        table["."] = [[0.6, 0.1, 0.4, -0.1]]
+        table["H"] = [[0, 0, 0, 1], [1, 0, 1, 1], [0, 0.5, 1, 0.5]]
+        table["z"] = [[1, 0, 0, 0, 1, 0.5, 0, 0.5]]
+        table["3"] = [[0, 0, 1, 0, 1, 1, 0, 1], [0, 0.5, 1, 0.5]]
+        table["_"] = [[0, 0, 1, 0]]
+        table[" "] = []
+    }
 }
 
