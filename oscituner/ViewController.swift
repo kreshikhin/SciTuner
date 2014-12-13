@@ -17,15 +17,23 @@ class ViewController: UIViewController {
         let f = self.view.frame
         NSLog("%@ %@ %@ %@", f.origin.x, f.origin.y, f.size.width, f.size.height)
         
-        
+        var source = Source()
+        // var source = MicSource()
         
         let tubeFrame = getOptimalTubeFrame(self.view.frame.size)
-        self.view.addSubview(TubeView(frame: tubeFrame))
+        var tube = TubeView(frame: tubeFrame)
+        
+        
+        
+        
+        self.view.addSubview(tube)
         
         let panelFrame = getOptimalPanelFrame(self.view.frame.size)
         self.view.addSubview(PanelView(frame: panelFrame))
         
         self.view.backgroundColor = UIColor.redColor()
+        
+        
     }
 
     override func didReceiveMemoryWarning() {

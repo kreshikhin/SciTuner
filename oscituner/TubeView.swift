@@ -33,6 +33,86 @@ class TubeView: GLKView{
     
     override func drawRect(rect: CGRect) {
         glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
+        
+        RenderInFramebuffer({ () -> () in
+            //capture(blendProgram)
+            //draw(wavePoints, 1)
+            //draw(spectrumPoints, 1)
+            //drawText(as.GetFreqText(), 1)
+        })
+        
+        //capture(textureProgram)
+        //draw(wavePoints, 1)
+        //draw(spectrumPoints, 1)
+        //drawText(as.GetFreqText(), 1)
+    }
+    
+    func drawPoints(points: [Float], w: Float){
+        /*drawProgram.Use()
+        
+        glLineWidth(w)
+    
+        col := drawProgram.GetUniformLocation("color")
+        col.Uniform4f(0.5, 1.0, 0.6, 0.0)
+    
+        a_position := drawProgram.GetAttribLocation("a_position")
+        a_position.AttribPointer(2, gl.FLOAT, false, 0, &points)
+        a_position.EnableArray()
+        gl.DrawArrays(gl.LINE_STRIP, 0, len(points) / 2)
+    
+        gl.Flush()*/
+    }
+    
+    func drawText(text: String, w: Float) {
+        /*polyline := GenerateTextPolyline(0, 0, 0.05, 0.1, 0.07, text)
+    
+        for _, line := range polyline {
+        drawProgram.Use()
+    
+        gl.LineWidth(w)
+    
+        col := drawProgram.GetUniformLocation("color")
+        col.Uniform4f(0.5, 1.0, 0.6, 0.0)
+    
+        a_position := drawProgram.GetAttribLocation("a_position")
+        a_position.AttribPointer(2, gl.FLOAT, false, 0, line)
+        a_position.EnableArray()
+        gl.DrawArrays(gl.LINE_STRIP, 0, len(line) / 2)
+        gl.Flush()
+    }*/
+    }
+    
+    func capture(program: GLuint){
+    //gl.Clear(gl.COLOR_BUFFER_BIT)
+        /*program.Use()
+    
+        vertices := []float32{
+            -1, -1,
+            -1, 1,
+            1, -1,
+            1, 1,
+        }
+    
+        texturePoints := []float32{
+            0.0, 0.0, 0.0, 1.0,
+            1.0, 0.0, 1.0, 1.0,
+        }
+    
+        s_picture := program.GetUniformLocation("s_picture")
+        s_picture.Uniform1i(0)
+    
+        gl.PixelStorei(gl.UNPACK_ALIGNMENT, gl.UNSIGNED_BYTE);
+        gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+    
+        a_position := program.GetAttribLocation("a_position")
+        a_position.AttribPointer(2, gl.FLOAT, false, 0, vertices)
+        a_position.EnableArray()
+    
+        a_coord := program.GetAttribLocation("a_coord")
+        a_coord.AttribPointer(2, gl.FLOAT, false, 0, texturePoints)
+        a_coord.EnableArray()
+    
+        gl.DrawArrays(gl.TRIANGLE_STRIP, 0, 4)*/
     }
     
     func prepareTubeBuffer() {
@@ -89,7 +169,7 @@ class TubeView: GLKView{
         glBindFramebuffer(GLenum(GL_FRAMEBUFFER), 0)
     }
 
-    func Render(draw:() -> ()) {
+    func RenderInFramebuffer(draw: (() -> ())) {
         glBindFramebuffer(GLenum(GL_FRAMEBUFFER), fb)
         draw()
         glBindFramebuffer(GLenum(GL_FRAMEBUFFER), 0)
