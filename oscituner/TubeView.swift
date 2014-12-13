@@ -29,6 +29,19 @@ class TubeView: GLKView{
         EAGLContext.setCurrentContext(self.context)
         
         glClearColor(0.5, 0.5, 0.5, 0.5)
+        
+        var drawingProgram = NewProgram(
+        "    attribute vec4 a_position;" +
+        "    void main() {" +
+        "    gl_Position = a_position;" +
+        "    }",
+        fragmentCode: "        uniform vec4 color;" +
+        "    void main() {" +
+        "        gl_FragColor = color;" +
+        "    }")
+        
+        //var textureProgram = NewProgram("", fragmentCode: "")
+        //var blendProgram
     }
     
     override func drawRect(rect: CGRect) {
@@ -221,6 +234,60 @@ class TubeView: GLKView{
         table["3"] = [[0, 0, 1, 0, 1, 1, 0, 1], [0, 0.5, 1, 0.5]]
         table["_"] = [[0, 0, 1, 0]]
         table[" "] = []
+    }
+    
+    
+    func NewProgram(vertexCode: String, fragmentCode: String) -> GLuint {
+        var program = glCreateProgram()
+        
+        var vertexShader = compileShader(vertexCode, shaderType: GLenum(GL_VERTEX_SHADER))
+        var fragmentShader = compileShader(fragmentCode, shaderType: GLenum(GL_FRAGMENT_SHADER))
+                
+        glAttachShader(program, vertexShader)
+        glAttachShader(program, fragmentShader)
+                
+        glLinkProgram(program)
+        
+        var isLinked: GLint = 0
+        
+        glGetProgramiv(program, GLenum(GL_LINK_STATUS), &isLinked)
+        NSLog(" linked: %i ", isLinked)
+                
+        if isLinked == 0 {
+            var infolen: GLint = 0
+            //glGetProgramiv(rain_program, GL_INFO_LOG_LENGTH, &infolen)
+            //char* infoLog = (char*)malloc(sizeof(char)*infolen)
+            //glGetProgramInfoLog(rain_program, infolen, NULL, infoLog)
+            //NSLog(" %s ", infoLog)
+        }
+        
+        return program
+    }
+
+    func compileShader(code: String, shaderType: GLenum) -> GLuint {
+        var shader = glCreateShader(shaderType)
+        
+        var cpointer = code.cStringUsingEncoding(NSUTF8StringEncoding)
+        var pointer = UnsafePointer<GLchar>(cpointer!)
+        var ppointer = UnsafePointer<UnsafePointer<GLchar>>(pointer)
+        
+        glShaderSource(shader, GLsizei(1), ppointer, nil)
+        glCompileShader(shader);
+        
+    
+        var isCompiled: GLint = 0
+        glGetShaderiv(shader, GLenum(GL_COMPILE_STATUS), &isCompiled)
+        NSLog(" is compiled : %i ", isCompiled)
+    
+        if isCompiled == 0 {
+            var infolen: GLint = 0
+            //glGetShaderiv(shader, GLenum(GL_INFO_LOG_LENGTH), &infolen)
+            //char* infoLog = (char*)malloc(sizeof(char)*infolen)
+            //glGetShaderInfoLog(rain_vsh, infolen, NULL, infoLog)
+            //NSLog(" %s ", infoLog)
+        }
+        
+        return shader
     }
 }
 
