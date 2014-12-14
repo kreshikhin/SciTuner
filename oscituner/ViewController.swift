@@ -45,6 +45,8 @@ class ViewController: UIViewController {
                 self.spectrumPoints[i+1] = Double(s) / 2.0 + 0.4
                 i += 2
             }
+            
+            tube.display()
         }
         
         

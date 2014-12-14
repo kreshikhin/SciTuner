@@ -30,6 +30,7 @@ class TubeView: GLKView{
         EAGLContext.setCurrentContext(self.context)
         
         glClearColor(0.5, 0.5, 0.5, 0.5)
+        glColor4f(0, 0, 0, 0)
         
         drawingProgram = NewProgram(
         "    attribute vec4 a_position;" +
@@ -37,6 +38,7 @@ class TubeView: GLKView{
         "    gl_Position = a_position;" +
         "    }",
         fragmentCode:
+        "    precision highp float; " +
         "    uniform vec4 color;" +
         "    void main() {" +
         "        gl_FragColor = color;" +
@@ -51,12 +53,12 @@ class TubeView: GLKView{
         
         var text = "123.45 Hz"
         
-        RenderInFramebuffer({ () -> () in
+        //RenderInFramebuffer({ () -> () in
             //capture(blendProgram)
             //draw(wavePoints, 1)
             //draw(spectrumPoints, 1)
-            self.drawText(text)
-        })
+            //self.drawText(text)
+        //})
         
         //capture(textureProgram)
         //draw(wavePoints, 1)
@@ -259,11 +261,15 @@ class TubeView: GLKView{
         NSLog(" linked: %i ", isLinked)
                 
         if isLinked == 0 {
-            var infolen: GLint = 0
-            //glGetProgramiv(rain_program, GL_INFO_LOG_LENGTH, &infolen)
-            //char* infoLog = (char*)malloc(sizeof(char)*infolen)
-            //glGetProgramInfoLog(rain_program, infolen, NULL, infoLog)
-            //NSLog(" %s ", infoLog)
+            var infolen: GLsizei = 0
+            var stringLen: GLsizei = 1024
+            glGetProgramiv(program, GLenum(GL_INFO_LOG_LENGTH), &infolen)
+            
+            var info: [GLchar] = Array(count: Int(stringLen), repeatedValue: GLchar(0))
+            var lenActual: GLsizei = 0
+            
+            glGetProgramInfoLog(program, stringLen, &lenActual, UnsafeMutablePointer(info))
+            NSLog(String(UTF8String:info)!)
         }
         
         return program
@@ -283,11 +289,15 @@ class TubeView: GLKView{
         NSLog(" is compiled : %i ", isCompiled)
     
         if isCompiled == 0 {
-            var infolen: GLint = 0
-            //glGetShaderiv(shader, GLenum(GL_INFO_LOG_LENGTH), &infolen)
-            //char* infoLog = (char*)malloc(sizeof(char)*infolen)
-            //glGetShaderInfoLog(rain_vsh, infolen, NULL, infoLog)
-            //NSLog(" %s ", infoLog)
+            var infolen: GLsizei = 0
+            var stringLen: GLsizei = 1024
+            glGetShaderiv(shader, GLenum(GL_INFO_LOG_LENGTH), &infolen)
+            
+            var info: [GLchar] = Array(count: Int(stringLen), repeatedValue: GLchar(0))
+            var lenActual: GLsizei = 0
+            
+            glGetShaderInfoLog(shader, stringLen, &lenActual, UnsafeMutablePointer(info))
+            NSLog(String(UTF8String:info)!)
         }
         
         return shader
