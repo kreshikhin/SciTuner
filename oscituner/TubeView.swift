@@ -15,6 +15,7 @@ class TubeView: GLKView{
     var rb: GLuint = 0
     var blured: GLuint = 0
     var table: [Character: [[Float]]] = [Character: [[Float]]]()
+    var drawingProgram: GLuint = 0
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -30,12 +31,13 @@ class TubeView: GLKView{
         
         glClearColor(0.5, 0.5, 0.5, 0.5)
         
-        var drawingProgram = NewProgram(
+        drawingProgram = NewProgram(
         "    attribute vec4 a_position;" +
         "    void main() {" +
         "    gl_Position = a_position;" +
         "    }",
-        fragmentCode: "        uniform vec4 color;" +
+        fragmentCode:
+        "    uniform vec4 color;" +
         "    void main() {" +
         "        gl_FragColor = color;" +
         "    }")
@@ -47,17 +49,19 @@ class TubeView: GLKView{
     override func drawRect(rect: CGRect) {
         glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
         
+        var text = "123.45 Hz"
+        
         RenderInFramebuffer({ () -> () in
             //capture(blendProgram)
             //draw(wavePoints, 1)
             //draw(spectrumPoints, 1)
-            //drawText(as.GetFreqText(), 1)
+            self.drawText(text)
         })
         
         //capture(textureProgram)
         //draw(wavePoints, 1)
         //draw(spectrumPoints, 1)
-        //drawText(as.GetFreqText(), 1)
+        drawText(text)
     }
     
     func drawPoints(points: [Float], w: Float){
@@ -76,23 +80,24 @@ class TubeView: GLKView{
         gl.Flush()*/
     }
     
-    func drawText(text: String, w: Float) {
-        /*polyline := GenerateTextPolyline(0, 0, 0.05, 0.1, 0.07, text)
+    func drawText(text: String) {
+        var polyline = GenerateTextPolyline(0, y0: 0, width: 0.05, height: 0.1, step: 0.07, text: text)
     
-        for _, line := range polyline {
-        drawProgram.Use()
+        for line in polyline {
+            glUseProgram(drawingProgram)
     
-        gl.LineWidth(w)
+            glLineWidth(1)
     
-        col := drawProgram.GetUniformLocation("color")
-        col.Uniform4f(0.5, 1.0, 0.6, 0.0)
+            var col = glGetUniformLocation(drawingProgram, "color")
+            glUniform4f(col, 0.5, 1.0, 0.6, 0.0)
     
-        a_position := drawProgram.GetAttribLocation("a_position")
-        a_position.AttribPointer(2, gl.FLOAT, false, 0, line)
-        a_position.EnableArray()
-        gl.DrawArrays(gl.LINE_STRIP, 0, len(line) / 2)
-        gl.Flush()
-    }*/
+            var a_position: GLuint = GLuint(glGetAttribLocation(drawingProgram, "a_position"))
+            glVertexAttribPointer(a_position, 2, GLenum(GL_FLOAT), GLboolean(0), 0 , line)
+            glEnableVertexAttribArray(GLuint(a_position))
+            
+            glDrawArrays(GLenum(GL_LINE_STRIP), 0, GLsizei(line.count / 2))
+            glFlush()
+        }
     }
     
     func capture(program: GLuint){
@@ -267,14 +272,12 @@ class TubeView: GLKView{
     func compileShader(code: String, shaderType: GLenum) -> GLuint {
         var shader = glCreateShader(shaderType)
         
-        var cpointer = code.cStringUsingEncoding(NSUTF8StringEncoding)
-        var pointer = UnsafePointer<GLchar>(cpointer!)
-        var ppointer = UnsafePointer<UnsafePointer<GLchar>>(pointer)
+        var cStringSource = (code as NSString).UTF8String
+        let stringfromutf8string = String.fromCString(cStringSource)
         
-        glShaderSource(shader, GLsizei(1), ppointer, nil)
+        glShaderSource(shader, GLsizei(1), &cStringSource, nil)
         glCompileShader(shader);
         
-    
         var isCompiled: GLint = 0
         glGetShaderiv(shader, GLenum(GL_COMPILE_STATUS), &isCompiled)
         NSLog(" is compiled : %i ", isCompiled)
