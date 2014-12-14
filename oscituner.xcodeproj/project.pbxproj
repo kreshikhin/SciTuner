@@ -176,6 +176,7 @@
 				TargetAttributes = {
 					92C4EF0B1A3A11C800ECD2C7 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = FY36GRS4PW;
 					};
 					92C4EF201A3A11C800ECD2C7 = {
 						CreatedOnToolsVersion = 6.1;

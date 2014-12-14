@@ -49,7 +49,8 @@ class ViewController: UIViewController {
             //    i += 2
             //}
             
-            tube.display()
+            //tube.display()
+            tube.setNeedsDisplay()
         }
         
         

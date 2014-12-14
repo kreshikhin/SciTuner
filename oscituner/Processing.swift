@@ -13,8 +13,9 @@ class Processing{
     var Fmax: Double = 400
     var Count: Int = 256
     var Td: Double = 1.0 / 44100.0
-    let Memory: Int = 8192
-    var samples: [Double] = [0, 0, 0, 0]
+    var samples: [Double] = [Double](count: 8192, repeatedValue: 0)
+    var lastSample: [Double] = [Double](count: 882, repeatedValue: 0)
+    var CurrentPosition: Int = 0
 
     func BuildSpectrum() -> [Double] {
         var sample = buildSample()
@@ -79,12 +80,10 @@ class Processing{
     }
 
     func Push(sample: [Double]) {
-        samples = samples + sample
-        
-        var overhead = samples.count - Memory
-    
-        if overhead > 0 {
-            samples = Array(samples[overhead..<samples.count])
+        lastSample = sample
+        for s in sample{
+            samples[CurrentPosition] = s
+            CurrentPosition = (CurrentPosition + 1) % samples.count
         }
     }
 
@@ -98,14 +97,14 @@ class Processing{
     
         var ti: Double = 1.0 / f0
         var length: Int = Int(ti / Td)
-    
+        
         for offset in 0 ..< length {
             var v: Double = 0
-        
+            var t: Double = 0
             for i in offset ..< offset+length {
-                var s = samples[i]
-                var t = Double(i) / Double(length)
+                var s = lastSample[i]
                 v = v + sin(M_2_PI * t / ti) * s
+                t = t + Td
             }
         
             if v > vOpt {
@@ -114,14 +113,7 @@ class Processing{
             }
         }
     
-        var result = [Double](count: Count, repeatedValue: 0)
-    
-        for i in 0 ..< result.count {
-            var opti = i * result.count / length
-            result[i] = samples[offsetOpt + opti]
-        }
-    
-        return result
+        return [Double](lastSample[offsetOpt ..< (offsetOpt + Count)])
     }
 
 }
