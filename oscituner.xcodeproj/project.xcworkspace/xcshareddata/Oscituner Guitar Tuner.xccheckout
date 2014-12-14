@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>5DC52B76-5EC5-45F2-BE9C-F0FC416487F7</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Oscituner Guitar Tuner</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>7C205F06930DBC21728AA78FAAE8C9ECDD0CBEE0</key>
+		<string>bitbucket.org:kreshikhin/oscituner.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Oscituner Guitar Tuner.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>7C205F06930DBC21728AA78FAAE8C9ECDD0CBEE0</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>bitbucket.org:kreshikhin/oscituner.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>7C205F06930DBC21728AA78FAAE8C9ECDD0CBEE0</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7C205F06930DBC21728AA78FAAE8C9ECDD0CBEE0</string>
+			<key>IDESourceControlWCCName</key>
+			<string>oscituner</string>
+		</dict>
+	</array>
+</dict>
+</plist>

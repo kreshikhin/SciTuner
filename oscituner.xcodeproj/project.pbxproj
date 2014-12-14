@@ -358,7 +358,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = oscituner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = oscituner;
 			};
 			name = Debug;
 		};
@@ -368,7 +368,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = oscituner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = oscituner;
 			};
 			name = Release;
 		};
@@ -386,7 +386,7 @@
 				);
 				INFOPLIST_FILE = oscitunerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = oscitunerTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/oscituner.app/oscituner";
 			};
 			name = Debug;
@@ -401,7 +401,7 @@
 				);
 				INFOPLIST_FILE = oscitunerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = oscitunerTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/oscituner.app/oscituner";
 			};
 			name = Release;

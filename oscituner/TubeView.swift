@@ -16,6 +16,9 @@ class TubeView: GLKView{
     var blured: GLuint = 0
     var table: [Character: [[Float]]] = [Character: [[Float]]]()
     var drawingProgram: GLuint = 0
+    var wavePoints = [Float]()
+    var spectrumPoints = [Float]()
+    let LineWidth: GLfloat = 2
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -61,25 +64,25 @@ class TubeView: GLKView{
         //})
         
         //capture(textureProgram)
-        //draw(wavePoints, 1)
-        //draw(spectrumPoints, 1)
+        drawPoints(wavePoints)
+        drawPoints(spectrumPoints)
         drawText(text)
     }
     
-    func drawPoints(points: [Float], w: Float){
-        /*drawProgram.Use()
+    func drawPoints(points: [Float]) {
+        glUseProgram(drawingProgram)
         
-        glLineWidth(w)
-    
-        col := drawProgram.GetUniformLocation("color")
-        col.Uniform4f(0.5, 1.0, 0.6, 0.0)
-    
-        a_position := drawProgram.GetAttribLocation("a_position")
-        a_position.AttribPointer(2, gl.FLOAT, false, 0, &points)
-        a_position.EnableArray()
-        gl.DrawArrays(gl.LINE_STRIP, 0, len(points) / 2)
-    
-        gl.Flush()*/
+        glLineWidth(LineWidth)
+        
+        var col = glGetUniformLocation(drawingProgram, "color")
+        glUniform4f(col, 0.5, 1.0, 0.6, 0.0)
+        
+        var a_position: GLuint = GLuint(glGetAttribLocation(drawingProgram, "a_position"))
+        glVertexAttribPointer(a_position, 2, GLenum(GL_FLOAT), GLboolean(0), 0 , points)
+        glEnableVertexAttribArray(GLuint(a_position))
+        
+        glDrawArrays(GLenum(GL_LINE_STRIP), 0, GLsizei(points.count / 2))
+        glFlush()
     }
     
     func drawText(text: String) {
@@ -88,7 +91,7 @@ class TubeView: GLKView{
         for line in polyline {
             glUseProgram(drawingProgram)
     
-            glLineWidth(1)
+            glLineWidth(LineWidth)
     
             var col = glGetUniformLocation(drawingProgram, "color")
             glUniform4f(col, 0.5, 1.0, 0.6, 0.0)

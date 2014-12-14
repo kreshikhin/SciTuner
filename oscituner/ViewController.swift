@@ -26,25 +26,28 @@ class ViewController: UIViewController {
         let tubeFrame = getOptimalTubeFrame(self.view.frame.size)
         var tube = TubeView(frame: tubeFrame)
         
+        tube.wavePoints = [Float](count: 512, repeatedValue: 0)
+        tube.spectrumPoints = [Float](count: 512, repeatedValue: 0)
+        
         source.OnData = { (sample: [Double]) -> () in
             processing.Push(sample)
             
-            var spectrum = processing.BuildSpectrumForFrequency()
+            //var spectrum = processing.BuildSpectrumForFrequency()
             var wave = processing.BuidStandingWaveForFrequency(200)
             
             var i = 0
             for w in wave {
-                self.wavePoints[i] = (Double(i) / Double(self.wavePoints.count) - 0.5) * 1.9
-                self.wavePoints[i+1] = Double(w) / 20.0 - 0.4
+                tube.wavePoints[i] = (Float(i) / Float(self.wavePoints.count) - 0.5) * 1.9
+                tube.wavePoints[i+1] = Float(w) / 20.0 - 0.4
                 i += 2
             }
             
-            i = 0
-            for s in spectrum {
-                self.spectrumPoints[i] = (Double(i) / Double(self.spectrumPoints.count) - 0.5) * 1.9
-                self.spectrumPoints[i+1] = Double(s) / 2.0 + 0.4
-                i += 2
-            }
+            //i = 0
+            //for s in spectrum {
+            //    tube.spectrumPoints[i] = (Float(i) / Float(self.spectrumPoints.count) - 0.5) * 1.9
+            //    tube.spectrumPoints[i+1] = Float(s) / 2.0 + 0.4
+            //    i += 2
+            //}
             
             tube.display()
         }
