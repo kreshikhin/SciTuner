@@ -28,8 +28,8 @@ class Processing{
 
     func buildSpectrum() -> [Double] {
         var sample = buildSample()
-        //var spectrum: [Complex] = Transform(Complicate(sample))
         spectrum := fft(sample)
+
         var powerSpectrum = [Double](count: spectrum.count, repeatedValue: 0)
 
         var powerMax: Double = 1.0
@@ -133,7 +133,39 @@ class Processing{
             }
         }
 
-        return [Double](lastSample[offsetOpt ..< (offsetOpt + Count)])
+        return approximate([Double](doubleWave[offsetOpt ..< (offsetOpt + length)]), figurePointCount)
+    }
+
+    func approximate(source: [Double], count: Int) -> [Double] {
+        var result = [Double](count: count, repeatedValue: 0)
+        var factor: Double = Double(src.count) / Double(result.count)
+
+        var i: Ints = 0
+        for r in result {
+            var index: Int
+            var t: Double
+            (index, t) = modf(Double(i) * factor)
+
+            var current = Int(index)
+            var next = current + 1
+            var prev = current - 1
+
+            if prev < 0 {
+                prev = 0
+            }
+
+            if next >= len(src) {
+                next = len(src) - 1
+            }
+
+            var c = src[current]
+            var b = src[current] - src[prev]
+            var a = src[next] - c - b
+
+            result[i] = a * t * t + b * t + c
+        }
+
+        return result
     }
 
     func period() -> Double{ 1.0 / frequency }
