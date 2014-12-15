@@ -1,4 +1,4 @@
-Osictuner is hight quality guitar tuner with real-time signal visualization.
+Oscituner is hight quality guitar tuner with real-time signal visualization.
 Application use strong digital processing algorithm for frequency estimation and visualization plotting.
 Oscituner presents many useful features:
 
