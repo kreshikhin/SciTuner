@@ -35,10 +35,10 @@ class TubeView: GLKView{
         glClearColor(0.5, 0.5, 0.5, 0.5)
         glColor4f(0, 0, 0, 0)
 
-        drawingProgram = NewProgram(
+        drawingProgram = newProgram(
         "    attribute vec4 a_position;" +
         "    void main() {" +
-        "    gl_Position = a_position;" +
+        "       gl_Position = a_position;" +
         "    }",
         fragmentCode:
         "    precision highp float; " +
@@ -47,8 +47,43 @@ class TubeView: GLKView{
         "        gl_FragColor = color;" +
         "    }")
 
-        //var textureProgram = NewProgram("", fragmentCode: "")
-        //var blendProgram
+        var textureProgram = newProgram(
+        "    attribute vec4 a_position;" +
+        "    attribute vec2 a_coord;" +
+        "    varying vec2 v_coord;" +
+        "    void main() {" +
+        "        gl_Position = a_position;" +
+        "        v_coord = a_coord;" +
+        "    }",
+        fragmentCode:
+        "   varying vec2 v_coord;" +
+        "   uniform sampler2D s_picture;" +
+        "   void main() {" +
+        "       float d = 0.0015;" +
+        "       vec4 c0 = texture2D(s_picture, v_coord + vec2(d,d));" +
+        "       vec4 c1 = texture2D(s_picture, v_coord + vec2(-d,d));" +
+        "       vec4 c2 = texture2D(s_picture, v_coord + vec2(d,-d));" +
+        "       vec4 c3 = texture2D(s_picture, v_coord + vec2(-d,-d));" +
+        "       vec4 c = c0 + c1 + c2 + c3;" +
+        "       gl_FragColor = texture2D(s_picture, v_coord) * 0.2 + c * 0.2;" +
+        "   }")
+
+        var blendProgram = newProgram(
+        "   attribute vec4 a_position;" +
+        "   attribute vec2 a_coord;" +
+        "   varying vec2 v_coord;" +
+        "   void main() {" +
+        "       gl_Position = a_position;" +
+        "       v_coord = a_coord;" +
+        "   }",
+        fragmentCode:
+        "   precision highp float; " +
+        "   varying vec2 v_coord;" +
+        "   uniform sampler2D s_picture;" +
+        "   void main() {" +
+        "       float k = 0.9;" +
+        "       gl_FragColor = k * texture2D(s_picture, v_coord) + (1.0 - k) * vec4(125.0/256.0, 155.0/256.0, 125.0/256.0, 0);" +
+        "   }")
     }
 
     override func drawRect(rect: CGRect) {
@@ -105,37 +140,28 @@ class TubeView: GLKView{
         }
     }
 
-    func capture(program: GLuint){
-    //gl.Clear(gl.COLOR_BUFFER_BIT)
-        /*program.Use()
+    func capture(){
+        glClear(GL_COLOR_BUFFER_BIT)
+        glUseProgram(drawingProgram)
 
-        vertices := []float32{
-            -1, -1,
-            -1, 1,
-            1, -1,
-            1, 1,
-        }
+        var vertices: [Float] = [-1, -1, -1, 1, 1, -1, 1, 1]
+        var texturePoints: [Float] = [0.0, 0.0, 0.0, 1.0,   1.0, 0.0, 1.0, 1.0]
 
-        texturePoints := []float32{
-            0.0, 0.0, 0.0, 1.0,
-            1.0, 0.0, 1.0, 1.0,
-        }
+        var s_picture = glGetUniformLocation(drawingProgram, "s_picture")
+        glUniform1i(s_picture, 0)
 
-        s_picture := program.GetUniformLocation("s_picture")
-        s_picture.Uniform1i(0)
+        glPixelStorei(GLenum(GL_UNPACK_ALIGNMENT), GLenum(GL_UNSIGNED_BYTE));
+        glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MIN_FILTER), GLenum(NEAREST));
 
-        gl.PixelStorei(gl.UNPACK_ALIGNMENT, gl.UNSIGNED_BYTE);
-        gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+        var a_position: GLuint = GLuint(glGetAttribLocation(drawingProgram, "a_position"))
+        glVertexAttribPointer(a_position, 2, GLenum(GL_FLOAT), GLboolean(0), 0 , vertices)
+        glEnableVertexAttribArray(GLuint(a_position))
 
-        a_position := program.GetAttribLocation("a_position")
-        a_position.AttribPointer(2, gl.FLOAT, false, 0, vertices)
-        a_position.EnableArray()
+        var a_coord: GLuint = GLuint(glGetAttribLocation(drawingProgram, "a_coord"))
+        glVertexAttribPointer(a_coord, 2, GLenum(GL_FLOAT), GLboolean(0), 0 , texturePoints)
+        glEnableVertexAttribArray(GLuint(a_coord))
 
-        a_coord := program.GetAttribLocation("a_coord")
-        a_coord.AttribPointer(2, gl.FLOAT, false, 0, texturePoints)
-        a_coord.EnableArray()
-
-        gl.DrawArrays(gl.TRIANGLE_STRIP, 0, 4)*/
+        glDrawArrays(GLenum(GL_LINE_STRIP), 0, GLsizei(vertices.count / 2))
     }
 
     func prepareTubeBuffer() {
