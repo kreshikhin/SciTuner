@@ -7,6 +7,26 @@
 //
 
 import Foundation
+import Acceleration
+
+public func fft(input: [Double]) -> [Double] {
+    var real = [Double](input)
+    var imaginary = [Double](count: input.count, repeatedValue: 0.0)
+    var splitComplex = DSPDoubleSplitComplex(realp: &real, imagp: &imaginary)
+
+    let length = vDSP_Length(floor(log2(Float(input.count))))
+    let radix = FFTRadix(kFFTRadix2)
+    let weights = vDSP_create_fftsetupD(length, radix)
+
+    vDSP_fft_zipD(weights, &splitComplex, 1, length, FFTDirection(FFT_FORWARD))
+    var magnitudes = [Double](count: input.count, repeatedValue: 0.0)
+    vDSP_zvmagsD(&splitComplex, 1, &magnitudes, 1, vDSP_Length(input.count))
+
+    var normalizedMagnitudes = [Double](count: input.count, repeatedValue: 0.0)
+    vDSP_vsmulD(sqrt(magnitudes), 1, [2.0 / Double(input.count)], &normalizedMagnitudes, 1, vDSP_Length(input.count))
+
+    return normalizedMagnitudes
+}
 
 struct Complex{
     var real: Double = 0
@@ -104,7 +124,7 @@ func TransformRadix2(var sequence: [Complex]) -> [Complex] {
 
     for i in 0 ..< n/2 {
         var phi: Double = Double(i) / Double(n)
-        
+
         cosTable[i] = cos(M_2_PI * phi)
         sinTable[i] = sin(M_2_PI * phi)
     }
@@ -153,12 +173,12 @@ func TransformRadix2(var sequence: [Complex]) -> [Complex] {
 // Returns the integer whose value is the reverse of the lowest 'bits' bits of the integer 'x'.
 func reverseBits(var x: Int, bits: Int)  -> Int {
     var y: Int = 0
-    
+
     for i in 0 ..< bits {
         y = (y << 1) | (x & 1)
         x /= 2
     }
-    
+
     return y
 }
 
@@ -283,7 +303,7 @@ func ConvolveComplex(x: [Complex], y: [Complex]) -> [Complex]{
 func Complicate(sequence: [Double]) -> [Complex] {
     var result = [Complex](count: sequence.count, repeatedValue: Complex()) //, len(sequence))
     var i = 0
-    
+
     for r in sequence {
         result[i] = Complex(real: r, image: 0)
         i = i + 1

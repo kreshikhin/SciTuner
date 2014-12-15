@@ -18,23 +18,23 @@ class TubeView: GLKView{
     var drawingProgram: GLuint = 0
     var wavePoints = [Float]()
     var spectrumPoints = [Float]()
-    let LineWidth: GLfloat = 2
-    
+    let lineWidth: GLfloat = 2
+
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         prepareTable()
-        
+
         self.context = EAGLContext(API: EAGLRenderingAPI.OpenGLES2)
         EAGLContext.setCurrentContext(self.context)
-        
+
         glClearColor(0.5, 0.5, 0.5, 0.5)
         glColor4f(0, 0, 0, 0)
-        
+
         drawingProgram = NewProgram(
         "    attribute vec4 a_position;" +
         "    void main() {" +
@@ -46,98 +46,98 @@ class TubeView: GLKView{
         "    void main() {" +
         "        gl_FragColor = color;" +
         "    }")
-        
+
         //var textureProgram = NewProgram("", fragmentCode: "")
         //var blendProgram
     }
-    
+
     override func drawRect(rect: CGRect) {
         glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
-        
+
         var text = "123.45 Hz"
-        
-        //RenderInFramebuffer({ () -> () in
+
+        //renderInFramebuffer({ () -> () in
             //capture(blendProgram)
             //draw(wavePoints, 1)
             //draw(spectrumPoints, 1)
             //self.drawText(text)
         //})
-        
+
         //capture(textureProgram)
         drawPoints(wavePoints)
         drawPoints(spectrumPoints)
         drawText(text)
     }
-    
+
     func drawPoints(points: [Float]) {
         glUseProgram(drawingProgram)
-        
-        glLineWidth(LineWidth)
-        
+
+        glLineWidth(lineWidth)
+
         var col = glGetUniformLocation(drawingProgram, "color")
         glUniform4f(col, 0.5, 1.0, 0.6, 0.0)
-        
+
         var a_position: GLuint = GLuint(glGetAttribLocation(drawingProgram, "a_position"))
         glVertexAttribPointer(a_position, 2, GLenum(GL_FLOAT), GLboolean(0), 0 , points)
         glEnableVertexAttribArray(GLuint(a_position))
-        
+
         glDrawArrays(GLenum(GL_LINE_STRIP), 0, GLsizei(points.count / 2))
         glFlush()
     }
-    
+
     func drawText(text: String) {
-        var polyline = GenerateTextPolyline(0, y0: 0, width: 0.05, height: 0.1, step: 0.07, text: text)
-    
+        var polyline = generateTextPolyline(0, y0: 0, width: 0.05, height: 0.1, step: 0.07, text: text)
+
         for line in polyline {
             glUseProgram(drawingProgram)
-    
-            glLineWidth(LineWidth)
-    
+
+            glLineWidth(lineWidth)
+
             var col = glGetUniformLocation(drawingProgram, "color")
             glUniform4f(col, 0.5, 1.0, 0.6, 0.0)
-    
+
             var a_position: GLuint = GLuint(glGetAttribLocation(drawingProgram, "a_position"))
             glVertexAttribPointer(a_position, 2, GLenum(GL_FLOAT), GLboolean(0), 0 , line)
             glEnableVertexAttribArray(GLuint(a_position))
-            
+
             glDrawArrays(GLenum(GL_LINE_STRIP), 0, GLsizei(line.count / 2))
             glFlush()
         }
     }
-    
+
     func capture(program: GLuint){
     //gl.Clear(gl.COLOR_BUFFER_BIT)
         /*program.Use()
-    
+
         vertices := []float32{
             -1, -1,
             -1, 1,
             1, -1,
             1, 1,
         }
-    
+
         texturePoints := []float32{
             0.0, 0.0, 0.0, 1.0,
             1.0, 0.0, 1.0, 1.0,
         }
-    
+
         s_picture := program.GetUniformLocation("s_picture")
         s_picture.Uniform1i(0)
-    
+
         gl.PixelStorei(gl.UNPACK_ALIGNMENT, gl.UNSIGNED_BYTE);
         gl.TexParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-    
+
         a_position := program.GetAttribLocation("a_position")
         a_position.AttribPointer(2, gl.FLOAT, false, 0, vertices)
         a_position.EnableArray()
-    
+
         a_coord := program.GetAttribLocation("a_coord")
         a_coord.AttribPointer(2, gl.FLOAT, false, 0, texturePoints)
         a_coord.EnableArray()
-    
+
         gl.DrawArrays(gl.TRIANGLE_STRIP, 0, 4)*/
     }
-    
+
     func prepareTubeBuffer() {
         var width: GLsizei = 512
         var height: GLsizei = 512
@@ -192,14 +192,14 @@ class TubeView: GLKView{
         glBindFramebuffer(GLenum(GL_FRAMEBUFFER), 0)
     }
 
-    func RenderInFramebuffer(draw: (() -> ())) {
+    func renderInFramebuffer(draw: (() -> ())) {
         glBindFramebuffer(GLenum(GL_FRAMEBUFFER), fb)
         draw()
         glBindFramebuffer(GLenum(GL_FRAMEBUFFER), 0)
     }
 
 
-    func GenerateTextPolyline(x0: Float, y0: Float, width: Float, height: Float, step: Float, text: String) -> [[Float]] {
+    func generateTextPolyline(x0: Float, y0: Float, width: Float, height: Float, step: Float, text: String) -> [[Float]] {
         var result = [[Float]]()
         var x = x0
         for s in text {
@@ -216,7 +216,7 @@ class TubeView: GLKView{
                     resizedLine[j] = x + width * line[j]
                     resizedLine[j+1] = y0 + height * line[j+1]
                 }
-                
+
                 result.append(resizedLine)
             }
 
@@ -245,65 +245,64 @@ class TubeView: GLKView{
         table["_"] = [[0, 0, 1, 0]]
         table[" "] = []
     }
-    
-    
-    func NewProgram(vertexCode: String, fragmentCode: String) -> GLuint {
+
+
+    func newProgram(vertexCode: String, fragmentCode: String) -> GLuint {
         var program = glCreateProgram()
-        
+
         var vertexShader = compileShader(vertexCode, shaderType: GLenum(GL_VERTEX_SHADER))
         var fragmentShader = compileShader(fragmentCode, shaderType: GLenum(GL_FRAGMENT_SHADER))
-                
+
         glAttachShader(program, vertexShader)
         glAttachShader(program, fragmentShader)
-                
+
         glLinkProgram(program)
-        
+
         var isLinked: GLint = 0
-        
+
         glGetProgramiv(program, GLenum(GL_LINK_STATUS), &isLinked)
         NSLog(" linked: %i ", isLinked)
-                
+
         if isLinked == 0 {
             var infolen: GLsizei = 0
             var stringLen: GLsizei = 1024
             glGetProgramiv(program, GLenum(GL_INFO_LOG_LENGTH), &infolen)
-            
+
             var info: [GLchar] = Array(count: Int(stringLen), repeatedValue: GLchar(0))
             var lenActual: GLsizei = 0
-            
+
             glGetProgramInfoLog(program, stringLen, &lenActual, UnsafeMutablePointer(info))
             NSLog(String(UTF8String:info)!)
         }
-        
+
         return program
     }
 
     func compileShader(code: String, shaderType: GLenum) -> GLuint {
         var shader = glCreateShader(shaderType)
-        
+
         var cStringSource = (code as NSString).UTF8String
         let stringfromutf8string = String.fromCString(cStringSource)
-        
+
         glShaderSource(shader, GLsizei(1), &cStringSource, nil)
         glCompileShader(shader);
-        
+
         var isCompiled: GLint = 0
         glGetShaderiv(shader, GLenum(GL_COMPILE_STATUS), &isCompiled)
         NSLog(" is compiled : %i ", isCompiled)
-    
+
         if isCompiled == 0 {
             var infolen: GLsizei = 0
             var stringLen: GLsizei = 1024
             glGetShaderiv(shader, GLenum(GL_INFO_LOG_LENGTH), &infolen)
-            
+
             var info: [GLchar] = Array(count: Int(stringLen), repeatedValue: GLchar(0))
             var lenActual: GLsizei = 0
-            
+
             glGetShaderInfoLog(shader, stringLen, &lenActual, UnsafeMutablePointer(info))
             NSLog(String(UTF8String:info)!)
         }
-        
+
         return shader
     }
 }
-
