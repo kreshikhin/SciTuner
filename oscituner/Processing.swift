@@ -13,9 +13,9 @@ class Processing{
     let minFrequency: Double = 20
     let maxFrequency: Double = 20000
     let discreteFrequency: Double = 44100.0
-    let discreteTime: Double = 1.0 / 44100.0
 
     var frequency: Double = 440
+
     var leftFrequency: Double = 400
     var rightFrequency: Double = 500
 
@@ -24,8 +24,9 @@ class Processing{
     var samples: [Double] = [Double]()
 
     var doubleWave: [Double] = [Double]()
-    
+
     var doubleWaveFftSetup: FFTSetup?
+    var samplesFftSetup: FFTSetup?
 
     init(){
         samples = [Double](count: Int(4 * discreteFrequency / minFrequency), repeatedValue: 0)
@@ -34,28 +35,27 @@ class Processing{
     }
 
     func buildSpectrum() -> [Double] {
-        var sample = buildSample()
-        var spectrum = [Double]() //fft(sample)
+        var realPart = [Float](samples)
+        var imagPart = [Float](count: samples.count, repeatedValue: 0)
 
-        var powerSpectrum = [Double](count: spectrum.count, repeatedValue: 0)
+        var signal = DSPSplitComplex(
+            realp: UnsafeMutablePointer<Float>(realPart),
+            imagp: UnsafeMutablePointer<Float>(imagPart))
 
-        var powerMax: Double = 1.0
+        fft_zrip(
+            samplesFftSetup,
+            signal,
+            vDSP_Stride(1),
+            samples.count,
+            FFTDirection(kFFTDirection_Forward))
 
-        var i = 0
-        for s in spectrum {
-            powerSpectrum[i] = abs(s) * abs(s)
+        var powerSpectrum = [Double](count: samples.count, repeatedValue: 0)
 
-            if powerMax < powerSpectrum[i] {
-                powerMax = powerSpectrum[i]
-            }
-
-            i = i + 1
-        }
-
-        i = 0
-        for s in powerSpectrum {
-            powerSpectrum[i] = s / powerMax
-        }
+        zaspec(
+            signal,
+            UnsafeMutablePointer(powerSpectrum),
+            samples.count
+        )
 
         return powerSpectrum
     }
@@ -75,7 +75,7 @@ class Processing{
     }
 
     func getValueAtFrequency(f: Double, spectrum: [Double]) -> Double {
-        var df: Double = Double(1.0) / (Double(spectrum.count) * discreteTime)
+        var df: Double = discreteFrequency / Double(spectrum.count))
         var position: Double = f / df
 
         var index0 = Int(ceil(position))
@@ -88,7 +88,6 @@ class Processing{
             var k1 = (Double(index1) * df - f) / df
             var s = s0 * sin(M_1_PI * k0) / k0 + s1 * sin(M_1_PI * k1) / k1
 
-            //return (s0 + s1) / 3.0
             return s / 5.0
         }
 
@@ -96,22 +95,15 @@ class Processing{
     }
 
     func Push(sample: [Double]) {
-        //NSLog(" %i ", samples.count)
-        //NSLog(" %i  ", sample.count)
-        
         samples += sample
         samples.removeRange(Range(start: 0, end: sample.count))
-        
+
         doubleWave += sample
         doubleWave.removeRange(Range(start: 0, end: sample.count))
     }
 
-    func buildSample() -> [Double] {
-        return samples
-    }
-
     func setFrequency(var newFrequency: Double) {
-        
+
         if newFrequency < minFrequency {
             newFrequency = minFrequency
         }
@@ -122,34 +114,57 @@ class Processing{
 
         frequency = newFrequency
 
-        var lengthExp: Int = Int(floor(log2(period() / discreteTime)))
-        var length: Int = Int(pow(2, Double(lengthExp)))
+        var length: Int
+        var dspLength: Int
+
+        (dspLength, length) = log2length(discreteFrequency / frequency)
+
         doubleWave = [Double](samples[0 ..< length])
-        
+
         if doubleWaveFftSetup != nil {
             destroy_fftsetup(doubleWaveFftSetup!)
             doubleWaveFftSetup = nil
         }
-        
-        
-        doubleWaveFftSetup = create_fftsetupD(vDSP_Length(lengthExp), FFTRadix(kFFTRadix2))
+
+
+        doubleWaveFftSetup = create_fftsetupD(vDSP_Length(dspLength), FFTRadix(kFFTRadix2))
     }
 
     func buidStandingWaveForFrequency(f0: Double) -> [Double] {
-        
-        /* func vDSP_fft_zrip(_ __vDSP_setup: FFTSetup,
-            _ __vDSP_ioData: UnsafePointer<DSPSplitComplex>,
-            _ __vDSP_stride: vDSP_Stride,
-            _ __vDSP_Log2N: vDSP_Length,
-            _ __vDSP_direction: FFTDirection) */
-        
-        
-        
-        var store = DSPSplitComplex(realp: <#UnsafeMutablePointer<Float>#>, imagp: <#UnsafeMutablePointer<Float>#>)
-        
-        fft_zrip(doubleWaveFftSetup, <#__vDSP_C: UnsafePointer<DSPSplitComplex>#>, <#__vDSP_IC: vDSP_Stride#>, <#__vDSP_Log2N: vDSP_Length#>, <#__vDSP_Direction: FFTDirection#>)
+        var realPart = [Float](doubleWave)
+        var imagPart = [Float](count: doubleWave.count, repeatedValue: 0)
 
-        return approximate([Double](doubleWave[offsetOpt ..< (offsetOpt + length)]), count: figurePointCount)
+        var signal = DSPSplitComplex(
+            realp: UnsafeMutablePointer<Float>(realPart),
+            imagp: UnsafeMutablePointer<Float>(imagPart))
+
+        fft_zrip(
+            doubleWaveFftSetup,
+            signal,
+            vDSP_Stride(1),
+            doubleWave.count,
+            FFTDirection(kFFTDirection_Forward))
+
+        var index, frac, x, y: Float
+
+        index, frac = modf(0.5 * frequency / discreteFrequency)
+
+        if index < length / 2 {
+            var index0 = Int(ceil(index))
+            var index1 = Int(floor(index))
+            x = (1 - frac) * realPart[index0] + frac * realPart[index1]
+            y = (1 - frac) * imagPart[index0] + frac * imagPart[index1]
+        } else {
+            x = realPart[index]
+            y = imagPart[index]
+        }
+
+        var phase = atan2(x, y) + M_1_PI / 2
+
+        var periodLength: Double = discreteFrequency / frequency
+        var offset: Int = Int(periodLength * phase / M_2_PI)
+
+        return approximate([Double](doubleWave[offset ..< offset + Int(length)]), count: figurePointCount)
     }
 
     func approximate(source: [Double], count: Int) -> [Double] {
@@ -181,11 +196,14 @@ class Processing{
             result[i] = a * t * t + b * t + c
             i = i + 1
         }
-        
+
         return result
     }
 
-    func period() -> Double {
-        return 1.0 / frequency
+    func log2length(time: Double) -> (Int, Int) {
+        var lengthExp: Int = Int(floor(log2(time))) + 1
+        var length: Int = Int(pow(2, Double(lengthExp)))
+
+        return (lengthExp, length)
     }
 }
