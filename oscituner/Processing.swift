@@ -44,7 +44,7 @@ class Processing{
         
         var l: vDSP_Length = vDSP_Length(samples.count)
         
-        fft_zrip(samplesFftSetup!, &signal, vDSP_Stride(1), l, FFTDirection(kFFTDirection_Forward))
+        fft_zip(samplesFftSetup!, &signal, vDSP_Stride(1), l, FFTDirection(kFFTDirection_Forward))
 
         var powerSpectrum = [Float](count: samples.count, repeatedValue: 0)
         
@@ -118,7 +118,7 @@ class Processing{
 
         if doubleWaveFftSetup != nil {
             NSLog(" destroy fft setup ");
-            //destroy_fftsetup(doubleWaveFftSetup!)
+            destroy_fftsetup(doubleWaveFftSetup!)
             doubleWaveFftSetup = nil
         }
 
@@ -126,7 +126,7 @@ class Processing{
         doubleWaveFftSetup = create_fftsetupD(vDSP_Length(dspLength), FFTRadix(kFFTRadix2))
     }
 
-    func buidStandingWaveForFrequency(f0: Double) -> [Float] {
+    func buidStandingWaveForFrequency() -> [Float] {
         //NSLog(" build standing wave ");
         
         var realPart = [Float](doubleWave)
@@ -140,8 +140,8 @@ class Processing{
         //NSLog(" %i ", realPart.count);
         //NSLog(" %i ", log2length);
         
-        var z = create_fftsetupD(vDSP_Length(log2length), FFTRadix(kFFTRadix2))
-        fft_zip(z, &signal, 1, log2length, FFTDirection(kFFTDirection_Forward))
+        //var z = create_fftsetupD(vDSP_Length(log2length), FFTRadix(kFFTRadix2))
+        fft_zip(doubleWaveFftSetup!, &signal, 1, log2length, FFTDirection(kFFTDirection_Forward))
 
         var index: Float
         var frac: Float

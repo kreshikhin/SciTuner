@@ -129,8 +129,8 @@ func TransformRadix2(var sequence: [Complex]) -> [Complex] {
     for i in 0 ..< n/2 {
         var phi: Double = Double(i) / Double(n)
 
-        cosTable[i] = cos(M_2_PI * phi)
-        sinTable[i] = sin(M_2_PI * phi)
+        cosTable[i] = cos(2 * M_PI * phi)
+        sinTable[i] = sin(2 * M_PI * phi)
     }
 
     // Bit-reversed addressing permutation

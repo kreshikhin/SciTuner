@@ -99,7 +99,7 @@ class TubeView: GLKView{
         var text = "123.45 Hz"
 
         renderInFramebuffer({ () -> () in
-            //self.capture(self.blendProgram)
+            self.capture(self.blendProgram)
             self.drawPoints(self.wavePoints)
             self.drawPoints(self.spectrumPoints)
             self.drawText(text)
@@ -107,7 +107,7 @@ class TubeView: GLKView{
         
         self.bindDrawable()
 
-        //capture(textureProgram)
+        capture(textureProgram)
         drawPoints(wavePoints)
         drawPoints(spectrumPoints)
         drawText(text)

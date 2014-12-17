@@ -33,9 +33,9 @@ class ViewController: UIViewController {
         source.onData = { (sample: [Float]) -> () in
             processing.Push(sample)
 
-            //var spectrum = processing.BuildSpectrumForFrequency()
-            var wave = processing.buidStandingWaveForFrequency(200)
-
+            var wave = processing.buidStandingWaveForFrequency()
+            var spectrum = processing.buildSpectrumForFrequency()
+            
             var i = 0
             for w in wave {
                 tube.wavePoints[i] = (Float(i) / Float(self.wavePoints.count) - 0.5) * 1.9
@@ -43,14 +43,13 @@ class ViewController: UIViewController {
                 i += 2
             }
 
-            //i = 0
-            //for s in spectrum {
-            //    tube.spectrumPoints[i] = (Float(i) / Float(self.spectrumPoints.count) - 0.5) * 1.9
-            //    tube.spectrumPoints[i+1] = Float(s) / 2.0 + 0.4
-            //    i += 2
-            //}
+            i = 0
+            for s in spectrum {
+                tube.spectrumPoints[i] = (Float(i) / Float(self.spectrumPoints.count) - 0.5) * 1.9
+                tube.spectrumPoints[i+1] = Float(s) / 2.0 + 0.4
+                i += 2
+            }
 
-            //tube.display()
             tube.setNeedsDisplay()
         }
 
