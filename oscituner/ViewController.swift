@@ -22,6 +22,7 @@ class ViewController: UIViewController {
         var source = Source()
         // var source = MicSource()
         var processing = Processing()
+        //processing.setFrequency(200)
 
         let tubeFrame = getOptimalTubeFrame(self.view.frame.size)
         var tube = TubeView(frame: tubeFrame)
@@ -29,7 +30,7 @@ class ViewController: UIViewController {
         tube.wavePoints = [Float](count: 512, repeatedValue: 0)
         tube.spectrumPoints = [Float](count: 512, repeatedValue: 0)
 
-        source.onData = { (sample: [Double]) -> () in
+        source.onData = { (sample: [Float]) -> () in
             processing.Push(sample)
 
             //var spectrum = processing.BuildSpectrumForFrequency()
