@@ -18,7 +18,9 @@ class Source{
     var sample = [Double](count: 882, repeatedValue: 0)
 
     init() {
-        var interval = Double(sample.count) / Fd
+        var interval = Double(sample.count) / discreteFrequency
+        
+        NSLog(" %f ", interval);
 
         let timer = NSTimer(timeInterval: interval, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
         NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
@@ -27,15 +29,15 @@ class Source{
     @objc func update(){
         var dt = Double(1) / discreteFrequency
 
-        var df: Double = frequencyDeviation * sin(M_2_PI * f2 * t)
-        frequency = f1 + df
+        var df: Double = frequencyDeviation * sin(M_2_PI * frequency2 * t)
+        frequency = frequency1 + df
 
         for var i = 0; i < sample.count ; i++ {
             t = t + dt
-            sample[i] = 1.0 * sin(M_2_PI * (f1 + df) * t + rand() / 100) + 1.0 * (rand() - 0.5)
+            sample[i] = 1.0 * sin(M_2_PI * (frequency1 + df) * t + rand() / 100) + 1.0 * (rand() - 0.5)
         }
-
-        OnData(sample)
+        
+        onData(sample)
     }
 
     func getFreqText() -> String {

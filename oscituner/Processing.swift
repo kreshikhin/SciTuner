@@ -7,28 +7,35 @@
 //
 
 import Foundation
+import Accelerate
 
 class Processing{
     let minFrequency: Double = 20
     let maxFrequency: Double = 20000
-    let discreteFrequency: Double = 44100
-    let discreteTime: Double = 1.0 / discreteFrequency
+    let discreteFrequency: Double = 44100.0
+    let discreteTime: Double = 1.0 / 44100.0
 
     var frequency: Double = 440
+    var leftFrequency: Double = 400
+    var rightFrequency: Double = 500
 
     var figurePointCount: Int = 256
 
-    var samples: [Double] = [Double](count: Int(4 * discreteFrequency / minFrequency), repeatedValue: 0)
+    var samples: [Double] = [Double]()
 
     var doubleWave: [Double] = [Double]()
+    
+    var doubleWaveFftSetup: FFTSetup?
 
     init(){
+        samples = [Double](count: Int(4 * discreteFrequency / minFrequency), repeatedValue: 0)
+        samples.reserveCapacity(samples.count*2)
         setFrequency(440)
     }
 
     func buildSpectrum() -> [Double] {
         var sample = buildSample()
-        spectrum := fft(sample)
+        var spectrum = [Double]() //fft(sample)
 
         var powerSpectrum = [Double](count: spectrum.count, repeatedValue: 0)
 
@@ -55,12 +62,12 @@ class Processing{
 
 
     func buildSpectrumForFrequency() -> [Double] {
-        var result = [Double](count:Count, repeatedValue: 0)
+        var result = [Double](count: figurePointCount, repeatedValue: 0)
         var spectrum = buildSpectrum()
 
         var i = 0
         for  r in result {
-            var f = Fmin + (Fmax - Fmin) * Double(i) / Double(Count - 1)
+            var f = leftFrequency + (rightFrequency - leftFrequency) * Double(i) / Double(figurePointCount - 1)
             result[i] = getValueAtFrequency(f, spectrum: spectrum)
         }
 
@@ -68,7 +75,7 @@ class Processing{
     }
 
     func getValueAtFrequency(f: Double, spectrum: [Double]) -> Double {
-        var df: Double = Double(1.0) / (Double(spectrum.count) * Td)
+        var df: Double = Double(1.0) / (Double(spectrum.count) * discreteTime)
         var position: Double = f / df
 
         var index0 = Int(ceil(position))
@@ -89,13 +96,22 @@ class Processing{
     }
 
     func Push(sample: [Double]) {
+        //NSLog(" %i ", samples.count)
+        //NSLog(" %i  ", sample.count)
+        
+        samples += sample
+        samples.removeRange(Range(start: 0, end: sample.count))
+        
+        doubleWave += sample
+        doubleWave.removeRange(Range(start: 0, end: sample.count))
     }
 
     func buildSample() -> [Double] {
         return samples
     }
 
-    func setFrequence(var newFrequency: Double) {
+    func setFrequency(var newFrequency: Double) {
+        
         if newFrequency < minFrequency {
             newFrequency = minFrequency
         }
@@ -106,43 +122,43 @@ class Processing{
 
         frequency = newFrequency
 
-        var length: Int = Int(period() / discreteTime)
-
-        doubleWave = [Double]samples[0 ..< length * 2]
+        var lengthExp: Int = Int(floor(log2(period() / discreteTime)))
+        var length: Int = Int(pow(2, Double(lengthExp)))
+        doubleWave = [Double](samples[0 ..< length])
+        
+        if doubleWaveFftSetup != nil {
+            destroy_fftsetup(doubleWaveFftSetup!)
+            doubleWaveFftSetup = nil
+        }
+        
+        
+        doubleWaveFftSetup = create_fftsetupD(vDSP_Length(lengthExp), FFTRadix(kFFTRadix2))
     }
 
     func buidStandingWaveForFrequency(f0: Double) -> [Double] {
-        var vOpt: Double = 0
-        var offsetOpt: Int = 0
+        
+        /* func vDSP_fft_zrip(_ __vDSP_setup: FFTSetup,
+            _ __vDSP_ioData: UnsafePointer<DSPSplitComplex>,
+            _ __vDSP_stride: vDSP_Stride,
+            _ __vDSP_Log2N: vDSP_Length,
+            _ __vDSP_direction: FFTDirection) */
+        
+        
+        
+        var store = DSPSplitComplex(realp: <#UnsafeMutablePointer<Float>#>, imagp: <#UnsafeMutablePointer<Float>#>)
+        
+        fft_zrip(doubleWaveFftSetup, <#__vDSP_C: UnsafePointer<DSPSplitComplex>#>, <#__vDSP_IC: vDSP_Stride#>, <#__vDSP_Log2N: vDSP_Length#>, <#__vDSP_Direction: FFTDirection#>)
 
-        var length: Int = Int(period() / discreteTime)
-
-        for offset in 0 ..< length {
-            var v: Double = 0
-            var t: Double = 0
-
-            for i in offset ..< offset+length {
-                var s = lastSample[i]
-                v = v + sin(M_2_PI * t / ti) * s
-                t = t + Td
-            }
-
-            if v > vOpt {
-                offsetOpt = offset
-                vOpt = v
-            }
-        }
-
-        return approximate([Double](doubleWave[offsetOpt ..< (offsetOpt + length)]), figurePointCount)
+        return approximate([Double](doubleWave[offsetOpt ..< (offsetOpt + length)]), count: figurePointCount)
     }
 
     func approximate(source: [Double], count: Int) -> [Double] {
         var result = [Double](count: count, repeatedValue: 0)
-        var factor: Double = Double(src.count) / Double(result.count)
+        var factor: Double = Double(source.count) / Double(result.count)
 
-        var i: Ints = 0
+        var i: Int = 0
         for r in result {
-            var index: Int
+            var index: Double
             var t: Double
             (index, t) = modf(Double(i) * factor)
 
@@ -154,19 +170,22 @@ class Processing{
                 prev = 0
             }
 
-            if next >= len(src) {
-                next = len(src) - 1
+            if next >= source.count {
+                next = source.count - 1
             }
 
-            var c = src[current]
-            var b = src[current] - src[prev]
-            var a = src[next] - c - b
+            var c = source[current]
+            var b = source[current] - source[prev]
+            var a = source[next] - c - b
 
             result[i] = a * t * t + b * t + c
+            i = i + 1
         }
-
+        
         return result
     }
 
-    func period() -> Double{ 1.0 / frequency }
+    func period() -> Double {
+        return 1.0 / frequency
+    }
 }

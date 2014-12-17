@@ -7,7 +7,9 @@
 //
 
 import Foundation
-import Acceleration
+
+/*
+import Accelerate
 
 public func fft(input: [Double]) -> [Double] {
     var real = [Double](input)
@@ -27,6 +29,8 @@ public func fft(input: [Double]) -> [Double] {
 
     return normalizedMagnitudes
 }
+
+*/
 
 struct Complex{
     var real: Double = 0

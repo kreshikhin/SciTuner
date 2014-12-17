@@ -15,7 +15,11 @@ class TubeView: GLKView{
     var rb: GLuint = 0
     var blured: GLuint = 0
     var table: [Character: [[Float]]] = [Character: [[Float]]]()
+    
     var drawingProgram: GLuint = 0
+    var textureProgram: GLuint = 0
+    var blendProgram: GLuint = 0
+    
     var wavePoints = [Float]()
     var spectrumPoints = [Float]()
     let lineWidth: GLfloat = 2
@@ -47,7 +51,7 @@ class TubeView: GLKView{
         "        gl_FragColor = color;" +
         "    }")
 
-        var textureProgram = newProgram(
+        textureProgram = newProgram(
         "    attribute vec4 a_position;" +
         "    attribute vec2 a_coord;" +
         "    varying vec2 v_coord;" +
@@ -56,6 +60,7 @@ class TubeView: GLKView{
         "        v_coord = a_coord;" +
         "    }",
         fragmentCode:
+        "   precision highp float; " +
         "   varying vec2 v_coord;" +
         "   uniform sampler2D s_picture;" +
         "   void main() {" +
@@ -68,7 +73,7 @@ class TubeView: GLKView{
         "       gl_FragColor = texture2D(s_picture, v_coord) * 0.2 + c * 0.2;" +
         "   }")
 
-        var blendProgram = newProgram(
+        blendProgram = newProgram(
         "   attribute vec4 a_position;" +
         "   attribute vec2 a_coord;" +
         "   varying vec2 v_coord;" +
@@ -84,19 +89,23 @@ class TubeView: GLKView{
         "       float k = 0.9;" +
         "       gl_FragColor = k * texture2D(s_picture, v_coord) + (1.0 - k) * vec4(125.0/256.0, 155.0/256.0, 125.0/256.0, 0);" +
         "   }")
+        
+        prepareTubeBuffer()
     }
 
     override func drawRect(rect: CGRect) {
-        glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
+        //glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
 
         var text = "123.45 Hz"
 
-        //renderInFramebuffer({ () -> () in
-            //capture(blendProgram)
-            //draw(wavePoints, 1)
-            //draw(spectrumPoints, 1)
-            //self.drawText(text)
-        //})
+        renderInFramebuffer({ () -> () in
+            //self.capture(self.blendProgram)
+            self.drawPoints(self.wavePoints)
+            self.drawPoints(self.spectrumPoints)
+            self.drawText(text)
+        })
+        
+        self.bindDrawable()
 
         //capture(textureProgram)
         drawPoints(wavePoints)
@@ -140,33 +149,34 @@ class TubeView: GLKView{
         }
     }
 
-    func capture(){
-        glClear(GL_COLOR_BUFFER_BIT)
-        glUseProgram(drawingProgram)
+    func capture(program: GLuint){
+        //glClear(GLenum(GL_COLOR_BUFFER_BIT))
+        glUseProgram(program)
 
         var vertices: [Float] = [-1, -1, -1, 1, 1, -1, 1, 1]
         var texturePoints: [Float] = [0.0, 0.0, 0.0, 1.0,   1.0, 0.0, 1.0, 1.0]
 
-        var s_picture = glGetUniformLocation(drawingProgram, "s_picture")
+        var s_picture = glGetUniformLocation(program, "s_picture")
         glUniform1i(s_picture, 0)
 
-        glPixelStorei(GLenum(GL_UNPACK_ALIGNMENT), GLenum(GL_UNSIGNED_BYTE));
-        glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MIN_FILTER), GLenum(NEAREST));
+        glPixelStorei(GLenum(GL_UNPACK_ALIGNMENT), GLint(GL_UNSIGNED_BYTE));
+        glTexParameteri(GLenum(GL_TEXTURE_2D), GLenum(GL_TEXTURE_MIN_FILTER), GLint(GL_NEAREST));
 
-        var a_position: GLuint = GLuint(glGetAttribLocation(drawingProgram, "a_position"))
+        var a_position: GLuint = GLuint(glGetAttribLocation(program, "a_position"))
         glVertexAttribPointer(a_position, 2, GLenum(GL_FLOAT), GLboolean(0), 0 , vertices)
         glEnableVertexAttribArray(GLuint(a_position))
 
-        var a_coord: GLuint = GLuint(glGetAttribLocation(drawingProgram, "a_coord"))
+        var a_coord: GLuint = GLuint(glGetAttribLocation(program, "a_coord"))
         glVertexAttribPointer(a_coord, 2, GLenum(GL_FLOAT), GLboolean(0), 0 , texturePoints)
         glEnableVertexAttribArray(GLuint(a_coord))
 
-        glDrawArrays(GLenum(GL_LINE_STRIP), 0, GLsizei(vertices.count / 2))
+        glDrawArrays(GLenum(GL_TRIANGLE_STRIP), 0, GLsizei(vertices.count / 2))
+        glFlush()
     }
 
     func prepareTubeBuffer() {
-        var width: GLsizei = 512
-        var height: GLsizei = 512
+        var width: GLsizei = 256
+        var height: GLsizei = 256
         var pixels = [Byte](count: Int(width * height * 4), repeatedValue: 0)
 
         glGenTextures(1, &blured);
@@ -190,7 +200,7 @@ class TubeView: GLKView{
 
         if status != GLenum(GL_FRAMEBUFFER_COMPLETE) {
             NSLog("failed to make complete framebuffer object @", status);
-            /*switch status {
+            switch status {
             case GLenum(GL_FRAMEBUFFER_COMPLETE):
                 NSLog("failed to make complete framebuffer object")
             case GLenum(GL_FRAMEBUFFER_UNDEFINED):
@@ -199,26 +209,21 @@ class TubeView: GLKView{
                 NSLog("any of the framebuffer attachment points are framebuffer incomplete")
             case GLenum(GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT):
                 NSLog("the framebuffer does not have at least one image attached to it.")
-            //case GLenum(GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER):
-            //    NSLog("the value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for any color attachment point(s) named by GL_DRAW_BUFFERi.")
-            //case GLenum(GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER):
-            //    NSLog("GL_READ_BUFFER is not GL_NONE and the value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for the color attachment point named by GL_READ_BUFFER.")
             case GLenum(GL_FRAMEBUFFER_UNSUPPORTED):
                 NSLog("the combination of internal formats of the attached images violates an implementation-dependent set of restrictions.")
             case GLenum(GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE):
                 NSLog("the value of GL_RENDERBUFFER_SAMPLES is not the same for all attached renderbuffers; if the value of GL_TEXTURE_SAMPLES is the not same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_RENDERBUFFER_SAMPLES does not match the value of GL_TEXTURE_SAMPLES.")
                 NSLog("the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not the same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not GL_TRUE for all attached textures.")
-            //case GLenum(GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS):
-            //    NSLog("is returned if any framebuffer attachment is layered, and any populated attachment is not layered, or if all populated color attachments are not from textures of the same target.")
             default:
                 NSLog("unknown framebuffer error")
-            }*/
+            }
         }
 
         glBindFramebuffer(GLenum(GL_FRAMEBUFFER), 0)
     }
 
     func renderInFramebuffer(draw: (() -> ())) {
+        glViewport(0, 0, 256, 256)
         glBindFramebuffer(GLenum(GL_FRAMEBUFFER), fb)
         draw()
         glBindFramebuffer(GLenum(GL_FRAMEBUFFER), 0)

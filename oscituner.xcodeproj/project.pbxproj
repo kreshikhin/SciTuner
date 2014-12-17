@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		920F09731A40A9D100A69F7A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 920F09721A40A9D000A69F7A /* Accelerate.framework */; };
 		92C4EF121A3A11C800ECD2C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF111A3A11C800ECD2C7 /* AppDelegate.swift */; };
 		92C4EF141A3A11C800ECD2C7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF131A3A11C800ECD2C7 /* ViewController.swift */; };
 		92C4EF171A3A11C800ECD2C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92C4EF151A3A11C800ECD2C7 /* Main.storyboard */; };
@@ -31,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		920F09721A40A9D000A69F7A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		92C4EF0C1A3A11C800ECD2C7 /* oscituner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = oscituner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92C4EF101A3A11C800ECD2C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92C4EF111A3A11C800ECD2C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -53,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				920F09731A40A9D100A69F7A /* Accelerate.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,6 +72,7 @@
 		92C4EF031A3A11C800ECD2C7 = {
 			isa = PBXGroup;
 			children = (
+				920F09721A40A9D000A69F7A /* Accelerate.framework */,
 				92C4EF0E1A3A11C800ECD2C7 /* oscituner */,
 				92C4EF241A3A11C800ECD2C7 /* oscitunerTests */,
 				92C4EF0D1A3A11C800ECD2C7 /* Products */,
@@ -357,6 +361,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = oscituner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = oscituner;
