@@ -2,7 +2,7 @@
 
 import Foundation
 
-class Source{
+class MicSource{
     var onData: (([Float]) -> ()) = { ([Float]) -> () in
     }
 
@@ -17,7 +17,12 @@ class Source{
 
     var sample = [Float](count: 882, repeatedValue: 0)
 
+
+    var session AVAudioSession?
+
     init() {
+        session = AVAudioSession.sharedInstance()
+
         var interval = Double(sample.count) / discreteFrequency
 
         NSLog(" %f ", interval);
@@ -27,24 +32,6 @@ class Source{
     }
 
     @objc func update(){
-        var dt = Double(1) / discreteFrequency
-
-        var df: Double = frequencyDeviation * sin(2 * M_PI * frequency2 * t)
-        frequency = frequency1 + df
-
-        for var i = 0; i < sample.count ; i++ {
-            t = t + dt
-            sample[i] = Float(1.0 * sin(2 * M_PI * (frequency1 + df) * t + rand() / 100) + 1.0 * (rand() - 0.5))
-        }
-
         onData(sample)
-    }
-
-    func getFreqText() -> String {
-        return String(format: "%6.2f Hz", frequency)
-    }
-
-    func rand() -> Double {
-        return Double(arc4random()) / Double(UINT32_MAX)
     }
 }
