@@ -22,7 +22,7 @@ class TubeView: GLKView{
     
     var wavePoints = [Float]()
     var spectrumPoints = [Float]()
-    let lineWidth: GLfloat = 2
+    let lineWidth: GLfloat = 1
 
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -86,7 +86,7 @@ class TubeView: GLKView{
         "   varying vec2 v_coord;" +
         "   uniform sampler2D s_picture;" +
         "   void main() {" +
-        "       float k = 0.9;" +
+        "       float k = 0.5;" +
         "       gl_FragColor = k * texture2D(s_picture, v_coord) + (1.0 - k) * vec4(125.0/256.0, 155.0/256.0, 125.0/256.0, 0);" +
         "   }")
         

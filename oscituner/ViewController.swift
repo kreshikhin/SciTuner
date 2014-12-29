@@ -19,9 +19,12 @@ class ViewController: UIViewController {
         let f = self.view.frame
         NSLog("%@ %@ %@ %@", f.origin.x, f.origin.y, f.size.width, f.size.height)
 
-        var source = Source()
+        let sampleRate = 44100
+        let sampleCount = 4096
+        
+        var source = Source(sampleRate: sampleRate, sampleCount: sampleCount)
         // var source = MicSource()
-        var processing = Processing()
+        var processing = Processing(sampleRate: sampleRate, sampleCount: sampleCount)
         //processing.setFrequency(200)
 
         let tubeFrame = getOptimalTubeFrame(self.view.frame.size)
@@ -32,9 +35,11 @@ class ViewController: UIViewController {
 
         source.onData = { (sample: [Float]) -> () in
             processing.Push(sample)
+            
+            processing.Recalculate()
 
-            var wave = processing.buidStandingWaveForFrequency()
-            var spectrum = processing.buildSpectrumForFrequency()
+            var wave = processing.buidStandingWave()
+            var spectrum = processing.buildSpectrumWindow(tube.spectrumPoints.count / 2)
             
             var i = 0
             for w in wave {

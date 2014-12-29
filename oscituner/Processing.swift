@@ -12,69 +12,78 @@ import Accelerate
 class Processing{
     let minFrequency: Double = 20
     let maxFrequency: Double = 20000
-    let discreteFrequency: Double = 44100.0
+    
+    var discreteFrequency: Double = 44100.0
 
     var frequency: Double = 440
 
-    var leftFrequency: Double = 400
+    var leftFrequency: Double = 300
     var rightFrequency: Double = 500
 
     var figurePointCount: Int = 256
-
-    var samples: [Float] = [Float]()
-    var doubleWave: [Float] = [Float]()
-
-    var doubleWaveFftSetup: FFTSetup?
-    var samplesFftSetup: FFTSetup?
-
-    init(){
-        samples = [Float](count: Int(4 * discreteFrequency / minFrequency), repeatedValue: 0)
-        samples.reserveCapacity(samples.count*2)
+    
+    
+    var samples: [Float]
+    var spectrumRealPart: [Float]
+    var spectrumImagePart: [Float]
+    var spectrum: DSPSplitComplex
+    var powerSpectrum: [Float]
+    
+    var fftSetup: FFTSetup?
+    
+    var log2Length: vDSP_Length
+    
+    init(sampleRate: Int, sampleCount: Int){
+        discreteFrequency = Double(sampleRate)
+        
+        samples = [Float](count: sampleCount, repeatedValue: 0)
+        
+        spectrumRealPart = [Float](count: sampleCount, repeatedValue: 0)
+        spectrumImagePart = [Float](count: sampleCount, repeatedValue: 0)
+        
+        spectrum = DSPSplitComplex(realp: &spectrumRealPart, imagp: &spectrumImagePart)
+        
+        powerSpectrum = [Float](count: sampleCount, repeatedValue: 0)
+        
+        log2Length = vDSP_Length(Processing.log2count(sampleCount))
+        
+        fftSetup = create_fftsetupD(log2Length, FFTRadix(kFFTRadix2))
+        
         setFrequency(440)
     }
-
-    func buildSpectrum() -> [Float] {
-        var realPart = [Float](samples)
-        var imagPart = [Float](count: samples.count, repeatedValue: 0)
-
-        var signal: DSPSplitComplex = DSPSplitComplex(
-            realp: UnsafeMutablePointer<Float>(realPart),
-            imagp: UnsafeMutablePointer<Float>(imagPart))
-
-        
-        var l: vDSP_Length = vDSP_Length(samples.count)
-        
-        fft_zip(samplesFftSetup!, &signal, vDSP_Stride(1), l, FFTDirection(kFFTDirection_Forward))
-
-        var powerSpectrum = [Float](count: samples.count, repeatedValue: 0)
-        
-        vDSP_zaspec(&signal, &powerSpectrum, l)
-
-        return (powerSpectrum)
+    
+    deinit{
+        destroy_fftsetup(fftSetup!)
     }
 
 
-    func buildSpectrumForFrequency() -> [Float] {
-        var result = [Float](count: figurePointCount, repeatedValue: 0)
-        var spectrum = buildSpectrum()
-
+    func buildSpectrumWindow(count: Int) -> [Float] {
+        var result = [Float](count: count, repeatedValue: 0)
+        
         var i = 0
-        for  r in result {
-            var f = leftFrequency + (rightFrequency - leftFrequency) * Double(i) / Double(figurePointCount - 1)
-            result[i] = getValueAtFrequency(f, spectrum: spectrum)
+        for r in result {
+            var f = leftFrequency + (rightFrequency - leftFrequency) * Double(i) / Double(count - 1)
+            result[i] = getValueAtFrequency(f)
+            
+            //NSLog(" %f ", getValueAtFrequency(f))
+            i++
         }
 
         return result
     }
 
-    func getValueAtFrequency(f: Double, spectrum: [Float]) -> Float {
-        var df: Double = discreteFrequency / Double(spectrum.count)
+    func getValueAtFrequency(f: Double) -> Float {
+        var df: Double = discreteFrequency / Double(powerSpectrum.count)
         var position: Double = f / df
 
+        
         var index0 = Int(ceil(position))
         var index1 = Int(floor(position))
-        var s0 = Double(spectrum[index0])
-        var s1 = Double(spectrum[index1])
+        var s0 = Double(powerSpectrum[index0])
+        var s1 = Double(powerSpectrum[index1])
+        
+        
+        //NSLog(" %f %f %f ", position, s0, s1)
 
         if index0 != index1 {
             var k0 = (Double(index0) * df - f) / df
@@ -87,12 +96,44 @@ class Processing{
         return Float(s0)
     }
 
-    func Push(sample: [Float]) {
-        samples += sample
-        samples.removeRange(Range(start: 0, end: sample.count))
-
-        doubleWave += sample
-        doubleWave.removeRange(Range(start: 0, end: sample.count))
+    func Push(samples: [Float]) {
+        self.samples = samples
+    }
+    
+    func Recalculate() {
+        spectrumRealPart = samples
+        spectrumImagePart = [Float](count: samples.count, repeatedValue: 0)
+        
+        powerSpectrum = [Float](count: samples.count, repeatedValue: 0)
+        
+        spectrum = DSPSplitComplex(realp: &spectrumRealPart, imagp: &spectrumImagePart)
+        
+        var fs = create_fftsetup(12, FFTRadix(kFFTRadix2))
+        fft_zip(fs, &spectrum, vDSP_Stride(1), 12, FFTDirection(kFFTDirection_Forward))
+        
+        vDSP_zaspec(&spectrum, &powerSpectrum, vDSP_Length(samples.count))
+        
+        //var powerPick: [Float] = [0, 1]
+        //vDSP_maxv(&powerPick, vDSP_Stride(1), &powerSpectrum, vDSP_Length(powerSpectrum.count))
+        
+        
+        var peak = Float(0)
+        
+        var i = 0
+        for p in powerSpectrum {
+            if peak < p {
+                peak = p
+            }
+            i++
+        }
+        
+        i = 0
+        for p in powerSpectrum {
+            powerSpectrum[i] = p / peak
+            i++
+        }
+        
+        destroy_fftsetup(fs)
     }
 
     func setFrequency(var newFrequency: Double) {
@@ -106,43 +147,9 @@ class Processing{
         }
 
         frequency = newFrequency
-
-        var length: Int
-        var dspLength: Int
-
-        (dspLength, length) = log2length(discreteFrequency / frequency)
-        
-        length = length * 2
-
-        doubleWave = [Float](samples[0 ..< length])
-
-        if doubleWaveFftSetup != nil {
-            NSLog(" destroy fft setup ");
-            destroy_fftsetup(doubleWaveFftSetup!)
-            doubleWaveFftSetup = nil
-        }
-
-        NSLog(" create fft setup ");
-        doubleWaveFftSetup = create_fftsetupD(vDSP_Length(dspLength), FFTRadix(kFFTRadix2))
     }
 
-    func buidStandingWaveForFrequency() -> [Float] {
-        //NSLog(" build standing wave ");
-        
-        var realPart = [Float](doubleWave)
-        var imagPart = [Float](count: doubleWave.count, repeatedValue: 0)
-
-        var signal = DSPSplitComplex(realp: &realPart, imagp: &imagPart)
-
-        var log2length = vDSP_Length(Int(log2(Double(doubleWave.count))))
-        //var log2length = vDSP_Length(doubleWave.count)
-        
-        //NSLog(" %i ", realPart.count);
-        //NSLog(" %i ", log2length);
-        
-        //var z = create_fftsetupD(vDSP_Length(log2length), FFTRadix(kFFTRadix2))
-        fft_zip(doubleWaveFftSetup!, &signal, 1, log2length, FFTDirection(kFFTDirection_Forward))
-
+    func buidStandingWave() -> [Float] {
         var index: Float
         var frac: Float
         var x: Float
@@ -150,21 +157,21 @@ class Processing{
 
         (index, frac) = modf(Float( 0.5 * frequency / discreteFrequency))
 
-        if index < Float(doubleWave.count) / 2 {
+        if index < Float(samples.count) / 2 {
             var index0 = Int(ceil(index))
             var index1 = Int(floor(index))
-            x = (1 - frac) * realPart[index0] + frac * realPart[index1]
-            y = (1 - frac) * imagPart[index0] + frac * imagPart[index1]
+            x = (1 - frac) * spectrumRealPart[index0] + frac * spectrumRealPart[index1]
+            y = (1 - frac) * spectrumImagePart[index0] + frac * spectrumImagePart[index1]
         } else {
-            x = realPart[Int(index)]
-            y = imagPart[Int(index)]
+            x = spectrumRealPart[Int(index)]
+            y = spectrumImagePart[Int(index)]
         }
 
         var phase = atan2f(x, y)
         var periodLength: Float = Float(discreteFrequency / frequency)
         var offset: Int = Int(periodLength + periodLength * phase / Float(2 * M_PI))
 
-        return approximate([Float](doubleWave[offset ..< offset + Int(periodLength)]), count: figurePointCount)
+        return approximate([Float](samples[offset ..< offset + Int(periodLength)]), count: figurePointCount)
     }
 
     func approximate(source: [Float], count: Int) -> [Float] {
@@ -201,10 +208,15 @@ class Processing{
         return result
     }
 
-    func log2length(time: Double) -> (Int, Int) {
+    class func log2length(time: Double) -> (Int, Int) {
         var lengthExp: Int = Int(floor(log2(time))) + 1
         var length: Int = Int(pow(2, Double(lengthExp)))
 
         return (lengthExp, length)
+    }
+    
+    class func log2count(count: Int) -> Int {
+        var p: Double = ceil(log2(Double(count)))
+        return Int(p)
     }
 }

@@ -8,16 +8,19 @@ class Source{
 
     var frequency: Double = 0
 
-    var frequency1: Double = 1600.625565
+    var frequency1: Double = 400.625565
     var frequency2: Double = 0.05
 
-    var frequencyDeviation: Double = 2.0
+    var frequencyDeviation: Double = 50.0
     var discreteFrequency: Double = 44100
     var t: Double = 0
 
     var sample = [Float](count: 882, repeatedValue: 0)
 
-    init() {
+    init(sampleRate: Int, sampleCount: Int) {
+        self.discreteFrequency = Double(sampleRate)
+        sample = [Float](count: sampleCount, repeatedValue: 0)
+        
         var interval = Double(sample.count) / discreteFrequency
 
         NSLog(" %f ", interval);
