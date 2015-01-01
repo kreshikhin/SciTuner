@@ -11,22 +11,23 @@
 
 #include <stdio.h>
 
-struct Packet{
-    float* buffer;
-    struct Packet* prev;
-    struct Packet* next;
-    size_t size;
-};
-
 typedef struct{
     double fd;
     double fMin;
-
+    
     size_t signalLength;
     size_t bufferLength;
 
-    double* signal;
-    struct Packet* packetList;
+    double* buffer;
+
+    double* real;
+    double* imag;
+
+    double* spectrum;
+
+    size_t step;
+
+    double fGrid[5];
 } Processing;
 
 void processing_init(Processing* processing, double fd, double fMin, size_t pointCount);

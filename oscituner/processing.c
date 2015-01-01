@@ -16,28 +16,47 @@ void processing_init(Processing* p, double fd, double fMin, size_t pointCount) {
     p->fMin = fMin;
     p->signalLength = ceil2((double)pointCount);
     p->bufferLength = ceil2((double)pointCount * fd / fMin);
+    p->step = 1;
+
+    p->buffer = malloc(p->bufferLength * sizeof(*p->buffer))
+
+    memset(p->buffer, 0, p->bufferLength * sizeof(*p->buffer));
+
+    p->real = malloc(p->signalLength * sizeof(*p->real))
+    p->imag = malloc(p->signalLength * sizeof(*p->imag))
 }
 
-/*
-void processing_push(Processing* p, const float* packetBuffer, size_t length) {
-    if (p->tailLength + length > SIGNAL_LENGTH) {
-        Packet* first = p->firstPacket;
-        p->firstPacket = first->next;
-        packer_destroy(first);
-
-        packet_create(p->lastPacket, NULL, packetBuffer)
-        p->lastPacket->next = packet_new(p->lastPacket, NULL, packetBuffer)
-        p->lastPacket =
+void processing_push(Processing* p, const double* packet, size_t packetLength) {
+    // push new samples
+    if(packetLength >= p->bufferLength) {
+        memcpy(p->buffer, packet + (packetLength - p->bufferLength), p->bufferLength * sizeof(*p->buffer));
+        return;
     }
+
+    memmove(buffer, buffer + packetLength, p->bufferLength - packetLength * sizeof(*p->buffer));
+    memcpy(buffer + p->bufferLength - packetLength, packet, packetLength * sizeof(*p->buffer));
 }
 
 void processing_calculate(Processing* processing){
+    int i;
+    int j;
+
+    double freal = p->fd / p->step;
+
+    for(i = 0; i < p->bufferLength; i += p->step, j++){
+        p->real[j] = p->buffer[i];  // thinning
+    }
+
+    memset(p->imag, 0, p->signalLength);
+
+    transform_radix2(p->real, p->imag);
 }
 
-void processing_deinit(Processing* processing){
-    free(processing->signal);
+void processing_deinit(Processing* p){
+    free(p->signal);
+    free(p->real);
+    free(p->imag);
 }
-*/
 
 int transform_radix2(double real[], double imag[], size_t n) {
     int status = 0;
