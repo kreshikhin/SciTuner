@@ -3,7 +3,7 @@
 import Foundation
 
 class Source{
-    var onData: (([Float]) -> ()) = { ([Float]) -> () in
+    var onData: (([Double]) -> ()) = { ([Double]) -> () in
     }
 
     var frequency: Double = 0
@@ -15,11 +15,11 @@ class Source{
     var discreteFrequency: Double = 44100
     var t: Double = 0
 
-    var sample = [Float](count: 882, repeatedValue: 0)
+    var sample = [Double](count: 882, repeatedValue: 0)
 
     init(sampleRate: Int, sampleCount: Int) {
         self.discreteFrequency = Double(sampleRate)
-        sample = [Float](count: sampleCount, repeatedValue: 0)
+        sample = [Double](count: sampleCount, repeatedValue: 0)
         
         var interval = Double(sample.count) / discreteFrequency
 
@@ -37,7 +37,7 @@ class Source{
 
         for var i = 0; i < sample.count ; i++ {
             t = t + dt
-            sample[i] = Float(1.0 * sin(2 * M_PI * (frequency1 + df) * t + rand() / 100) + 1.0 * (rand() - 0.5))
+            sample[i] = Double(1.0 * sin(2 * M_PI * (frequency1 + df) * t + rand() / 100) + 1.0 * (rand() - 0.5))
         }
 
         onData(sample)

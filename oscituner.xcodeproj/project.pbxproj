@@ -21,7 +21,7 @@
 		92C4EF351A3BFB6300ECD2C7 /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF331A3BFB6300ECD2C7 /* Source.swift */; };
 		92C4EF361A3BFB6300ECD2C7 /* TubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF341A3BFB6300ECD2C7 /* TubeView.swift */; };
 		92C4EF381A3C3FB800ECD2C7 /* PanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF371A3C3FB800ECD2C7 /* PanelView.swift */; };
-		92C4EF3A1A3C8FD200ECD2C7 /* Processing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF391A3C8FD200ECD2C7 /* Processing.swift */; };
+		92C4EF3A1A3C8FD200ECD2C7 /* ProcessingAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF391A3C8FD200ECD2C7 /* ProcessingAdapter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,7 +55,7 @@
 		92C4EF331A3BFB6300ECD2C7 /* Source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
 		92C4EF341A3BFB6300ECD2C7 /* TubeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TubeView.swift; sourceTree = "<group>"; };
 		92C4EF371A3C3FB800ECD2C7 /* PanelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanelView.swift; sourceTree = "<group>"; };
-		92C4EF391A3C8FD200ECD2C7 /* Processing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Processing.swift; sourceTree = "<group>"; };
+		92C4EF391A3C8FD200ECD2C7 /* ProcessingAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessingAdapter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,7 +111,7 @@
 				92C4EF0F1A3A11C800ECD2C7 /* Supporting Files */,
 				92C4EF311A3A1C1F00ECD2C7 /* Spectrum.swift */,
 				92C4EF371A3C3FB800ECD2C7 /* PanelView.swift */,
-				92C4EF391A3C8FD200ECD2C7 /* Processing.swift */,
+				92C4EF391A3C8FD200ECD2C7 /* ProcessingAdapter.swift */,
 				923920441A502AF600ACDC2E /* MicSource.swift */,
 				9239204C1A51C06C00ACDC2E /* processing.c */,
 				9239204D1A51C06C00ACDC2E /* processing.h */,
@@ -254,7 +254,7 @@
 				923920451A502AF600ACDC2E /* MicSource.swift in Sources */,
 				92C4EF361A3BFB6300ECD2C7 /* TubeView.swift in Sources */,
 				92C4EF121A3A11C800ECD2C7 /* AppDelegate.swift in Sources */,
-				92C4EF3A1A3C8FD200ECD2C7 /* Processing.swift in Sources */,
+				92C4EF3A1A3C8FD200ECD2C7 /* ProcessingAdapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

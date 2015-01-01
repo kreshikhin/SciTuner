@@ -11,51 +11,75 @@
 #include <stdlib.h>
 #include <math.h>
 
+Processing* processing_create(){
+    return malloc(sizeof(Processing));
+}
+
+void processing_destroy(Processing* p){
+    free(p);
+}
+
 void processing_init(Processing* p, double fd, double fMin, size_t pointCount) {
     p->fd = fd;
     p->fMin = fMin;
     p->signalLength = ceil2((double)pointCount);
-    p->bufferLength = ceil2((double)pointCount * fd / fMin);
     p->step = 1;
 
-    p->buffer = malloc(p->bufferLength * sizeof(*p->buffer))
+    p->signal = malloc(p->signalLength * sizeof(*p->signal));
 
-    memset(p->buffer, 0, p->bufferLength * sizeof(*p->buffer));
+    memset(p->signal, 0, p->signalLength * sizeof(*p->signal));
 
-    p->real = malloc(p->signalLength * sizeof(*p->real))
-    p->imag = malloc(p->signalLength * sizeof(*p->imag))
-}
-
-void processing_push(Processing* p, const double* packet, size_t packetLength) {
-    // push new samples
-    if(packetLength >= p->bufferLength) {
-        memcpy(p->buffer, packet + (packetLength - p->bufferLength), p->bufferLength * sizeof(*p->buffer));
-        return;
-    }
-
-    memmove(buffer, buffer + packetLength, p->bufferLength - packetLength * sizeof(*p->buffer));
-    memcpy(buffer + p->bufferLength - packetLength, packet, packetLength * sizeof(*p->buffer));
-}
-
-void processing_calculate(Processing* processing){
-    int i;
-    int j;
-
-    double freal = p->fd / p->step;
-
-    for(i = 0; i < p->bufferLength; i += p->step, j++){
-        p->real[j] = p->buffer[i];  // thinning
-    }
-
-    memset(p->imag, 0, p->signalLength);
-
-    transform_radix2(p->real, p->imag);
+    p->real = malloc(p->signalLength * sizeof(*p->real));
+    p->imag = malloc(p->signalLength * sizeof(*p->imag));
+    
+    p->spectrum = malloc(p->signalLength * sizeof(*p->spectrum));
 }
 
 void processing_deinit(Processing* p){
     free(p->signal);
     free(p->real);
     free(p->imag);
+    free(p->spectrum);
+}
+
+void processing_push(Processing* p, const double* packet, size_t packetLength) {
+    // push new samples
+    int shift = p->signalLength - packetLength;
+    
+    if(shift <= 0) {
+        memcpy(p->signal,
+               packet - shift,
+               p->signalLength * sizeof(*p->signal));
+        return;
+    }
+
+    memmove(p->signal,
+            p->signal + packetLength,
+            shift * sizeof(*p->signal));
+    
+    memcpy(p->signal + shift,
+           packet,
+           packetLength * sizeof(*p->signal));
+}
+
+void processing_recalculate(Processing* p){
+    memcpy(p->real, p->signal, p->signalLength * sizeof(*p->signal));
+    memset(p->imag, 0, p->signalLength* sizeof(*p->signal));
+
+    transform_radix2(p->real, p->imag, p->signalLength);
+    
+    for(int i = 0; i < p->signalLength; i ++){
+        p->spectrum[i] = p->real[i] * p->real[i] + p->imag[i] * p->imag[i];
+    }
+}
+
+
+void processing_build_standing_wave(Processing* p, double* wave, size_t length){
+    memcpy(wave, p->signal, length * sizeof(*wave));
+}
+
+void processing_build_build_power_spectrum(Processing* p, double* spectrum, size_t length){
+    memcpy(spectrum, p->spectrum, length * sizeof(*spectrum));
 }
 
 int transform_radix2(double real[], double imag[], size_t n) {

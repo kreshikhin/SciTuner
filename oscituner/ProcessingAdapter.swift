@@ -9,7 +9,38 @@
 import Foundation
 import Accelerate
 
-class Processing{
+class ProcessingAdapter{
+    var p = processing_create();
+    
+    init(){
+        processing_init(p, 44100, 16, 32768)
+    }
+    
+    deinit{
+        processing_deinit(p)
+        processing_destroy(p)
+    }
+    
+    func Push(packet: [Double]){
+        processing_push(p, packet, UInt(packet.count))
+    }
+    
+    func Recalculate() {
+        processing_recalculate(p)
+    }
+    
+    func buildStandingWave(length: Int) -> [Double] {
+        var wave = [Double](count: length, repeatedValue: 0)
+        processing_build_standing_wave(p, &wave, UInt(length))
+        return wave
+    }
+    
+    func buildSpectrumWindow(length: Int) -> [Double] {
+        var wave = [Double](count: length, repeatedValue: 0)
+        processing_build_standing_wave(p, &wave, UInt(length))
+        return wave
+    }
+/*
     let minFrequency: Double = 20
     let maxFrequency: Double = 20000
     
@@ -219,4 +250,5 @@ class Processing{
         var p: Double = ceil(log2(Double(count)))
         return Int(p)
     }
+*/
 }
