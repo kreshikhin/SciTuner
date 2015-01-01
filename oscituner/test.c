@@ -16,5 +16,22 @@ int main(){
     assert(real[2] == 1.0);
     assert(real[3] == 1.0);
 
+    printf("2. ceil2 ");
+
+    printf("128, 129, 1000 -> %li  %li  %li\n", ceil2(128.0), ceil2(129.0), ceil2(1000.0));
+
+    assert(ceil2(128.0) == 128);
+    assert(ceil2(129.0) == 256);
+    assert(ceil2(1000.0) == 1024);
+
+    printf("3. test processing init\n");
+    Processing proc;
+
+    processing_init(&proc, 44100.0, 16.0, 32768);
+
+    assert(proc.fd == 44100.0);
+    assert(proc.signalLength == 32768);
+    assert(proc.bufferLength == 32768 * ceil2(44100.0 / 16.0));
+
     printf("ok!\n");
 }

@@ -11,8 +11,6 @@
 
 #include <stdio.h>
 
-#define OBSERVATION_TIME 10 // in sex
-
 struct Packet{
     float* buffer;
     struct Packet* prev;
@@ -21,16 +19,24 @@ struct Packet{
 };
 
 typedef struct{
-    float* signal;
+    double fd;
+    double fMin;
+
+    size_t signalLength;
+    size_t bufferLength;
+
+    double* signal;
     struct Packet* packetList;
-    float fd;  // Hz
 } Processing;
 
-void processing_init(Processing* processing, float fd);
+void processing_init(Processing* processing, double fd, double fMin, size_t pointCount);
 void processing_push(Processing* processing, const float* packetBuffer, size_t length);
 void processing_calculate(Processing* processing);
 void processing_deinit(Processing* processing);
 
 int transform_radix2(double real[], double imag[], size_t n);
+
+size_t reverse_bits(size_t x, unsigned int n);
+size_t ceil2(double value);
 
 #endif /* defined(__oscituner__processing__) */

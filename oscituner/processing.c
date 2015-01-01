@@ -11,20 +11,23 @@
 #include <stdlib.h>
 #include <math.h>
 
-
-size_t reverse_bits(size_t x, unsigned int n);
-
-/*
-void processing_init(Processing* processing, float fd){
-    size_t signalSize = fd * OBSERVATION_TIME * sizeof(float);
-    processing->signal = malloc(signalSize);
-    processing->packetList = NULL;
-    processing->fd = fd;
+void processing_init(Processing* p, double fd, double fMin, size_t pointCount) {
+    p->fd = fd;
+    p->fMin = fMin;
+    p->signalLength = ceil2((double)pointCount);
+    p->bufferLength = ceil2((double)pointCount * fd / fMin);
 }
 
-void processing_push(Processing* processing, const float* packetBuffer, size_t length) {
-    if (processing->historySize + length > processing->historyLimitInSec * processing->fd) {
-        processing->
+/*
+void processing_push(Processing* p, const float* packetBuffer, size_t length) {
+    if (p->tailLength + length > SIGNAL_LENGTH) {
+        Packet* first = p->firstPacket;
+        p->firstPacket = first->next;
+        packer_destroy(first);
+
+        packet_create(p->lastPacket, NULL, packetBuffer)
+        p->lastPacket->next = packet_new(p->lastPacket, NULL, packetBuffer)
+        p->lastPacket =
     }
 }
 
@@ -121,5 +124,11 @@ size_t reverse_bits(size_t x, unsigned int n) {
     for (i = 0; i < n; i++, x >>= 1)
         result = (result << 1) | (x & 1);
 
+    return result;
+}
+
+size_t ceil2(double value){
+    int shift = ceil(log2(value));
+    size_t result = 1 << shift;
     return result;
 }
