@@ -41,14 +41,14 @@
 		9239204B1A51C06A00ACDC2E /* oscituner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "oscituner-Bridging-Header.h"; sourceTree = "<group>"; };
 		9239204C1A51C06C00ACDC2E /* processing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = processing.c; sourceTree = "<group>"; };
 		9239204D1A51C06C00ACDC2E /* processing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = processing.h; sourceTree = "<group>"; };
-		92C4EF0C1A3A11C800ECD2C7 /* oscituner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = oscituner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		92C4EF0C1A3A11C800ECD2C7 /* SciTuner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SciTuner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92C4EF101A3A11C800ECD2C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92C4EF111A3A11C800ECD2C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92C4EF131A3A11C800ECD2C7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		92C4EF161A3A11C800ECD2C7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		92C4EF181A3A11C800ECD2C7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		92C4EF1B1A3A11C800ECD2C7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		92C4EF211A3A11C800ECD2C7 /* oscitunerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = oscitunerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		92C4EF211A3A11C800ECD2C7 /* SciTunerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SciTunerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		92C4EF261A3A11C800ECD2C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92C4EF271A3A11C800ECD2C7 /* oscitunerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = oscitunerTests.swift; sourceTree = "<group>"; };
 		92C4EF311A3A1C1F00ECD2C7 /* Spectrum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spectrum.swift; sourceTree = "<group>"; };
@@ -92,8 +92,8 @@
 		92C4EF0D1A3A11C800ECD2C7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				92C4EF0C1A3A11C800ECD2C7 /* oscituner.app */,
-				92C4EF211A3A11C800ECD2C7 /* oscitunerTests.xctest */,
+				92C4EF0C1A3A11C800ECD2C7 /* SciTuner.app */,
+				92C4EF211A3A11C800ECD2C7 /* SciTunerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -148,9 +148,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		92C4EF0B1A3A11C800ECD2C7 /* oscituner */ = {
+		92C4EF0B1A3A11C800ECD2C7 /* SciTuner */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 92C4EF2B1A3A11C800ECD2C7 /* Build configuration list for PBXNativeTarget "oscituner" */;
+			buildConfigurationList = 92C4EF2B1A3A11C800ECD2C7 /* Build configuration list for PBXNativeTarget "SciTuner" */;
 			buildPhases = (
 				92C4EF081A3A11C800ECD2C7 /* Sources */,
 				92C4EF091A3A11C800ECD2C7 /* Frameworks */,
@@ -160,14 +160,14 @@
 			);
 			dependencies = (
 			);
-			name = oscituner;
+			name = SciTuner;
 			productName = oscituner;
-			productReference = 92C4EF0C1A3A11C800ECD2C7 /* oscituner.app */;
+			productReference = 92C4EF0C1A3A11C800ECD2C7 /* SciTuner.app */;
 			productType = "com.apple.product-type.application";
 		};
-		92C4EF201A3A11C800ECD2C7 /* oscitunerTests */ = {
+		92C4EF201A3A11C800ECD2C7 /* SciTunerTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 92C4EF2E1A3A11C800ECD2C7 /* Build configuration list for PBXNativeTarget "oscitunerTests" */;
+			buildConfigurationList = 92C4EF2E1A3A11C800ECD2C7 /* Build configuration list for PBXNativeTarget "SciTunerTests" */;
 			buildPhases = (
 				92C4EF1D1A3A11C800ECD2C7 /* Sources */,
 				92C4EF1E1A3A11C800ECD2C7 /* Frameworks */,
@@ -178,9 +178,9 @@
 			dependencies = (
 				92C4EF231A3A11C800ECD2C7 /* PBXTargetDependency */,
 			);
-			name = oscitunerTests;
+			name = SciTunerTests;
 			productName = oscitunerTests;
-			productReference = 92C4EF211A3A11C800ECD2C7 /* oscitunerTests.xctest */;
+			productReference = 92C4EF211A3A11C800ECD2C7 /* SciTunerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -202,7 +202,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 92C4EF071A3A11C800ECD2C7 /* Build configuration list for PBXProject "oscituner" */;
+			buildConfigurationList = 92C4EF071A3A11C800ECD2C7 /* Build configuration list for PBXProject "SciTuner" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -215,8 +215,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				92C4EF0B1A3A11C800ECD2C7 /* oscituner */,
-				92C4EF201A3A11C800ECD2C7 /* oscitunerTests */,
+				92C4EF0B1A3A11C800ECD2C7 /* SciTuner */,
+				92C4EF201A3A11C800ECD2C7 /* SciTunerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -271,7 +271,7 @@
 /* Begin PBXTargetDependency section */
 		92C4EF231A3A11C800ECD2C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 92C4EF0B1A3A11C800ECD2C7 /* oscituner */;
+			target = 92C4EF0B1A3A11C800ECD2C7 /* SciTuner */;
 			targetProxy = 92C4EF221A3A11C800ECD2C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -378,10 +378,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Denis Kreshikhin (CBXCCUSRLW)";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = oscituner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = oscituner;
+				PRODUCT_NAME = SciTuner;
 				SWIFT_OBJC_BRIDGING_HEADER = "oscituner/oscituner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -392,9 +393,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Denis Kreshikhin (CBXCCUSRLW)";
 				INFOPLIST_FILE = oscituner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = oscituner;
+				PRODUCT_NAME = SciTuner;
 				SWIFT_OBJC_BRIDGING_HEADER = "oscituner/oscituner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -414,7 +416,7 @@
 				);
 				INFOPLIST_FILE = oscitunerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = oscitunerTests;
+				PRODUCT_NAME = SciTunerTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/oscituner.app/oscituner";
 			};
 			name = Debug;
@@ -429,7 +431,7 @@
 				);
 				INFOPLIST_FILE = oscitunerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = oscitunerTests;
+				PRODUCT_NAME = SciTunerTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/oscituner.app/oscituner";
 			};
 			name = Release;
@@ -437,7 +439,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		92C4EF071A3A11C800ECD2C7 /* Build configuration list for PBXProject "oscituner" */ = {
+		92C4EF071A3A11C800ECD2C7 /* Build configuration list for PBXProject "SciTuner" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				92C4EF291A3A11C800ECD2C7 /* Debug */,
@@ -446,7 +448,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		92C4EF2B1A3A11C800ECD2C7 /* Build configuration list for PBXNativeTarget "oscituner" */ = {
+		92C4EF2B1A3A11C800ECD2C7 /* Build configuration list for PBXNativeTarget "SciTuner" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				92C4EF2C1A3A11C800ECD2C7 /* Debug */,
@@ -455,7 +457,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		92C4EF2E1A3A11C800ECD2C7 /* Build configuration list for PBXNativeTarget "oscitunerTests" */ = {
+		92C4EF2E1A3A11C800ECD2C7 /* Build configuration list for PBXNativeTarget "SciTunerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				92C4EF2F1A3A11C800ECD2C7 /* Debug */,

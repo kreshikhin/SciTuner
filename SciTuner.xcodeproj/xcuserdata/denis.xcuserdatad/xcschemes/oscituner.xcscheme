@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "92C4EF0B1A3A11C800ECD2C7"
                BuildableName = "oscituner.app"
-               BlueprintName = "oscituner"
-               ReferencedContainer = "container:oscituner.xcodeproj">
+               BlueprintName = "SciTuner"
+               ReferencedContainer = "container:SciTuner.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -30,8 +30,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "92C4EF201A3A11C800ECD2C7"
                BuildableName = "oscitunerTests.xctest"
-               BlueprintName = "oscitunerTests"
-               ReferencedContainer = "container:oscituner.xcodeproj">
+               BlueprintName = "SciTunerTests"
+               ReferencedContainer = "container:SciTuner.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -48,8 +48,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "92C4EF201A3A11C800ECD2C7"
                BuildableName = "oscitunerTests.xctest"
-               BlueprintName = "oscitunerTests"
-               ReferencedContainer = "container:oscituner.xcodeproj">
+               BlueprintName = "SciTunerTests"
+               ReferencedContainer = "container:SciTuner.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -58,8 +58,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "92C4EF0B1A3A11C800ECD2C7"
             BuildableName = "oscituner.app"
-            BlueprintName = "oscituner"
-            ReferencedContainer = "container:oscituner.xcodeproj">
+            BlueprintName = "SciTuner"
+            ReferencedContainer = "container:SciTuner.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -77,8 +77,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "92C4EF0B1A3A11C800ECD2C7"
             BuildableName = "oscituner.app"
-            BlueprintName = "oscituner"
-            ReferencedContainer = "container:oscituner.xcodeproj">
+            BlueprintName = "SciTuner"
+            ReferencedContainer = "container:SciTuner.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,8 +95,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "92C4EF0B1A3A11C800ECD2C7"
             BuildableName = "oscituner.app"
-            BlueprintName = "oscituner"
-            ReferencedContainer = "container:oscituner.xcodeproj">
+            BlueprintName = "SciTuner"
+            ReferencedContainer = "container:SciTuner.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

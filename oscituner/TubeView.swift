@@ -22,6 +22,7 @@ class TubeView: GLKView{
     
     var wavePoints = [Float]()
     var spectrumPoints = [Float]()
+    var frequency = String()
     let lineWidth: GLfloat = 1
 
     required init(coder aDecoder: NSCoder) {
@@ -94,20 +95,20 @@ class TubeView: GLKView{
     }
 
     override func drawRect(rect: CGRect) {
-        //glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
+        glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
 
-        var text = "123.45 Hz"
+        var text = self.frequency //"123.45 Hz"
 
-        renderInFramebuffer({ () -> () in
+        /*renderInFramebuffer({ () -> () in
             self.capture(self.blendProgram)
             self.drawPoints(self.wavePoints)
             self.drawPoints(self.spectrumPoints)
             self.drawText(text)
-        })
+        })*/
         
         self.bindDrawable()
 
-        capture(textureProgram)
+        //capture(textureProgram)
         drawPoints(wavePoints)
         drawPoints(spectrumPoints)
         drawText(text)

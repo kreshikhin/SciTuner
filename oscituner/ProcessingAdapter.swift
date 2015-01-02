@@ -21,7 +21,7 @@ class ProcessingAdapter{
         processing_destroy(p)
     }
     
-    func Push(packet: [Double]){
+    func Push(inout packet: [Double]){
         processing_push(p, packet, UInt(packet.count))
     }
     
@@ -36,9 +36,13 @@ class ProcessingAdapter{
     }
     
     func buildSpectrumWindow(length: Int) -> [Double] {
-        var wave = [Double](count: length, repeatedValue: 0)
-        processing_build_standing_wave(p, &wave, UInt(length))
-        return wave
+        var spectrum = [Double](count: length, repeatedValue: 0)
+        processing_build_build_power_spectrum(p, &spectrum, UInt(length))
+        return spectrum
+    }
+    
+    func getFrequency() -> Double {
+        return processing_get_frequency(p)
     }
 /*
     let minFrequency: Double = 20

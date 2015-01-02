@@ -10,6 +10,20 @@
 
 #include <stdlib.h>
 #include <math.h>
+#include <string.h> /* memset */
+#include <unistd.h> /* close */
+
+void approximate(double* dest, const double* src, size_t destLength, size_t srcLength);
+int get_freq_code(double freq);
+double get_code_freq(int code);
+
+
+void source_generate(double* dest, size_t count, double* t, double dt, double freq){
+    for(int i = 0; i < count ; i++){
+        *t = *t + dt;
+        dest[i] = 1.0 * sin(2 * M_PI * freq * (*t) + rand() / 100) + 1.0 * (rand() - 0.5);
+    }
+}
 
 Processing* processing_create(){
     return malloc(sizeof(Processing));
@@ -43,13 +57,13 @@ void processing_deinit(Processing* p){
 }
 
 void processing_push(Processing* p, const double* packet, size_t packetLength) {
-    // push new samples
     int shift = p->signalLength - packetLength;
     
     if(shift <= 0) {
         memcpy(p->signal,
                packet - shift,
                p->signalLength * sizeof(*p->signal));
+        
         return;
     }
 
@@ -68,9 +82,26 @@ void processing_recalculate(Processing* p){
 
     transform_radix2(p->real, p->imag, p->signalLength);
     
-    for(int i = 0; i < p->signalLength; i ++){
-        p->spectrum[i] = p->real[i] * p->real[i] + p->imag[i] * p->imag[i];
+    double peak = 0;
+    for(int i = 1; i < p->signalLength / 2; i ++){
+        double s = p->real[i] * p->real[i] + p->imag[i] * p->imag[i];
+        p->spectrum[i] = s;
+        
+        if (s > peak) {
+            peak = s;
+            p->peakFrequency = p->fd * i * 0.5 / p->signalLength;
+        }
     }
+    
+    if (peak == 0) {
+        peak = 1.0;
+    }
+    
+    for (int i = 0; i < p->signalLength; i ++) {
+        p->spectrum[i] /= peak;
+    }
+    
+    //printf("preak freq: %f Hz \n", p->peakFrequency);
 }
 
 
@@ -79,7 +110,50 @@ void processing_build_standing_wave(Processing* p, double* wave, size_t length){
 }
 
 void processing_build_build_power_spectrum(Processing* p, double* spectrum, size_t length){
-    memcpy(spectrum, p->spectrum, length * sizeof(*spectrum));
+    int code = get_freq_code(p->peakFrequency);
+    
+    double left = get_code_freq(code - 2);
+    double right = get_code_freq(code + 2);
+    
+    size_t leftIndex = left * p->signalLength * 2 / p->fd;
+    size_t rightIndex = right * p->signalLength * 2/ p->fd;
+
+    //printf("freq range: %f %f Hz \n", left, right);
+
+    approximate(spectrum, p->spectrum + leftIndex, length, rightIndex - leftIndex);
+}
+
+double processing_get_frequency(Processing* p){
+    return p->peakFrequency;
+}
+
+int get_freq_code(double freq){
+    return round(12.0 * log2(freq / 261.63)) + 58;
+}
+
+double get_code_freq(int code){
+    return pow(2.0, (code - 58.0) / 12.0) * 261.63;
+}
+
+void approximate(double* dest, const double* src, size_t destLength, size_t srcLength) {
+    double factor = srcLength;
+    factor /= (double)destLength;
+    
+    for(size_t i = 0; i < destLength; i++) {
+        double index = 0;
+        double t = 0;
+        t = modf((double)i * factor, &index);
+        
+        size_t current = index;
+        size_t next = index < srcLength ? index + 1 : srcLength - 1;
+        size_t prev = index > 0 ? index - 1 : 0;
+        
+        double c = src[current];
+        double b = src[current] - src[prev];
+        double a = src[next] - c - b;
+        
+        dest[i] = a * t * t + b * t + c;
+    }
 }
 
 int transform_radix2(double real[], double imag[], size_t n) {

@@ -33,11 +33,12 @@ class ViewController: UIViewController {
         tube.wavePoints = [Float](count: 512, repeatedValue: 0)
         tube.spectrumPoints = [Float](count: 512, repeatedValue: 0)
 
-        source.onData = { (sample: [Double]) -> () in
-            processing.Push(sample)
+        source.onData = { () -> () in
+            processing.Push(&source.sample)
             
             processing.Recalculate()
 
+            /*
             var wave = processing.buildStandingWave(tube.wavePoints.count / 2)
             var spectrum = processing.buildSpectrumWindow(tube.spectrumPoints.count / 2)
             
@@ -54,11 +55,14 @@ class ViewController: UIViewController {
                 tube.spectrumPoints[i+1] = Float(s) / 2.0 + 0.4
                 i += 2
             }
-
+            */
+            
+            var freq = processing.getFrequency()
+            tube.frequency = String(format: "%.2f Hz", freq)
+            
             tube.setNeedsDisplay()
         }
-
-
+        
         self.view.addSubview(tube)
 
         let panelFrame = getOptimalPanelFrame(self.view.frame.size)

@@ -15,6 +15,8 @@ typedef struct{
     double fd;
     double fMin;
     
+    double peakFrequency;
+    
     size_t signalLength;
 
     double* signal;
@@ -29,6 +31,8 @@ typedef struct{
     double fGrid[5];
 } Processing;
 
+void source_generate(double* dest, size_t count, double* t, double dt, double freq);
+
 Processing* processing_create();
 void processing_destroy(Processing* p);
 
@@ -37,6 +41,8 @@ void processing_push(Processing* processing, const double* packetBuffer, size_t 
 void processing_recalculate(Processing* processing);
 void processing_build_standing_wave(Processing* processing, double* wave, size_t length);
 void processing_build_build_power_spectrum(Processing* processing, double* spectrum, size_t length);
+double processing_get_frequency(Processing* p);
+
 void processing_deinit(Processing* processing);
 
 int transform_radix2(double real[], double imag[], size_t n);
