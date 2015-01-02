@@ -6,22 +6,13 @@
 //  Copyright (c) 2014 Denis Kreshikhin. All rights reserved.
 //
 
-/*
+// https://developer.apple.com/library/ios/documentation/MusicAudio/Conceptual/AudioQueueProgrammingGuide/AQRecord/RecordingAudio.html#//apple_ref/doc/uid/TP40005343-CH4-SW24
+
 import Foundation
 import AVFoundation
 
 class MicSource{
-    let bufferNumebrs = 3
-    
-    var dataFormat: AudioStreamBasicDescription
-    var queue: AudioQueueRef
-    var buffers: AudioQueueBufferRef
-    var audioFileID: AudioFileID
-    
-    var bufferByteSize: Int32
-    var currentPacket: Int64
-    
-    var isRunning: Bool
+    var aqData = AQRecorderState_create()
     
     var onData: (([Float]) -> ()) = { ([Float]) -> () in
     }
@@ -37,21 +28,12 @@ class MicSource{
     
     var sample = [Float](count: 882, repeatedValue: 0)
     
-    init(sampleRate: Int, sampleCount: Int) {
-        dataFormat.mFormatID = AudioFormatID(kAudioFormatLinearPCM)
-        dataFormat.mSampleRate = Float64(sampleRate)
-        dataFormat.mChannelsPerFrame = 1
-        dataFormat.mBitsPerChannel = 16
-        dataFormat.mBytesPerPacket = 1 // for linear pcm
-        dataFormat.mBytesPerFrame = dataFormat.mChannelsPerFrame * sizeof(Int16) // for 16bit
-        
-        var session = AVAudioSession()
-        session.setCategory(AVAudioSessionCategoryRecord, error: nil)
-        
-        recorder = AVAudioRecorder()
+    init(sampleRate: Double, sampleCount: Int) {
+        AQRecorderState_init(aqData, sampleRate, UInt(sampleCount))
         
         
         
+        /*
         self.discreteFrequency = Double(sampleRate)
         sample = [Float](count: sampleCount, repeatedValue: 0)
         
@@ -60,29 +42,15 @@ class MicSource{
         NSLog(" %f ", interval);
         
         let timer = NSTimer(timeInterval: interval, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
-        NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
+        NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)*/
+    }
+    
+    deinit{
+        AQRecorderState_destroy(aqData);
     }
     
     @objc func update(){
-        var dt = Double(1) / discreteFrequency
         
-        var df: Double = frequencyDeviation * sin(2 * M_PI * frequency2 * t)
-        frequency = frequency1 + df
-        
-        for var i = 0; i < sample.count ; i++ {
-            t = t + dt
-            sample[i] = Float(1.0 * sin(2 * M_PI * (frequency1 + df) * t + rand() / 100) + 1.0 * (rand() - 0.5))
-        }
-        
-        onData(sample)
-    }
-    
-    func getFreqText() -> String {
-        return String(format: "%6.2f Hz", frequency)
-    }
-    
-    func rand() -> Double {
-        return Double(arc4random()) / Double(UINT32_MAX)
+        //onData()
     }
 }
-*/

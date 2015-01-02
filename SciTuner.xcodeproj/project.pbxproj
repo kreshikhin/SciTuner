@@ -11,6 +11,7 @@
 		923920481A502DFE00ACDC2E /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 920F09721A40A9D000A69F7A /* Accelerate.framework */; };
 		9239204A1A502E0500ACDC2E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 923920491A502E0500ACDC2E /* AVFoundation.framework */; };
 		9239204E1A51C06C00ACDC2E /* processing.c in Sources */ = {isa = PBXBuildFile; fileRef = 9239204C1A51C06C00ACDC2E /* processing.c */; };
+		92C2B80D1A57195F008F6A31 /* micsource.c in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B80B1A57195F008F6A31 /* micsource.c */; };
 		92C4EF121A3A11C800ECD2C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF111A3A11C800ECD2C7 /* AppDelegate.swift */; };
 		92C4EF141A3A11C800ECD2C7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF131A3A11C800ECD2C7 /* ViewController.swift */; };
 		92C4EF171A3A11C800ECD2C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92C4EF151A3A11C800ECD2C7 /* Main.storyboard */; };
@@ -41,6 +42,8 @@
 		9239204B1A51C06A00ACDC2E /* oscituner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "oscituner-Bridging-Header.h"; sourceTree = "<group>"; };
 		9239204C1A51C06C00ACDC2E /* processing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = processing.c; sourceTree = "<group>"; };
 		9239204D1A51C06C00ACDC2E /* processing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = processing.h; sourceTree = "<group>"; };
+		92C2B80B1A57195F008F6A31 /* micsource.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = micsource.c; sourceTree = "<group>"; };
+		92C2B80C1A57195F008F6A31 /* micsource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = micsource.h; sourceTree = "<group>"; };
 		92C4EF0C1A3A11C800ECD2C7 /* SciTuner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SciTuner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92C4EF101A3A11C800ECD2C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92C4EF111A3A11C800ECD2C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -113,6 +116,8 @@
 				92C4EF371A3C3FB800ECD2C7 /* PanelView.swift */,
 				92C4EF391A3C8FD200ECD2C7 /* ProcessingAdapter.swift */,
 				923920441A502AF600ACDC2E /* MicSource.swift */,
+				92C2B80B1A57195F008F6A31 /* micsource.c */,
+				92C2B80C1A57195F008F6A31 /* micsource.h */,
 				9239204C1A51C06C00ACDC2E /* processing.c */,
 				9239204D1A51C06C00ACDC2E /* processing.h */,
 				9239204B1A51C06A00ACDC2E /* oscituner-Bridging-Header.h */,
@@ -252,6 +257,7 @@
 				92C4EF321A3A1C1F00ECD2C7 /* Spectrum.swift in Sources */,
 				92C4EF381A3C3FB800ECD2C7 /* PanelView.swift in Sources */,
 				923920451A502AF600ACDC2E /* MicSource.swift in Sources */,
+				92C2B80D1A57195F008F6A31 /* micsource.c in Sources */,
 				92C4EF361A3BFB6300ECD2C7 /* TubeView.swift in Sources */,
 				92C4EF121A3A11C800ECD2C7 /* AppDelegate.swift in Sources */,
 				92C4EF3A1A3C8FD200ECD2C7 /* ProcessingAdapter.swift in Sources */,

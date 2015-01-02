@@ -118,10 +118,10 @@ void processing_recalculate(Processing* p){
 
 
 void processing_build_standing_wave(Processing* p, float* wave, size_t length){
-    /*for(int i = 0; i < length; i+=2){
+    for(int i = 0; i < length; i+=2){
         wave[i] = ((double)i / length - 0.5) * 1.9;
         wave[i + 1] = p->signal[i/2] / 20.0 - 0.4;
-    }*/
+    }
 }
 
 void processing_build_build_power_spectrum(Processing* p, float* spectrum, size_t length){

@@ -16,7 +16,6 @@ class Source{
 
     var sample = [Double](count: 2205, repeatedValue: 0)
     
-    
     var lock = NSLock()
 
     init(sampleRate: Int, sampleCount: Int) {
