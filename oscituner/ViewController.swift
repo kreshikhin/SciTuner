@@ -37,25 +37,9 @@ class ViewController: UIViewController {
             processing.Push(&source.sample)
             
             processing.Recalculate()
-
-            /*
-            var wave = processing.buildStandingWave(tube.wavePoints.count / 2)
-            var spectrum = processing.buildSpectrumWindow(tube.spectrumPoints.count / 2)
             
-            var i = 0
-            for w in wave {
-                tube.wavePoints[i] = (Float(i) / Float(self.wavePoints.count) - 0.5) * 1.9
-                tube.wavePoints[i+1] = Float(w) / 20.0 - 0.4
-                i += 2
-            }
-
-            i = 0
-            for s in spectrum {
-                tube.spectrumPoints[i] = (Float(i) / Float(self.spectrumPoints.count) - 0.5) * 1.9
-                tube.spectrumPoints[i+1] = Float(s) / 2.0 + 0.4
-                i += 2
-            }
-            */
+            processing.buildStandingWave(&tube.wavePoints, length: tube.wavePoints.count)
+            processing.buildSpectrumWindow(&tube.spectrumPoints, length: tube.spectrumPoints.count)
             
             var freq = processing.getFrequency()
             tube.frequency = String(format: "%.2f Hz", freq)

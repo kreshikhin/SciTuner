@@ -36,7 +36,7 @@ class Source{
             return
         }
         
-        var dt = Double(1) / discreteFrequency
+        var dt: Double = Double(1) / discreteFrequency
 
         var df: Double = frequencyDeviation * sin(2 * M_PI * frequency2 * t)
         frequency = frequency1 + df

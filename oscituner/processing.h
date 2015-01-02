@@ -10,6 +10,7 @@
 #define __oscituner__processing__
 
 #include <stdio.h>
+#include <Accelerate/Accelerate.h>
 
 typedef struct{
     double fd;
@@ -29,6 +30,8 @@ typedef struct{
     size_t step;
 
     double fGrid[5];
+    
+    FFTSetupD fs;
 } Processing;
 
 void source_generate(double* dest, size_t count, double* t, double dt, double freq);
@@ -39,8 +42,8 @@ void processing_destroy(Processing* p);
 void processing_init(Processing* processing, double fd, double fMin, size_t pointCount);
 void processing_push(Processing* processing, const double* packetBuffer, size_t length);
 void processing_recalculate(Processing* processing);
-void processing_build_standing_wave(Processing* processing, double* wave, size_t length);
-void processing_build_build_power_spectrum(Processing* processing, double* spectrum, size_t length);
+void processing_build_standing_wave(Processing* processing, float* wave, size_t length);
+void processing_build_build_power_spectrum(Processing* processing, float* spectrum, size_t length);
 double processing_get_frequency(Processing* p);
 
 void processing_deinit(Processing* processing);

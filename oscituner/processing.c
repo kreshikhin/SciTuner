@@ -21,7 +21,10 @@ double get_code_freq(int code);
 void source_generate(double* dest, size_t count, double* t, double dt, double freq){
     for(int i = 0; i < count ; i++){
         *t = *t + dt;
-        dest[i] = 1.0 * sin(2 * M_PI * freq * (*t) + rand() / 100) + 1.0 * (rand() - 0.5);
+        
+        double r1 = (double)rand() / (100.0 * RAND_MAX);
+        double r2 = 1.0 * ((double)rand() / (RAND_MAX) - 0.5);
+        dest[i] = 1.0 * sin(2.0 * M_PI * freq * (*t) + r1) + r2;
     }
 }
 
@@ -47,9 +50,12 @@ void processing_init(Processing* p, double fd, double fMin, size_t pointCount) {
     p->imag = malloc(p->signalLength * sizeof(*p->imag));
     
     p->spectrum = malloc(p->signalLength * sizeof(*p->spectrum));
+    
+    p->fs = vDSP_create_fftsetupD(log2(p->signalLength), kFFTRadix2);
 }
 
 void processing_deinit(Processing* p){
+    vDSP_destroy_fftsetupD(p->fs);
     free(p->signal);
     free(p->real);
     free(p->imag);
@@ -57,7 +63,7 @@ void processing_deinit(Processing* p){
 }
 
 void processing_push(Processing* p, const double* packet, size_t packetLength) {
-    int shift = p->signalLength - packetLength;
+    long int shift = p->signalLength - packetLength;
     
     if(shift <= 0) {
         memcpy(p->signal,
@@ -80,7 +86,13 @@ void processing_recalculate(Processing* p){
     memcpy(p->real, p->signal, p->signalLength * sizeof(*p->signal));
     memset(p->imag, 0, p->signalLength* sizeof(*p->signal));
 
-    transform_radix2(p->real, p->imag, p->signalLength);
+    DSPDoubleSplitComplex spectrum = {p->real, p->imag};
+    
+    vDSP_fft_zipD(p->fs, &spectrum, 1, log2(p->signalLength), kFFTDirection_Forward);
+    
+    vDSP_zaspecD(&spectrum, p->spectrum, p->signalLength);
+    
+    //transform_radix2(p->real, p->imag, p->signalLength);
     
     double peak = 0;
     for(int i = 1; i < p->signalLength / 2; i ++){
@@ -105,11 +117,14 @@ void processing_recalculate(Processing* p){
 }
 
 
-void processing_build_standing_wave(Processing* p, double* wave, size_t length){
-    memcpy(wave, p->signal, length * sizeof(*wave));
+void processing_build_standing_wave(Processing* p, float* wave, size_t length){
+    /*for(int i = 0; i < length; i+=2){
+        wave[i] = ((double)i / length - 0.5) * 1.9;
+        wave[i + 1] = p->signal[i/2] / 20.0 - 0.4;
+    }*/
 }
 
-void processing_build_build_power_spectrum(Processing* p, double* spectrum, size_t length){
+void processing_build_build_power_spectrum(Processing* p, float* spectrum, size_t length){
     int code = get_freq_code(p->peakFrequency);
     
     double left = get_code_freq(code - 2);
@@ -120,7 +135,14 @@ void processing_build_build_power_spectrum(Processing* p, double* spectrum, size
 
     //printf("freq range: %f %f Hz \n", left, right);
 
-    approximate(spectrum, p->spectrum + leftIndex, length, rightIndex - leftIndex);
+    double* dest = (double*)spectrum;
+    
+    approximate(dest, p->spectrum + leftIndex, length/2, rightIndex - leftIndex);
+    for(int i = 0; i < length; i+=2){
+        double s = dest[i/2];
+        spectrum[i] = ((double)i / length - 0.5) * 1.9;
+        spectrum[i+1] = s / 2.0 + 0.4;
+    }
 }
 
 double processing_get_frequency(Processing* p){

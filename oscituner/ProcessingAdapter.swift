@@ -29,16 +29,12 @@ class ProcessingAdapter{
         processing_recalculate(p)
     }
     
-    func buildStandingWave(length: Int) -> [Double] {
-        var wave = [Double](count: length, repeatedValue: 0)
+    func buildStandingWave(inout wave: [Float], length: Int) {
         processing_build_standing_wave(p, &wave, UInt(length))
-        return wave
     }
     
-    func buildSpectrumWindow(length: Int) -> [Double] {
-        var spectrum = [Double](count: length, repeatedValue: 0)
+    func buildSpectrumWindow(inout spectrum: [Float], length: Int) {
         processing_build_build_power_spectrum(p, &spectrum, UInt(length))
-        return spectrum
     }
     
     func getFrequency() -> Double {

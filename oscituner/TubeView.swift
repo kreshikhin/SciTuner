@@ -37,7 +37,7 @@ class TubeView: GLKView{
         self.context = EAGLContext(API: EAGLRenderingAPI.OpenGLES2)
         EAGLContext.setCurrentContext(self.context)
 
-        glClearColor(0.5, 0.5, 0.5, 0.5)
+        glClearColor(0.0, 0.05, 0.0, 0.5)
         glColor4f(0, 0, 0, 0)
 
         drawingProgram = newProgram(
@@ -127,7 +127,7 @@ class TubeView: GLKView{
         glEnableVertexAttribArray(GLuint(a_position))
 
         glDrawArrays(GLenum(GL_LINE_STRIP), 0, GLsizei(points.count / 2))
-        glFlush()
+        //glFlush()
     }
 
     func drawText(text: String) {
@@ -146,7 +146,7 @@ class TubeView: GLKView{
             glEnableVertexAttribArray(GLuint(a_position))
 
             glDrawArrays(GLenum(GL_LINE_STRIP), 0, GLsizei(line.count / 2))
-            glFlush()
+            //glFlush()
         }
     }
 
@@ -172,7 +172,7 @@ class TubeView: GLKView{
         glEnableVertexAttribArray(GLuint(a_coord))
 
         glDrawArrays(GLenum(GL_TRIANGLE_STRIP), 0, GLsizei(vertices.count / 2))
-        glFlush()
+        //glFlush()
     }
 
     func prepareTubeBuffer() {
