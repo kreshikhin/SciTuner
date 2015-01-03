@@ -31,8 +31,6 @@ class MicSource{
     init(sampleRate: Double, sampleCount: Int) {
         AQRecorderState_init(aqData, sampleRate, UInt(sampleCount))
         
-        
-        
         /*
         self.discreteFrequency = Double(sampleRate)
         sample = [Float](count: sampleCount, repeatedValue: 0)
@@ -46,6 +44,7 @@ class MicSource{
     }
     
     deinit{
+        AQRecorderState_deinit(aqData);
         AQRecorderState_destroy(aqData);
     }
     

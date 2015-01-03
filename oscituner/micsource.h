@@ -20,15 +20,16 @@ struct AQRecorderState {
     AudioStreamBasicDescription  mDataFormat;                   // 2
     AudioQueueRef                mQueue;                        // 3
     AudioQueueBufferRef          mBuffers[kNumberBuffers];      // 4
-    AudioFileID                  mAudioFile;                    // 5
+    //AudioFileID                  mAudioFile;                    // 5
     UInt32                       bufferByteSize;                // 6
     SInt64                       mCurrentPacket;                // 7
     bool                         mIsRunning;                    // 8s
 };
 
 struct AQRecorderState* AQRecorderState_create();
-void AQRecorderState_destroy(struct AQRecorderState* aq);
 void AQRecorderState_init(struct AQRecorderState* aq, double sampleRate, size_t count);
+void AQRecorderState_deinit(struct AQRecorderState* aq);
+void AQRecorderState_destroy(struct AQRecorderState* aq);
 
 static void HandleInputBuffer (
     void                                *aqData,             // 1
