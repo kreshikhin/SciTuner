@@ -90,18 +90,17 @@ void processing_recalculate(Processing* p){
     
     vDSP_fft_zipD(p->fs, &spectrum, 1, log2(p->signalLength), kFFTDirection_Forward);
     
+    memset(p->spectrum, 0, p->signalLength * sizeof(*p->spectrum));
+    
     vDSP_zaspecD(&spectrum, p->spectrum, p->signalLength);
     
     //transform_radix2(p->real, p->imag, p->signalLength);
     
     double peak = 0;
     for(int i = 1; i < p->signalLength / 2; i ++){
-        double s = p->real[i] * p->real[i] + p->imag[i] * p->imag[i];
-        p->spectrum[i] = s;
-        
-        if (s > peak) {
-            peak = s;
-            p->peakFrequency = p->fd * i * 0.5 / p->signalLength;
+        if (p->spectrum[i] > peak) {
+            peak = p->spectrum[i];
+            p->peakFrequency = p->fd * i / p->signalLength;
         }
     }
     
@@ -118,30 +117,59 @@ void processing_recalculate(Processing* p){
 
 
 void processing_build_standing_wave(Processing* p, float* wave, size_t length){
+    double* src = &p->signal[p->signalLength - length / 2];
+    
+    double peak = 0;
+    for (int i = 0; i < length; i+=2) {
+        double s = abs(src[i/2]);
+        if(s > peak){
+            peak = s;
+        }
+    }
+    
+    if (peak == 0) {
+        peak = 1.0;
+    }
+    
+    //printf("peak %f \n", peak);
+    
     for(int i = 0; i < length; i+=2){
         wave[i] = ((double)i / length - 0.5) * 1.9;
-        wave[i + 1] = p->signal[i/2] / 20.0 - 0.4;
+        wave[i + 1] = src[i/2] / peak - 0.4;
     }
 }
 
 void processing_build_build_power_spectrum(Processing* p, float* spectrum, size_t length){
     int code = get_freq_code(p->peakFrequency);
     
-    double left = get_code_freq(code - 2);
-    double right = get_code_freq(code + 2);
+    double left = 20; //get_code_freq(code - 2);
+    double right = 2000; //get_code_freq(code + 2);
     
     size_t leftIndex = left * p->signalLength * 2 / p->fd;
     size_t rightIndex = right * p->signalLength * 2/ p->fd;
 
     //printf("freq range: %f %f Hz \n", left, right);
 
-    double* dest = (double*)spectrum;
+    //double* dest = (double*)spectrum;
     
-    approximate(dest, p->spectrum + leftIndex, length/2, rightIndex - leftIndex);
-    for(int i = 0; i < length; i+=2){
+    //approximate(dest, p->spectrum + leftIndex, length/2, rightIndex - leftIndex);
+    /*for(int i = 0; i < length; i+=2){
         double s = dest[i/2];
         spectrum[i] = ((double)i / length - 0.5) * 1.9;
         spectrum[i+1] = s / 2.0 + 0.4;
+    }*/
+    
+    int l = p->signalLength / 8;
+    int f = l * 2 / length;
+    for(int i = 0; i < l; i++){
+        int j = i / f;
+        if (i % f == 0) {
+            spectrum[2*j + 1] = 0.4;
+        }
+        
+        double s = p->spectrum[i];
+        spectrum[2*j] = ((double)j * 2/ length - 0.5) * 1.9;
+        spectrum[2*j+1] += s / (2.0 * f);
     }
 }
 

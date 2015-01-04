@@ -14,7 +14,7 @@ import AVFoundation
 class MicSource{
     var aqData = AQRecorderState_create()
     
-    var onData: (([Float]) -> ()) = { ([Float]) -> () in
+    var onData: (() -> ()) = { () -> () in
     }
     
     var frequency: Double = 0
@@ -26,21 +26,35 @@ class MicSource{
     var discreteFrequency: Double = 44100
     var t: Double = 0
     
-    var sample = [Float](count: 882, repeatedValue: 0)
+    var sample = [Double](count: 2205, repeatedValue: 0)
     
     init(sampleRate: Double, sampleCount: Int) {
+        var err: NSError?;
+        /*var session = AVAudioSession.sharedInstance()
+        session.setActive(false, error: &err)
+        if err != nil {
+            NSLog("can't deactivate session %@ ", err!)
+        }
+        
+        var sucess = session.setMode(AVAudioSessionModeMeasurement, error: &err)
+        if err != nil {
+            NSLog("cant's set mode %@ ", err!)
+        }
+        
+        session.setActive(true, error: &err)
+        if err != nil {
+            NSLog("can't activate session %@ ", err!)
+        }*/
+        
         AQRecorderState_init(aqData, sampleRate, UInt(sampleCount))
         
-        /*
         self.discreteFrequency = Double(sampleRate)
-        sample = [Float](count: sampleCount, repeatedValue: 0)
+        sample = [Double](count: sampleCount, repeatedValue: 0)
         
         var interval = Double(sample.count) / discreteFrequency
         
-        NSLog(" %f ", interval);
-        
         let timer = NSTimer(timeInterval: interval, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
-        NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)*/
+        NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
     }
     
     deinit{
@@ -49,7 +63,7 @@ class MicSource{
     }
     
     @objc func update(){
-        
-        //onData()
+        AQRecorderState_get_samples(aqData, &sample, UInt(sample.count));
+        onData()
     }
 }

@@ -24,12 +24,16 @@ struct AQRecorderState {
     UInt32                       bufferByteSize;                // 6
     SInt64                       mCurrentPacket;                // 7
     bool                         mIsRunning;                    // 8s
+    
+    double* samples;
 };
 
 struct AQRecorderState* AQRecorderState_create();
 void AQRecorderState_init(struct AQRecorderState* aq, double sampleRate, size_t count);
 void AQRecorderState_deinit(struct AQRecorderState* aq);
 void AQRecorderState_destroy(struct AQRecorderState* aq);
+
+void AQRecorderState_get_samples(struct AQRecorderState* aq, double* dest, size_t count);
 
 static void HandleInputBuffer (
     void                                *aqData,             // 1

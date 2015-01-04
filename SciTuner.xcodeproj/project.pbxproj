@@ -7,58 +7,47 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		923920451A502AF600ACDC2E /* MicSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923920441A502AF600ACDC2E /* MicSource.swift */; };
 		923920481A502DFE00ACDC2E /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 920F09721A40A9D000A69F7A /* Accelerate.framework */; };
 		9239204A1A502E0500ACDC2E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 923920491A502E0500ACDC2E /* AVFoundation.framework */; };
-		9239204E1A51C06C00ACDC2E /* processing.c in Sources */ = {isa = PBXBuildFile; fileRef = 9239204C1A51C06C00ACDC2E /* processing.c */; };
-		92C2B80D1A57195F008F6A31 /* micsource.c in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B80B1A57195F008F6A31 /* micsource.c */; };
-		92C4EF121A3A11C800ECD2C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF111A3A11C800ECD2C7 /* AppDelegate.swift */; };
-		92C4EF141A3A11C800ECD2C7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF131A3A11C800ECD2C7 /* ViewController.swift */; };
-		92C4EF171A3A11C800ECD2C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92C4EF151A3A11C800ECD2C7 /* Main.storyboard */; };
-		92C4EF191A3A11C800ECD2C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92C4EF181A3A11C800ECD2C7 /* Images.xcassets */; };
-		92C4EF1C1A3A11C800ECD2C7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92C4EF1A1A3A11C800ECD2C7 /* LaunchScreen.xib */; };
-		92C4EF281A3A11C800ECD2C7 /* oscitunerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF271A3A11C800ECD2C7 /* oscitunerTests.swift */; };
-		92C4EF321A3A1C1F00ECD2C7 /* Spectrum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF311A3A1C1F00ECD2C7 /* Spectrum.swift */; };
-		92C4EF351A3BFB6300ECD2C7 /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF331A3BFB6300ECD2C7 /* Source.swift */; };
-		92C4EF361A3BFB6300ECD2C7 /* TubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF341A3BFB6300ECD2C7 /* TubeView.swift */; };
-		92C4EF381A3C3FB800ECD2C7 /* PanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF371A3C3FB800ECD2C7 /* PanelView.swift */; };
-		92C4EF3A1A3C8FD200ECD2C7 /* ProcessingAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C4EF391A3C8FD200ECD2C7 /* ProcessingAdapter.swift */; };
+		92C2B8241A5801E8008F6A31 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 92C2B80F1A5801E8008F6A31 /* .gitignore */; };
+		92C2B8251A5801E8008F6A31 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B8101A5801E8008F6A31 /* AppDelegate.swift */; };
+		92C2B8261A5801E8008F6A31 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92C2B8111A5801E8008F6A31 /* LaunchScreen.xib */; };
+		92C2B8271A5801E8008F6A31 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92C2B8131A5801E8008F6A31 /* Main.storyboard */; };
+		92C2B8281A5801E8008F6A31 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92C2B8151A5801E8008F6A31 /* Images.xcassets */; };
+		92C2B8291A5801E8008F6A31 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92C2B8161A5801E8008F6A31 /* Info.plist */; };
+		92C2B82A1A5801E8008F6A31 /* micsource.c in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B8171A5801E8008F6A31 /* micsource.c */; };
+		92C2B82B1A5801E8008F6A31 /* MicSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B8191A5801E8008F6A31 /* MicSource.swift */; };
+		92C2B82C1A5801E8008F6A31 /* PanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B81A1A5801E8008F6A31 /* PanelView.swift */; };
+		92C2B82D1A5801E8008F6A31 /* processing.c in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B81B1A5801E8008F6A31 /* processing.c */; };
+		92C2B82E1A5801E8008F6A31 /* ProcessingAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B81D1A5801E8008F6A31 /* ProcessingAdapter.swift */; };
+		92C2B82F1A5801E8008F6A31 /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B81F1A5801E8008F6A31 /* Source.swift */; };
+		92C2B8301A5801E8008F6A31 /* Spectrum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B8201A5801E8008F6A31 /* Spectrum.swift */; };
+		92C2B8321A5801E8008F6A31 /* TubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B8221A5801E8008F6A31 /* TubeView.swift */; };
+		92C2B8331A5801E8008F6A31 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B8231A5801E8008F6A31 /* ViewController.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		92C4EF221A3A11C800ECD2C7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 92C4EF041A3A11C800ECD2C7 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 92C4EF0B1A3A11C800ECD2C7;
-			remoteInfo = oscituner;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		920F09721A40A9D000A69F7A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		923920441A502AF600ACDC2E /* MicSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MicSource.swift; sourceTree = "<group>"; };
 		923920491A502E0500ACDC2E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		9239204B1A51C06A00ACDC2E /* oscituner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "oscituner-Bridging-Header.h"; sourceTree = "<group>"; };
-		9239204C1A51C06C00ACDC2E /* processing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = processing.c; sourceTree = "<group>"; };
-		9239204D1A51C06C00ACDC2E /* processing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = processing.h; sourceTree = "<group>"; };
-		92C2B80B1A57195F008F6A31 /* micsource.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = micsource.c; sourceTree = "<group>"; };
-		92C2B80C1A57195F008F6A31 /* micsource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = micsource.h; sourceTree = "<group>"; };
+		92C2B80F1A5801E8008F6A31 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		92C2B8101A5801E8008F6A31 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		92C2B8121A5801E8008F6A31 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		92C2B8141A5801E8008F6A31 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		92C2B8151A5801E8008F6A31 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		92C2B8161A5801E8008F6A31 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		92C2B8171A5801E8008F6A31 /* micsource.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = micsource.c; sourceTree = "<group>"; };
+		92C2B8181A5801E8008F6A31 /* micsource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = micsource.h; sourceTree = "<group>"; };
+		92C2B8191A5801E8008F6A31 /* MicSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MicSource.swift; sourceTree = "<group>"; };
+		92C2B81A1A5801E8008F6A31 /* PanelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanelView.swift; sourceTree = "<group>"; };
+		92C2B81B1A5801E8008F6A31 /* processing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = processing.c; sourceTree = "<group>"; };
+		92C2B81C1A5801E8008F6A31 /* processing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = processing.h; sourceTree = "<group>"; };
+		92C2B81D1A5801E8008F6A31 /* ProcessingAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessingAdapter.swift; sourceTree = "<group>"; };
+		92C2B81E1A5801E8008F6A31 /* scituner-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "scituner-Bridging-Header.h"; sourceTree = "<group>"; };
+		92C2B81F1A5801E8008F6A31 /* Source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
+		92C2B8201A5801E8008F6A31 /* Spectrum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spectrum.swift; sourceTree = "<group>"; };
+		92C2B8221A5801E8008F6A31 /* TubeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TubeView.swift; sourceTree = "<group>"; };
+		92C2B8231A5801E8008F6A31 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		92C4EF0C1A3A11C800ECD2C7 /* SciTuner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SciTuner.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		92C4EF101A3A11C800ECD2C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		92C4EF111A3A11C800ECD2C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		92C4EF131A3A11C800ECD2C7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		92C4EF161A3A11C800ECD2C7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		92C4EF181A3A11C800ECD2C7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		92C4EF1B1A3A11C800ECD2C7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		92C4EF211A3A11C800ECD2C7 /* SciTunerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SciTunerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		92C4EF261A3A11C800ECD2C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		92C4EF271A3A11C800ECD2C7 /* oscitunerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = oscitunerTests.swift; sourceTree = "<group>"; };
-		92C4EF311A3A1C1F00ECD2C7 /* Spectrum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spectrum.swift; sourceTree = "<group>"; };
-		92C4EF331A3BFB6300ECD2C7 /* Source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
-		92C4EF341A3BFB6300ECD2C7 /* TubeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TubeView.swift; sourceTree = "<group>"; };
-		92C4EF371A3C3FB800ECD2C7 /* PanelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanelView.swift; sourceTree = "<group>"; };
-		92C4EF391A3C8FD200ECD2C7 /* ProcessingAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessingAdapter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,23 +60,40 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		92C4EF1E1A3A11C800ECD2C7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		92C2B80E1A5801E8008F6A31 /* SciTuner */ = {
+			isa = PBXGroup;
+			children = (
+				92C2B80F1A5801E8008F6A31 /* .gitignore */,
+				92C2B8101A5801E8008F6A31 /* AppDelegate.swift */,
+				92C2B8111A5801E8008F6A31 /* LaunchScreen.xib */,
+				92C2B8131A5801E8008F6A31 /* Main.storyboard */,
+				92C2B8151A5801E8008F6A31 /* Images.xcassets */,
+				92C2B8161A5801E8008F6A31 /* Info.plist */,
+				92C2B8171A5801E8008F6A31 /* micsource.c */,
+				92C2B8181A5801E8008F6A31 /* micsource.h */,
+				92C2B8191A5801E8008F6A31 /* MicSource.swift */,
+				92C2B81A1A5801E8008F6A31 /* PanelView.swift */,
+				92C2B81B1A5801E8008F6A31 /* processing.c */,
+				92C2B81C1A5801E8008F6A31 /* processing.h */,
+				92C2B81D1A5801E8008F6A31 /* ProcessingAdapter.swift */,
+				92C2B81E1A5801E8008F6A31 /* scituner-Bridging-Header.h */,
+				92C2B81F1A5801E8008F6A31 /* Source.swift */,
+				92C2B8201A5801E8008F6A31 /* Spectrum.swift */,
+				92C2B8221A5801E8008F6A31 /* TubeView.swift */,
+				92C2B8231A5801E8008F6A31 /* ViewController.swift */,
+			);
+			path = SciTuner;
+			sourceTree = "<group>";
+		};
 		92C4EF031A3A11C800ECD2C7 = {
 			isa = PBXGroup;
 			children = (
+				92C2B80E1A5801E8008F6A31 /* SciTuner */,
 				923920491A502E0500ACDC2E /* AVFoundation.framework */,
 				920F09721A40A9D000A69F7A /* Accelerate.framework */,
-				92C4EF0E1A3A11C800ECD2C7 /* oscituner */,
-				92C4EF241A3A11C800ECD2C7 /* oscitunerTests */,
 				92C4EF0D1A3A11C800ECD2C7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -96,58 +102,8 @@
 			isa = PBXGroup;
 			children = (
 				92C4EF0C1A3A11C800ECD2C7 /* SciTuner.app */,
-				92C4EF211A3A11C800ECD2C7 /* SciTunerTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		92C4EF0E1A3A11C800ECD2C7 /* oscituner */ = {
-			isa = PBXGroup;
-			children = (
-				92C4EF331A3BFB6300ECD2C7 /* Source.swift */,
-				92C4EF341A3BFB6300ECD2C7 /* TubeView.swift */,
-				92C4EF111A3A11C800ECD2C7 /* AppDelegate.swift */,
-				92C4EF131A3A11C800ECD2C7 /* ViewController.swift */,
-				92C4EF151A3A11C800ECD2C7 /* Main.storyboard */,
-				92C4EF181A3A11C800ECD2C7 /* Images.xcassets */,
-				92C4EF1A1A3A11C800ECD2C7 /* LaunchScreen.xib */,
-				92C4EF0F1A3A11C800ECD2C7 /* Supporting Files */,
-				92C4EF311A3A1C1F00ECD2C7 /* Spectrum.swift */,
-				92C4EF371A3C3FB800ECD2C7 /* PanelView.swift */,
-				92C4EF391A3C8FD200ECD2C7 /* ProcessingAdapter.swift */,
-				923920441A502AF600ACDC2E /* MicSource.swift */,
-				92C2B80B1A57195F008F6A31 /* micsource.c */,
-				92C2B80C1A57195F008F6A31 /* micsource.h */,
-				9239204C1A51C06C00ACDC2E /* processing.c */,
-				9239204D1A51C06C00ACDC2E /* processing.h */,
-				9239204B1A51C06A00ACDC2E /* oscituner-Bridging-Header.h */,
-			);
-			path = oscituner;
-			sourceTree = "<group>";
-		};
-		92C4EF0F1A3A11C800ECD2C7 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				92C4EF101A3A11C800ECD2C7 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		92C4EF241A3A11C800ECD2C7 /* oscitunerTests */ = {
-			isa = PBXGroup;
-			children = (
-				92C4EF271A3A11C800ECD2C7 /* oscitunerTests.swift */,
-				92C4EF251A3A11C800ECD2C7 /* Supporting Files */,
-			);
-			path = oscitunerTests;
-			sourceTree = "<group>";
-		};
-		92C4EF251A3A11C800ECD2C7 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				92C4EF261A3A11C800ECD2C7 /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -170,24 +126,6 @@
 			productReference = 92C4EF0C1A3A11C800ECD2C7 /* SciTuner.app */;
 			productType = "com.apple.product-type.application";
 		};
-		92C4EF201A3A11C800ECD2C7 /* SciTunerTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 92C4EF2E1A3A11C800ECD2C7 /* Build configuration list for PBXNativeTarget "SciTunerTests" */;
-			buildPhases = (
-				92C4EF1D1A3A11C800ECD2C7 /* Sources */,
-				92C4EF1E1A3A11C800ECD2C7 /* Frameworks */,
-				92C4EF1F1A3A11C800ECD2C7 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				92C4EF231A3A11C800ECD2C7 /* PBXTargetDependency */,
-			);
-			name = SciTunerTests;
-			productName = oscitunerTests;
-			productReference = 92C4EF211A3A11C800ECD2C7 /* SciTunerTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -200,10 +138,6 @@
 					92C4EF0B1A3A11C800ECD2C7 = {
 						CreatedOnToolsVersion = 6.1;
 						DevelopmentTeam = FY36GRS4PW;
-					};
-					92C4EF201A3A11C800ECD2C7 = {
-						CreatedOnToolsVersion = 6.1;
-						TestTargetID = 92C4EF0B1A3A11C800ECD2C7;
 					};
 				};
 			};
@@ -221,7 +155,6 @@
 			projectRoot = "";
 			targets = (
 				92C4EF0B1A3A11C800ECD2C7 /* SciTuner */,
-				92C4EF201A3A11C800ECD2C7 /* SciTunerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -231,16 +164,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92C4EF171A3A11C800ECD2C7 /* Main.storyboard in Resources */,
-				92C4EF1C1A3A11C800ECD2C7 /* LaunchScreen.xib in Resources */,
-				92C4EF191A3A11C800ECD2C7 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		92C4EF1F1A3A11C800ECD2C7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				92C2B8291A5801E8008F6A31 /* Info.plist in Resources */,
+				92C2B8261A5801E8008F6A31 /* LaunchScreen.xib in Resources */,
+				92C2B8241A5801E8008F6A31 /* .gitignore in Resources */,
+				92C2B8281A5801E8008F6A31 /* Images.xcassets in Resources */,
+				92C2B8271A5801E8008F6A31 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,52 +179,36 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92C4EF351A3BFB6300ECD2C7 /* Source.swift in Sources */,
-				92C4EF141A3A11C800ECD2C7 /* ViewController.swift in Sources */,
-				9239204E1A51C06C00ACDC2E /* processing.c in Sources */,
-				92C4EF321A3A1C1F00ECD2C7 /* Spectrum.swift in Sources */,
-				92C4EF381A3C3FB800ECD2C7 /* PanelView.swift in Sources */,
-				923920451A502AF600ACDC2E /* MicSource.swift in Sources */,
-				92C2B80D1A57195F008F6A31 /* micsource.c in Sources */,
-				92C4EF361A3BFB6300ECD2C7 /* TubeView.swift in Sources */,
-				92C4EF121A3A11C800ECD2C7 /* AppDelegate.swift in Sources */,
-				92C4EF3A1A3C8FD200ECD2C7 /* ProcessingAdapter.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		92C4EF1D1A3A11C800ECD2C7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				92C4EF281A3A11C800ECD2C7 /* oscitunerTests.swift in Sources */,
+				92C2B82E1A5801E8008F6A31 /* ProcessingAdapter.swift in Sources */,
+				92C2B8251A5801E8008F6A31 /* AppDelegate.swift in Sources */,
+				92C2B8301A5801E8008F6A31 /* Spectrum.swift in Sources */,
+				92C2B82B1A5801E8008F6A31 /* MicSource.swift in Sources */,
+				92C2B8321A5801E8008F6A31 /* TubeView.swift in Sources */,
+				92C2B82D1A5801E8008F6A31 /* processing.c in Sources */,
+				92C2B82F1A5801E8008F6A31 /* Source.swift in Sources */,
+				92C2B82C1A5801E8008F6A31 /* PanelView.swift in Sources */,
+				92C2B8331A5801E8008F6A31 /* ViewController.swift in Sources */,
+				92C2B82A1A5801E8008F6A31 /* micsource.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		92C4EF231A3A11C800ECD2C7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 92C4EF0B1A3A11C800ECD2C7 /* SciTuner */;
-			targetProxy = 92C4EF221A3A11C800ECD2C7 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin PBXVariantGroup section */
-		92C4EF151A3A11C800ECD2C7 /* Main.storyboard */ = {
+		92C2B8111A5801E8008F6A31 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				92C4EF161A3A11C800ECD2C7 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		92C4EF1A1A3A11C800ECD2C7 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				92C4EF1B1A3A11C800ECD2C7 /* Base */,
+				92C2B8121A5801E8008F6A31 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		92C2B8131A5801E8008F6A31 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				92C2B8141A5801E8008F6A31 /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -386,10 +298,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Denis Kreshikhin (CBXCCUSRLW)";
 				GCC_OPTIMIZATION_LEVEL = 0;
-				INFOPLIST_FILE = oscituner/Info.plist;
+				INFOPLIST_FILE = scituner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = SciTuner;
-				SWIFT_OBJC_BRIDGING_HEADER = "oscituner/oscituner-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "scituner/scituner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -400,45 +312,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Denis Kreshikhin (CBXCCUSRLW)";
-				INFOPLIST_FILE = oscituner/Info.plist;
+				INFOPLIST_FILE = scituner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = SciTuner;
-				SWIFT_OBJC_BRIDGING_HEADER = "oscituner/oscituner-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "scituner/scituner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-			};
-			name = Release;
-		};
-		92C4EF2F1A3A11C800ECD2C7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = oscitunerTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = SciTunerTests;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/oscituner.app/oscituner";
-			};
-			name = Debug;
-		};
-		92C4EF301A3A11C800ECD2C7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = oscitunerTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = SciTunerTests;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/oscituner.app/oscituner";
 			};
 			name = Release;
 		};
@@ -459,15 +337,6 @@
 			buildConfigurations = (
 				92C4EF2C1A3A11C800ECD2C7 /* Debug */,
 				92C4EF2D1A3A11C800ECD2C7 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		92C4EF2E1A3A11C800ECD2C7 /* Build configuration list for PBXNativeTarget "SciTunerTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				92C4EF2F1A3A11C800ECD2C7 /* Debug */,
-				92C4EF301A3A11C800ECD2C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

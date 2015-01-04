@@ -20,10 +20,10 @@ class ViewController: UIViewController {
         NSLog("%@ %@ %@ %@", f.origin.x, f.origin.y, f.size.width, f.size.height)
 
         let sampleRate = 44100
-        let sampleCount = 4096
+        let sampleCount = 2205
         
-        var source = Source(sampleRate: sampleRate, sampleCount: sampleCount)
-        // var source = MicSource()
+        //var source = Source(sampleRate: sampleRate, sampleCount: sampleCount)
+        var source = MicSource(sampleRate: Double(sampleRate), sampleCount: sampleCount)
         var processing = ProcessingAdapter()
         //processing.setFrequency(200)
 

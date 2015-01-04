@@ -8,6 +8,7 @@
 
 #include "micsource.h"
 
+
 void DeriveBufferSize(AudioQueueRef audioQueue,
                       AudioStreamBasicDescription* ASBDescription,
                       Float64 seconds,
@@ -19,12 +20,16 @@ struct AQRecorderState* AQRecorderState_create(){
 }
 
 void AQRecorderState_init(struct AQRecorderState* aq, double sampleRate, size_t count){
+    aq->samples = malloc(count * sizeof(*aq->samples));
+    
     aq->mDataFormat.mFormatID = kAudioFormatLinearPCM;
+    aq->mDataFormat.mFormatFlags = kLinearPCMFormatFlagIsPacked | kLinearPCMFormatFlagIsSignedInteger;
     aq->mDataFormat.mSampleRate = sampleRate;
     aq->mDataFormat.mChannelsPerFrame = 1;
     aq->mDataFormat.mBitsPerChannel = 16;
-    aq->mDataFormat.mBytesPerPacket = 1;// for linear pcm
-    aq->mDataFormat.mBytesPerFrame = aq->mDataFormat.mChannelsPerFrame * sizeof(int16_t);
+    aq->mDataFormat.mFramesPerPacket = 1;
+    aq->mDataFormat.mBytesPerPacket = 2;// for linear pcm
+    aq->mDataFormat.mBytesPerFrame = 2;
     
     AudioQueueNewInput(&aq->mDataFormat,
                        HandleInputBuffer,
@@ -36,8 +41,13 @@ void AQRecorderState_init(struct AQRecorderState* aq, double sampleRate, size_t 
     
     DeriveBufferSize(aq->mQueue,
                      &aq->mDataFormat,
-                     0.5,
+                     (double)count / sampleRate,  // seconds
                      &aq->bufferByteSize);
+    
+    for (int i = 0; i < kNumberBuffers; ++i) {
+        AudioQueueAllocateBuffer(aq->mQueue, aq->bufferByteSize, &aq->mBuffers[i]);
+        AudioQueueEnqueueBuffer(aq->mQueue, aq->mBuffers[i], 0, NULL);
+    }
     
     aq->mCurrentPacket = 0;
     aq->mIsRunning = true;
@@ -49,10 +59,16 @@ void AQRecorderState_deinit(struct AQRecorderState* aq){
     aq->mIsRunning = false;
     
     AudioQueueDispose(aq->mQueue, true);
+    
+    free(aq->samples);
 }
 
 void AQRecorderState_destroy(struct AQRecorderState* aq){
     return free(aq);
+}
+
+void AQRecorderState_get_samples(struct AQRecorderState* aq, double* dest, size_t count){
+    memcpy(dest, aq->samples, count * sizeof(*aq->samples));
 }
 
 static void HandleInputBuffer (
@@ -78,8 +94,16 @@ static void HandleInputBuffer (
                              inBuffer->mAudioData
     ) == noErr) {
     */
-    pAqData->mCurrentPacket += inNumPackets;
-    //}
+    
+    const SInt16* data = inBuffer->mAudioData;
+    for (int i = 0; i < inNumPackets; i++) {
+        SInt16 d = data[i];
+        double s = (double)d / (0x7000);
+        pAqData->samples[i] = s;
+    }
+    
+    //pAqData->mCurrentPacket += inNumPackets;
+    
     
     if (pAqData->mIsRunning == 0) return;
     
