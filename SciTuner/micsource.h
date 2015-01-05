@@ -16,6 +16,11 @@
 
 static const int kNumberBuffers = 3;                            // 1
 
+struct Buffer{
+    double* data;
+    struct Buffer* next;
+};
+
 struct AQRecorderState {
     AudioStreamBasicDescription  mDataFormat;                   // 2
     AudioQueueRef                mQueue;                        // 3
@@ -25,7 +30,7 @@ struct AQRecorderState {
     SInt64                       mCurrentPacket;                // 7
     bool                         mIsRunning;                    // 8s
     
-    double* samples;
+    struct Buffer* list;
 };
 
 struct AQRecorderState* AQRecorderState_create();

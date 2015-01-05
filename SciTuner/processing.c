@@ -13,10 +13,17 @@
 #include <string.h> /* memset */
 #include <unistd.h> /* close */
 
+void processing_detect_freq_and_phase(Processing* p, double peakFrequency);
+void processing_detect_freq_and_phase2(Processing* p, double peakFrequency);
+
 void approximate(double* dest, const double* src, size_t destLength, size_t srcLength);
+void approximate_sinc(double* dest, const double* src, size_t destLength, size_t srcLength);
+
 int get_freq_code(double freq);
 double get_code_freq(int code);
+double sinc(double t);
 
+void expend2(double* data, size_t length);
 
 void source_generate(double* dest, size_t count, double* t, double dt, double freq){
     for(int i = 0; i < count ; i++){
@@ -90,6 +97,9 @@ void processing_recalculate(Processing* p){
     
     vDSP_fft_zipD(p->fs, &spectrum, 1, log2(p->signalLength), kFFTDirection_Forward);
     
+    expend2(p->real, p->signalLength);
+    expend2(p->imag, p->signalLength);
+    
     memset(p->spectrum, 0, p->signalLength * sizeof(*p->spectrum));
     
     vDSP_zaspecD(&spectrum, p->spectrum, p->signalLength);
@@ -97,10 +107,11 @@ void processing_recalculate(Processing* p){
     //transform_radix2(p->real, p->imag, p->signalLength);
     
     double peak = 0;
+    double peakFrequency = 0;
     for(int i = 1; i < p->signalLength / 2; i ++){
         if (p->spectrum[i] > peak) {
             peak = p->spectrum[i];
-            p->peakFrequency = p->fd * i / p->signalLength;
+            peakFrequency = p->fd * i * 0.5 / p->signalLength;
         }
     }
     
@@ -112,7 +123,7 @@ void processing_recalculate(Processing* p){
         p->spectrum[i] /= peak;
     }
     
-    //printf("preak freq: %f Hz \n", p->peakFrequency);
+    processing_detect_freq_and_phase2(p, peakFrequency);
 }
 
 
@@ -142,24 +153,24 @@ void processing_build_standing_wave(Processing* p, float* wave, size_t length){
 void processing_build_build_power_spectrum(Processing* p, float* spectrum, size_t length){
     int code = get_freq_code(p->peakFrequency);
     
-    double left = 20; //get_code_freq(code - 2);
-    double right = 2000; //get_code_freq(code + 2);
+    double left = get_code_freq(code - 2);
+    double right = get_code_freq(code + 2);
     
-    size_t leftIndex = left * p->signalLength * 2 / p->fd;
-    size_t rightIndex = right * p->signalLength * 2/ p->fd;
+    size_t leftIndex = 2 * left * p->signalLength / p->fd;
+    size_t rightIndex = 2 * right * p->signalLength / p->fd;
 
     //printf("freq range: %f %f Hz \n", left, right);
 
-    //double* dest = (double*)spectrum;
+    double* dest = (double*)spectrum;
     
-    //approximate(dest, p->spectrum + leftIndex, length/2, rightIndex - leftIndex);
-    /*for(int i = 0; i < length; i+=2){
+    approximate_sinc(dest, p->spectrum + leftIndex, length/2, rightIndex - leftIndex);
+    for(int i = 0; i < length; i+=2){
         double s = dest[i/2];
         spectrum[i] = ((double)i / length - 0.5) * 1.9;
         spectrum[i+1] = s / 2.0 + 0.4;
-    }*/
+    }
     
-    int l = p->signalLength / 8;
+    /*int l = p->signalLength / 8;
     int f = l * 2 / length;
     for(int i = 0; i < l; i++){
         int j = i / f;
@@ -170,11 +181,86 @@ void processing_build_build_power_spectrum(Processing* p, float* spectrum, size_
         double s = p->spectrum[i];
         spectrum[2*j] = ((double)j * 2/ length - 0.5) * 1.9;
         spectrum[2*j+1] += s / (2.0 * f);
-    }
+    }*/
 }
 
 double processing_get_frequency(Processing* p){
     return p->peakFrequency;
+}
+
+void processing_detect_freq_and_phase(Processing* p, double peakFrequency){
+    double* real = p->real;
+    double* imag = p->imag;
+    size_t length = p->signalLength;
+    
+    size_t index = peakFrequency * length / p->fd;
+    size_t next = index < length ? index + 1 : length - 1;
+    size_t next2 = index < length - 1 ? index + 2 : length - 1;
+    size_t prev = index > 0 ? index - 1 : 0;
+    size_t prev2 = index + 1 > 0 ? index - 2 : 0;
+    
+    double peak = 0;
+    double df0 = 0;
+    
+    for(int i = -100; i < 100; i++){
+        double df = (double)i / 100;
+        
+        double re = 0;
+        re += real[prev2] * sinc(M_PI * (df + 2.0));
+        re += real[prev] * sinc(M_PI * (df + 1.0));
+        re += real[index] * sinc(M_PI * df);
+        re += real[next] * sinc(M_PI * (df - 1.0));
+        re += real[next2] * sinc(M_PI * (df - 2.0));
+    
+        double im = 0;
+        im += imag[prev2] * sinc(M_PI * (df + 2.0));
+        im += imag[prev] * sinc(M_PI * (df + 1.0));
+        im += imag[index] * sinc(M_PI * df);
+        im += imag[next] * sinc(M_PI * (df - 1.0));
+        im += imag[next2] * sinc(M_PI * (df - 2.0));
+        
+        double s = re * re + im * im;
+        if(s > peak){
+            peak = s;
+            df0 = df * p->fd * 2 / p->signalLength;
+        }
+    }
+    p->peakFrequency = peakFrequency + df0;
+    
+    printf(" F ~ %f       %f \n", p->peakFrequency, df0);
+}
+
+void processing_detect_freq_and_phase2(Processing* p, double peakFrequency){
+    size_t length = p->signalLength;
+    
+    double df = 0.1;
+    double left = (1 - df) * peakFrequency;
+    double right = (1 + df) * peakFrequency;
+    
+    size_t leftIndex = 2 * left * length / p->fd;
+    size_t rightIndex = 2 * right * length / p->fd;
+    //size_t index = 2 * peakFrequency * length / p->fd;
+    
+    double freq = 0;
+    double sum = 0;
+    
+    for(int i = leftIndex; i <= rightIndex; i++){
+        double f = (double)i * p->fd / (2.0 * length);
+        double k = 1.0; //exp(-1.0 * (f - peakFrequency)*(f - peakFrequency) / (df * df));
+        sum += p->spectrum[i] * k;
+        freq += p->spectrum[i] * f * k;
+    }
+    
+    if(sum == 0){
+        //sum = 1.0;
+        //freq = peakFrequency;
+    }
+    
+    freq /= sum;
+    
+    p->peakFrequency = freq;
+    
+    printf(" F ~ %f       %f \n", freq, freq - peakFrequency);
 }
 
 int get_freq_code(double freq){
@@ -203,6 +289,56 @@ void approximate(double* dest, const double* src, size_t destLength, size_t srcL
         double a = src[next] - c - b;
         
         dest[i] = a * t * t + b * t + c;
+    }
+}
+
+
+double sinc(double t){
+    if(!t) return 1.0;
+    
+    return sin(t) / t;
+}
+
+void approximate_sinc(double* dest, const double* src, size_t destLength, size_t srcLength) {
+    double factor = srcLength;
+    factor /= (double)destLength;
+    
+    for(size_t i = 0; i < destLength; i++) {
+        double index = 0;
+        double t = 0;
+        t = modf((double)i * factor, &index);
+        
+        size_t current = index;
+        size_t next = index < srcLength ? index + 1 : srcLength - 1;
+        size_t next2 = index < srcLength - 1 ? index + 2 : srcLength - 1;
+        size_t prev = index > 0 ? index - 1 : 0;
+        size_t prev2 = index + 1 > 0 ? index - 2 : 0;
+        
+        dest[i] = src[prev2] * sinc(M_PI * (t + 2.0));
+        dest[i] += src[prev] * sinc(M_PI * (t + 1.0));
+        dest[i] += src[current] * sinc(M_PI * t);
+        dest[i] += src[next] * sinc(M_PI * (t - 1.0));
+        dest[i] += src[next2] * sinc(M_PI * (t - 2.0));
+    }
+}
+
+void expend2(double* data, size_t length) {
+    for(int i = length - 1; i >= 0; i--) {
+        double index = 0;
+        double t = 0;
+        t = modf((double)i * 0.5, &index);
+        
+        size_t current = index;
+        size_t next = index < length / 2 ? index + 1 : length / 2 - 1;
+        size_t next2 = index < length / 2 - 1 ? index + 2 : length / 2 - 1;
+        size_t prev = index > 0 ? index - 1 : 0;
+        size_t prev2 = index + 1 > 0 ? index - 2 : 0;
+        
+        data[i] = data[prev2] * sinc(M_PI * (t + 2.0));
+        data[i] += data[prev] * sinc(M_PI * (t + 1.0));
+        data[i] += data[current] * sinc(M_PI * t);
+        data[i] += data[next] * sinc(M_PI * (t - 1.0));
+        data[i] += data[next2] * sinc(M_PI * (t - 2.0));
     }
 }
 
