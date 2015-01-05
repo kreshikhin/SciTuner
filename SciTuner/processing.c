@@ -123,7 +123,7 @@ void processing_recalculate(Processing* p){
         p->spectrum[i] /= peak;
     }
     
-    processing_detect_freq_and_phase2(p, peakFrequency);
+    processing_detect_freq_and_phase(p, peakFrequency);
 }
 
 

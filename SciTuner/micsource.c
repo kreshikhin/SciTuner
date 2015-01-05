@@ -18,7 +18,7 @@ Buffer* Buffer_push(Buffer* node, Buffer* next);
 Buffer* Buffer_shift(Buffer* node);
 
 size_t Buffer_size(Buffer* node) {
-    size_t = 0;
+    size_t size = 0;
     while(node){
         size ++;
         node = node->next;
@@ -44,17 +44,18 @@ Buffer* Buffer_new(double* data, size_t length){
     node->length = length;
     node->next = NULL;
 
-    return node
+    return node;
 }
 
 Buffer* Buffer_new_zeros(size_t length){
     Buffer* node = malloc(sizeof(Buffer));
-
+    
+    node->data = malloc(length * sizeof(*node->data));
     memset(node->data, 0, length * sizeof(*node->data));
     node->length = length;
     node->next = NULL;
 
-    return node
+    return node;
 }
 
 void Buffer_delete(Buffer* node){
@@ -97,8 +98,6 @@ struct AQRecorderState* AQRecorderState_create(){
 }
 
 void AQRecorderState_init(struct AQRecorderState* aq, double sampleRate, size_t count){
-    aq->samples = malloc(count * sizeof(*aq->samples));
-
     aq->mDataFormat.mFormatID = kAudioFormatLinearPCM;
     aq->mDataFormat.mFormatFlags = kLinearPCMFormatFlagIsPacked | kLinearPCMFormatFlagIsSignedInteger;
     aq->mDataFormat.mSampleRate = sampleRate;
@@ -139,8 +138,8 @@ void AQRecorderState_deinit(struct AQRecorderState* aq){
     aq->mIsRunning = false;
 
     AudioQueueDispose(aq->mQueue, true);
-
-    free(aq->samples);
+    
+    Buffer_delete(aq->list);
 }
 
 void AQRecorderState_destroy(struct AQRecorderState* aq){
@@ -151,11 +150,11 @@ void AQRecorderState_get_samples(struct AQRecorderState* aq, double* dest, size_
     if(!aq->list) return;
 
     size_t length = count < aq->list->length ? count : aq->list->length;
-    memcpy(dest, aq->list->data, length * sizeof(*aq->samples));
+    memcpy(dest, aq->list->data, length * sizeof(*dest));
 
     aq->list = Buffer_shift(aq->list);
 
-    if(Buffer_size() > 16){
+    if(Buffer_size(aq->list) > 16){
         Buffer_delete(aq->list);
         aq->list = NULL;
     }
