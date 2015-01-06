@@ -7,6 +7,7 @@
 //
 
 #include "processing.h"
+#include "dspmath.h"
 
 #include <stdlib.h>
 #include <math.h>
@@ -16,24 +17,6 @@
 void processing_detect_freq_and_phase(Processing* p, double peakFrequency);
 void processing_detect_freq_and_phase2(Processing* p, double peakFrequency);
 
-void approximate(double* dest, const double* src, size_t destLength, size_t srcLength);
-void approximate_sinc(double* dest, const double* src, size_t destLength, size_t srcLength);
-
-int get_freq_code(double freq);
-double get_code_freq(int code);
-double sinc(double t);
-
-void expend2(double* data, size_t length);
-
-void source_generate(double* dest, size_t count, double* t, double dt, double freq){
-    for(int i = 0; i < count ; i++){
-        *t = *t + dt;
-        
-        double r1 = (double)rand() / (100.0 * RAND_MAX);
-        double r2 = 1.0 * ((double)rand() / (RAND_MAX) - 0.5);
-        dest[i] = 1.0 * sin(2.0 * M_PI * freq * (*t) + r1) + r2;
-    }
-}
 
 Processing* processing_create(){
     return malloc(sizeof(Processing));
@@ -46,6 +29,10 @@ void processing_destroy(Processing* p){
 void processing_init(Processing* p, double fd, double fMin, size_t pointCount) {
     p->fd = fd;
     p->fMin = fMin;
+    
+    p->peakFrequency = 440;
+    p->peakPhase = 0;
+    
     p->signalLength = ceil2((double)pointCount);
     p->step = 1;
 
@@ -128,25 +115,58 @@ void processing_recalculate(Processing* p){
 
 
 void processing_build_standing_wave(Processing* p, float* wave, size_t length){
-    double* src = &p->signal[p->signalLength - length / 2];
+    double f = p->peakFrequency;
+    if(f < 20) f = 20;
+    if(f > 16000) f = 16000;
+    
+    double waveLength = p->fd / f;
+    
+    size_t index = p->signalLength - waveLength * 2;
+    
+    double* src = &p->signal[index];
+    
+    double re = 0; double im = 0;
+    for (size_t i = 0; i < waveLength*2; i++) {
+        double t = (double)2.0 * M_PI * i / waveLength;
+        re += src[i] * cos(t);
+        im += src[i] * sin(t);
+    }
+    
+    double phase = get_phase(re, im);
+    
+    double shift = waveLength * phase / (2.0 * M_PI);
+    
+    double* shiftedSrc = &p->signal[index - (size_t)(waveLength - shift) - (size_t)waveLength];
+    
+    double* dest = (double*)wave;
+    approximate_sinc(dest, shiftedSrc, length/2, 2*waveLength);
+    for(size_t i = 0; i < length; i+=2){
+        volatile double s = dest[i/2];
+        wave[i] = ((double)i / length - 0.5) * 1.6;
+        wave[i+1] = s;
+    }
+    
+    double avr = 0;
+    for (size_t i = 1; i < length; i+=2) {
+        avr += wave[i];
+    }
+    avr /= 0.5 * length;
     
     double peak = 0;
-    for (int i = 0; i < length; i+=2) {
-        double s = abs(src[i/2]);
-        if(s > peak){
-            peak = s;
+    for (size_t i = 1; i < length; i+=2) {
+        wave[i] -= avr;
+        if(fabs(wave[i]) > peak){
+            peak = fabs(wave[i]);
         }
     }
     
-    if (peak == 0) {
+    if (peak == 0.0) {
         peak = 1.0;
     }
     
-    //printf("peak %f \n", peak);
-    
-    for(int i = 0; i < length; i+=2){
-        wave[i] = ((double)i / length - 0.5) * 1.9;
-        wave[i + 1] = src[i/2] / peak - 0.4;
+    for (size_t i = 1; i < length; i+=2) {
+        wave[i] /= 4.0 * peak;
+        wave[i] -= 0.4;
     }
 }
 
@@ -165,9 +185,9 @@ void processing_build_build_power_spectrum(Processing* p, float* spectrum, size_
     
     approximate_sinc(dest, p->spectrum + leftIndex, length/2, rightIndex - leftIndex);
     for(int i = 0; i < length; i+=2){
-        double s = dest[i/2];
-        spectrum[i] = ((double)i / length - 0.5) * 1.9;
-        spectrum[i+1] = s / 2.0 + 0.4;
+        volatile double s = dest[i/2];
+        spectrum[i] = ((double)i / length - 0.5) * 1.6;
+        spectrum[i+1] = s / 2.5 + 0.4;
     }
     
     /*int l = p->signalLength / 8;
@@ -201,6 +221,8 @@ void processing_detect_freq_and_phase(Processing* p, double peakFrequency){
     
     double peak = 0;
     double df0 = 0;
+    double peakRe = 0;
+    double peakIm = 0;
     
     for(int i = -100; i < 100; i++){
         double df = (double)i / 100;
@@ -222,12 +244,16 @@ void processing_detect_freq_and_phase(Processing* p, double peakFrequency){
         double s = re * re + im * im;
         if(s > peak){
             peak = s;
+            peakRe = re;
+            peakIm = im;
             df0 = df * p->fd * 2 / p->signalLength;
         }
     }
+    
+    p->peakPhase = get_phase(peakRe, peakIm);
     p->peakFrequency = peakFrequency + df0;
     
-    printf(" F ~ %f       %f \n", p->peakFrequency, df0);
+    //printf(" F ~ %f       %f \n", p->peakFrequency, df0);
 }
 
 void processing_detect_freq_and_phase2(Processing* p, double peakFrequency){
@@ -244,7 +270,7 @@ void processing_detect_freq_and_phase2(Processing* p, double peakFrequency){
     double freq = 0;
     double sum = 0;
     
-    for(int i = leftIndex; i <= rightIndex; i++){
+    for(size_t i = leftIndex; i <= rightIndex; i++){
         double f = (double)i * p->fd / (2.0 * length);
         double k = 1.0; //exp(-1.0 * (f - peakFrequency)*(f - peakFrequency) / (df * df));
         sum += p->spectrum[i] * k;
@@ -263,175 +289,4 @@ void processing_detect_freq_and_phase2(Processing* p, double peakFrequency){
     printf(" F ~ %f       %f \n", freq, freq - peakFrequency);
 }
 
-int get_freq_code(double freq){
-    return round(12.0 * log2(freq / 261.63)) + 58;
-}
 
-double get_code_freq(int code){
-    return pow(2.0, (code - 58.0) / 12.0) * 261.63;
-}
-
-void approximate(double* dest, const double* src, size_t destLength, size_t srcLength) {
-    double factor = srcLength;
-    factor /= (double)destLength;
-    
-    for(size_t i = 0; i < destLength; i++) {
-        double index = 0;
-        double t = 0;
-        t = modf((double)i * factor, &index);
-        
-        size_t current = index;
-        size_t next = index < srcLength ? index + 1 : srcLength - 1;
-        size_t prev = index > 0 ? index - 1 : 0;
-        
-        double c = src[current];
-        double b = src[current] - src[prev];
-        double a = src[next] - c - b;
-        
-        dest[i] = a * t * t + b * t + c;
-    }
-}
-
-
-double sinc(double t){
-    if(!t) return 1.0;
-    
-    return sin(t) / t;
-}
-
-void approximate_sinc(double* dest, const double* src, size_t destLength, size_t srcLength) {
-    double factor = srcLength;
-    factor /= (double)destLength;
-    
-    for(size_t i = 0; i < destLength; i++) {
-        double index = 0;
-        double t = 0;
-        t = modf((double)i * factor, &index);
-        
-        size_t current = index;
-        size_t next = index < srcLength ? index + 1 : srcLength - 1;
-        size_t next2 = index < srcLength - 1 ? index + 2 : srcLength - 1;
-        size_t prev = index > 0 ? index - 1 : 0;
-        size_t prev2 = index + 1 > 0 ? index - 2 : 0;
-        
-        dest[i] = src[prev2] * sinc(M_PI * (t + 2.0));
-        dest[i] += src[prev] * sinc(M_PI * (t + 1.0));
-        dest[i] += src[current] * sinc(M_PI * t);
-        dest[i] += src[next] * sinc(M_PI * (t - 1.0));
-        dest[i] += src[next2] * sinc(M_PI * (t - 2.0));
-    }
-}
-
-void expend2(double* data, size_t length) {
-    for(int i = length - 1; i >= 0; i--) {
-        double index = 0;
-        double t = 0;
-        t = modf((double)i * 0.5, &index);
-        
-        size_t current = index;
-        size_t next = index < length / 2 ? index + 1 : length / 2 - 1;
-        size_t next2 = index < length / 2 - 1 ? index + 2 : length / 2 - 1;
-        size_t prev = index > 0 ? index - 1 : 0;
-        size_t prev2 = index + 1 > 0 ? index - 2 : 0;
-        
-        data[i] = data[prev2] * sinc(M_PI * (t + 2.0));
-        data[i] += data[prev] * sinc(M_PI * (t + 1.0));
-        data[i] += data[current] * sinc(M_PI * t);
-        data[i] += data[next] * sinc(M_PI * (t - 1.0));
-        data[i] += data[next2] * sinc(M_PI * (t - 2.0));
-    }
-}
-
-int transform_radix2(double real[], double imag[], size_t n) {
-    int status = 0;
-    unsigned int levels;
-    double *cos_table, *sin_table;
-    size_t size;
-    size_t i;
-
-    // Compute levels = floor(log2(n))
-    {
-        size_t temp = n;
-        levels = 0;
-        while (temp > 1) {
-            levels++;
-            temp >>= 1;
-        }
-        if (1u << levels != n)
-        return 0;  // n is not a power of 2
-    }
-
-    // Trignometric tables
-    size = (n / 2) * sizeof(double);
-    cos_table = malloc(size);
-    sin_table = malloc(size);
-
-    if (cos_table == NULL || sin_table == NULL)
-        goto cleanup;
-
-    for (i = 0; i < n / 2; i++) {
-        cos_table[i] = cos(2 * M_PI * i / n);
-        sin_table[i] = sin(2 * M_PI * i / n);
-    }
-
-    // Bit-reversed addressing permutation
-    for (i = 0; i < n; i++) {
-        size_t j = reverse_bits(i, levels);
-        if (j > i) {
-            double temp = real[i];
-            real[i] = real[j];
-            real[j] = temp;
-            temp = imag[i];
-            imag[i] = imag[j];
-            imag[j] = temp;
-        }
-    }
-
-    // Cooley-Tukey decimation-in-time radix-2 FFT
-    for (size = 2; size <= n; size *= 2) {
-        size_t halfsize = size / 2;
-        size_t tablestep = n / size;
-
-        for (i = 0; i < n; i += size) {
-            size_t j;
-            size_t k;
-
-            for (j = i, k = 0; j < i + halfsize; j++, k += tablestep) {
-                double tpre =  real[j+halfsize] * cos_table[k] + imag[j+halfsize] * sin_table[k];
-                double tpim = -real[j+halfsize] * sin_table[k] + imag[j+halfsize] * cos_table[k];
-
-                real[j + halfsize] = real[j] - tpre;
-                imag[j + halfsize] = imag[j] - tpim;
-
-                real[j] += tpre;
-                imag[j] += tpim;
-            }
-        }
-
-        if (size == n)  // Prevent overflow in 'size *= 2'
-            break;
-    }
-
-    status = 1;
-
-cleanup:
-    free(cos_table);
-    free(sin_table);
-    return status;
-}
-
-size_t reverse_bits(size_t x, unsigned int n) {
-    size_t result = 0;
-    unsigned int i;
-
-    for (i = 0; i < n; i++, x >>= 1)
-        result = (result << 1) | (x & 1);
-
-    return result;
-}
-
-size_t ceil2(double value){
-    int shift = ceil(log2(value));
-    size_t result = 1 << shift;
-    return result;
-}

@@ -49,8 +49,13 @@ class ViewController: UIViewController {
         
         self.view.addSubview(tube)
 
-        let panelFrame = getOptimalPanelFrame(self.view.frame.size)
-        self.view.addSubview(PanelView(frame: panelFrame))
+        //let panelFrame = getOptimalPanelFrame(self.view.frame.size)
+        //self.view.addSubview(PanelView(frame: panelFrame))
+        
+        let borderView = UIImageView(frame: self.view.frame)
+        borderView.image = UIImage(named: "border1136.png")
+        
+        self.view.addSubview(borderView)
 
         self.view.backgroundColor = UIColor.redColor()
 
@@ -73,7 +78,7 @@ class ViewController: UIViewController {
             height = 177.5
         }
 
-        return CGRectMake(0, 0, size.width, size.height - height)
+        return CGRectMake(0, 0, size.width, size.height)
     }
 
     func getOptimalPanelFrame(size: CGSize) -> CGRect {

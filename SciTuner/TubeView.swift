@@ -24,6 +24,10 @@ class TubeView: GLKView{
     var spectrumPoints = [Float]()
     var frequency = String()
     let lineWidth: GLfloat = 1
+    
+    let foreColor: [Float] = [0.7, 0.9, 0.7, 0]
+    let backColor: [Float] = [0.05, 0.15, 0.05, 0]
+    
 
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -37,8 +41,8 @@ class TubeView: GLKView{
         self.context = EAGLContext(API: EAGLRenderingAPI.OpenGLES2)
         EAGLContext.setCurrentContext(self.context)
 
-        glClearColor(0.0, 0.05, 0.0, 0.5)
-        glColor4f(0, 0, 0, 0)
+        glClearColor(backColor[0], backColor[1], backColor[2], 0)
+        glColor4f(foreColor[0], foreColor[1], foreColor[2], 0)
 
         drawingProgram = newProgram(
         "    attribute vec4 a_position;" +
@@ -120,7 +124,7 @@ class TubeView: GLKView{
         glLineWidth(lineWidth)
 
         var col = glGetUniformLocation(drawingProgram, "color")
-        glUniform4f(col, 0.5, 1.0, 0.6, 0.0)
+        glUniform4f(col, foreColor[0], foreColor[1], foreColor[2], 0)
 
         var a_position: GLuint = GLuint(glGetAttribLocation(drawingProgram, "a_position"))
         glVertexAttribPointer(a_position, 2, GLenum(GL_FLOAT), GLboolean(0), 0 , points)
@@ -139,7 +143,7 @@ class TubeView: GLKView{
             glLineWidth(lineWidth)
 
             var col = glGetUniformLocation(drawingProgram, "color")
-            glUniform4f(col, 0.5, 1.0, 0.6, 0.0)
+            glUniform4f(col, foreColor[0], foreColor[1], foreColor[2], 0)
 
             var a_position: GLuint = GLuint(glGetAttribLocation(drawingProgram, "a_position"))
             glVertexAttribPointer(a_position, 2, GLenum(GL_FLOAT), GLboolean(0), 0 , line)

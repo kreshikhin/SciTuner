@@ -17,6 +17,7 @@ typedef struct{
     double fMin;
     
     double peakFrequency;
+    double peakPhase;
     
     size_t signalLength;
 

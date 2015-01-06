@@ -16,7 +16,7 @@ class PanelView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.backgroundColor = UIColor.greenColor()
+        self.backgroundColor = UIColor.blackColor()
         
         var lockButton = UIButton(frame: CGRectMake(10, 10, 100, 100))
         lockButton.titleLabel?.text = "lock"
