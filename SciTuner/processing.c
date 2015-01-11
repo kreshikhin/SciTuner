@@ -16,7 +16,7 @@
 
 void processing_detect_freq_and_phase(Processing* p, double peakFrequency);
 void processing_detect_freq_and_phase2(Processing* p, double peakFrequency);
-
+int processing_detect_undertone(Processing* p);
 
 Processing* processing_create(){
     return malloc(sizeof(Processing));
@@ -111,6 +111,9 @@ void processing_recalculate(Processing* p){
     }
     
     processing_detect_freq_and_phase(p, peakFrequency);
+    
+    int c = processing_detect_undertone(p);
+    p->peakFrequency /= c;
 }
 
 
@@ -342,10 +345,29 @@ int processing_detect_undertone(Processing* p){
     
     double delta = get_peak_width(s, f0, df, length);
     
-    double e0 = get_range_energy(s, f0, df, length);
-    double e1 = get_range_energy(s, f0/2, df, length);
-    double e2 = get_range_energy(s, f0/4, df, length);
-    double e3 = get_range_energy(s, f0/8, df, length);
+    double e0 = get_range_energy(s, f0, delta, df, length);
+    
+    if (e0 == 0) {
+        e0 = 1;
+    }
+    
+    double e1 = get_range_energy(s, f0/2, delta, df, length) / e0;
+    double e2 = get_range_energy(s, f0/3, delta, df, length) / e0;
+    double e3 = get_range_energy(s, f0/4, delta, df, length) / e0;
+    
+    printf("%f %f %f %f \n", f0, e1, e2, e3);
+    
+    if (e3 > 0.01) {
+        return 4;
+    }
+    
+    if (e2 > 0.01) {
+        return 3;
+    }
+    
+    if (e1 > 0.01) {
+        return 2;
+    }
     
     return 1; // 2, 3
 }
