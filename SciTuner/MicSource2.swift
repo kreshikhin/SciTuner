@@ -1,4 +1,11 @@
 //
+//  MicSource2.swift
+//  SciTuner
+//
+//  Created by Denis Kreshikhin on 10.01.15.
+//  Copyright (c) 2015 Denis Kreshikhin. All rights reserved.
+//
+//
 //  MicSource.swift
 //  oscituner
 //
@@ -11,9 +18,7 @@
 import Foundation
 import AVFoundation
 
-class MicSource{
-    var aqData = AQRecorderState_create()
-    
+class MicSource2{
     var onData: (() -> ()) = { () -> () in
     }
     
@@ -30,7 +35,6 @@ class MicSource{
     
     init(sampleRate: Double, sampleCount: Int) {
         var err: NSError?;
-        
         var session = AVAudioSession.sharedInstance()
         
         session.setPreferredSampleRate(44100, error: nil)
@@ -49,8 +53,6 @@ class MicSource{
             NSLog("It can't set mode, because %@ ", err!)
         }
         
-        AQRecorderState_init(aqData, sampleRate, UInt(sampleCount))
-        
         self.discreteFrequency = Double(sampleRate)
         sample = [Double](count: sampleCount, repeatedValue: 0)
         
@@ -61,12 +63,9 @@ class MicSource{
     }
     
     deinit{
-        AQRecorderState_deinit(aqData);
-        AQRecorderState_destroy(aqData);
     }
     
     @objc func update(){
-        AQRecorderState_get_samples(aqData, &sample, UInt(sample.count));
         onData()
     }
 }

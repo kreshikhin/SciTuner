@@ -11,6 +11,9 @@ import GLKit
 import OpenGLES
 
 class TubeView: GLKView{
+    var onDraw: (rect: CGRect)->() = { (rect: CGRect) -> () in
+    }
+    
     var fb: GLuint = 0
     var rb: GLuint = 0
     var blured: GLuint = 0
@@ -25,7 +28,7 @@ class TubeView: GLKView{
     var frequency = String()
     let lineWidth: GLfloat = 1
     
-    let foreColor: [Float] = [0.7, 0.9, 0.7, 0]
+    let foreColor: [Float] = [0.8, 1.0, 0.8, 0]
     let backColor: [Float] = [0.05, 0.15, 0.05, 0]
     
 
@@ -99,23 +102,7 @@ class TubeView: GLKView{
     }
 
     override func drawRect(rect: CGRect) {
-        glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
-
-        var text = self.frequency //"123.45 Hz"
-
-        /*renderInFramebuffer({ () -> () in
-            self.capture(self.blendProgram)
-            self.drawPoints(self.wavePoints)
-            self.drawPoints(self.spectrumPoints)
-            self.drawText(text)
-        })*/
-        
-        self.bindDrawable()
-
-        //capture(textureProgram)
-        drawPoints(wavePoints)
-        drawPoints(spectrumPoints)
-        drawText(text)
+        self.onDraw(rect: rect)
     }
 
     func drawPoints(points: [Float]) {
@@ -134,8 +121,12 @@ class TubeView: GLKView{
         //glFlush()
     }
 
-    func drawText(text: String) {
-        var polyline = generateTextPolyline(0, y0: 0, width: 0.05, height: 0.1, step: 0.07, text: text)
+    func drawText(
+        text: String,
+        x: Float, y: Float,
+        w: Float, h: Float, step: Float)
+    {
+        var polyline = generateTextPolyline(text, x0:x, y0: y, width: w, height: h, step: step)
 
         for line in polyline {
             glUseProgram(drawingProgram)
@@ -150,7 +141,6 @@ class TubeView: GLKView{
             glEnableVertexAttribArray(GLuint(a_position))
 
             glDrawArrays(GLenum(GL_LINE_STRIP), 0, GLsizei(line.count / 2))
-            //glFlush()
         }
     }
 
@@ -235,7 +225,7 @@ class TubeView: GLKView{
     }
 
 
-    func generateTextPolyline(x0: Float, y0: Float, width: Float, height: Float, step: Float, text: String) -> [[Float]] {
+    func generateTextPolyline(text: String, x0: Float, y0: Float, width: Float, height: Float, step: Float) -> [[Float]] {
         var result = [[Float]]()
         var x = x0
         for s in text {

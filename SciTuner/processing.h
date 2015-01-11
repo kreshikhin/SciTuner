@@ -44,7 +44,9 @@ void processing_init(Processing* processing, double fd, double fMin, size_t poin
 void processing_push(Processing* processing, const double* packetBuffer, size_t length);
 void processing_recalculate(Processing* processing);
 void processing_build_standing_wave(Processing* processing, float* wave, size_t length);
+void processing_build_build_power_spectrum_range(Processing* processing, float* spectrum, size_t length);
 void processing_build_build_power_spectrum(Processing* processing, float* spectrum, size_t length);
+
 double processing_get_frequency(Processing* p);
 
 void processing_deinit(Processing* processing);

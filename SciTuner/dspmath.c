@@ -8,6 +8,21 @@
 
 #include "dspmath.h"
 
+double get_peak_width(double* s, double freq, double df, size_t length){
+    /*double s0 = 0.5 * s[i];
+     while ((s[i-d] > s0 || s[i+d] > s0) &&
+     (i-d) > 1 &&
+     (i+d) < p->signalLength) {
+     d++;
+     }
+     */
+    return 0;
+}
+
+double get_range_energy(double* s, double freq, double df, size_t length){
+    return 0;
+}
+
 double get_phase(double x, double y){
     if(!x && !y) return 0;
     

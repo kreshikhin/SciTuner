@@ -26,6 +26,7 @@
 		92C2B8301A5801E8008F6A31 /* Spectrum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B8201A5801E8008F6A31 /* Spectrum.swift */; };
 		92C2B8321A5801E8008F6A31 /* TubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B8221A5801E8008F6A31 /* TubeView.swift */; };
 		92C2B8331A5801E8008F6A31 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B8231A5801E8008F6A31 /* ViewController.swift */; };
+		92FB2A3F1A614F02009EC409 /* MicSource2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FB2A3E1A614F02009EC409 /* MicSource2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		92C2B8221A5801E8008F6A31 /* TubeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TubeView.swift; sourceTree = "<group>"; };
 		92C2B8231A5801E8008F6A31 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		92C4EF0C1A3A11C800ECD2C7 /* SciTuner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SciTuner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		92FB2A3E1A614F02009EC409 /* MicSource2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MicSource2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 				92C2B8201A5801E8008F6A31 /* Spectrum.swift */,
 				92C2B8221A5801E8008F6A31 /* TubeView.swift */,
 				92C2B8231A5801E8008F6A31 /* ViewController.swift */,
+				92FB2A3E1A614F02009EC409 /* MicSource2.swift */,
 			);
 			path = SciTuner;
 			sourceTree = "<group>";
@@ -199,6 +202,7 @@
 				92C2B82C1A5801E8008F6A31 /* PanelView.swift in Sources */,
 				92C2B8331A5801E8008F6A31 /* ViewController.swift in Sources */,
 				92C2B82A1A5801E8008F6A31 /* micsource.c in Sources */,
+				92FB2A3F1A614F02009EC409 /* MicSource2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

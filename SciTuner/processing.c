@@ -170,7 +170,7 @@ void processing_build_standing_wave(Processing* p, float* wave, size_t length){
     }
 }
 
-void processing_build_build_power_spectrum(Processing* p, float* spectrum, size_t length){
+void processing_build_build_power_spectrum_range(Processing* p, float* spectrum, size_t length){
     int code = get_freq_code(p->peakFrequency);
     
     double left = get_code_freq(code - 2);
@@ -178,8 +178,6 @@ void processing_build_build_power_spectrum(Processing* p, float* spectrum, size_
     
     size_t leftIndex = 2 * left * p->signalLength / p->fd;
     size_t rightIndex = 2 * right * p->signalLength / p->fd;
-
-    //printf("freq range: %f %f Hz \n", left, right);
 
     double* dest = (double*)spectrum;
     
@@ -189,19 +187,66 @@ void processing_build_build_power_spectrum(Processing* p, float* spectrum, size_
         spectrum[i] = ((double)i / length - 0.5) * 1.6;
         spectrum[i+1] = s / 2.5 + 0.4;
     }
-    
-    /*int l = p->signalLength / 8;
+}
+
+void processing_build_build_power_spectrum(Processing* p, float* spectrum, size_t length){
+    int l = p->signalLength / 2;
     int f = l * 2 / length;
-    for(int i = 0; i < l; i++){
-        int j = i / f;
-        if (i % f == 0) {
-            spectrum[2*j + 1] = 0.4;
-        }
+    
+    double left = 10;
+    double right = 10000;
+    
+    double df = p->fd / (2 * p->signalLength);
+    
+    size_t leftIndex = left / df;
+    
+    if(leftIndex < 1) {
+        leftIndex = 1;
+    }
+    
+    size_t rightIndex = right / df;
+    
+    double leftLog = log10(df * leftIndex);
+    double rightLog = log10(df * rightIndex);
+    
+    size_t j0 = 0;
+    double s0 = 0;
+    
+    for(int i = leftIndex; i < rightIndex; i++){
+        int j = (double)0.5 * length * (log10(df * i) - leftLog) / (rightLog - leftLog);
         
         double s = p->spectrum[i];
-        spectrum[2*j] = ((double)j * 2/ length - 0.5) * 1.9;
-        spectrum[2*j+1] += s / (2.0 * f);
-    }*/
+        spectrum[2*j] = ((double)j * 2/ length - 0.5) * 1.6;
+        
+        while(j > j0){
+            spectrum[2*j0] = ((double)j0 * 2/ length - 0.5) * 1.6;
+            spectrum[2*j0 + 1] = s0;
+            j0 ++;
+            
+            if(j == j0){
+                s0 = 0;
+                spectrum[2*j0 + 1] = s0 + s;
+            }
+        }
+        
+        s0 += s / (2.0 * f);
+    }
+    
+    double peak = 0;
+    for(int j = 1; j < length; j+=2){
+        if(spectrum[j] > peak){
+            peak = spectrum[j];
+        }
+    }
+    
+    if(peak == 0.0){
+        peak = 1.0;
+    }
+    
+    for(int j = 1; j < length; j+=2){
+        spectrum[j] = spectrum[j] / peak + 0.4;
+    }
+    
 }
 
 double processing_get_frequency(Processing* p){
@@ -289,4 +334,18 @@ void processing_detect_freq_and_phase2(Processing* p, double peakFrequency){
     printf(" F ~ %f       %f \n", freq, freq - peakFrequency);
 }
 
-
+int processing_detect_undertone(Processing* p){
+    double* s = p->spectrum;
+    double f0 = p->peakFrequency;
+    double df =  p->fd / (2.0 * p->signalLength);
+    size_t length = p->signalLength;
+    
+    double delta = get_peak_width(s, f0, df, length);
+    
+    double e0 = get_range_energy(s, f0, df, length);
+    double e1 = get_range_energy(s, f0/2, df, length);
+    double e2 = get_range_energy(s, f0/4, df, length);
+    double e3 = get_range_energy(s, f0/8, df, length);
+    
+    return 1; // 2, 3
+}

@@ -10,6 +10,9 @@
 #include <math.h>
 #include <stdlib.h>
 
+double get_peak_width(double* s, double freq, double df, size_t length);
+double get_range_energy(double* s, double freq, double df, size_t length);
+
 void approximate(double* dest, const double* src, size_t destLength, size_t srcLength);
 void approximate_sinc(double* dest, const double* src, size_t destLength, size_t srcLength);
 

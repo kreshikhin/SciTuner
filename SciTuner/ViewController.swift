@@ -24,6 +24,8 @@ class ViewController: UIViewController {
         
         //var source = Source(sampleRate: sampleRate, sampleCount: sampleCount)
         var source = MicSource(sampleRate: Double(sampleRate), sampleCount: sampleCount)
+        //var source = MicSource2(sampleRate: Double(sampleRate), sampleCount: sampleCount)
+        
         var processing = ProcessingAdapter()
         //processing.setFrequency(200)
 
@@ -45,6 +47,27 @@ class ViewController: UIViewController {
             tube.frequency = String(format: "%.2f Hz", freq)
             
             tube.setNeedsDisplay()
+        }
+        
+        
+        tube.onDraw = {(rect: CGRect) -> () in
+            glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
+            
+            var text = tube.frequency //"123.45 Hz"
+            
+            /*renderInFramebuffer({ () -> () in
+            self.capture(self.blendProgram)
+            self.drawPoints(self.wavePoints)
+            self.drawPoints(self.spectrumPoints)
+            self.drawText(text)
+            })*/
+            
+            tube.bindDrawable()
+            
+            //capture(textureProgram)
+            tube.drawPoints(tube.wavePoints)
+            tube.drawPoints(tube.spectrumPoints)
+            tube.drawText(text, x:0, y: 0, w: 0.05, h: 0.05, step: 0.07)
         }
         
         self.view.addSubview(tube)
