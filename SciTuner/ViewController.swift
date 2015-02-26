@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UINavigationController {
     var tube = TubeViewController()
-    var settings = SettingViewController()
+    var settings = SettingsViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()

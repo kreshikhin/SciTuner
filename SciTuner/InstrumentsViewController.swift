@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class InstrumentViewController: UIAlertController {
+class InstrumentsViewController: UIAlertController {
     override func viewDidLoad() {
         addAction(UIAlertAction(
             title: "✓ guitar  ", style: UIAlertActionStyle.Default, handler: nil))

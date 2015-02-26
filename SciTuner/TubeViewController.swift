@@ -9,7 +9,7 @@
 import UIKit
 
 class TubeViewController: UIViewController {
-    let instruments = InstrumentViewController(title: nil, message: nil, preferredStyle: .ActionSheet)
+    let instruments = InstrumentsViewController(title: nil, message: nil, preferredStyle: .ActionSheet)
     
     var wavePoints: [Double] = [Double](count: 512, repeatedValue: 0)
     var spectrumPoints: [Double] = [Double](count: 512, repeatedValue: 0)
@@ -87,7 +87,7 @@ class TubeViewController: UIViewController {
             //capture(textureProgram)
             tube.drawPoints(tube.wavePoints)
             tube.drawPoints(tube.spectrumPoints)
-            //tube.drawText(text, x:0, y: 0, w: 0.05, h: 0.05, step: 0.07)
+            tube.drawText(text, x:0, y: 0, w: 0.05, h: 0.05, step: 0.07)
         }
         
         self.view.addSubview(tube)
