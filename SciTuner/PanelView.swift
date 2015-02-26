@@ -16,11 +16,23 @@ class PanelView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        var lockButton = UIButton(frame: CGRectMake(10, 10, 100, 100))
-        lockButton.titleLabel?.text = "lock"
-        self.addSubview(lockButton)
+        let half = frame.size.width / 2
+        let third = frame.size.width / 3;
+        
+        var thick = UILabel(frame: CGRectMake(10, 10, half - 10, 20))
+        thick.text = "thick"
+        thick.textAlignment = .Left
+        self.addSubview(thick)
+        
+        var thin = UILabel(frame: CGRectMake(10+half, 10, half - 20, 20))
+        thin.text = "thin"
+        thin.textAlignment = .Right
+        self.addSubview(thin)
+        
+        var re = UIBarButtonItem(barButtonSystemItem: .Rewind, target: nil, action: nil)
+        var pl = UIBarButtonItem(barButtonSystemItem: .Play, target: nil, action: nil)
+        var ff = UIBarButtonItem(barButtonSystemItem: .FastForward, target: nil, action: nil)
         
         NSLog("wtf ???")
-        // ...
     }
 }

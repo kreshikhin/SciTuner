@@ -93,8 +93,8 @@ class TubeViewController: UIViewController {
         self.view.addSubview(tube)
         
         let panelFrame = getOptimalPanelFrame(navbarHeight, size: self.view.frame.size)
-        
-        self.view.addSubview(PanelView(frame: panelFrame))
+        var panel = PanelView(frame: panelFrame)
+        self.view.addSubview(panel)
     }
     
     override func didReceiveMemoryWarning() {
