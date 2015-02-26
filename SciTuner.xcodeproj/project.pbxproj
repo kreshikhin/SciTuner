@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9221C9231A9F171300DF36F6 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9221C9221A9F171300DF36F6 /* SettingViewController.swift */; };
 		923920481A502DFE00ACDC2E /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 920F09721A40A9D000A69F7A /* Accelerate.framework */; };
 		9239204A1A502E0500ACDC2E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 923920491A502E0500ACDC2E /* AVFoundation.framework */; };
+		924ECB5B1A9DB91A005E38FF /* TubeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924ECB5A1A9DB91A005E38FF /* TubeViewController.swift */; };
 		928A2F511A5BC9AD00F83522 /* dspmath.c in Sources */ = {isa = PBXBuildFile; fileRef = 928A2F501A5BC9AD00F83522 /* dspmath.c */; };
 		928A2F531A5C6DF800F83522 /* border1136.png in Resources */ = {isa = PBXBuildFile; fileRef = 928A2F521A5C6DF800F83522 /* border1136.png */; };
 		92C2B8241A5801E8008F6A31 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 92C2B80F1A5801E8008F6A31 /* .gitignore */; };
@@ -31,7 +33,9 @@
 
 /* Begin PBXFileReference section */
 		920F09721A40A9D000A69F7A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		9221C9221A9F171300DF36F6 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		923920491A502E0500ACDC2E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		924ECB5A1A9DB91A005E38FF /* TubeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TubeViewController.swift; sourceTree = "<group>"; };
 		928A2F4F1A5BC95A00F83522 /* dspmath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dspmath.h; sourceTree = "<group>"; };
 		928A2F501A5BC9AD00F83522 /* dspmath.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dspmath.c; sourceTree = "<group>"; };
 		928A2F521A5C6DF800F83522 /* border1136.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border1136.png; sourceTree = "<group>"; };
@@ -70,16 +74,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		92C2B80E1A5801E8008F6A31 /* SciTuner */ = {
+		924ECB591A9DAC9B005E38FF /* native */ = {
 			isa = PBXGroup;
 			children = (
-				928A2F521A5C6DF800F83522 /* border1136.png */,
 				928A2F501A5BC9AD00F83522 /* dspmath.c */,
 				928A2F4F1A5BC95A00F83522 /* dspmath.h */,
 				92C2B81B1A5801E8008F6A31 /* processing.c */,
 				92C2B81C1A5801E8008F6A31 /* processing.h */,
 				92C2B8171A5801E8008F6A31 /* micsource.c */,
 				92C2B8181A5801E8008F6A31 /* micsource.h */,
+			);
+			name = native;
+			sourceTree = "<group>";
+		};
+		92C2B80E1A5801E8008F6A31 /* SciTuner */ = {
+			isa = PBXGroup;
+			children = (
+				928A2F521A5C6DF800F83522 /* border1136.png */,
+				924ECB591A9DAC9B005E38FF /* native */,
 				92C2B80F1A5801E8008F6A31 /* .gitignore */,
 				92C2B8101A5801E8008F6A31 /* AppDelegate.swift */,
 				92C2B8111A5801E8008F6A31 /* LaunchScreen.xib */,
@@ -94,6 +106,8 @@
 				92C2B8201A5801E8008F6A31 /* Spectrum.swift */,
 				92C2B8221A5801E8008F6A31 /* TubeView.swift */,
 				92C2B8231A5801E8008F6A31 /* ViewController.swift */,
+				924ECB5A1A9DB91A005E38FF /* TubeViewController.swift */,
+				9221C9221A9F171300DF36F6 /* SettingViewController.swift */,
 				92FB2A3E1A614F02009EC409 /* MicSource2.swift */,
 			);
 			path = SciTuner;
@@ -196,12 +210,14 @@
 				92C2B8301A5801E8008F6A31 /* Spectrum.swift in Sources */,
 				928A2F511A5BC9AD00F83522 /* dspmath.c in Sources */,
 				92C2B82B1A5801E8008F6A31 /* MicSource.swift in Sources */,
+				9221C9231A9F171300DF36F6 /* SettingViewController.swift in Sources */,
 				92C2B8321A5801E8008F6A31 /* TubeView.swift in Sources */,
 				92C2B82D1A5801E8008F6A31 /* processing.c in Sources */,
 				92C2B82F1A5801E8008F6A31 /* Source.swift in Sources */,
 				92C2B82C1A5801E8008F6A31 /* PanelView.swift in Sources */,
 				92C2B8331A5801E8008F6A31 /* ViewController.swift in Sources */,
 				92C2B82A1A5801E8008F6A31 /* micsource.c in Sources */,
+				924ECB5B1A9DB91A005E38FF /* TubeViewController.swift in Sources */,
 				92FB2A3F1A614F02009EC409 /* MicSource2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

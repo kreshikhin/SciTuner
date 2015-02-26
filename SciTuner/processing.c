@@ -247,7 +247,7 @@ void processing_build_build_power_spectrum(Processing* p, float* spectrum, size_
     }
     
     for(int j = 1; j < length; j+=2){
-        spectrum[j] = spectrum[j] / peak + 0.4;
+        spectrum[j] = 0.5 * spectrum[j] / peak + 0.4;
     }
     
 }
@@ -354,8 +354,15 @@ int processing_detect_undertone(Processing* p){
     double e1 = get_range_energy(s, f0/2, delta, df, length) / e0;
     double e2 = get_range_energy(s, f0/3, delta, df, length) / e0;
     double e3 = get_range_energy(s, f0/4, delta, df, length) / e0;
+    double e4 = get_range_energy(s, f0/5, delta, df, length) / e0;
     
-    printf("%f %f %f %f \n", f0, e1, e2, e3);
+    printf("%f %f %f %f %f \n", f0, e1, e2, e3, e4);
+    
+    return 1;
+    
+    if (e3 > 0.01) {
+        return 5;
+    }
     
     if (e3 > 0.01) {
         return 4;
