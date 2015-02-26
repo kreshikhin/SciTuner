@@ -14,6 +14,8 @@ class SettingViewController: UIViewController {
         super.viewDidLoad()
         
         self.navigationItem.title = "settings"
+        
+        self.view.opaque = false //SettingView()
     }
     
     override func didReceiveMemoryWarning() {

@@ -26,10 +26,10 @@ class TubeView: GLKView{
     var wavePoints = [Float]()
     var spectrumPoints = [Float]()
     var frequency = String()
-    let lineWidth: GLfloat = 1
+    let lineWidth: GLfloat = 5
     
-    let foreColor: [Float] = [0.8, 1.0, 0.8, 0]
-    let backColor: [Float] = [0.05, 0.15, 0.05, 0]
+    let foreColor: [Float] = [1.0, 1.0, 1.0, 0]
+    let backColor: [Float] = [0.1, 0.1, 0.1, 0]
     
 
     required init(coder aDecoder: NSCoder) {

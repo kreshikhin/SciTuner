@@ -15,6 +15,8 @@ class ViewController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = UIColor.whiteColor()
+        
         self.pushViewController(tube, animated: false)
     }
     

@@ -9,19 +9,23 @@
 import UIKit
 
 class TubeViewController: UIViewController {
+    let instruments = InstrumentViewController(title: nil, message: nil, preferredStyle: .ActionSheet)
+    
     var wavePoints: [Double] = [Double](count: 512, repeatedValue: 0)
     var spectrumPoints: [Double] = [Double](count: 512, repeatedValue: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = UIColor.whiteColor()
+        
         self.navigationItem.title = "SciTuner"
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: "guitar",
             style: UIBarButtonItemStyle.Plain,
-            target: nil,
-            action: nil)
+            target: self,
+            action: Selector("showInstruments"))
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "settings",
@@ -29,24 +33,28 @@ class TubeViewController: UIViewController {
             target: self.parentViewController,
             action: Selector("showSettings"))
         
-        let f = self.view.frame
-        NSLog("%@ %@ %@ %@", f.origin.x, f.origin.y, f.size.width, f.size.height)
+        let navbarHeight = UIApplication.sharedApplication().statusBarFrame.size.height + (self.navigationController!).navigationBar.frame.size.height
+        
+        let f = self.view.frame;
+        
+        NSLog("%@ %@ %@ %@ %@", navbarHeight, f.origin.x, f.origin.y, f.size.width, f.size.height)
         
         let sampleRate = 44100
         let sampleCount = 2205
         
-        //var source = Source(sampleRate: sampleRate, sampleCount: sampleCount)
-        var source = MicSource(sampleRate: Double(sampleRate), sampleCount: sampleCount)
+        var source = Source(sampleRate: sampleRate, sampleCount: sampleCount)
+        //var source = MicSource(sampleRate: Double(sampleRate), sampleCount: sampleCount)
         //var source = MicSource2(sampleRate: Double(sampleRate), sampleCount: sampleCount)
         
         var processing = ProcessingAdapter()
         //processing.setFrequency(200)
         
-        let tubeFrame = getOptimalTubeFrame(self.view.frame.size)
+        let tubeFrame = getOptimalTubeFrame(navbarHeight, size: self.view.frame.size)
+        
         var tube = TubeView(frame: tubeFrame)
         
-        tube.wavePoints = [Float](count: 512, repeatedValue: 0)
-        tube.spectrumPoints = [Float](count: 512, repeatedValue: 0)
+        tube.wavePoints = [Float](count: 128, repeatedValue: 0)
+        tube.spectrumPoints = [Float](count: 128, repeatedValue: 0)
         
         source.onData = { () -> () in
             processing.Push(&source.sample)
@@ -79,15 +87,14 @@ class TubeViewController: UIViewController {
             //capture(textureProgram)
             tube.drawPoints(tube.wavePoints)
             tube.drawPoints(tube.spectrumPoints)
-            tube.drawText(text, x:0, y: 0, w: 0.05, h: 0.05, step: 0.07)
+            //tube.drawText(text, x:0, y: 0, w: 0.05, h: 0.05, step: 0.07)
         }
         
         self.view.addSubview(tube)
         
-        //let panelFrame = getOptimalPanelFrame(self.view.frame.size)
-        //self.view.addSubview(PanelView(frame: panelFrame))
+        let panelFrame = getOptimalPanelFrame(navbarHeight, size: self.view.frame.size)
         
-        self.view.backgroundColor = UIColor.redColor()
+        self.view.addSubview(PanelView(frame: panelFrame))
     }
     
     override func didReceiveMemoryWarning() {
@@ -95,32 +102,20 @@ class TubeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func getOptimalTubeFrame(size: CGSize) -> CGRect {
-        var height: CGFloat = 100.0
-        
-        if size.width > 568 { // 6
-            height = 117.2
-        }
-        
-        if size.width > 667 { //6s
-            height = 177.5
-        }
-        
-        return CGRectMake(0, 0, size.width, size.height)
+    func getOptimalTubeFrame(verticalShift: CGFloat, size: CGSize) -> CGRect {
+        return CGRectMake(
+            0, verticalShift,
+            size.width, size.width)
     }
     
-    func getOptimalPanelFrame(size: CGSize) -> CGRect {
-        var height: CGFloat = 100.0
-        
-        if size.width > 568 { // 6
-            height = 117.2
-        }
-        
-        if size.width > 667 { //6s
-            height = 177.5
-        }
-        
-        return CGRectMake(0, size.height - height, size.width, height)
+    func getOptimalPanelFrame(verticalShift: CGFloat, size: CGSize) -> CGRect {
+        return CGRectMake(
+            0, verticalShift + size.width,
+            size.width, size.height - size.width - verticalShift)
+    }
+    
+    func showInstruments() {
+        self.presentViewController(instruments, animated: true, completion: nil)
     }
 }
 

@@ -356,7 +356,7 @@ int processing_detect_undertone(Processing* p){
     double e3 = get_range_energy(s, f0/4, delta, df, length) / e0;
     double e4 = get_range_energy(s, f0/5, delta, df, length) / e0;
     
-    printf("%f %f %f %f %f \n", f0, e1, e2, e3, e4);
+    //printf("%f %f %f %f %f \n", f0, e1, e2, e3, e4);
     
     return 1;
     
