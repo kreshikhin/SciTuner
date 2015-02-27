@@ -32,11 +32,7 @@ class ControlbarView: UIView {
         var forward = ForwardButton(frame: CGRectMake(width/2 + 60, 10, 32, 16))
         self.addSubview(forward)
 
-        var record = RecordButton(frame: CGRectMake(width/2 - 8, 10, 16, 16))
+        var record = RecordButton(frame: CGRectMake(width/2 - 10, 10, 20, 20))
         self.addSubview(record)
-    }
-    
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        println("controlbar began")
     }
 }

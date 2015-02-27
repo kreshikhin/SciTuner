@@ -39,6 +39,7 @@ class PanelView: UIView {
         var controlbar = ControlbarView(frame: CGRectMake(0, 110, half*2, 40))
         self.addSubview(controlbar)
         
-        //NSLog("wtf ???")
+        var modebar = ModebarView(frame: CGRectMake(0, 150, half*2, 40))
+        self.addSubview(modebar)
     }
 }

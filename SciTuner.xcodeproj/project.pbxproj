@@ -20,6 +20,7 @@
 		924EFD0F1AA08D5000C11B09 /* ForwardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924EFD0E1AA08D5000C11B09 /* ForwardButton.swift */; };
 		924EFD111AA08E6700C11B09 /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924EFD101AA08E6700C11B09 /* RecordButton.swift */; };
 		924EFD131AA09CB100C11B09 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924EFD121AA09CB100C11B09 /* CustomButton.swift */; };
+		924EFD151AA0A06700C11B09 /* ModebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924EFD141AA0A06700C11B09 /* ModebarView.swift */; };
 		928A2F511A5BC9AD00F83522 /* dspmath.c in Sources */ = {isa = PBXBuildFile; fileRef = 928A2F501A5BC9AD00F83522 /* dspmath.c */; };
 		928A2F531A5C6DF800F83522 /* border1136.png in Resources */ = {isa = PBXBuildFile; fileRef = 928A2F521A5C6DF800F83522 /* border1136.png */; };
 		92C2B8241A5801E8008F6A31 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 92C2B80F1A5801E8008F6A31 /* .gitignore */; };
@@ -55,6 +56,7 @@
 		924EFD0E1AA08D5000C11B09 /* ForwardButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForwardButton.swift; sourceTree = "<group>"; };
 		924EFD101AA08E6700C11B09 /* RecordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
 		924EFD121AA09CB100C11B09 /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		924EFD141AA0A06700C11B09 /* ModebarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModebarView.swift; sourceTree = "<group>"; };
 		928A2F4F1A5BC95A00F83522 /* dspmath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dspmath.h; sourceTree = "<group>"; };
 		928A2F501A5BC9AD00F83522 /* dspmath.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dspmath.c; sourceTree = "<group>"; };
 		928A2F521A5C6DF800F83522 /* border1136.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border1136.png; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				924EFD031AA071EF00C11B09 /* StringbarView.swift */,
 				924EFD011AA05F6700C11B09 /* NotebarView.swift */,
 				924EFD0C1AA08B1600C11B09 /* ControlbarView.swift */,
+				924EFD141AA0A06700C11B09 /* ModebarView.swift */,
 			);
 			name = CustomBars;
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 				924EFD041AA071EF00C11B09 /* StringbarView.swift in Sources */,
 				924EFD021AA05F6700C11B09 /* NotebarView.swift in Sources */,
 				92C2B82C1A5801E8008F6A31 /* PanelView.swift in Sources */,
+				924EFD151AA0A06700C11B09 /* ModebarView.swift in Sources */,
 				92C2B8331A5801E8008F6A31 /* ViewController.swift in Sources */,
 				92C2B82A1A5801E8008F6A31 /* micsource.c in Sources */,
 				924EFD131AA09CB100C11B09 /* CustomButton.swift in Sources */,
