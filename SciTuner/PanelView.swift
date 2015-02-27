@@ -19,7 +19,7 @@ class PanelView: UIView {
         let half = frame.size.width / 2
         let third = frame.size.width / 3;
         
-        var thick = UILabel(frame: CGRectMake(10, 10, half - 10, 20))
+        /*var thick = UILabel(frame: CGRectMake(10, 10, half - 10, 20))
         thick.text = "thick"
         thick.textAlignment = .Left
         self.addSubview(thick)
@@ -28,11 +28,17 @@ class PanelView: UIView {
         thin.text = "thin"
         thin.textAlignment = .Right
         self.addSubview(thin)
+        */
         
-        var re = UIBarButtonItem(barButtonSystemItem: .Rewind, target: nil, action: nil)
-        var pl = UIBarButtonItem(barButtonSystemItem: .Play, target: nil, action: nil)
-        var ff = UIBarButtonItem(barButtonSystemItem: .FastForward, target: nil, action: nil)
+        var notebar = NotebarView(frame: CGRectMake(0, 10, half*2, 40))
+        self.addSubview(notebar)
         
-        NSLog("wtf ???")
+        var stringbar = StringbarView(frame: CGRectMake(0, 30, half*2, 40))
+        self.addSubview(stringbar)
+        
+        var controlbar = ControlbarView(frame: CGRectMake(0, 110, half*2, 40))
+        self.addSubview(controlbar)
+        
+        //NSLog("wtf ???")
     }
 }
