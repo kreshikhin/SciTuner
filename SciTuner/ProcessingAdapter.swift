@@ -11,9 +11,11 @@ import Accelerate
 
 class ProcessingAdapter{
     var p = processing_create();
+    let pointCount: UInt
     
-    init(){
-        processing_init(p, 44100, 16, 32768)
+    init(pointCount: UInt){
+        self.pointCount = pointCount
+        processing_init(p, 44100, 16, 32768, pointCount)
     }
     
     deinit{
@@ -31,6 +33,10 @@ class ProcessingAdapter{
     
     func buildStandingWave(inout wave: [Float], length: Int) {
         processing_build_standing_wave(p, &wave, UInt(length))
+    }
+    
+    func buildSmoothStandingWave(inout wave: [Float], inout light: [Float], length: Int, thickness: Float) {
+        processing_build_smooth_standing_wave(p, &wave, &light, UInt(length), thickness)
     }
     
     func buildSpectrumWindow(inout spectrum: [Float], length: Int) {

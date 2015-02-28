@@ -19,8 +19,10 @@ typedef struct{
     double peakFrequency;
     double peakPhase;
     
-    size_t signalLength;
+    size_t pointCount;
+    double* points;
 
+    size_t signalLength;
     double* signal;
 
     double* real;
@@ -40,10 +42,12 @@ void source_generate(double* dest, size_t count, double* t, double dt, double fr
 Processing* processing_create();
 void processing_destroy(Processing* p);
 
-void processing_init(Processing* processing, double fd, double fMin, size_t pointCount);
+void processing_init(Processing* processing, double fd, double fMin, size_t pointCount, size_t points);
+
 void processing_push(Processing* processing, const double* packetBuffer, size_t length);
 void processing_recalculate(Processing* processing);
 void processing_build_standing_wave(Processing* processing, float* wave, size_t length);
+void processing_build_smooth_standing_wave(Processing* processing, float* wave, float* light, size_t length, float thickness);
 void processing_build_build_power_spectrum_range(Processing* processing, float* spectrum, size_t length);
 void processing_build_build_power_spectrum(Processing* processing, float* spectrum, size_t length);
 

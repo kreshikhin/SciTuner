@@ -11,9 +11,6 @@ import UIKit
 class TubeViewController: UIViewController {
     let instruments = InstrumentsViewController(title: nil, message: nil, preferredStyle: .ActionSheet)
     
-    var wavePoints: [Double] = [Double](count: 512, repeatedValue: 0)
-    var spectrumPoints: [Double] = [Double](count: 512, repeatedValue: 0)
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,27 +39,31 @@ class TubeViewController: UIViewController {
         let sampleRate = 44100
         let sampleCount = 2205
         
-        var source = Source(sampleRate: sampleRate, sampleCount: sampleCount)
-        //var source = MicSource(sampleRate: Double(sampleRate), sampleCount: sampleCount)
+        //var source = Source(sampleRate: sampleRate, sampleCount: sampleCount)
+        var source = MicSource(sampleRate: Double(sampleRate), sampleCount: sampleCount)
         //var source = MicSource2(sampleRate: Double(sampleRate), sampleCount: sampleCount)
         
-        var processing = ProcessingAdapter()
+        var processing = ProcessingAdapter(pointCount: 128)
         //processing.setFrequency(200)
         
         let tubeFrame = getOptimalTubeFrame(navbarHeight, size: self.view.frame.size)
         
         var tube = TubeView(frame: tubeFrame)
         
-        tube.wavePoints = [Float](count: 128, repeatedValue: 0)
-        tube.spectrumPoints = [Float](count: 128, repeatedValue: 0)
+        tube.wavePoints = [Float](count: Int(processing.pointCount)*2*3*4, repeatedValue: 0)
+        tube.waveLightPoints = [Float](count: Int(processing.pointCount)*4*3*4, repeatedValue: 0)
+        
+        //tube.spectrumPoints = [Float](count: 128, repeatedValue: 0)
         
         source.onData = { () -> () in
             processing.Push(&source.sample)
         
             processing.Recalculate()
         
-            processing.buildStandingWave(&tube.wavePoints, length: tube.wavePoints.count)
-            processing.buildSpectrumWindow(&tube.spectrumPoints, length: tube.spectrumPoints.count)
+            //processing.buildStandingWave(&tube.wavePoints, length: tube.wavePoints.count)
+            processing.buildSmoothStandingWave(&tube.wavePoints, light: &tube.waveLightPoints, length: tube.wavePoints.count, thickness: 0.1)
+            
+            //processing.buildSpectrumWindow(&tube.spectrumPoints, length: tube.spectrumPoints.count)
         
             var freq = processing.getFrequency()
             tube.frequency = String(format: "%.2f Hz", freq)
@@ -73,21 +74,12 @@ class TubeViewController: UIViewController {
         tube.onDraw = {(rect: CGRect) -> () in
             glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
         
-            var text = tube.frequency //"123.45 Hz"
-        
-            /*renderInFramebuffer({ () -> () in
-            self.capture(self.blendProgram)
-            self.drawPoints(self.wavePoints)
-            self.drawPoints(self.spectrumPoints)
-            self.drawText(text)
-            })*/
-        
+            var text = tube.frequency
+            
             tube.bindDrawable()
         
-            //capture(textureProgram)
-            tube.drawPoints(tube.wavePoints)
-            tube.drawPoints(tube.spectrumPoints)
-            tube.drawText(text, x:0, y: 0, w: 0.05, h: 0.05, step: 0.07)
+            tube.drawPoints(tube.wavePoints, lightPoints: tube.waveLightPoints)
+            //tube.drawPoints(tube.spectrumPoints)
         }
         
         self.view.addSubview(tube)

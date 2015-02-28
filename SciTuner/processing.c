@@ -18,6 +18,17 @@ void processing_detect_freq_and_phase(Processing* p, double peakFrequency);
 void processing_detect_freq_and_phase2(Processing* p, double peakFrequency);
 int processing_detect_undertone(Processing* p);
 
+float* build_edge(float* dest, float x0, float y0, float x1, float y1, float thickness);
+float* write_point2D(float* dest, float x, float y);
+float* write_point4D(float* dest, float x, float y, float z, float d);
+
+double data_avr(double* data, size_t length);
+void data_shift(double* data, size_t length, double shift);
+double data_max(double* data, size_t length);
+double data_min(double* data, size_t length);
+double data_dev(double* data, size_t length);
+void data_scale(double* data, size_t length, double scale);
+
 Processing* processing_create(){
     return malloc(sizeof(Processing));
 }
@@ -26,15 +37,18 @@ void processing_destroy(Processing* p){
     free(p);
 }
 
-void processing_init(Processing* p, double fd, double fMin, size_t pointCount) {
+void processing_init(Processing* p, double fd, double fMin, size_t sampleCount, size_t pointCount) {
     p->fd = fd;
     p->fMin = fMin;
     
     p->peakFrequency = 440;
     p->peakPhase = 0;
     
-    p->signalLength = ceil2((double)pointCount);
+    p->signalLength = ceil2((double)sampleCount);
     p->step = 1;
+    
+    p->pointCount = pointCount;
+    p->points = malloc(p->pointCount * sizeof(p->points));
 
     p->signal = malloc(p->signalLength * sizeof(*p->signal));
 
@@ -54,6 +68,7 @@ void processing_deinit(Processing* p){
     free(p->real);
     free(p->imag);
     free(p->spectrum);
+    free(p->points);
 }
 
 void processing_push(Processing* p, const double* packet, size_t packetLength) {
@@ -252,11 +267,11 @@ void processing_build_build_power_spectrum(Processing* p, float* spectrum, size_
     
 }
 
-double processing_get_frequency(Processing* p){
+double processing_get_frequency(Processing* p) {
     return p->peakFrequency;
 }
 
-void processing_detect_freq_and_phase(Processing* p, double peakFrequency){
+void processing_detect_freq_and_phase(Processing* p, double peakFrequency) {
     double* real = p->real;
     double* imag = p->imag;
     size_t length = p->signalLength;
@@ -304,7 +319,7 @@ void processing_detect_freq_and_phase(Processing* p, double peakFrequency){
     //printf(" F ~ %f       %f \n", p->peakFrequency, df0);
 }
 
-void processing_detect_freq_and_phase2(Processing* p, double peakFrequency){
+void processing_detect_freq_and_phase2(Processing* p, double peakFrequency) {
     size_t length = p->signalLength;
     
     double df = 0.1;
@@ -318,7 +333,7 @@ void processing_detect_freq_and_phase2(Processing* p, double peakFrequency){
     double freq = 0;
     double sum = 0;
     
-    for(size_t i = leftIndex; i <= rightIndex; i++){
+    for(size_t i = leftIndex; i <= rightIndex; i++) {
         double f = (double)i * p->fd / (2.0 * length);
         double k = 1.0; //exp(-1.0 * (f - peakFrequency)*(f - peakFrequency) / (df * df));
         sum += p->spectrum[i] * k;
@@ -337,7 +352,7 @@ void processing_detect_freq_and_phase2(Processing* p, double peakFrequency){
     printf(" F ~ %f       %f \n", freq, freq - peakFrequency);
 }
 
-int processing_detect_undertone(Processing* p){
+int processing_detect_undertone(Processing* p) {
     double* s = p->spectrum;
     double f0 = p->peakFrequency;
     double df =  p->fd / (2.0 * p->signalLength);
@@ -377,4 +392,163 @@ int processing_detect_undertone(Processing* p){
     }
     
     return 1; // 2, 3
+}
+
+void processing_build_smooth_standing_wave(Processing* p, float* wave, float* light, size_t length, float thickness) {
+    double f = p->peakFrequency;
+    if(f < 20) f = 20;
+    if(f > 16000) f = 16000;
+    
+    double waveLength = p->fd / f;
+    
+    size_t index = p->signalLength - waveLength * 2;
+    
+    double* src = &p->signal[index];
+    
+    double re = 0; double im = 0;
+    for (size_t i = 0; i < waveLength*2; i++) {
+        double t = (double)2.0 * M_PI * i / waveLength;
+        re += src[i] * cos(t);
+        im += src[i] * sin(t);
+    }
+    
+    double phase = get_phase(re, im);
+    
+    double shift = waveLength * phase / (2.0 * M_PI);
+    
+    double* shiftedSrc = &p->signal[index - (size_t)(waveLength - shift) - (size_t)waveLength];
+    
+    approximate_sinc(p->points, shiftedSrc, p->pointCount, 2*waveLength);
+    double avr = data_avr(p->points, p->pointCount);
+    data_shift(p->points, p->pointCount, -avr);
+    double dev = data_dev(p->points, p->pointCount);
+    if(dev != 0){
+        data_scale(p->points, p->pointCount, 0.2/dev);
+    }
+    
+    double dx = (double)2.0 / p->pointCount;
+    float* dest = wave;
+    for (size_t j = 0; j < p->pointCount; j ++) {
+        float x0 = dx * j - 1.0;
+        float y0 = p->points[j];
+        float x1 = dx*(j + 1) - 1.0;
+        float y1 = p->points[j+1];
+        
+        dest = build_edge(dest, x0, y0, x1, y1, thickness);
+        
+        for (int i = 0; i < 12; i++) {
+            if (j == 0) {
+                light = write_point4D(light, x0 + thickness / 2.0, y0, x1, y1);
+                continue;
+            }
+            if (j + 1 == p->pointCount) {
+                light = write_point4D(light, x0, y0, x1 - thickness / 2.0, y1);
+                continue;
+            }
+            light = write_point4D(light, x0, y0, x1, y1);
+        }
+    }
+}
+
+float* build_edge(float* dest, float x0, float y0, float x1, float y1, float thickness) {
+    float dy = y1 - y0;
+    float dx = x1 - x0;
+    float dh = thickness / 2.0;
+    
+    float hypotenuse = sqrtf(dx*dx + dy*dy);
+    if (hypotenuse != 0) {
+        dh *= hypotenuse / dx;
+    }
+    
+    //dh = thickness / 2.0;
+    
+    // triangle 0 (left top)
+    dest = write_point2D(dest, x0, y0);
+    dest = write_point2D(dest, x0, y0+dh);
+    dest = write_point2D(dest, x1, y1+dh);
+    
+    // triangle 1
+    dest = write_point2D(dest, x0, y0);
+    dest = write_point2D(dest, x1, y1+dh);
+    dest = write_point2D(dest, x1, y1);
+    // triangle 2
+    dest = write_point2D(dest, x0, y0);
+    dest = write_point2D(dest, x1, y1);
+    dest = write_point2D(dest, x1, y1-dh);
+    // triangle 3
+    dest = write_point2D(dest, x0, y0);
+    dest = write_point2D(dest, x1, y1-dh);
+    dest = write_point2D(dest, x0, y0-dh);
+    
+    return dest;
+}
+
+float* write_point2D(float* dest, float x, float y) {
+    dest[0] = x;
+    dest[1] = y;
+    
+    return dest + 2;
+}
+
+float* write_point4D(float* dest, float x, float y, float z, float d) {
+    dest[0] = x;
+    dest[1] = y;
+    dest[2] = z;
+    dest[3] = d;
+    
+    return dest + 4;
+}
+
+double data_avr(double* data, size_t length) {
+    double avr = 0;
+    for (size_t i = 0; i < length; i++) {
+        avr += data[i];
+    }
+    return avr / length;
+}
+
+void data_shift(double* data, size_t length, double shift) {
+    for (size_t i = 0; i < length; i++) {
+        data[i] += shift;
+    }
+}
+
+void data_scale(double* data, size_t length, double scale){
+    for (size_t i = 0; i < length; i++) {
+        data[i] *= scale;
+    }
+}
+
+double data_max(double* data, size_t length) {
+    if (!length) {
+        return NAN;
+    }
+    double maximum = data[0];
+    for (size_t i = 1; i < length; i++) {
+        if(data[i] > maximum) maximum = data[i];
+    }
+    return maximum;
+}
+
+double data_min(double* data, size_t length) {
+    if (!length) {
+        return NAN;
+    }
+    double minimum = data[0];
+    for (size_t i = 1; i < length; i++) {
+        if(data[i] < minimum) minimum = data[i];
+    }
+    return minimum;
+}
+
+double data_dev(double* data, size_t length) {
+    return (data_max(data, length) - data_min(data, length)) / 2.0;
+}
+
+double data_avr2(double* data, size_t length) {
+    double avr2 = 0;
+    for (size_t i = 0; i < length; i++) {
+        avr2 += data[i] * data[i];
+    }
+    return avr2 / length;
 }
