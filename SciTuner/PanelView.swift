@@ -9,6 +9,11 @@
 import UIKit
 
 class PanelView: UIView {
+    var notebar: NotebarView?
+    var stringbar: StringbarView?
+    var controlbar: ControlbarView?
+    var modebar: ModebarView?
+    
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -30,16 +35,22 @@ class PanelView: UIView {
         self.addSubview(thin)
         */
         
-        var notebar = NotebarView(frame: CGRectMake(0, 10, half*2, 40))
-        self.addSubview(notebar)
+        notebar = NotebarView(frame: CGRectMake(0, 10, half*2, 40))
+        stringbar = StringbarView(frame: CGRectMake(0, 30, half*2, 40))
+        controlbar = ControlbarView(frame: CGRectMake(0, 110, half*2, 40))
+        modebar = ModebarView(frame: CGRectMake(0, 150, half*2, 40))
         
-        var stringbar = StringbarView(frame: CGRectMake(0, 30, half*2, 40))
-        self.addSubview(stringbar)
-        
-        var controlbar = ControlbarView(frame: CGRectMake(0, 110, half*2, 40))
-        self.addSubview(controlbar)
-        
-        var modebar = ModebarView(frame: CGRectMake(0, 150, half*2, 40))
-        self.addSubview(modebar)
+        self.addSubview(notebar!)
+        self.addSubview(stringbar!)
+        self.addSubview(controlbar!)
+        self.addSubview(modebar!)
+    }
+    
+    func setNotes(notes: [String]) {
+        notebar!.notes = notes;
+    }
+    
+    func setNotePosition(position: Double) {
+        notebar!.pointerPosition = position;
     }
 }

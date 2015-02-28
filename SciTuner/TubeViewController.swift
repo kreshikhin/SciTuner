@@ -36,11 +36,15 @@ class TubeViewController: UIViewController {
         
         NSLog("%@ %@ %@ %@ %@", navbarHeight, f.origin.x, f.origin.y, f.size.width, f.size.height)
         
+        let panelFrame = getOptimalPanelFrame(navbarHeight, size: self.view.frame.size)
+        var panel = PanelView(frame: panelFrame)
+        self.view.addSubview(panel)
+        
         let sampleRate = 44100
         let sampleCount = 2205
         
-        //var source = Source(sampleRate: sampleRate, sampleCount: sampleCount)
-        var source = MicSource(sampleRate: Double(sampleRate), sampleCount: sampleCount)
+        var source = Source(sampleRate: sampleRate, sampleCount: sampleCount)
+        //var source = MicSource(sampleRate: Double(sampleRate), sampleCount: sampleCount)
         //var source = MicSource2(sampleRate: Double(sampleRate), sampleCount: sampleCount)
         
         var processing = ProcessingAdapter(pointCount: 128)
@@ -55,38 +59,31 @@ class TubeViewController: UIViewController {
         
         //tube.spectrumPoints = [Float](count: 128, repeatedValue: 0)
         
+        var tuner = Tuner()
+        
         source.onData = { () -> () in
             processing.Push(&source.sample)
-        
             processing.Recalculate()
-        
-            //processing.buildStandingWave(&tube.wavePoints, length: tube.wavePoints.count)
+            
             processing.buildSmoothStandingWave(&tube.wavePoints, light: &tube.waveLightPoints, length: tube.wavePoints.count, thickness: 0.1)
             
             //processing.buildSpectrumWindow(&tube.spectrumPoints, length: tube.spectrumPoints.count)
-        
-            var freq = processing.getFrequency()
-            tube.frequency = String(format: "%.2f Hz", freq)
-        
+            
+            tuner.frequency = processing.getFrequency()
+            panel.setNotes(tuner.notes)
+            panel.setNotePosition(tuner.frequencyDeviation())
+            
             tube.setNeedsDisplay()
         }
         
         tube.onDraw = {(rect: CGRect) -> () in
             glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
-        
-            var text = tube.frequency
-            
-            tube.bindDrawable()
-        
             tube.drawPoints(tube.wavePoints, lightPoints: tube.waveLightPoints)
-            //tube.drawPoints(tube.spectrumPoints)
         }
         
         self.view.addSubview(tube)
         
-        let panelFrame = getOptimalPanelFrame(navbarHeight, size: self.view.frame.size)
-        var panel = PanelView(frame: panelFrame)
-        self.view.addSubview(panel)
+        
     }
     
     override func didReceiveMemoryWarning() {

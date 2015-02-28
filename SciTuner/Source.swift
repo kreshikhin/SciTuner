@@ -7,7 +7,7 @@ class Source{
 
     var frequency: Double = 0
 
-    var frequency1: Double = 400.625565
+    var frequency1: Double = 440.625565
     var frequency2: Double = 0.05
 
     var frequencyDeviation: Double = 50.0
