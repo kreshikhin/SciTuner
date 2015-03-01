@@ -10,21 +10,26 @@ import Foundation
 import UIKit
 
 class InstrumentsViewController: UIAlertController {
+    var onChange = {(title: String) -> Void in }
+    
     override func viewDidLoad() {
-        addAction(UIAlertAction(
-            title: "✓ guitar  ", style: UIAlertActionStyle.Default, handler: nil))
+        addInstrument("guitar")
+        addInstrument("ukulule")
+        addInstrument("violin")
+        addInstrument("free mode")
         
-        addAction(UIAlertAction(
-            title: "ukulule", style: UIAlertActionStyle.Default, handler: nil))
+        self.title = "guitar"
         
-        addAction(UIAlertAction(
-            title: "violin", style: UIAlertActionStyle.Default, handler: nil))
+        addAction(UIAlertAction(title: "cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+    }
+    
+    func addInstrument(title: String){
+        var action = UIAlertAction(
+            title: title, style: UIAlertActionStyle.Default,
+            handler: {(action: UIAlertAction?) -> Void in
+                self.onChange(action!.title)
+        })
         
-        addAction(UIAlertAction(
-            title: "free mode", style: UIAlertActionStyle.Default, handler: nil))
-        
-        addAction(UIAlertAction(
-            title: "cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-        
+        addAction(action)
     }
 }

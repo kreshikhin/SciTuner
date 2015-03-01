@@ -15,10 +15,25 @@ class Tuner {
     
     var frequency: Double = 440
     
+    // pitch
     var baseFrequency: Double = 440
     var baseNote: String = "a4"
     
-    var targetNote: String = "a4"
+    // target
+    var targetStringNumber: Int = 0
+    var targetNote: String {
+        get{
+            if self.targetStringNumber < 0 {
+                return strings.first!
+            } else if self.targetStringNumber >= strings.count {
+                return strings.last!
+            }
+            
+            return strings[self.targetStringNumber]
+        }
+        set{
+        }
+    }
     
     init(){
     }
@@ -83,5 +98,24 @@ class Tuner {
     
     func frequencyDeviation() -> Double {
         return 100.0 * frequencyDistanceNumber(targetFrequency(), frequency)
+    }
+    
+    func stringPosition() -> Double {
+        var first = noteFrequency(strings.first!)
+        var last = noteFrequency(strings.last!)
+        
+        return Double(strings.count - 1) * (frequency - first) / (last - first)
+    }
+    
+    func nextString() {
+        if targetStringNumber < strings.count-1 {
+            targetStringNumber++
+        }
+    }
+    
+    func prevString() {
+        if targetStringNumber > 0 {
+            targetStringNumber--
+        }
     }
 }

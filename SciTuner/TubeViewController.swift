@@ -62,7 +62,13 @@ class TubeViewController: UIViewController {
         var tuner = Tuner()
         
         var t = 0.0
-        source.onData = { () -> () in
+        var isPaused = false;
+        
+        source.onData = {()in
+            if isPaused {
+                return
+            }
+            
             processing.Push(&source.sample)
             processing.Recalculate()
             
@@ -72,10 +78,11 @@ class TubeViewController: UIViewController {
             
             tuner.frequency = processing.getFrequency()
             panel.setNotes(tuner.notes)
-            panel.setNotePosition(tuner.frequencyDeviation())
             
-            // tuner.stringPosition()
-            panel.setStringPosition(5)
+            panel.setNotePosition(tuner.frequencyDeviation())
+            panel.setStringPosition(tuner.stringPosition())
+            
+            panel.stringbar!.targetStringNumber = tuner.targetStringNumber
             
             t += 0.01
             
@@ -89,7 +96,28 @@ class TubeViewController: UIViewController {
         
         self.view.addSubview(tube)
         
+        instruments.onChange = {(title: String) -> Void in
+            self.navigationItem.leftBarButtonItem!.title = title
+        }
         
+        panel.stringbar!.strings = ["E2", "A2", "B3", "G3", "D3", "E4", "E5"]
+        
+        panel.controlbar!.onNextString = {()in
+            tuner.nextString()
+            panel.stringbar!.targetStringNumber = tuner.targetStringNumber
+        }
+        
+        panel.controlbar!.onPrevString = {()in
+            tuner.prevString()
+        }
+        
+        panel.controlbar!.onRecord = {()in
+            isPaused = false
+        }
+        
+        panel.controlbar!.onPause = {()in
+            isPaused = true
+        }
     }
     
     override func didReceiveMemoryWarning() {
