@@ -20,7 +20,37 @@ import Foundation
 import UIKit
 
 class StringbarView: UIView {
+    let margin: CGFloat = 10;
+    
     var strings: [String] = ["E2", "A2", "B3", "G3", "D3", "E4"]
+    
+    var pointer: PointerView?
+    var position: Double = 0.0
+    
+    var pointerPosition: Double {
+        set{
+            position = newValue
+            
+            var count = Double(strings.count)
+            var step = (frame.width - 2*margin) / CGFloat(count)
+            
+            var shift: Double = position + 0.5;
+            
+            if position < 0.0 {
+                shift = 0.5 * exp(position);
+            }
+            
+            if position > count - 1.0 {
+                shift = count - 0.5 * exp(-position+count-1);
+            }
+            
+            var width: CGFloat = frame.size.width;
+            pointer!.frame.origin.x = CGFloat(shift) * step + 5.5;
+        }
+        get{
+            return position
+        }
+    }
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -30,7 +60,6 @@ class StringbarView: UIView {
         super.init(frame: frame)
         
         var width = frame.size.width;
-        var margin: CGFloat = 10;
         var left = frame.origin.x + margin;
         var top = frame.origin.y + margin;
         
@@ -50,8 +79,8 @@ class StringbarView: UIView {
             self.addSubview(label);
         }
         
-        var pointer = PointerView(frame: CGRectMake(left + width/1.5, top - 10, 10, 10))
-        self.addSubview(pointer)
+        pointer = PointerView(frame: CGRectMake(left + width/1.5, top - 10, 10, 10))
+        self.addSubview(pointer!)
         
         self.addSubview(baseline)
     }

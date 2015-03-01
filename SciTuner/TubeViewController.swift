@@ -43,8 +43,8 @@ class TubeViewController: UIViewController {
         let sampleRate = 44100
         let sampleCount = 2205
         
-        var source = Source(sampleRate: sampleRate, sampleCount: sampleCount)
-        //var source = MicSource(sampleRate: Double(sampleRate), sampleCount: sampleCount)
+        //var source = Source(sampleRate: sampleRate, sampleCount: sampleCount)
+        var source = MicSource(sampleRate: Double(sampleRate), sampleCount: sampleCount)
         //var source = MicSource2(sampleRate: Double(sampleRate), sampleCount: sampleCount)
         
         var processing = ProcessingAdapter(pointCount: 128)
@@ -61,6 +61,7 @@ class TubeViewController: UIViewController {
         
         var tuner = Tuner()
         
+        var t = 0.0
         source.onData = { () -> () in
             processing.Push(&source.sample)
             processing.Recalculate()
@@ -72,6 +73,11 @@ class TubeViewController: UIViewController {
             tuner.frequency = processing.getFrequency()
             panel.setNotes(tuner.notes)
             panel.setNotePosition(tuner.frequencyDeviation())
+            
+            // tuner.stringPosition()
+            panel.setStringPosition(5)
+            
+            t += 0.01
             
             tube.setNeedsDisplay()
         }

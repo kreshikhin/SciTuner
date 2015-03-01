@@ -53,4 +53,12 @@ class PanelView: UIView {
     func setNotePosition(position: Double) {
         notebar!.pointerPosition = position;
     }
+    
+    func setStrings(strings: [String]) {
+        stringbar!.strings = strings;
+    }
+    
+    func setStringPosition(position: Double) {
+        stringbar!.pointerPosition = position;
+    }
 }
