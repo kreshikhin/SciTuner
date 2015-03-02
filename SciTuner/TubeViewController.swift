@@ -11,6 +11,9 @@ import UIKit
 class TubeViewController: UIViewController {
     let instruments = InstrumentsViewController(title: nil, message: nil, preferredStyle: .ActionSheet)
     
+    var setPitch = {(pitch: String)->Void in}
+    var setTuning = {(values: [String])->Void in}
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -117,6 +120,21 @@ class TubeViewController: UIViewController {
         
         panel.controlbar!.onPause = {()in
             isPaused = true
+        }
+        
+        setPitch = {(pitch: String)->Void in
+            if pitch == "scientific" {
+                tuner.baseFrequency = 256.0
+                tuner.baseNote = "c4"
+                return
+            }
+            
+            tuner.baseFrequency = 440.0
+            tuner.baseNote = "a4"
+        }
+        
+        setTuning = {(values: [String])->Void in
+            tuner.strings = values
         }
     }
     

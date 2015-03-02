@@ -17,6 +17,14 @@ class ViewController: UINavigationController {
         
         self.view.backgroundColor = UIColor.whiteColor()
         
+        settings.onPitchChange = {(pitch: String)->Void in
+            self.tube.setPitch(pitch)
+        }
+        
+        settings.onTuningChange = {(values: [String])->Void in
+            self.tube.setTuning(values)
+        }
+        
         self.pushViewController(tube, animated: false)
     }
     
