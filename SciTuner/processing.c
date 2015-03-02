@@ -428,7 +428,7 @@ void processing_build_smooth_standing_wave(Processing* p, float* wave, float* li
     
     double dx = (double)2.0 / p->pointCount;
     float* dest = wave;
-    for (size_t j = 0; j < p->pointCount; j ++) {
+    for (size_t j = 0; j < p->pointCount-1; j ++) {
         float x0 = dx * j - 1.0;
         float y0 = p->points[j];
         float x1 = dx*(j + 1) - 1.0;

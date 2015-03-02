@@ -51,16 +51,13 @@ class TubeViewController: UIViewController {
         //var source = MicSource2(sampleRate: Double(sampleRate), sampleCount: sampleCount)
         
         var processing = ProcessingAdapter(pointCount: 128)
-        //processing.setFrequency(200)
         
         let tubeFrame = getOptimalTubeFrame(navbarHeight, size: self.view.frame.size)
         
         var tube = TubeView(frame: tubeFrame)
         
-        tube.wavePoints = [Float](count: Int(processing.pointCount)*2*3*4, repeatedValue: 0)
-        tube.waveLightPoints = [Float](count: Int(processing.pointCount)*4*3*4, repeatedValue: 0)
-        
-        //tube.spectrumPoints = [Float](count: 128, repeatedValue: 0)
+        tube.wavePoints = [Float](count: Int(processing.pointCount-1)*2*12, repeatedValue: 0)
+        tube.waveLightPoints = [Float](count: Int(processing.pointCount-1)*4*12, repeatedValue: 0)
         
         var tuner = Tuner()
         
@@ -76,8 +73,6 @@ class TubeViewController: UIViewController {
             processing.Recalculate()
             
             processing.buildSmoothStandingWave(&tube.wavePoints, light: &tube.waveLightPoints, length: tube.wavePoints.count, thickness: 0.1)
-            
-            //processing.buildSpectrumWindow(&tube.spectrumPoints, length: tube.spectrumPoints.count)
             
             tuner.frequency = processing.getFrequency()
             panel.setNotes(tuner.notes)
@@ -103,7 +98,7 @@ class TubeViewController: UIViewController {
             self.navigationItem.leftBarButtonItem!.title = title
         }
         
-        panel.stringbar!.strings = ["E2", "A2", "B3", "G3", "D3", "E4", "E5"]
+        panel.stringbar!.strings = ["E2", "A2", "B3", "G3", "D3", "E4"]
         
         panel.controlbar!.onNextString = {()in
             tuner.nextString()
@@ -135,6 +130,7 @@ class TubeViewController: UIViewController {
         
         setTuning = {(values: [String])->Void in
             tuner.strings = values
+            panel.stringbar!.strings = values
         }
     }
     
