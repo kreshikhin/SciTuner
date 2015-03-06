@@ -49,8 +49,8 @@ void source_generate(double* dest, size_t count, double* t, double dt, double fr
     for(int i = 0; i < count ; i++){
         *t = *t + dt;
         
-        double r1 = (double)rand() / (100.0 * RAND_MAX);
-        double r2 = 1.0 * ((double)rand() / (RAND_MAX) - 0.5);
+        double r1 = 0; //(double)rand() / (100.0 * RAND_MAX);
+        double r2 = 0; //1.0 * ((double)rand() / (RAND_MAX) - 0.5);
         dest[i] = 1.0 * sin(2.0 * M_PI * freq * (*t) + r1) + r2;
     }
 }

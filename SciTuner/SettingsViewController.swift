@@ -22,13 +22,33 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     var pitchIndex: Int = 0
     
     var tuningIndex: Int = 0
+    
     let tuningValues: [[String]] = [
-        ["e2", "a2", "d3", "g3", "b3", "e4"],
-        ["d2", "a2", "d3", "d#3", "a3", "d4"]
+        ["e2", "a2", "d3", "g3", "b3", "e4"], // standard
+        ["c2", "g2", "d3", "a3", "e4", "g4"], // new standard
+        ["d2", "g2", "b2", "d3", "g3", "b3", "d4"], // russian
+        
+        ["d2", "a2", "d3", "g3", "b3", "e4"], // drop D
+        ["c2", "g2", "c3", "f3", "a3", "d4"], // drop C
+        ["g2", "d2", "g3", "c4", "e4", "a4"], // drop G
+        
+        ["d2", "a2", "d3", "f#3", "a3", "d4"], // open D
+        ["c2", "g2", "c3", "g3", "c4", "e4"], // open C
+        ["g2", "g3", "d3", "g3", "b3", "d4"], // open G
     ]
+    
     let tunings: [String] = [
-        "Standard E2 A2 D3 G3 B3 E4",
-        "Open D2 A2 D3 F3♯ A3 D4"
+        "Standard (E A D G B E)",
+        "New Standard (C G D A E G)",
+        "Russian (D G B D G B D)",
+        
+        "Drop D (D A D G B E)",
+        "Drop C (C G C F A D)",
+        "Drop G (G D G C E A)",
+        
+        "Open D (D A D F♯ A D)",
+        "Open C (C G C G C E)",
+        "Open G (G G D G B D)",
     ]
     
     override func viewDidLoad() {

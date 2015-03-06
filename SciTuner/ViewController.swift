@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UINavigationController {
     var tube = TubeViewController()
     var settings = SettingsViewController()
+    var defaults = NSUserDefaults.standardUserDefaults()
 
     override func viewDidLoad() {
         super.viewDidLoad()

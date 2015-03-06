@@ -11,6 +11,8 @@ import UIKit
 class TubeViewController: UIViewController {
     let instruments = InstrumentsViewController(title: nil, message: nil, preferredStyle: .ActionSheet)
     
+    let defaults = NSUserDefaults.standardUserDefaults()
+
     var setPitch = {(pitch: String)->Void in}
     var setTuning = {(values: [String])->Void in}
     
@@ -44,7 +46,7 @@ class TubeViewController: UIViewController {
         self.view.addSubview(panel)
         
         let sampleRate = 44100
-        let sampleCount = 2205
+        let sampleCount = 2048
         
         //var source = Source(sampleRate: sampleRate, sampleCount: sampleCount)
         var source = MicSource(sampleRate: Double(sampleRate), sampleCount: sampleCount)
@@ -74,8 +76,11 @@ class TubeViewController: UIViewController {
             
             processing.buildSmoothStandingWave(&tube.wavePoints, light: &tube.waveLightPoints, length: tube.wavePoints.count, thickness: 0.1)
             
-            tuner.frequency = processing.getFrequency()
-            panel.setNotes(tuner.notes)
+            tuner.frequency = processing.getFrequency() + processing.getSubFrequency()
+            //panel.setNotes(tuner.notes)
+            
+            panel.thin!.text = String(format:"%f", processing.getFrequency())
+            panel.thick!.text = String(format: "%f", processing.getFrequency() + processing.getSubFrequency())
             
             panel.setNotePosition(tuner.frequencyDeviation())
             panel.setStringPosition(tuner.stringPosition())
@@ -87,6 +92,9 @@ class TubeViewController: UIViewController {
             tube.setNeedsDisplay()
         }
         
+        processing.enableFilter()
+        processing.setTargetFrequency(tuner.targetFrequency())
+        
         tube.onDraw = {(rect: CGRect) -> () in
             glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
             tube.drawPoints(tube.wavePoints, lightPoints: tube.waveLightPoints)
@@ -94,8 +102,17 @@ class TubeViewController: UIViewController {
         
         self.view.addSubview(tube)
         
+        // instruments
+        
+        if defaults.valueForKey("instrument") != nil {
+            var title = defaults.valueForKey("instrument") as String
+            instruments.title = title
+            self.navigationItem.leftBarButtonItem!.title = title
+        }
+        
         instruments.onChange = {(title: String) -> Void in
             self.navigationItem.leftBarButtonItem!.title = title
+            self.defaults.setValue(title, forKey: "instrument")
         }
         
         panel.stringbar!.strings = ["E2", "A2", "B3", "G3", "D3", "E4"]
@@ -103,10 +120,19 @@ class TubeViewController: UIViewController {
         panel.controlbar!.onNextString = {()in
             tuner.nextString()
             panel.stringbar!.targetStringNumber = tuner.targetStringNumber
+            
+            panel.notebar!.notes = tuner.targetNotes()
+            
+            processing.setTargetFrequency(tuner.targetFrequency())
         }
         
         panel.controlbar!.onPrevString = {()in
             tuner.prevString()
+            panel.stringbar!.targetStringNumber = tuner.targetStringNumber
+            
+            panel.notebar!.notes = tuner.targetNotes()
+            
+            processing.setTargetFrequency(tuner.targetFrequency())
         }
         
         panel.controlbar!.onRecord = {()in

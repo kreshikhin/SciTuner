@@ -7,14 +7,14 @@ class Source{
 
     var frequency: Double = 0
 
-    var frequency1: Double = 440.625565
+    var frequency1: Double = 89.9
     var frequency2: Double = 0.05
 
-    var frequencyDeviation: Double = 50.0
+    var frequencyDeviation: Double = 0.0
     var discreteFrequency: Double = 44100
     var t: Double = 0
 
-    var sample = [Double](count: 2205, repeatedValue: 0)
+    var sample = [Double](count: 2048, repeatedValue: 0)
     
     var lock = NSLock()
 
@@ -24,7 +24,8 @@ class Source{
         
         var interval = Double(sample.count) / discreteFrequency
 
-        NSLog(" %f ", interval);
+        print("source freq ")
+        println(interval)
 
         let timer = NSTimer(timeInterval: interval, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
         NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
@@ -39,6 +40,8 @@ class Source{
 
         var df: Double = frequencyDeviation * sin(2 * M_PI * frequency2 * t)
         frequency = frequency1 + df
+        
+        //NSLog("source freq %f ", frequency);
 
         source_generate(&sample, UInt(sample.count), &t, dt, frequency)
         

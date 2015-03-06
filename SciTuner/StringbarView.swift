@@ -34,8 +34,8 @@ class StringbarView: UIView {
             
             count = newValue.count
             var width = frame.size.width;
-            var left = frame.origin.x + margin;
-            var top = frame.origin.y + margin;
+            var left = margin;
+            var top = margin;
             var step = (width - 2 * margin) / CGFloat(count);
             
             for(var i = 0; i < count; i++){
@@ -46,7 +46,7 @@ class StringbarView: UIView {
                 
                 var label = labels[i]!
                 label.frame = CGRectMake(left + shift - 9, top + 7, 25 , 20)
-                label.text = newValue[i]
+                label.text = newValue[i].uppercaseString
                 label.hidden = false
             }
         }
@@ -66,8 +66,8 @@ class StringbarView: UIView {
     var targetStringNumber: Int {
         set{
             var width = frame.size.width;
-            var left = frame.origin.x + margin;
-            var top = frame.origin.y + margin;
+            var left = margin;
+            var top = margin;
             var step = (width - 2 * margin) / CGFloat(count);
             var shift = step * (CGFloat(newValue) + 0.5)
             
@@ -127,8 +127,8 @@ class StringbarView: UIView {
         }
         
         var width = frame.size.width;
-        var left = frame.origin.x + margin;
-        var top = frame.origin.y + margin;
+        var left = margin;
+        var top = margin;
         
         var baseline = UIView(frame: CGRectMake(left, top, width - 2 * margin, 1))
         baseline.backgroundColor = UIColor.blackColor()

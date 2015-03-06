@@ -14,6 +14,10 @@ class PanelView: UIView {
     var controlbar: ControlbarView?
     var modebar: ModebarView?
     
+    
+    var thick: UILabel?
+    var thin: UILabel?
+    
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -24,20 +28,19 @@ class PanelView: UIView {
         let half = frame.size.width / 2
         let third = frame.size.width / 3;
         
-        /*var thick = UILabel(frame: CGRectMake(10, 10, half - 10, 20))
-        thick.text = "thick"
-        thick.textAlignment = .Left
-        self.addSubview(thick)
+        thick = UILabel(frame: CGRectMake(10, 5, half - 10, 20))
+        thick!.text = "thick"
+        thick!.textAlignment = .Left
+        self.addSubview(thick!)
         
-        var thin = UILabel(frame: CGRectMake(10+half, 10, half - 20, 20))
-        thin.text = "thin"
-        thin.textAlignment = .Right
-        self.addSubview(thin)
-        */
+        thin = UILabel(frame: CGRectMake(10+half, 5, half - 20, 20))
+        thin!.text = "thin"
+        thin!.textAlignment = .Right
+        self.addSubview(thin!)
         
-        notebar = NotebarView(frame: CGRectMake(0, 10, half*2, 40))
-        stringbar = StringbarView(frame: CGRectMake(0, 30, half*2, 40))
-        controlbar = ControlbarView(frame: CGRectMake(0, 110, half*2, 40))
+        notebar = NotebarView(frame: CGRectMake(0, 25, half*2, 40))
+        stringbar = StringbarView(frame: CGRectMake(0, 65, half*2, 40))
+        controlbar = ControlbarView(frame: CGRectMake(0, 105, half*2, 40))
         modebar = ModebarView(frame: CGRectMake(0, 150, half*2, 40))
         
         self.addSubview(notebar!)

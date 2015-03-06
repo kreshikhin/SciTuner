@@ -12,9 +12,23 @@ import UIKit
 class NotebarView: UIView {
     let margin: CGFloat = 10;
     
-    var notes: [String] = ["G#4", "A4", "B#4"]
     var pointer: PointerView?
     var position: Double = 0.0
+    
+    var labels: [UILabel?] = []
+    
+    var notes: [String] {
+        get{
+            return ["", "", ""]
+        }
+        set{
+            var index = 0
+            for label in labels {
+                label!.text = newValue[index].uppercaseString
+                index++
+            }
+        }
+    }
     
     var pointerPosition: Double {
         set{
@@ -50,6 +64,7 @@ class NotebarView: UIView {
         super.init(frame: frame)
         
         var width = frame.size.width;
+        var notes = ["G#4", "A4", "B#4"]
         
         var baseline = UIView(frame: CGRectMake(margin, 10, width - 2 * margin, 1))
         baseline.backgroundColor = UIColor.blackColor()
@@ -65,10 +80,12 @@ class NotebarView: UIView {
         for(var i: CGFloat = 0; i < 3; i++){
             var line = UIView(frame: CGRectMake(margin + step * (i + 0.5), margin, 2.0 , 7))
             line.backgroundColor = UIColor.blackColor()
+            
             self.addSubview(line);
             
             var label = UILabel(frame: CGRectMake(margin + step * (i + 0.5) - 9, margin + 7, 40 , 20))
             label.text = notes[Int(i)];
+            labels.append(label)
             self.addSubview(label);
         }
         

@@ -31,19 +31,27 @@ class ProcessingAdapter{
         processing_recalculate(p)
     }
     
-    func buildStandingWave(inout wave: [Float], length: Int) {
-        processing_build_standing_wave(p, &wave, UInt(length))
-    }
-    
     func buildSmoothStandingWave(inout wave: [Float], inout light: [Float], length: Int, thickness: Float) {
-        processing_build_smooth_standing_wave(p, &wave, &light, UInt(length), thickness)
-    }
-    
-    func buildSpectrumWindow(inout spectrum: [Float], length: Int) {
-        processing_build_build_power_spectrum(p, &spectrum, UInt(length))
+        processing_build_standing_wave(p, &wave, &light, UInt(length), thickness)
     }
     
     func getFrequency() -> Double {
         return processing_get_frequency(p)
+    }
+    
+    func getSubFrequency() -> Double {
+        return processing_get_sub_frequency(p)
+    }
+    
+    func setTargetFrequency(frequency: Double) {
+        processing_set_target_frequency(p, frequency)
+    }
+    
+    func enableFilter(){
+        processing_enable_filter(p)
+    }
+    
+    func disableFilter(){
+        processing_disable_filter(p)
     }
 }

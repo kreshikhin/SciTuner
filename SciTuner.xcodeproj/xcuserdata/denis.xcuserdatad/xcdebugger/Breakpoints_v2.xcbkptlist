@@ -582,28 +582,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SciTuner/processing.c"
-            timestampString = "446824190.305702"
+            timestampString = "447334871.93937"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "336"
-            endingLineNumber = "336"
-            landmarkName = "processing_detect_freq_and_phase2()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SciTuner/processing.c"
-            timestampString = "446824190.305702"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "234"
-            endingLineNumber = "234"
-            landmarkName = "processing_build_build_power_spectrum()"
+            startingLineNumber = "369"
+            endingLineNumber = "369"
+            landmarkName = "data_scale()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -614,11 +598,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SciTuner/TubeViewController.swift"
-            timestampString = "446987165.317858"
+            timestampString = "447345278.278429"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
             landmarkName = "viewDidLoad()"
             landmarkType = "5">
          </BreakpointContent>
@@ -630,12 +614,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SciTuner/processing.c"
-            timestampString = "446824190.305702"
+            timestampString = "447334871.93937"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "422"
-            endingLineNumber = "422"
-            landmarkName = "processing_build_smooth_standing_wave()"
+            startingLineNumber = "460"
+            endingLineNumber = "460"
+            landmarkName = "data_append_and_shift()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -646,12 +630,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SciTuner/processing.c"
-            timestampString = "446824190.305702"
+            timestampString = "447334871.93937"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "424"
-            endingLineNumber = "424"
-            landmarkName = "processing_build_smooth_standing_wave()"
+            startingLineNumber = "462"
+            endingLineNumber = "462"
+            landmarkName = "data_append_and_shift()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -662,12 +646,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SciTuner/processing.c"
-            timestampString = "446829627.642737"
+            timestampString = "447334871.93937"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "549"
-            endingLineNumber = "549"
-            landmarkName = "data_avr2()"
+            startingLineNumber = "587"
+            endingLineNumber = "587"
+            landmarkName = "data_append_and_shift()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -678,11 +662,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SciTuner/TubeViewController.swift"
-            timestampString = "447008877.714998"
+            timestampString = "447345278.278429"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
             landmarkName = "viewDidLoad()"
             landmarkType = "5">
          </BreakpointContent>
@@ -694,7 +678,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SciTuner/TubeViewController.swift"
-            timestampString = "447008877.714998"
+            timestampString = "447345278.278429"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "81"
@@ -710,11 +694,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SciTuner/NotebarView.swift"
-            timestampString = "446845093.933821"
+            timestampString = "447015132.942153"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
             landmarkName = "NotebarView"
             landmarkType = "3">
             <Locations>
@@ -756,11 +740,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SciTuner/NotebarView.swift"
-            timestampString = "446845797.866211"
+            timestampString = "447015132.942153"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
             landmarkName = "NotebarView"
             landmarkType = "3">
          </BreakpointContent>
@@ -820,12 +804,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SciTuner/processing.c"
-            timestampString = "447008869.418906"
+            timestampString = "447334871.93937"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "398"
-            endingLineNumber = "398"
-            landmarkName = "processing_build_smooth_standing_wave()"
+            startingLineNumber = "436"
+            endingLineNumber = "436"
+            landmarkName = "data_append_and_shift()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -836,12 +820,60 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SciTuner/processing.c"
-            timestampString = "447008921.942921"
+            timestampString = "447334871.93937"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "415"
-            endingLineNumber = "415"
-            landmarkName = "processing_build_smooth_standing_wave()"
+            startingLineNumber = "453"
+            endingLineNumber = "453"
+            landmarkName = "data_append_and_shift()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SciTuner/processing.c"
+            timestampString = "447334871.93937"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "409"
+            endingLineNumber = "409"
+            landmarkName = "data_append_and_shift()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SciTuner/processing.c"
+            timestampString = "447334871.93937"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "220"
+            endingLineNumber = "220"
+            landmarkName = "processing_clarify_peak_frequency_in_range()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SciTuner/processing.c"
+            timestampString = "447334871.93937"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "223"
+            endingLineNumber = "223"
+            landmarkName = "processing_clarify_peak_frequency_in_range()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

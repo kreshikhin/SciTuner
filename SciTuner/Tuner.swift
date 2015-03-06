@@ -10,14 +10,17 @@ import Foundation
 
 class Tuner {
     var shift: Int = 0
-    var strings: [String] = ["e2", "a2", "b3", "g3", "d3", "e4"]
-    var notes: [String] = ["d#4", "e4", "f4"]
+    var strings: [String] = ["e2", "a2", "d3", "g3", "b3", "e4"]
+    var notes: [String] = ["d#2", "e2", "f2"]
     
     var frequency: Double = 440
     
     // pitch
     var baseFrequency: Double = 440
     var baseNote: String = "a4"
+    
+    //
+    var fret: Int = 0
     
     // target
     var targetStringNumber: Int = 0
@@ -39,6 +42,11 @@ class Tuner {
     }
     
     func getNotePosition(){
+    }
+    
+    func targetNotes() -> [String] {
+        var n = Double(noteNumber(targetNote))
+        return [noteString(n-1), noteString(n), noteString(n+1)]
     }
     
     func noteNumber(noteString: String) -> Int {
@@ -70,6 +78,30 @@ class Tuner {
         if note.hasPrefix("8") { octave = 8; }
         
         return 12 * octave + number
+    }
+    
+    func noteString(num: Double) -> String {
+        var noteOctave: Int = Int(num / 12)
+        var noteShift: Int = Int(num % 12)
+        
+        var result = ""
+        switch noteShift {
+            case 0: result += "c"
+            case 1: result += "c#"
+            case 2: result += "d"
+            case 3: result += "d#"
+            case 4: result += "e"
+            case 5: result += "f"
+            case 6: result += "f#"
+            case 7: result += "g"
+            case 8: result += "g#"
+            case 9: result += "a"
+            case 10: result += "a#"
+            case 11: result += "b"
+            default: result += ""
+        }
+        
+        return result + String(noteOctave)
     }
     
     func noteFrequency(noteString: String) -> Double {
