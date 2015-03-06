@@ -21,35 +21,31 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     let pitchValues: [String] = ["default", "scientific"]
     var pitchIndex: Int = 0
     
-    var tuningIndex: Int = 0
+    var instruments: [String:[String:String]] = [String:[String:String]]()
     
-    let tuningValues: [[String]] = [
-        ["e2", "a2", "d3", "g3", "b3", "e4"], // standard
-        ["c2", "g2", "d3", "a3", "e4", "g4"], // new standard
-        ["d2", "g2", "b2", "d3", "g3", "b3", "d4"], // russian
-        
-        ["d2", "a2", "d3", "g3", "b3", "e4"], // drop D
-        ["c2", "g2", "c3", "f3", "a3", "d4"], // drop C
-        ["g2", "d2", "g3", "c4", "e4", "a4"], // drop G
-        
-        ["d2", "a2", "d3", "f#3", "a3", "d4"], // open D
-        ["c2", "g2", "c3", "g3", "c4", "e4"], // open C
-        ["g2", "g3", "d3", "g3", "b3", "d4"], // open G
-    ]
+    // bingins
+    var instrumentTitle: String = ""
+    var tuningTitles: [String] = []
+    var tuningStrings: [[String]]
     
-    let tunings: [String] = [
-        "Standard (E A D G B E)",
-        "New Standard (C G D A E G)",
-        "Russian (D G B D G B D)",
-        
-        "Drop D (D A D G B E)",
-        "Drop C (C G C F A D)",
-        "Drop G (G D G C E A)",
-        
-        "Open D (D A D F♯ A D)",
-        "Open C (C G C G C E)",
-        "Open G (G G D G B D)",
-    ]
+    var instrument: String{
+        set{
+            instrumentTitle = newValue
+            tuningTitles = []
+            tuningStrings = []
+            for (title, strings) in instruments[instrumentTitle]! {
+                var splitStrings = split(strings) {$0 == " "}
+                var titleStrings = join(" ", splitStrings.map({(note: String) -> String in
+                    return note.repl
+                })
+                tuningTitles.append(title + " (" + titleNotes + ")"))
+                //tuningStrings.append(strings.spl)
+            }
+        }
+        get{
+            return instrumentTitle
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,8 +58,47 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         tableView?.dataSource = self;
         
         self.view.addSubview(tableView!)
+        
+        
+        addInstrument("guitar", [
+            "Standard": "e2 a2 d3 g3 b3 e4",
+            "New Standard": "c2 g2 d3 a3 e4 g4",
+            "Russian": "d2 g2 b2 d3 g3 b3 d4",
+            "Drop D": "d2 a2 d3 g3 b3 e4",
+            "Drop C": "c2 g2 c3 f3 a3 d4",
+            "Drop G": "g2 d2 g3 c4 e4 a4",
+            "Open D": "d2 a2 d3 f#3 a3 d4",
+            "Open C": "c2 g2 c3 g3 c4 e4",
+            "Open G": "g2 g3 d3 g3 b3 d4",
+            "Lute": "e2 a2 d3 f#3 b3 e4",
+            "Irish": "d2 a2 d3 g3 a3 d4",
+        ])
+        
+        addInstrument("cello", [
+            "Standard": "c2 g2 d3 a3",
+            "Alternative": "c2 g2 d3 g3"
+        ])
+        
+        addInstrument("violin", [
+            "Standard": "g3 d4 a4 e5",
+            "Tenor": "g2 d3 a3 e4",
+            "Tenor alter.": "f2 c3 g3 d4"
+        ])
+        
+        addInstrument("banjo", [
+            "Standard": "g4 d3 g3 b3 d4",
+        ])
+        
+        addInstrument("ukulule", [
+            "Standard": "g4 c4 e4 a4",
+            "D-tuning": "a4 d4 f#4 b4",
+        ])
     }
     
+    
+    func addInstrument(name: String, _ tunings: [String: String]){
+        instruments[name] = tunings
+    }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
@@ -74,7 +109,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             return pitchs.count
         }
         if(section == 1){
-            return tunings.count
+            return instrumentTunings.count
         }
         
         return 0
