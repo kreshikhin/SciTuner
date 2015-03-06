@@ -15,20 +15,30 @@ class ViewController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.view.backgroundColor = UIColor.whiteColor()
-        
+
         settings.onPitchChange = {(pitch: String)->Void in
-            self.tube.setPitch(pitch)
+            //self.defaults.setObjectForKey()
+
+            if pitch == "scientific" {
+                self.tube.tuner.baseFrequency = 256.0
+                self.tube.tuner.baseNote = "c4"
+                return
+            }
+
+            self.tube.tuner.baseFrequency = 440.0
+            self.tube.tuner.baseNote = "a4"
         }
-        
+
         settings.onTuningChange = {(values: [String])->Void in
-            self.tube.setTuning(values)
+            self.tube.tuner.strings = values
+            self.tube.panel.stringbar!.strings = values
         }
-        
+
         self.pushViewController(tube, animated: false)
     }
-    
+
     func showSettings(){
         self.pushViewController(settings, animated: true)
     }
