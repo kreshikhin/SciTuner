@@ -103,5 +103,7 @@ class NotebarView: UIView {
         self.tuner.on("stringChange", {()in
             self.notes = self.tuner.notes
         })
+        
+        self.notes = self.tuner.notes
     }
 }

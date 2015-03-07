@@ -69,21 +69,24 @@ class Tuner {
             return
         }
         
-        defaults.setValue(value, forKey: "instrument")
+        instrument = value
+        defaults.setValue(instrument, forKey: "instrument")
         
         tunings = []
         tuningStrings = []
-        for tuning in instruments[value]! {
+        for tuning in instruments[instrument]! {
             tunings.append(tuning.title)
             tuningStrings.append(tuning.strings)
         }
         
-        var defaultTuning: Int? = defaults.integerForKey(value)
+        var defaultTuning: Int? = defaults.integerForKey(instrument)
         if defaultTuning != nil {
             setTuningIndex(defaultTuning!)
+        }else{
+            setTuningIndex(0)
         }
         
-        instrument = value
+        
         call("instrumentChange")
     }
     
@@ -91,6 +94,8 @@ class Tuner {
         defaults.setInteger(value, forKey: instrument)
         tuningIndex = value
         strings = tuningStrings[tuningIndex]
+        
+        setStringIndex(stringIndex)
         
         call("tuningChange")
     }

@@ -22,9 +22,10 @@ class StringbarView: UIView {
     var strings: [String] {
         set{
             for la in labels { la!.hidden = true }
-            for li in labels { li!.hidden = true }
+            for li in lines { li!.hidden = true }
 
             count = newValue.count
+            
             var width = frame.size.width;
             var left = margin;
             var top = margin;
@@ -37,9 +38,10 @@ class StringbarView: UIView {
                 line.hidden = false
 
                 var label = labels[i]!
-                label.frame = CGRectMake(left + shift - 9, top + 7, 25 , 20)
+                label.frame = CGRectMake(left + shift - 9, top + 7, 30 , 20)
                 label.text = newValue[i].uppercaseString
                 label.hidden = false
+                label.adjustsFontSizeToFitWidth = true
             }
         }
         get {
@@ -112,6 +114,7 @@ class StringbarView: UIView {
             line.hidden = true
             lines.append(line)
             self.addSubview(line)
+            
             var label = UILabel()
             label.hidden = true
             labels.append(label)
@@ -131,6 +134,7 @@ class StringbarView: UIView {
         
         tuner.on("tuningChange", {()in
             self.strings = self.tuner.strings
+            self.stringIndex = self.tuner.stringIndex
         })
         
         tuner.on("frequencyChange", {()in
