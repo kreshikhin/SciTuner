@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 class ModebarView: UIView {
+    let tuner = Tuner.sharedInstance
+    
     var notes: [String] = ["G#4", "A4", "B#4"]
     var tuningMode: UIButton?
     

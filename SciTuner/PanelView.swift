@@ -38,14 +38,14 @@ class PanelView: UIView {
         thin!.textAlignment = .Right
         self.addSubview(thin!)
         
-        //notebar = NotebarView(frame: CGRectMake(0, 25, half*2, 40))
-        //stringbar = StringbarView(frame: CGRectMake(0, 65, half*2, 40))
-        //controlbar = ControlbarView(frame: CGRectMake(0, 105, half*2, 40))
+        notebar = NotebarView(frame: CGRectMake(0, 25, half*2, 40))
+        stringbar = StringbarView(frame: CGRectMake(0, 65, half*2, 40))
+        controlbar = ControlbarView(frame: CGRectMake(0, 105, half*2, 40))
         //modebar = ModebarView(frame: CGRectMake(0, 150, half*2, 40))
         
-        //self.addSubview(notebar!)
-        //self.addSubview(stringbar!)
-        //self.addSubview(controlbar!)
+        self.addSubview(notebar!)
+        self.addSubview(stringbar!)
+        self.addSubview(controlbar!)
         //self.addSubview(modebar!)
     }
 }

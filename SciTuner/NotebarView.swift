@@ -99,5 +99,9 @@ class NotebarView: UIView {
         self.tuner.on("frequencyChange", {()in
             self.pointerPosition = self.tuner.frequencyDeviation()
         })
+        
+        self.tuner.on("stringChange", {()in
+            self.notes = self.tuner.notes
+        })
     }
 }

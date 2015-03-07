@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class ControlbarView: UIView {
-    var tuner = Tuner()
+    let tuner = Tuner.sharedInstance
     var isPaused = false
     
     required init(coder aDecoder: NSCoder) {

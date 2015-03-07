@@ -91,6 +91,8 @@ class Tuner {
         defaults.setInteger(value, forKey: instrument)
         tuningIndex = value
         strings = tuningStrings[tuningIndex]
+        
+        call("tuningChange")
     }
 
     func setStringIndex(value: Int) {
@@ -107,6 +109,8 @@ class Tuner {
         
         var n = Double(noteNumber(string))
         notes = [noteString(n-1.0), noteString(n), noteString(n+1.0)]
+        
+        call("stringChange")
     }
     
     func setPitchIndex(value: Int) {
@@ -122,6 +126,13 @@ class Tuner {
         
         baseFrequency = 440.0
         baseNote = "a4"
+        
+        call("pitchChange")
+    }
+    
+    func setFrequency(value: Double){
+        frequency = value
+        call("frequencyChange")
     }
 
     init(){
@@ -286,14 +297,10 @@ class Tuner {
     }
 
     func nextString() {
-        if stringIndex < strings.count-1 {
-            stringIndex++
-        }
+        setStringIndex(stringIndex+1)
     }
 
     func prevString() {
-        if stringIndex > 0 {
-            stringIndex--
-        }
+        setStringIndex(stringIndex-1)
     }
 }

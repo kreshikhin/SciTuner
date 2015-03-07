@@ -55,7 +55,7 @@ class StringbarView: UIView {
     var pointer: PointerView?
     var position: Double = 0.0
 
-    var targetStringNumber: Int {
+    var stringIndex: Int {
         set{
             var width = frame.size.width;
             var left = margin;
@@ -137,6 +137,11 @@ class StringbarView: UIView {
             self.pointerPosition = self.tuner.stringPosition()
         })
         
+        tuner.on("stringChange", {()in
+            self.stringIndex = self.tuner.stringIndex
+        })
+        
         self.strings = self.tuner.strings
+        self.stringIndex = self.tuner.stringIndex
     }
 }

@@ -44,8 +44,8 @@ class TubeViewController: UIViewController {
         let sampleRate = 44100
         let sampleCount = 2048
 
-        //var source = Source(sampleRate: sampleRate, sampleCount: sampleCount)
-        var source = MicSource(sampleRate: Double(sampleRate), sampleCount: sampleCount)
+        var source = Source(sampleRate: sampleRate, sampleCount: sampleCount)
+        //var source = MicSource(sampleRate: Double(sampleRate), sampleCount: sampleCount)
         //var source = MicSource2(sampleRate: Double(sampleRate), sampleCount: sampleCount)
 
         var processing = ProcessingAdapter(pointCount: 128)
@@ -66,7 +66,7 @@ class TubeViewController: UIViewController {
 
             processing.buildSmoothStandingWave(&tube.wavePoints, light: &tube.waveLightPoints, length: tube.wavePoints.count, thickness: 0.1)
 
-            self.tuner.frequency = processing.getFrequency() + processing.getSubFrequency()
+            self.tuner.setFrequency(processing.getFrequency() + processing.getSubFrequency())
 
             tube.setNeedsDisplay()
         }
@@ -81,7 +81,6 @@ class TubeViewController: UIViewController {
         self.view.addSubview(tube)
 
         tuner.on("instrumentChange", {() -> Void in
-            println("wtf?")
             self.navigationItem.leftBarButtonItem!.title = self.tuner.instrument
         })
     }
