@@ -136,5 +136,7 @@ class StringbarView: UIView {
         tuner.on("frequencyChange", {()in
             self.pointerPosition = self.tuner.stringPosition()
         })
+        
+        self.strings = self.tuner.strings
     }
 }

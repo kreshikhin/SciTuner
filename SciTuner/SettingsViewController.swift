@@ -26,8 +26,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         tableView?.dataSource = self;
 
         tuner.on("instrumentChange", {()in
-            println("instrment had changed")
             self.tableView!.reloadData()
+            println("wtf in settings?")
+            println(self.tuner.instrument)
+            println(self.tuner.tunings)
         })
         
         self.view.addSubview(tableView!)
@@ -77,11 +79,11 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
     func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
         if(indexPath.section == 0){
-            tuner.pitchIndex = indexPath.row
+            tuner.setPitchIndex(indexPath.row)
         }
 
         if(indexPath.section == 1){
-            tuner.tuningIndex = indexPath.row
+            tuner.setTuningIndex(indexPath.row)
         }
 
         println("You selected cell #\(indexPath.row)!")

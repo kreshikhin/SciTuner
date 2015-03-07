@@ -10,8 +10,7 @@ import UIKit
 
 class TubeViewController: UIViewController {
     let instruments = InstrumentsViewController(title: nil, message: nil, preferredStyle: .ActionSheet)
-    let defaults = NSUserDefaults.standardUserDefaults()
-    let tuner = Tuner()
+    let tuner = Tuner.sharedInstance
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +20,7 @@ class TubeViewController: UIViewController {
         self.navigationItem.title = "SciTuner"
 
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: "guitar",
+            title: tuner.instrument,
             style: UIBarButtonItemStyle.Plain,
             target: self,
             action: Selector("showInstruments"))
@@ -82,6 +81,7 @@ class TubeViewController: UIViewController {
         self.view.addSubview(tube)
 
         tuner.on("instrumentChange", {() -> Void in
+            println("wtf?")
             self.navigationItem.leftBarButtonItem!.title = self.tuner.instrument
         })
     }

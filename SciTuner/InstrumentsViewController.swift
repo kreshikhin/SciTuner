@@ -28,7 +28,7 @@ class InstrumentsViewController: UIAlertController {
         var action = UIAlertAction(
             title: title, style: UIAlertActionStyle.Default,
             handler: {(action: UIAlertAction?) -> Void in
-                self.tuner.instrument = action!.title
+                self.tuner.setInstrument(title)
         })
         
         addAction(action)
