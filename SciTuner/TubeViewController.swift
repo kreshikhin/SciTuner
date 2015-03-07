@@ -56,11 +56,8 @@ class TubeViewController: UIViewController {
         tube.wavePoints = [Float](count: Int(processing.pointCount-1)*2*12, repeatedValue: 0)
         tube.waveLightPoints = [Float](count: Int(processing.pointCount-1)*4*12, repeatedValue: 0)
 
-        var t = 0.0
-        var isPaused = false;
-
         source.onData = {()in
-            if isPaused {
+            if self.tuner.isPaused {
                 return
             }
             processing.setTargetFrequency(self.tuner.targetFrequency())
@@ -70,17 +67,7 @@ class TubeViewController: UIViewController {
 
             processing.buildSmoothStandingWave(&tube.wavePoints, light: &tube.waveLightPoints, length: tube.wavePoints.count, thickness: 0.1)
 
-            tuner.frequency = processing.getFrequency() + processing.getSubFrequency()
-
-            panel.thin!.text = String(format:"%f", processing.getFrequency())
-            panel.thick!.text = String(format: "%f", processing.getFrequency() + processing.getSubFrequency())
-
-            panel.setNotePosition(tuner.frequencyDeviation())
-            panel.setStringPosition(tuner.stringPosition())
-
-            panel.stringbar!.targetStringNumber = tuner.targetStringNumber
-
-            t += 0.01
+            self.tuner.frequency = processing.getFrequency() + processing.getSubFrequency()
 
             tube.setNeedsDisplay()
         }
@@ -94,36 +81,9 @@ class TubeViewController: UIViewController {
 
         self.view.addSubview(tube)
 
-        instruments.onChange = {(title: String) -> Void in
-            self.navigationItem.leftBarButtonItem!.title = title
-            self.settings.instrument = title
-        }
-
-        tuner.onStringsChange = {()in
-            panel.stringbar!.strings = ["E2", "A2", "B3", "G3", "D3", "E4"]
-        }
-
-        tuner.onStringChange = {()in
-            panel.stringbar!.targetStringNumber = self.tuner.targetStringNumber
-            panel.notebar!.notes = self.tuner.targetNotes()
-        }
-
-        // controlbar: prev, pause, next
-        panel.controlbar!.onNextString = {()in
-            self.tuner.nextString()
-        }
-
-        panel.controlbar!.onPrevString = {()in
-            self.tuner.prevString()
-        }
-
-        panel.controlbar!.onRecord = {()in
-            isPaused = false
-        }
-
-        panel.controlbar!.onPause = {()in
-            isPaused = true
-        }
+        tuner.on("instrumentChange", {() -> Void in
+            self.navigationItem.leftBarButtonItem!.title = self.tuner.instrument
+        })
     }
 
     override func didReceiveMemoryWarning() {

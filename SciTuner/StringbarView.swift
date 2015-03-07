@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 class StringbarView: UIView {
+    let tuner = Tuner.sharedInstance
+    
     let margin: CGFloat = 10;
 
     var count = 0
@@ -125,7 +127,14 @@ class StringbarView: UIView {
 
         pointer = PointerView(frame: CGRectMake(left + width/1.5, top - 10, 10, 10))
         self.addSubview(pointer!)
-
         self.addSubview(baseline)
+        
+        tuner.on("tuningChange", {()in
+            self.strings = self.tuner.strings
+        })
+        
+        tuner.on("frequencyChange", {()in
+            self.pointerPosition = self.tuner.stringPosition()
+        })
     }
 }

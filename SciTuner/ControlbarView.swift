@@ -10,11 +10,7 @@ import Foundation
 import UIKit
 
 class ControlbarView: UIView {
-    var onPrevString = {() -> Void in}
-    var onNextString = {() -> Void in}
-    var onPause = {() -> Void in}
-    var onRecord = {() -> Void in}
-    
+    var tuner = Tuner()
     var isPaused = false
     
     required init(coder aDecoder: NSCoder) {
@@ -45,19 +41,15 @@ class ControlbarView: UIView {
     }
     
     func prevString(){
-        self.onPrevString()
+        tuner.prevString()
     }
     
     func nextString(){
-        self.onNextString()
+        tuner.nextString()
     }
     
     func toggle(){
         isPaused = !isPaused;
-        if(isPaused){
-            onPause()
-        }else{
-            onRecord()
-        }
+        self.tuner.isPaused = isPaused;
     }
 }

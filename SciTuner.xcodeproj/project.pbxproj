@@ -36,7 +36,6 @@
 		92C2B82D1A5801E8008F6A31 /* processing.c in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B81B1A5801E8008F6A31 /* processing.c */; };
 		92C2B82E1A5801E8008F6A31 /* ProcessingAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B81D1A5801E8008F6A31 /* ProcessingAdapter.swift */; };
 		92C2B82F1A5801E8008F6A31 /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B81F1A5801E8008F6A31 /* Source.swift */; };
-		92C2B8301A5801E8008F6A31 /* Spectrum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B8201A5801E8008F6A31 /* Spectrum.swift */; };
 		92C2B8321A5801E8008F6A31 /* TubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B8221A5801E8008F6A31 /* TubeView.swift */; };
 		92C2B8331A5801E8008F6A31 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B8231A5801E8008F6A31 /* ViewController.swift */; };
 		92D1CEEE1A9F38F400CD8BAF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D1CEED1A9F38F400CD8BAF /* SettingsView.swift */; };
@@ -77,7 +76,6 @@
 		92C2B81D1A5801E8008F6A31 /* ProcessingAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessingAdapter.swift; sourceTree = "<group>"; };
 		92C2B81E1A5801E8008F6A31 /* scituner-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "scituner-Bridging-Header.h"; sourceTree = "<group>"; };
 		92C2B81F1A5801E8008F6A31 /* Source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
-		92C2B8201A5801E8008F6A31 /* Spectrum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spectrum.swift; sourceTree = "<group>"; };
 		92C2B8221A5801E8008F6A31 /* TubeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TubeView.swift; sourceTree = "<group>"; };
 		92C2B8231A5801E8008F6A31 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		92C4EF0C1A3A11C800ECD2C7 /* SciTuner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SciTuner.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -152,7 +150,6 @@
 				92C2B81D1A5801E8008F6A31 /* ProcessingAdapter.swift */,
 				92C2B81E1A5801E8008F6A31 /* scituner-Bridging-Header.h */,
 				92C2B81F1A5801E8008F6A31 /* Source.swift */,
-				92C2B8201A5801E8008F6A31 /* Spectrum.swift */,
 				92C2B8221A5801E8008F6A31 /* TubeView.swift */,
 				92C2B8231A5801E8008F6A31 /* ViewController.swift */,
 				924ECB5A1A9DB91A005E38FF /* TubeViewController.swift */,
@@ -262,7 +259,6 @@
 				924EFD091AA08AA300C11B09 /* RewindButton.swift in Sources */,
 				92C2B8251A5801E8008F6A31 /* AppDelegate.swift in Sources */,
 				924EFD0D1AA08B1600C11B09 /* ControlbarView.swift in Sources */,
-				92C2B8301A5801E8008F6A31 /* Spectrum.swift in Sources */,
 				928A2F511A5BC9AD00F83522 /* dspmath.c in Sources */,
 				92C2B82B1A5801E8008F6A31 /* MicSource.swift in Sources */,
 				9221C9231A9F171300DF36F6 /* SettingsViewController.swift in Sources */,

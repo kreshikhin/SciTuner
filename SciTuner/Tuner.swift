@@ -22,42 +22,58 @@ class Tuner {
         return Static.instance!
     }
 
-    var onInstrumentChange = {()-Void in}
-
-    let sections: [String] = ["pitch", "tuning"]
+    var bindings: [String:[()->Void]] = [:]
+    
+    func on(name: String, _ callback: ()->Void){
+        if bindings[name] != nil {
+            bindings[name]! += [callback]
+        } else {
+            bindings[name] = [callback]
+        }
+    }
+    
+    func call(name: String) {
+        var callbacks = bindings[name]
+        if callbacks == nil {
+            return
+        }
+        
+        for callback in callbacks! {
+            callback()
+        }
+    }
+    
+    var isPaused = false;
 
     let pitchs: [String] = ["Default A4=440Hz", "Scientific C4=256Hz"]
     let pitchValues: [String] = ["default", "scientific"]
     var pitchIndex: Int = 0
 
-    var instruments: [String:[String:String]] = [String:[String:String]]()
+    var instruments: [String: [(title: String, strings: [String])]] = [:]
+    
+    var stringIndex: Int = 0
 
-    // bindings
+    var tuningIndex: Int = 0
+    
+    var strings: [String] = ["e2"]
+    
+    var tunings: [String] = []
+    
     var instrumentTitle: String = ""
-    var tuningTitles: [String] = []
-    var tuningStrings: [[String]]
-
     var instrument: String{
         set{
             instrumentTitle = newValue
-            tuningTitles = []
-            tuningStrings = []
-            for (title, strings) in instruments[instrumentTitle]! {
-                var splitStrings = split(strings) {$0 == " "}
-                var titleStrings = join(" ", splitStrings.map({(note: String) -> String in
-                    return note.repl
-                })
-                tuningTitles.append(title + " (" + titleNotes + ")"))
-                //tuningStrings.append(strings.spl)
+            tunings = []
+            for tuning in instruments[instrumentTitle]! {
+                tunings.append(tuning.title)
             }
+            call("instrumentChange")
         }
         get{
             return instrumentTitle
         }
     }
-
-    var shift: Int = 0
-    var strings: [String] = ["e2", "a2", "d3", "g3", "b3", "e4"]
+    
     var notes: [String] = ["d#2", "e2", "f2"]
 
     var frequency: Double = 440
@@ -87,42 +103,86 @@ class Tuner {
 
     init(){
         addInstrument("guitar", [
-            "Standard": "e2 a2 d3 g3 b3 e4",
-            "New Standard": "c2 g2 d3 a3 e4 g4",
-            "Russian": "d2 g2 b2 d3 g3 b3 d4",
-            "Drop D": "d2 a2 d3 g3 b3 e4",
-            "Drop C": "c2 g2 c3 f3 a3 d4",
-            "Drop G": "g2 d2 g3 c4 e4 a4",
-            "Open D": "d2 a2 d3 f#3 a3 d4",
-            "Open C": "c2 g2 c3 g3 c4 e4",
-            "Open G": "g2 g3 d3 g3 b3 d4",
-            "Lute": "e2 a2 d3 f#3 b3 e4",
-            "Irish": "d2 a2 d3 g3 a3 d4",
+            ("Standard", "e2 a2 d3 g3 b3 e4"),
+            ("New Standard", "c2 g2 d3 a3 e4 g4"),
+            ("Russian", "d2 g2 b2 d3 g3 b3 d4"),
+            ("Drop D", "d2 a2 d3 g3 b3 e4"),
+            ("Drop C", "c2 g2 c3 f3 a3 d4"),
+            ("Drop G", "g2 d2 g3 c4 e4 a4"),
+            ("Open D", "d2 a2 d3 f#3 a3 d4"),
+            ("Open C", "c2 g2 c3 g3 c4 e4"),
+            ("Open G", "g2 g3 d3 g3 b3 d4"),
+            ("Lute", "e2 a2 d3 f#3 b3 e4"),
+            ("Irish", "d2 a2 d3 g3 a3 d4")
         ])
 
         addInstrument("cello", [
-            "Standard": "c2 g2 d3 a3",
-            "Alternative": "c2 g2 d3 g3"
+            ("Standard", "c2 g2 d3 a3"),
+            ("Alternative", "c2 g2 d3 g3")
         ])
 
         addInstrument("violin", [
-            "Standard": "g3 d4 a4 e5",
-            "Tenor": "g2 d3 a3 e4",
-            "Tenor alter.": "f2 c3 g3 d4"
+            ("Standard", "g3 d4 a4 e5"),
+            ("Tenor", "g2 d3 a3 e4"),
+            ("Tenor alter.", "f2 c3 g3 d4")
         ])
 
         addInstrument("banjo", [
-            "Standard": "g4 d3 g3 b3 d4",
+            ("Standard", "g4 d3 g3 b3 d4")
+        ])
+        
+        addInstrument("balalaika", [
+            ("Standard", "g4 d3 g3 b3 d4")
         ])
 
         addInstrument("ukulule", [
-            "Standard": "g4 c4 e4 a4",
-            "D-tuning": "a4 d4 f#4 b4",
+            ("Standard", "g4 c4 e4 a4"),
+            ("D-tuning", "a4 d4 f#4 b4")
         ])
+        
+        addInstrument("free mode", [
+            ("Octaves", "c2 c3 c4 c5 c6"),
+            ("C-major", "c3 d3 e3 f3 g3 a3 b3"),
+            ("C-minor", "c3 d3 e3 f3 g3 a3 b3")
+        ])
+        
+        self.instrument = "guitar"
+        
+        /*
+        
+        settings.onPitchChange = {(pitch: String)->Void in
+        //self.defaults.setObjectForKey()
+        
+        if pitch == "scientific" {
+        self.tube.tuner.baseFrequency = 256.0
+        self.tube.tuner.baseNote = "c4"
+        return
+        }
+        
+        self.tube.tuner.baseFrequency = 440.0
+        self.tube.tuner.baseNote = "a4"
+        }
+        
+        settings.onTuningChange = {(values: [String])->Void in
+        self.tube.tuner.strings = values
+        self.tube.panel.stringbar!.strings = values
+        }
+        
+        */
     }
 
-    func addInstrument(name: String, _ tunings: [String: String]){
-        instruments[name] = tunings
+    func addInstrument(name: String, _ tunings: [(String, String)]){
+        var result: [(title: String, strings: [String])] = []
+        
+        for (title, strings) in tunings {
+            var splitStrings: [String] = split(strings) {$0 == " "}
+            var titleStrings: String = join(" ", splitStrings.map({(note: String) -> String in
+                return note.stringByReplacingOccurrencesOfString("#", withString: "♯", options: NSStringCompareOptions.LiteralSearch, range: nil).uppercaseString
+            }))
+            result += [(title: title + " (" + titleStrings + ")", strings: splitStrings)]
+        }
+        
+        instruments[name] = result
     }
 
     func getNotePosition(){

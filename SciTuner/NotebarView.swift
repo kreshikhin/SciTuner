@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 class NotebarView: UIView {
+    let tuner = Tuner.sharedInstance
+    
     let margin: CGFloat = 10;
     
     var pointer: PointerView?
@@ -93,5 +95,9 @@ class NotebarView: UIView {
         self.addSubview(pointer!)
         
         self.addSubview(baseline)
+        
+        self.tuner.on("frequencyChange", {()in
+            self.pointerPosition = self.tuner.frequencyDeviation()
+        })
     }
 }

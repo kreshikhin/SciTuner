@@ -10,8 +10,9 @@ import Foundation
 import UIKit
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    let tuner = Tuner.sharedInstance()
-
+    let tuner = Tuner.sharedInstance
+    let sections: [String] = ["pitch", "tuning"]
+    
     var tableView: SettingsView?
 
     override func viewDidLoad() {
@@ -24,11 +25,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         tableView?.delegate = self;
         tableView?.dataSource = self;
 
+        tuner.on("instrumentChange", {()in
+            println("instrment had changed")
+            self.tableView!.reloadData()
+        })
+        
         self.view.addSubview(tableView!)
-
-        tuner.onInstrumentChange = {()in
-            tableView.reloadData()
-        }
     }
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -40,7 +42,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             return tuner.pitchs.count
         }
         if(section == 1){
-            return tuner.instrumentTunings.count
+            return tuner.tunings.count
         }
 
         return 0
@@ -56,14 +58,14 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         cell.accessoryType = .None
 
         if(indexPath.section == 0){
-            if(indexPath.row == pitchIndex){
+            if(indexPath.row == tuner.pitchIndex){
                 cell.accessoryType = .Checkmark
             }
 
             cell.textLabel!.text = tuner.pitchs[indexPath.row]
         }
         if(indexPath.section == 1){
-            if(indexPath.row == tuningIndex){
+            if(indexPath.row == tuner.tuningIndex){
                 cell.accessoryType = .Checkmark
             }
 
