@@ -37,4 +37,10 @@ class CustomButton: UIButton {
         super.touchesEnded(touches, withEvent: event)
         self.setNeedsDisplay()
     }
+    
+    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
+        var margin: CGFloat = 20.0
+        var area = CGRectInset(self.bounds, -margin, -margin);
+        return CGRectContainsPoint(area, point) ? self : nil;
+    }
 }
