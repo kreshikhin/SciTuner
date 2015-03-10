@@ -10,6 +10,7 @@ import UIKit
 
 class TubeViewController: UIViewController {
     let instruments = InstrumentsViewController(title: nil, message: nil, preferredStyle: .ActionSheet)
+    let frets = FretsViewController(title: nil, message: nil, preferredStyle: .ActionSheet)
     let tuner = Tuner.sharedInstance
 
     override func viewDidLoad() {
@@ -44,8 +45,8 @@ class TubeViewController: UIViewController {
         let sampleRate = 44100
         let sampleCount = 2048
 
-        var source = Source(sampleRate: sampleRate, sampleCount: sampleCount)
-        //var source = MicSource(sampleRate: Double(sampleRate), sampleCount: sampleCount)
+        //var source = Source(sampleRate: sampleRate, sampleCount: sampleCount)
+        var source = MicSource(sampleRate: Double(sampleRate), sampleCount: sampleCount)
         //var source = MicSource2(sampleRate: Double(sampleRate), sampleCount: sampleCount)
 
         var processing = ProcessingAdapter(pointCount: 128)
@@ -55,6 +56,7 @@ class TubeViewController: UIViewController {
         tube.wavePoints = [Float](count: Int(processing.pointCount-1)*2*12, repeatedValue: 0)
         tube.waveLightPoints = [Float](count: Int(processing.pointCount-1)*4*12, repeatedValue: 0)
 
+        
         source.onData = {()in
             if self.tuner.isPaused {
                 return
@@ -62,6 +64,8 @@ class TubeViewController: UIViewController {
             processing.setTargetFrequency(self.tuner.targetFrequency())
 
             processing.Push(&source.sample)
+            processing.SavePreview(&source.preview)
+            
             processing.Recalculate()
 
             processing.buildSmoothStandingWave(&tube.wavePoints, light: &tube.waveLightPoints, length: tube.wavePoints.count, thickness: 0.1)
@@ -83,6 +87,8 @@ class TubeViewController: UIViewController {
         tuner.on("instrumentChange", {() -> Void in
             self.navigationItem.leftBarButtonItem!.title = self.tuner.instrument
         })
+        
+        panel.modebar!.fretMode!.addTarget(self, action: Selector("showFrets"), forControlEvents: .TouchUpInside)
     }
 
     override func didReceiveMemoryWarning() {
@@ -104,5 +110,13 @@ class TubeViewController: UIViewController {
 
     func showInstruments() {
         self.presentViewController(instruments, animated: true, completion: nil)
+    }
+    
+    func showFrets() {
+        self.presentViewController(self.frets, animated: true, completion: nil)
+    }
+    
+    func showModes() {
+        //self.presentViewController(instruments, animated: true, completion: nil)
     }
 }

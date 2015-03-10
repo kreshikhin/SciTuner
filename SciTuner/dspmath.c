@@ -121,6 +121,8 @@ void expend2(double* data, size_t length) {
         double t = 0;
         t = modf((double)i * 0.5, &index);
         
+        //printf(" %f ", t);
+        
         size_t current = index;
         size_t next = index < length / 2 ? index + 1 : length / 2 - 1;
         size_t next2 = index < length / 2 - 1 ? index + 2 : length / 2 - 1;

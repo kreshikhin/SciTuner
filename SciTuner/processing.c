@@ -56,14 +56,17 @@ void processing_init(Processing* p, double fd, double fMin, size_t sampleCount, 
     p->subLength = 32;
     p->subSignalReal = malloc(p->subLength * sizeof(*p->subSignalReal));
     p->subSignalImag = malloc(p->subLength * sizeof(*p->subSignalImag));
-    p->subSpectrumReal = malloc(2 * p->subLength * sizeof(*p->subSpectrumReal));
-    p->subSpectrumImag = malloc(2 * p->subLength * sizeof(*p->subSpectrumImag));
-    p->subSpectrum = malloc(2 * p->subLength * sizeof(*p->subSpectrum));
+    p->subSpectrumReal = malloc(p->subLength * sizeof(*p->subSpectrumReal));
+    p->subSpectrumImag = malloc(p->subLength * sizeof(*p->subSpectrumImag));
+    p->subSpectrum = malloc(p->subLength * sizeof(*p->subSpectrum));
     
     p->pointCount = pointCount;
     p->points = malloc(p->pointCount * sizeof(p->points));
 
     p->signal = malloc(p->signalLength * sizeof(*p->signal));
+    
+    p->previewLength = 2500;
+    p->preview = malloc(p->previewLength * sizeof(*p->preview));
 
     memset(p->signal, 0, p->signalLength * sizeof(*p->signal));
 
@@ -81,6 +84,7 @@ void processing_deinit(Processing* p){
     vDSP_destroy_fftsetupD(p->sfs);
     
     free(p->signal);
+    free(p->preview);
     free(p->real);
     free(p->imag);
     free(p->spectrum);
@@ -126,6 +130,26 @@ void processing_push(Processing* p, const double* packet, size_t packetLength) {
            packetLength * sizeof(*p->signal));
 }
 
+void processing_save_preview(Processing* p, const double* packet, size_t packetLength) {
+    long int shift = p->previewLength - packetLength;
+    
+    if(shift <= 0) {
+        memcpy(p->preview,
+               packet - shift,
+               p->previewLength * sizeof(*p->preview));
+        
+        return;
+    }
+    
+    memmove(p->preview,
+            p->preview + packetLength,
+            shift * sizeof(*p->preview));
+    
+    memcpy(p->preview + shift,
+           packet,
+           packetLength * sizeof(*p->preview));
+}
+
 void processing_recalculate(Processing* p){
     memcpy(p->real, p->signal, p->signalLength * sizeof(*p->signal));
     memset(p->imag, 0, p->signalLength* sizeof(*p->signal));
@@ -133,9 +157,6 @@ void processing_recalculate(Processing* p){
     DSPDoubleSplitComplex spectrum = {p->real, p->imag};
     
     vDSP_fft_zipD(p->fs, &spectrum, 1, log2(p->signalLength), kFFTDirection_Forward);
-    
-    expend2(p->real, p->signalLength);
-    expend2(p->imag, p->signalLength);
     
     memset(p->spectrum, 0, p->signalLength * sizeof(*p->spectrum));
     
@@ -147,7 +168,7 @@ void processing_recalculate(Processing* p){
     
     for(size_t i = 1; i < p->signalLength / 2; i ++){
         double spectrumValue = p->spectrum[i];
-        double f = p->fd * i * 0.5 / p->signalLength;
+        double f = p->fd * i / p->signalLength;
         
         if (p->filter) {
             double df = (f - p->targetFrequency) / p->targetFrequency;
@@ -164,9 +185,7 @@ void processing_recalculate(Processing* p){
         }
     }
     
-    //double x = processing_detect_undertone(p, peakFrequency);
-    p->peakFrequency = peakFrequency;// / x;
-    //peakIndex /= x;
+    p->peakFrequency = peakFrequency;
     
     if (p->subcounter / 16) {
         data_append_and_shift(p->subSignalReal, p->subLength, p->real[peakIndex]);
@@ -198,17 +217,14 @@ double processing_clarify_peak_frequency_in_range(Processing* p, double range) {
     DSPDoubleSplitComplex subspectrum = {p->subSpectrumReal, p->subSpectrumImag};
     vDSP_fft_zipD(p->sfs, &subspectrum, 1, log2(p->subLength), kFFTDirection_Forward);
     
-    expend2(p->subSpectrumReal, 2 * p->subLength);
-    expend2(p->subSpectrumImag, 2 * p->subLength);
+    memset(p->subSpectrum, 0, p->subLength * sizeof(*p->subSpectrum));
     
-    memset(p->subSpectrum, 0, 2 * p->subLength * sizeof(*p->subSpectrum));
-    
-    vDSP_zaspecD(&subspectrum, p->subSpectrum, 2 * p->subLength);
+    vDSP_zaspecD(&subspectrum, p->subSpectrum, p->subLength);
     
     double subPeak = 0;
     size_t subPeakIndex = 1;
     
-    for(size_t i = 0; i < 2*p->subLength; i ++) {
+    for(size_t i = 0; i < p->subLength; i ++) {
         if (p->subSpectrum[i] > subPeak) {
             subPeak = p->subSpectrum[i];
             subPeakIndex = i;
@@ -217,10 +233,10 @@ double processing_clarify_peak_frequency_in_range(Processing* p, double range) {
     
     if (subPeakIndex > p->subLength) {
         volatile double shift = subPeakIndex;
-        return range * (shift - 2.0 * p->subLength) / (2.0*p->subLength);
+        return range * (shift - p->subLength) / p->subLength;
     }
     
-    return range * subPeakIndex / (2.0*p->subLength);
+    return range * subPeakIndex / p->subLength;
 }
 
 double processing_detect_undertone(Processing* p, double f0) {
@@ -248,14 +264,14 @@ double processing_detect_undertone(Processing* p, double f0) {
 
 void processing_build_standing_wave(Processing* p, float* wave, float* light, size_t length, float thickness) {
     double f = p->peakFrequency;
-    if(f < 20) f = 20;
+    if(f < 40) f = 80;
     if(f > 16000) f = 16000;
     
     double waveLength = p->fd / f;
     
-    size_t index = p->signalLength - waveLength * 2;
+    size_t index = p->previewLength - waveLength * 2;
     
-    double* src = &p->signal[index];
+    double* src = &p->preview[index];
     
     double re = 0; double im = 0;
     for (size_t i = 0; i < waveLength*2; i++) {
@@ -268,7 +284,7 @@ void processing_build_standing_wave(Processing* p, float* wave, float* light, si
     
     double shift = waveLength * phase / (2.0 * M_PI);
     
-    double* shiftedSrc = &p->signal[index - (size_t)(waveLength - shift) - (size_t)waveLength];
+    double* shiftedSrc = &p->preview[index - (size_t)(waveLength - shift) - (size_t)waveLength];
     
     approximate_sinc(p->points, shiftedSrc, p->pointCount, 2*waveLength);
     double avr = data_avr(p->points, p->pointCount);

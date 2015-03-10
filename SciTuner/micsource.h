@@ -16,10 +16,10 @@
 
 static const int kNumberBuffers = 3;                            // 1
 
-typedef struct{
+typedef struct {
     double* data;
     size_t length;
-    struct Buffer* next;
+    size_t position;
 } Buffer;
 
 struct AQRecorderState {
@@ -31,7 +31,8 @@ struct AQRecorderState {
     SInt64                       mCurrentPacket;                // 7
     bool                         mIsRunning;                    // 8s
     
-    Buffer* list;
+    Buffer* buffer;
+    Buffer* preview_buffer;
 };
 
 struct AQRecorderState* AQRecorderState_create();
@@ -39,7 +40,8 @@ void AQRecorderState_init(struct AQRecorderState* aq, double sampleRate, size_t 
 void AQRecorderState_deinit(struct AQRecorderState* aq);
 void AQRecorderState_destroy(struct AQRecorderState* aq);
 
-void AQRecorderState_get_samples(struct AQRecorderState* aq, double* dest, size_t count);
+bool AQRecorderState_get_samples(struct AQRecorderState* aq, double* dest, size_t count);
+bool AQRecorderState_get_preview(struct AQRecorderState* aq, double* dest, size_t count);
 
 static void HandleInputBuffer (
     void                                *aqData,             // 1

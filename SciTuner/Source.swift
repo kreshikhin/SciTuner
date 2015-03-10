@@ -7,7 +7,7 @@ class Source{
 
     var frequency: Double = 0
 
-    var frequency1: Double = 89.9
+    var frequency1: Double = 82.41
     var frequency2: Double = 0.05
 
     var frequencyDeviation: Double = 0.0
@@ -15,6 +15,7 @@ class Source{
     var t: Double = 0
 
     var sample = [Double](count: 2048, repeatedValue: 0)
+    var preview = [Double](count: 2500, repeatedValue: 0)
     
     var lock = NSLock()
 
@@ -42,8 +43,10 @@ class Source{
         frequency = frequency1 + df
         
         //NSLog("source freq %f ", frequency);
-
+        
+        var t2 = dt;
         source_generate(&sample, UInt(sample.count), &t, dt, frequency)
+        source_generate(&preview, UInt(preview.count), &t2, dt, frequency)
         
         onData()
         

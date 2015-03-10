@@ -8,84 +8,55 @@
 
 #include "micsource.h"
 
-
-size_t Buffer_size(Buffer* node);
-Buffer* Buffer_last(Buffer* node);
-Buffer* Buffer_new(double* data, size_t length);
-Buffer* Buffer_new_zeros(size_t length);
+Buffer* Buffer_new(size_t length);
 void Buffer_delete(Buffer* node);
-Buffer* Buffer_push(Buffer* node, Buffer* next);
-Buffer* Buffer_shift(Buffer* node);
 
-size_t Buffer_size(Buffer* node) {
-    size_t size = 0;
-    while(node){
-        size ++;
-        node = node->next;
-    }
+size_t Buffer_free_space(Buffer* buffer);
+void Buffer_write_ints(Buffer* buffer, const SInt16* data, size_t length);
+void Buffer_read(Buffer* node, double* data, size_t length);
 
-    return size;
-}
+Buffer* Buffer_new(size_t length) {
+    Buffer* buffer = malloc(sizeof(Buffer));
 
-Buffer* Buffer_last(Buffer* node){
-    if(!node) return NULL;
-
-    while(node->next){
-        node = node->next;
-    }
-
-    return node;
-}
-
-Buffer* Buffer_new(double* data, size_t length){
-    Buffer* node = malloc(sizeof(Buffer));
-
-    memcpy(node->data, data, length * sizeof(*node->data));
-    node->length = length;
-    node->next = NULL;
-
-    return node;
-}
-
-Buffer* Buffer_new_zeros(size_t length){
-    Buffer* node = malloc(sizeof(Buffer));
+    buffer->length = length;
+    buffer->position = 0;
+    buffer->data = malloc(length * sizeof(double));
+    //memset(buffer->data, 0, length * sizeof(double));
     
-    node->data = malloc(length * sizeof(*node->data));
-    memset(node->data, 0, length * sizeof(*node->data));
-    node->length = length;
-    node->next = NULL;
-
-    return node;
+    return buffer;
 }
 
-void Buffer_delete(Buffer* node){
-    while(node){
-        Buffer* next = node->next;
+void Buffer_delete(Buffer* buffer) {
+    free(buffer->data);
+    free(buffer);
+}
 
-        free(node->data);
-        free(node);
+size_t Buffer_free_space(Buffer* buffer) {
+    return buffer->length - buffer->position;
+}
 
-        node = next;
+void Buffer_write_ints(Buffer* buffer, const SInt16* data, size_t length) {
+    size_t free_space = Buffer_free_space(buffer);
+    size_t actual_length = length < free_space ? length : free_space;
+    
+    double* dest = buffer->data + buffer->position;
+    
+    for (int i = 0; i < actual_length; i++) {
+        SInt16 d = data[i];
+        double s = (double)d / (0x7000);
+        dest[i] = s;
     }
+    buffer->position += actual_length;
 }
 
-Buffer* Buffer_push(Buffer* node, Buffer* next){
-    Buffer* last = Buffer_last(node);
-    if(!last) return next;
-    last->next = next;
-
-    return node;
+void Buffer_read(Buffer* buffer, double* data, size_t length) {
+    size_t actual_length = length < buffer->position ? length : buffer->position;
+    memcpy(data, buffer->data, actual_length * sizeof(double));
+    buffer->position -= actual_length;
+    memmove(buffer->data, buffer->data + actual_length, buffer->position * sizeof(double));
 }
 
-Buffer* Buffer_shift(Buffer* node){
-    if(!node) return NULL;
 
-    Buffer* next = node->next;
-    node->next = NULL;
-    Buffer_delete(node);
-
-    return next;
-}
 
 void DeriveBufferSize(AudioQueueRef audioQueue,
                       AudioStreamBasicDescription* ASBDescription,
@@ -128,7 +99,8 @@ void AQRecorderState_init(struct AQRecorderState* aq, double sampleRate, size_t 
     aq->mCurrentPacket = 0;
     aq->mIsRunning = true;
 
-    aq->list = NULL;
+    aq->buffer = Buffer_new(32768);
+    aq->preview_buffer = Buffer_new(2500);
 
     AudioQueueStart(aq->mQueue, NULL);
 }
@@ -139,25 +111,30 @@ void AQRecorderState_deinit(struct AQRecorderState* aq){
 
     AudioQueueDispose(aq->mQueue, true);
     
-    Buffer_delete(aq->list);
+    Buffer_delete(aq->buffer);
+    Buffer_delete(aq->preview_buffer);
 }
 
 void AQRecorderState_destroy(struct AQRecorderState* aq){
     return free(aq);
 }
 
-void AQRecorderState_get_samples(struct AQRecorderState* aq, double* dest, size_t count){
-    if(!aq->list) return;
-
-    size_t length = count < aq->list->length ? count : aq->list->length;
-    memcpy(dest, aq->list->data, length * sizeof(*dest));
-
-    aq->list = Buffer_shift(aq->list);
-
-    if(Buffer_size(aq->list) > 16){
-        Buffer_delete(aq->list);
-        aq->list = NULL;
+bool AQRecorderState_get_samples(struct AQRecorderState* aq, double* dest, size_t count){
+    if(aq->buffer->position < count) {
+        return false;
     }
+    
+    Buffer_read(aq->buffer, dest, count);
+    return true;
+}
+
+bool AQRecorderState_get_preview(struct AQRecorderState* aq, double* dest, size_t count){
+    if(aq->preview_buffer->position < count) {
+        return false;
+    }
+    
+    Buffer_read(aq->preview_buffer, dest, count);
+    return true;
 }
 
 static void HandleInputBuffer (
@@ -185,16 +162,8 @@ static void HandleInputBuffer (
     */
 
     const SInt16* data = inBuffer->mAudioData;
-    Buffer* node = Buffer_new_zeros(inNumPackets);
-
-    for (int i = 0; i < inNumPackets; i++) {
-        SInt16 d = data[i];
-        double s = (double)d / (0x7000);
-        node->data[i] = s;
-    }
-
-    pAqData->list = Buffer_push(pAqData->list, node);
-
+    Buffer_write_ints(pAqData->buffer, data, inNumPackets);
+    Buffer_write_ints(pAqData->preview_buffer, data, inNumPackets);
     //pAqData->mCurrentPacket += inNumPackets;
 
 

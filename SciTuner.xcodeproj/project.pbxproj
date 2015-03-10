@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		92076C301AACC10400A1E99E /* FretsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92076C2F1AACC10400A1E99E /* FretsViewController.swift */; };
 		9221C9231A9F171300DF36F6 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9221C9221A9F171300DF36F6 /* SettingsViewController.swift */; };
 		923920481A502DFE00ACDC2E /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 920F09721A40A9D000A69F7A /* Accelerate.framework */; };
 		9239204A1A502E0500ACDC2E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 923920491A502E0500ACDC2E /* AVFoundation.framework */; };
@@ -43,6 +44,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		92076C2F1AACC10400A1E99E /* FretsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FretsViewController.swift; path = ../FretsViewController.swift; sourceTree = "<group>"; };
 		920F09721A40A9D000A69F7A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		9221C9221A9F171300DF36F6 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		923920491A502E0500ACDC2E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -153,6 +155,7 @@
 				92C2B8221A5801E8008F6A31 /* TubeView.swift */,
 				92C2B8231A5801E8008F6A31 /* ViewController.swift */,
 				924ECB5A1A9DB91A005E38FF /* TubeViewController.swift */,
+				92076C2F1AACC10400A1E99E /* FretsViewController.swift */,
 				924EFCFF1A9F462600C11B09 /* InstrumentsViewController.swift */,
 				9221C9221A9F171300DF36F6 /* SettingsViewController.swift */,
 				92D1CEED1A9F38F400CD8BAF /* SettingsView.swift */,
@@ -277,6 +280,7 @@
 				92C2B82A1A5801E8008F6A31 /* micsource.c in Sources */,
 				924EFD131AA09CB100C11B09 /* CustomButton.swift in Sources */,
 				924ECB5B1A9DB91A005E38FF /* TubeViewController.swift in Sources */,
+				92076C301AACC10400A1E99E /* FretsViewController.swift in Sources */,
 				924EFD111AA08E6700C11B09 /* RecordButton.swift in Sources */,
 				92FB2A3F1A614F02009EC409 /* MicSource2.swift in Sources */,
 			);

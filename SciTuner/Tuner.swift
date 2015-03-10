@@ -136,8 +136,15 @@ class Tuner {
     }
     
     func setFrequency(value: Double){
-        frequency = value
+        frequency = value * fretScale()
         call("frequencyChange")
+    }
+    
+    func setFret(value: Int) {
+        fret = value
+        
+        defaults.setInteger(fret, forKey: "fret")
+        call("fretChange")
     }
 
     init(){
@@ -195,6 +202,7 @@ class Tuner {
         setTuningIndex(defaults.integerForKey(instrument))
         setStringIndex(defaults.integerForKey("stringIndex"))
         setPitchIndex(defaults.integerForKey("pitchIndex"))
+        setFret(defaults.integerForKey("fret"))
     }
 
     func addInstrument(name: String, _ tunings: [(String, String)]){
@@ -287,7 +295,7 @@ class Tuner {
     }
 
     func targetFrequency() -> Double {
-        return noteFrequency(string)
+        return noteFrequency(string) / fretScale()
     }
 
     func frequencyDeviation() -> Double {
@@ -307,5 +315,9 @@ class Tuner {
 
     func prevString() {
         setStringIndex(stringIndex-1)
+    }
+    
+    func fretScale() -> Double {
+        return 12.0 / (12.0 + Double(fret))
     }
 }

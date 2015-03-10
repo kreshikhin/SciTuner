@@ -30,7 +30,6 @@ class CustomButton: UIButton {
     
     override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
         super.touchesMoved(touches, withEvent: event)
-        //self.setNeedsDisplay()
     }
     
     override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {

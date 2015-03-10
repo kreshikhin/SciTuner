@@ -27,6 +27,10 @@ class ProcessingAdapter{
         processing_push(p, packet, UInt(packet.count))
     }
     
+    func SavePreview(inout packet: [Double]){
+        processing_save_preview(p, packet, UInt(packet.count))
+    }
+    
     func Recalculate() {
         processing_recalculate(p)
     }
