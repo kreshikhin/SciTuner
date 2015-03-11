@@ -136,7 +136,7 @@ class Tuner {
     }
     
     func setFrequency(value: Double){
-        frequency = value * fretScale()
+        frequency = value / fretScale()
         call("frequencyChange")
     }
     
@@ -295,18 +295,31 @@ class Tuner {
     }
 
     func targetFrequency() -> Double {
-        return noteFrequency(string) / fretScale()
+        return noteFrequency(string) * fretScale()
     }
 
     func frequencyDeviation() -> Double {
-        return 100.0 * frequencyDistanceNumber(targetFrequency(), frequency)
+        return 100.0 * frequencyDistanceNumber(noteFrequency(string), frequency)
     }
 
     func stringPosition() -> Double {
-        var first = noteFrequency(strings.first!)
-        var last = noteFrequency(strings.last!)
-
-        return Double(strings.count - 1) * (frequency - first) / (last - first)
+        var frst = noteFrequency(strings.first!)
+        var lst = noteFrequency(strings.last!)
+        
+        if frequency > frst {
+            var f0 = 0.0
+            var pos: Double = 0.0
+            for str in strings {
+                var f1 = noteFrequency(str)
+                if frequency < f1 {
+                    return pos + (frequency - f0) / (f1 - f0)
+                }
+                f0 = f1
+                pos++
+            }
+        }
+        
+        return Double(strings.count - 1) * (frequency - frst) / (lst - frst)
     }
 
     func nextString() {
@@ -318,6 +331,6 @@ class Tuner {
     }
     
     func fretScale() -> Double {
-        return 12.0 / (12.0 + Double(fret))
+        return pow(2.0, Double(fret) / 12.0)
     }
 }

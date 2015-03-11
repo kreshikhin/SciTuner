@@ -45,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		92076C2F1AACC10400A1E99E /* FretsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FretsViewController.swift; path = ../FretsViewController.swift; sourceTree = "<group>"; };
+		92076C311AAF8F0400A1E99E /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		920F09721A40A9D000A69F7A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		9221C9221A9F171300DF36F6 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		923920491A502E0500ACDC2E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -107,6 +108,7 @@
 				92C2B81C1A5801E8008F6A31 /* processing.h */,
 				92C2B8171A5801E8008F6A31 /* micsource.c */,
 				92C2B8181A5801E8008F6A31 /* micsource.h */,
+				92076C311AAF8F0400A1E99E /* config.h */,
 			);
 			name = native;
 			sourceTree = "<group>";

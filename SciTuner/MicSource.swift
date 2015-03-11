@@ -27,7 +27,7 @@ class MicSource{
     var t: Double = 0
     
     var sample = [Double](count: 2205, repeatedValue: 0)
-    var preview = [Double](count: 2500, repeatedValue: 0)
+    var preview = [Double](count: Int(PREVIEW_LENGTH), repeatedValue: 0)
     
     init(sampleRate: Double, sampleCount: Int) {
         var err: NSError?;

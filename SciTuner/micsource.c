@@ -100,7 +100,7 @@ void AQRecorderState_init(struct AQRecorderState* aq, double sampleRate, size_t 
     aq->mIsRunning = true;
 
     aq->buffer = Buffer_new(32768);
-    aq->preview_buffer = Buffer_new(2500);
+    aq->preview_buffer = Buffer_new(5000);
 
     AudioQueueStart(aq->mQueue, NULL);
 }

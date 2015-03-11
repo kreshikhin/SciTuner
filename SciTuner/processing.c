@@ -8,6 +8,7 @@
 
 #include "processing.h"
 #include "dspmath.h"
+#include "config.h"
 
 #include <stdlib.h>
 #include <math.h>
@@ -65,7 +66,7 @@ void processing_init(Processing* p, double fd, double fMin, size_t sampleCount, 
 
     p->signal = malloc(p->signalLength * sizeof(*p->signal));
     
-    p->previewLength = 2500;
+    p->previewLength = PREVIEW_LENGTH;
     p->preview = malloc(p->previewLength * sizeof(*p->preview));
 
     memset(p->signal, 0, p->signalLength * sizeof(*p->signal));

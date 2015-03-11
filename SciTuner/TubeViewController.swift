@@ -75,7 +75,7 @@ class TubeViewController: UIViewController {
             tube.setNeedsDisplay()
         }
 
-        processing.enableFilter()
+        //processing.enableFilter()
 
         tube.onDraw = {(rect: CGRect) -> () in
             glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
