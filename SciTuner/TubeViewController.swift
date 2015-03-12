@@ -75,7 +75,7 @@ class TubeViewController: UIViewController {
             tube.setNeedsDisplay()
         }
 
-        //processing.enableFilter()
+        processing.enableFilter()
 
         tube.onDraw = {(rect: CGRect) -> () in
             glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
@@ -89,6 +89,17 @@ class TubeViewController: UIViewController {
         })
         
         panel.modebar!.fretMode!.addTarget(self, action: Selector("showFrets"), forControlEvents: .TouchUpInside)
+        
+        tuner.on("frequencyChange", {()in
+            panel.actualFrequency!.text = String(format: "%.2fHz", self.tuner.actualFrequency())
+            panel.frequencyDeviation!.text = String(format: "%.0fc", self.tuner.frequencyDeviation())
+        })
+        
+        tuner.on("stringChange", {()in
+            panel.targetFrequency!.text = String(format: "%.2fHz", self.tuner.targetFrequency())
+        })
+        
+        panel.targetFrequency!.text = String(format: "%.2fHz", self.tuner.targetFrequency())
     }
 
     override func didReceiveMemoryWarning() {

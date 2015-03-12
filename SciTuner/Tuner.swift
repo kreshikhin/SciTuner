@@ -297,6 +297,10 @@ class Tuner {
     func targetFrequency() -> Double {
         return noteFrequency(string) * fretScale()
     }
+    
+    func actualFrequency() -> Double {
+        return frequency * fretScale()
+    }
 
     func frequencyDeviation() -> Double {
         return 100.0 * frequencyDistanceNumber(noteFrequency(string), frequency)

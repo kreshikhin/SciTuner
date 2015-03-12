@@ -265,7 +265,7 @@ double processing_detect_undertone(Processing* p, double f0) {
 
 void processing_build_standing_wave(Processing* p, float* wave, float* light, size_t length, float thickness) {
     double f = p->peakFrequency;
-    if(f < 40) f = 80;
+    if(f < 40) f = 40;
     if(f > 16000) f = 16000;
     
     double waveLength = p->fd / f;
