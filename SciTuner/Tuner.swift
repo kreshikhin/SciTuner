@@ -10,7 +10,7 @@ import Foundation
 
 class Tuner {
     let defaults = NSUserDefaults.standardUserDefaults()
-    
+
     class var sharedInstance: Tuner {
         struct Static {
             static var instance: Tuner?
@@ -25,7 +25,7 @@ class Tuner {
     }
 
     var bindings: [String:[()->Void]] = [:]
-    
+
     func on(name: String, _ callback: ()->Void){
         if bindings[name] != nil {
             bindings[name]! += [callback]
@@ -33,18 +33,18 @@ class Tuner {
             bindings[name] = [callback]
         }
     }
-    
+
     func call(name: String) {
         var callbacks = bindings[name]
         if callbacks == nil {
             return
         }
-        
+
         for callback in callbacks! {
             callback()
         }
     }
-    
+
     var instrument: String = "guitar"
     var tunings: [String] = []
     var tuningStrings: [[String]] = []
@@ -63,40 +63,40 @@ class Tuner {
     var pitchIndex: Int = 0
     var pitch: String = "default"
     var instruments: [String: [(title: String, strings: [String])]] = [:]
-    
+
     func setInstrument(value: String){
         if instruments[value] == nil {
             return
         }
-        
+
         instrument = value
         defaults.setValue(instrument, forKey: "instrument")
-        
+
         tunings = []
         tuningStrings = []
         for tuning in instruments[instrument]! {
             tunings.append(tuning.title)
             tuningStrings.append(tuning.strings)
         }
-        
+
         var defaultTuning: Int? = defaults.integerForKey(instrument)
         if defaultTuning != nil {
             setTuningIndex(defaultTuning!)
         }else{
             setTuningIndex(0)
         }
-        
-        
+
+
         call("instrumentChange")
     }
-    
+
     func setTuningIndex(value: Int) {
         defaults.setInteger(value, forKey: instrument)
         tuningIndex = value
         strings = tuningStrings[tuningIndex]
-        
+
         setStringIndex(stringIndex)
-        
+
         call("tuningChange")
     }
 
@@ -108,41 +108,41 @@ class Tuner {
         } else {
             stringIndex = value
         }
-        
+
         defaults.setInteger(stringIndex, forKey: "stringIndex")
         string = strings[stringIndex]
-        
+
         var n = Double(noteNumber(string))
         notes = [noteString(n-1.0), noteString(n), noteString(n+1.0)]
-        
+
         call("stringChange")
     }
-    
+
     func setPitchIndex(value: Int) {
         defaults.setInteger(value, forKey: "pitchIndex")
         pitchIndex = value
         pitch = pitchValues[pitchIndex]
-        
+
         if pitch == "scientific" {
             baseFrequency = 256.0
             baseNote = "c4"
             return
         }
-        
+
         baseFrequency = 440.0
         baseNote = "a4"
-        
+
         call("pitchChange")
     }
-    
+
     func setFrequency(value: Double){
         frequency = value / fretScale()
         call("frequencyChange")
     }
-    
+
     func setFret(value: Int) {
         fret = value
-        
+
         defaults.setInteger(fret, forKey: "fret")
         call("fretChange")
     }
@@ -176,7 +176,7 @@ class Tuner {
         addInstrument("banjo", [
             ("Standard", "g4 d3 g3 b3 d4")
         ])
-        
+
         addInstrument("balalaika", [
             ("Standard", "g4 d3 g3 b3 d4")
         ])
@@ -185,20 +185,20 @@ class Tuner {
             ("Standard", "g4 c4 e4 a4"),
             ("D-tuning", "a4 d4 f#4 b4")
         ])
-        
+
         addInstrument("free mode", [
             ("Octaves", "c2 c3 c4 c5 c6"),
             ("C-major", "c3 d3 e3 f3 g3 a3 b3"),
             ("C-minor", "c3 d3 e3 f3 g3 a3 b3")
         ])
-        
+
         if defaults.stringForKey("instrument") != nil {
             var value: String? = defaults.stringForKey("instrument")
             setInstrument(value!)
         } else {
             setInstrument("guitar")
         }
-        
+
         setTuningIndex(defaults.integerForKey(instrument))
         setStringIndex(defaults.integerForKey("stringIndex"))
         setPitchIndex(defaults.integerForKey("pitchIndex"))
@@ -207,7 +207,7 @@ class Tuner {
 
     func addInstrument(name: String, _ tunings: [(String, String)]){
         var result: [(title: String, strings: [String])] = []
-        
+
         for (title, strings) in tunings {
             var splitStrings: [String] = split(strings) {$0 == " "}
             var titleStrings: String = join(" ", splitStrings.map({(note: String) -> String in
@@ -215,10 +215,10 @@ class Tuner {
             }))
             result += [(title: title + " (" + titleStrings + ")", strings: splitStrings)]
         }
-        
+
         instruments[name] = result
     }
-    
+
     func noteNumber(noteString: String) -> Int {
         var note = noteString.lowercaseString
         var number = 0
@@ -305,10 +305,10 @@ class Tuner {
     func stringPosition() -> Double {
         var frst = noteFrequency(strings.first!)
         var lst = noteFrequency(strings.last!)
-        
+
         if frequency > frst {
             var f0 = 0.0
-            var pos: Double = 0.0
+            var pos: Double = -1.0
             for str in strings {
                 var f1 = noteFrequency(str)
                 if frequency < f1 {
@@ -318,7 +318,7 @@ class Tuner {
                 pos++
             }
         }
-        
+
         return Double(strings.count - 1) * (frequency - frst) / (lst - frst)
     }
 
@@ -329,7 +329,7 @@ class Tuner {
     func prevString() {
         setStringIndex(stringIndex-1)
     }
-    
+
     func fretScale() -> Double {
         return pow(2.0, Double(fret) / 12.0)
     }
