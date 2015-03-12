@@ -41,6 +41,7 @@ class TubeView: GLKView{
         
         glEnable(GLenum(GL_BLEND));
         glBlendFunc(GLenum(GL_SRC_ALPHA), GLenum(GL_ONE_MINUS_SRC_ALPHA));
+        
 
         drawingProgram = newProgram(
         "    attribute vec2 a_position;" +
@@ -61,21 +62,23 @@ class TubeView: GLKView{
         "       vec2 lineDir = normalize(pt2 - pt1);" +
         "       float len = length(pt2 - pt1);" +
         "       vec2 perpDir = vec2(lineDir.y, -lineDir.x);" +
-        "       vec2 dirToPt1 = pt1 - testPt;" +
-        "       float proj = dot(lineDir, -dirToPt1);" +
+        "       vec2 toTest = testPt - pt1;" +
+        "       float proj = dot(lineDir, toTest);" +
         "       if(proj < 0.0 ){ " +
         "           return distance(testPt, pt1);" +
         "       }" +
         "       if(proj > len){ " +
         "           return distance(testPt, pt2);" +
         "       }" +
-        "       return abs(dot(perpDir, dirToPt1)); " +
+        "       return abs(dot(perpDir, toTest)); " +
         "   }" +
         "   void main() {" +
         "       float d = DistToLine(light.xy, light.zw, v_coord.xy);" +
-        "       float alpha = exp(- 10000.0 * d * d);" +
-        "       if(alpha > 1.0) alpha = 1.0;" +
-        "       if(alpha < 0.01) discard;" +
+        "       float min_d = 0.01;" +
+        "       float max_d = 0.02;" +
+        "       float alpha = 1.0;" +
+        "       if (min_d<d && d<max_d) alpha = (max_d-d)/(max_d - min_d);" +
+        "       if (d > max_d) discard;" +
         "       gl_FragColor = vec4(color.rgb, alpha);" +
         "   }")
     }
@@ -91,9 +94,6 @@ class TubeView: GLKView{
 
         var col = glGetUniformLocation(drawingProgram, "color")
         glUniform4f(col, foreColor[0], foreColor[1], foreColor[2], 0.0)
-
-        var backcol = glGetUniformLocation(drawingProgram, "backcolor")
-        glUniform4f(backcol, backColor[0], backColor[1], backColor[2], 0.0)
         
         var a_position: GLuint = GLuint(glGetAttribLocation(drawingProgram, "a_position"))
         glVertexAttribPointer(a_position, 2, GLenum(GL_FLOAT), GLboolean(0), 0 , points)

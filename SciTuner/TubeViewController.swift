@@ -68,7 +68,7 @@ class TubeViewController: UIViewController {
             
             processing.Recalculate()
 
-            processing.buildSmoothStandingWave(&tube.wavePoints, light: &tube.waveLightPoints, length: tube.wavePoints.count, thickness: 0.1)
+            processing.buildSmoothStandingWave(&tube.wavePoints, light: &tube.waveLightPoints, length: tube.wavePoints.count, thickness: 0.03)
 
             self.tuner.setFrequency(processing.getFrequency() + processing.getSubFrequency())
 

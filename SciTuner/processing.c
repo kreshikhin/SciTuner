@@ -306,48 +306,35 @@ void processing_build_standing_wave(Processing* p, float* wave, float* light, si
         dest = build_edge(dest, x0, y0, x1, y1, thickness);
         
         for (int i = 0; i < 12; i++) {
-            if (j == 0) {
-                light = write_point4D(light, x0 + thickness / 2.0, y0, x1, y1);
-                continue;
-            }
-            if (j + 1 == p->pointCount) {
-                light = write_point4D(light, x0, y0, x1 - thickness / 2.0, y1);
-                continue;
-            }
             light = write_point4D(light, x0, y0, x1, y1);
         }
     }
 }
 
 float* build_edge(float* dest, float x0, float y0, float x1, float y1, float thickness) {
-    float dy = y1 - y0;
-    float dx = x1 - x0;
-    float dh = thickness / 2.0;
     
-    float hypotenuse = sqrtf(dx*dx + dy*dy);
-    if (hypotenuse != 0) {
-        dh *= hypotenuse / dx;
-    }
+    x0 -= thickness;
+    x1 += thickness;
     
-    //dh = thickness / 2.0;
+    float dy = 2.0 * thickness + fabs(y1 - y0);
     
     // triangle 0 (left top)
     dest = write_point2D(dest, x0, y0);
-    dest = write_point2D(dest, x0, y0+dh);
-    dest = write_point2D(dest, x1, y1+dh);
+    dest = write_point2D(dest, x0, y0+dy);
+    dest = write_point2D(dest, x1, y1+dy);
     
     // triangle 1
     dest = write_point2D(dest, x0, y0);
-    dest = write_point2D(dest, x1, y1+dh);
+    dest = write_point2D(dest, x1, y1+dy);
     dest = write_point2D(dest, x1, y1);
     // triangle 2
     dest = write_point2D(dest, x0, y0);
     dest = write_point2D(dest, x1, y1);
-    dest = write_point2D(dest, x1, y1-dh);
+    dest = write_point2D(dest, x1, y1-dy);
     // triangle 3
     dest = write_point2D(dest, x0, y0);
-    dest = write_point2D(dest, x1, y1-dh);
-    dest = write_point2D(dest, x0, y0-dh);
+    dest = write_point2D(dest, x1, y1-dy);
+    dest = write_point2D(dest, x0, y0-dy);
     
     return dest;
 }
