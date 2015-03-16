@@ -14,12 +14,12 @@ class InstrumentsViewController: UIAlertController {
     
     override func viewDidLoad() {
         addInstrument("guitar")
-        addInstrument("ukulule")
+        addInstrument("ukulele")
         addInstrument("banjo")
         addInstrument("balalaika")
         addInstrument("cello")
         addInstrument("violin")
-        addInstrument("free mode")
+        //addInstrument("free mode")
         
         addAction(UIAlertAction(title: "cancel", style: UIAlertActionStyle.Cancel, handler: nil))
     }

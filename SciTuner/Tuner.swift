@@ -97,7 +97,7 @@ class Tuner {
         tuningIndex = value
         strings = tuningStrings[tuningIndex]
 
-        sortedStrings = sorted(strings) {noteFrequency($0) > noteFrequency($1)}
+        sortedStrings = sorted(strings) {self.noteFrequency($0) > self.noteFrequency($1)}
 
         setStringIndex(stringIndex)
 
@@ -185,7 +185,7 @@ class Tuner {
             ("Standard", "g4 d3 g3 b3 d4")
         ])
 
-        addInstrument("ukulule", [
+        addInstrument("ukulele", [
             ("Standard", "g4 c4 e4 a4"),
             ("D-tuning", "a4 d4 f#4 b4")
         ])
@@ -312,7 +312,7 @@ class Tuner {
 
     func stringPosition() -> Double {
         var pos: Double = soretedStringPosition()
-        var index: Int = (pos + 0.5)
+        var index: Int = Int(pos + 0.5)
 
         if index < 0 || index > sortedStrings.count {
             return pos
@@ -320,18 +320,18 @@ class Tuner {
 
         var name = sortedStrings[index]
 
-        var realIndex = find(strings, name)
+        var realIndex: Int? = find(strings, name)
 
-        if !realIndex {
+        if realIndex == nil{
             return pos
         }
 
-        return pos + Double(realIndex-index)
+        return pos + Double(realIndex! - index)
     }
 
     func soretedStringPosition() -> Double {
-        var frst = noteFrequency(sortedString.first!)
-        var lst = noteFrequency(sortedString.last!)
+        var frst = noteFrequency(sortedStrings.first!)
+        var lst = noteFrequency(sortedStrings.last!)
 
         if frequency > frst {
             var f0 = 0.0

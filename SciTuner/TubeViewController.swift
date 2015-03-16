@@ -45,8 +45,8 @@ class TubeViewController: UIViewController {
         let sampleRate = 44100
         let sampleCount = 2048
 
-        //var source = Source(sampleRate: sampleRate, sampleCount: sampleCount)
-        var source = MicSource(sampleRate: Double(sampleRate), sampleCount: sampleCount)
+        var source = Source(sampleRate: sampleRate, sampleCount: sampleCount)
+        //var source = MicSource(sampleRate: Double(sampleRate), sampleCount: sampleCount)
         //var source = MicSource2(sampleRate: Double(sampleRate), sampleCount: sampleCount)
 
         var processing = ProcessingAdapter(pointCount: 128)
@@ -108,15 +108,23 @@ class TubeViewController: UIViewController {
     }
 
     func getOptimalTubeFrame(verticalShift: CGFloat, size: CGSize) -> CGRect {
+        var h = size.width;
+        if size.height < 500 {
+            h = 220
+        }
         return CGRectMake(
             0, verticalShift,
-            size.width, size.width)
+            size.width, h)
     }
 
     func getOptimalPanelFrame(verticalShift: CGFloat, size: CGSize) -> CGRect {
+        var h = size.width;
+        if size.height < 500 {
+            h = 220
+        }
         return CGRectMake(
-            0, verticalShift + size.width,
-            size.width, size.height - size.width - verticalShift)
+            0, verticalShift + h,
+            size.width, size.height - h - verticalShift)
     }
 
     func showInstruments() {
