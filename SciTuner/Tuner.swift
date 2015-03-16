@@ -50,6 +50,8 @@ class Tuner {
     var tuningStrings: [[String]] = []
     var tuningIndex: Int = 0
     var strings: [String] = []
+    var sortedStrings: [String] = []
+
     var stringIndex: Int = 0
     var string: String = "e2"
     var notes: [String] = []
@@ -94,6 +96,8 @@ class Tuner {
         defaults.setInteger(value, forKey: instrument)
         tuningIndex = value
         strings = tuningStrings[tuningIndex]
+
+        sortedStrings = sorted(strings) {noteFrequency($0) > noteFrequency($1)}
 
         setStringIndex(stringIndex)
 
@@ -297,7 +301,7 @@ class Tuner {
     func targetFrequency() -> Double {
         return noteFrequency(string) * fretScale()
     }
-    
+
     func actualFrequency() -> Double {
         return frequency * fretScale()
     }
@@ -307,29 +311,42 @@ class Tuner {
     }
 
     func stringPosition() -> Double {
-        var frst = strings.map(noteFrequency).reduce(
-            -Double.infinity, { max($0, $1) }
-        )
-        
-        var lst = strings.map(noteFrequency).reduce(
-            +Double.infinity, { min($0, $1) }
-        )
-        
-        if frequency > lst || frequency < frst {
-            return Double(strings.count - 1) * (frequency - frst) / (lst - frst)
+        var pos: Double = soretedStringPosition()
+        var index: Int = (pos + 0.5)
+
+        if index < 0 || index > sortedStrings.count {
+            return pos
         }
-        
-        var f0 = frst
-        var pos: Double = -1.0
-        for str in strings {
-            var f1 = noteFrequency(str)
-            if frequency < f1 {
-                return pos + (frequency - f0) / (f1 - f0)
+
+        var name = sortedStrings[index]
+
+        var realIndex = find(strings, name)
+
+        if !realIndex {
+            return pos
+        }
+
+        return pos + Double(realIndex-index)
+    }
+
+    func soretedStringPosition() -> Double {
+        var frst = noteFrequency(sortedString.first!)
+        var lst = noteFrequency(sortedString.last!)
+
+        if frequency > frst {
+            var f0 = 0.0
+            var pos: Double = -1.0
+            for str in strings {
+                var f1 = noteFrequency(str)
+                if frequency < f1 {
+                    return pos + (frequency - f0) / (f1 - f0)
+                }
+                f0 = f1
+                pos++
             }
-            f0 = f1
-            pos++
         }
-        return pos
+
+        return Double(strings.count - 1) * (frequency - frst) / (lst - frst)
     }
 
     func nextString() {
