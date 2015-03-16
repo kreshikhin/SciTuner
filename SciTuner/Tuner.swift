@@ -186,11 +186,11 @@ class Tuner {
             ("D-tuning", "a4 d4 f#4 b4")
         ])
 
-        addInstrument("free mode", [
-            ("Octaves", "c2 c3 c4 c5 c6"),
-            ("C-major", "c3 d3 e3 f3 g3 a3 b3"),
-            ("C-minor", "c3 d3 e3 f3 g3 a3 b3")
-        ])
+        //addInstrument("free mode", [
+        //    ("Octaves", "c2 c3 c4 c5 c6"),
+        //    ("C-major", "c3 d3 e3 f3 g3 a3 b3"),
+        //    ("C-minor", "c3 d3 e3 f3 g3 a3 b3")
+        //])
 
         if defaults.stringForKey("instrument") != nil {
             var value: String? = defaults.stringForKey("instrument")
@@ -307,23 +307,29 @@ class Tuner {
     }
 
     func stringPosition() -> Double {
-        var frst = noteFrequency(strings.first!)
-        var lst = noteFrequency(strings.last!)
-
-        if frequency > frst {
-            var f0 = 0.0
-            var pos: Double = -1.0
-            for str in strings {
-                var f1 = noteFrequency(str)
-                if frequency < f1 {
-                    return pos + (frequency - f0) / (f1 - f0)
-                }
-                f0 = f1
-                pos++
-            }
+        var frst = strings.map(noteFrequency).reduce(
+            -Double.infinity, { max($0, $1) }
+        )
+        
+        var lst = strings.map(noteFrequency).reduce(
+            +Double.infinity, { min($0, $1) }
+        )
+        
+        if frequency > lst || frequency < frst {
+            return Double(strings.count - 1) * (frequency - frst) / (lst - frst)
         }
-
-        return Double(strings.count - 1) * (frequency - frst) / (lst - frst)
+        
+        var f0 = frst
+        var pos: Double = -1.0
+        for str in strings {
+            var f1 = noteFrequency(str)
+            if frequency < f1 {
+                return pos + (frequency - f0) / (f1 - f0)
+            }
+            f0 = f1
+            pos++
+        }
+        return pos
     }
 
     func nextString() {
