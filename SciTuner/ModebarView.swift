@@ -64,7 +64,7 @@ class ModebarView: UIView {
         fretMode!.backgroundColor = defaultColor
         self.addSubview(fretMode!)
         
-        filterMode = UIButton(frame: CGRectMake(width-100, 10, 100, 20))
+        filterMode = UIButton(frame: CGRectMake(width-100, 5, 100, 20))
         filterMode!.setTitle("filter on", forState: UIControlState.Normal)
         filterMode!.titleLabel?.textAlignment = .Right
         filterMode!.setTitleColor(defaultColor, forState: .Normal)

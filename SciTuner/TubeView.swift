@@ -24,7 +24,7 @@ class TubeView: GLKView{
     let lineWidth: GLfloat = 5
     
     let foreColor: [Float] = [1.0, 1.0, 1.0, 0]
-    let backColor: [Float] = [0.1, 0.1, 0.2, 0]
+    let backColor: [Float] = [0.0, 0.0, 0.35, 0]
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
