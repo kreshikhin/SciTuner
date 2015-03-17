@@ -11,6 +11,8 @@ import UIKit
 class TubeViewController: UIViewController {
     let instruments = InstrumentsViewController(title: nil, message: nil, preferredStyle: .ActionSheet)
     let frets = FretsViewController(title: nil, message: nil, preferredStyle: .ActionSheet)
+    let filters = FiltersViewController(title: nil, message: nil, preferredStyle: .ActionSheet)
+    
     let tuner = Tuner.sharedInstance
 
     override func viewDidLoad() {
@@ -45,8 +47,8 @@ class TubeViewController: UIViewController {
         let sampleRate = 44100
         let sampleCount = 2048
 
-        var source = Source(sampleRate: sampleRate, sampleCount: sampleCount)
-        //var source = MicSource(sampleRate: Double(sampleRate), sampleCount: sampleCount)
+        //var source = Source(sampleRate: sampleRate, sampleCount: sampleCount)
+        var source = MicSource(sampleRate: Double(sampleRate), sampleCount: sampleCount)
         //var source = MicSource2(sampleRate: Double(sampleRate), sampleCount: sampleCount)
 
         var processing = ProcessingAdapter(pointCount: 128)
@@ -89,6 +91,7 @@ class TubeViewController: UIViewController {
         })
         
         panel.modebar!.fretMode!.addTarget(self, action: Selector("showFrets"), forControlEvents: .TouchUpInside)
+        panel.modebar!.filterMode!.addTarget(self, action: Selector("showFilters"), forControlEvents: .TouchUpInside)
         
         tuner.on("frequencyChange", {()in
             panel.actualFrequency!.text = String(format: "%.2fHz", self.tuner.actualFrequency())
@@ -135,7 +138,7 @@ class TubeViewController: UIViewController {
         self.presentViewController(self.frets, animated: true, completion: nil)
     }
     
-    func showModes() {
-        //self.presentViewController(instruments, animated: true, completion: nil)
+    func showFilters() {
+        self.presentViewController(self.filters, animated: true, completion: nil)
     }
 }

@@ -39,6 +39,22 @@ class ModebarView: UIView {
         get{ return 0 }
     }
     
+    var filter: String {
+        set{
+            switch newValue {
+            case "off":
+                self.filterMode!.setTitle("filter: off", forState: .Normal)
+                self.filterMode!.backgroundColor = self.tintColor
+                self.filterMode!.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            default:
+                self.filterMode!.setTitle("filter: on", forState: .Normal)
+                self.filterMode!.backgroundColor = self.backgroundColor
+                self.filterMode!.setTitleColor(self.tintColor, forState: .Normal)
+            }
+        }
+        get{ return "" }
+    }
+    
     var notes: [String] = ["G#4", "A4", "B#4"]
     var tuningMode: UIButton?
     
@@ -56,7 +72,7 @@ class ModebarView: UIView {
         
         var defaultColor = self.tintColor
         
-        fretMode = UIButton(frame: CGRectMake(5, 5, 110, 20))
+        fretMode = CustomButton(frame: CGRectMake(5, 5, 110, 20))
         fretMode!.setTitle("tune on fret", forState: .Normal)
         fretMode!.titleLabel?.textAlignment = .Left
         fretMode!.setTitleColor(UIColor.whiteColor(), forState: .Normal)
@@ -64,10 +80,12 @@ class ModebarView: UIView {
         fretMode!.backgroundColor = defaultColor
         self.addSubview(fretMode!)
         
-        filterMode = UIButton(frame: CGRectMake(width-100, 5, 100, 20))
-        filterMode!.setTitle("filter on", forState: UIControlState.Normal)
+        filterMode = CustomButton(frame: CGRectMake(width-100, 5, 100, 20))
+        filterMode!.setTitle("filter: on", forState: .Normal)
         filterMode!.titleLabel?.textAlignment = .Right
-        filterMode!.setTitleColor(defaultColor, forState: .Normal)
+        filterMode!.layer.cornerRadius = 3.0
+        filterMode!.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        filterMode!.backgroundColor = defaultColor
         self.addSubview(filterMode!)
         
         tuner.on("fretChange", {()in
@@ -75,5 +93,11 @@ class ModebarView: UIView {
         })
         
         self.fret = self.tuner.fret
+        
+        tuner.on("filterChange", {()in
+            self.filter = self.tuner.filter
+        })
+        
+        self.filter = self.tuner.filter
     }
 }

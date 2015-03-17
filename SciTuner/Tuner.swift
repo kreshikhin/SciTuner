@@ -65,6 +65,7 @@ class Tuner {
     var pitchIndex: Int = 0
     var pitch: String = "default"
     var instruments: [String: [(title: String, strings: [String])]] = [:]
+    var filter: String = "on"
 
     func setInstrument(value: String){
         if instruments[value] == nil {
@@ -150,6 +151,12 @@ class Tuner {
         defaults.setInteger(fret, forKey: "fret")
         call("fretChange")
     }
+    
+    func setFilter(value: String) {
+        filter = value
+        defaults.setObject(filter, forKey: "filter")
+        call("filterChange")
+    }
 
     init(){
         addInstrument("guitar", [
@@ -201,6 +208,13 @@ class Tuner {
             setInstrument(value!)
         } else {
             setInstrument("guitar")
+        }
+        
+        if defaults.stringForKey("filter") != nil {
+            var value: String? = defaults.stringForKey("filter")
+            setFilter(value!)
+        } else {
+            setFilter("on")
         }
 
         setTuningIndex(defaults.integerForKey(instrument))
@@ -314,7 +328,7 @@ class Tuner {
         var pos: Double = soretedStringPosition()
         var index: Int = Int(pos + 0.5)
 
-        if index < 0 || index > sortedStrings.count {
+        if index < 0 || index >= sortedStrings.count {
             return pos
         }
 

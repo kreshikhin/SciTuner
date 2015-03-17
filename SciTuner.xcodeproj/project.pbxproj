@@ -40,6 +40,7 @@
 		92C2B8321A5801E8008F6A31 /* TubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B8221A5801E8008F6A31 /* TubeView.swift */; };
 		92C2B8331A5801E8008F6A31 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B8231A5801E8008F6A31 /* ViewController.swift */; };
 		92D1CEEE1A9F38F400CD8BAF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D1CEED1A9F38F400CD8BAF /* SettingsView.swift */; };
+		92D8D0CA1AB839A2001E0119 /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D8D0C91AB839A2001E0119 /* FiltersViewController.swift */; };
 		92FB2A3F1A614F02009EC409 /* MicSource2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FB2A3E1A614F02009EC409 /* MicSource2.swift */; };
 /* End PBXBuildFile section */
 
@@ -83,6 +84,7 @@
 		92C2B8231A5801E8008F6A31 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		92C4EF0C1A3A11C800ECD2C7 /* SciTuner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SciTuner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92D1CEED1A9F38F400CD8BAF /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		92D8D0C91AB839A2001E0119 /* FiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
 		92FB2A3E1A614F02009EC409 /* MicSource2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MicSource2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -159,6 +161,7 @@
 				924ECB5A1A9DB91A005E38FF /* TubeViewController.swift */,
 				92076C2F1AACC10400A1E99E /* FretsViewController.swift */,
 				924EFCFF1A9F462600C11B09 /* InstrumentsViewController.swift */,
+				92D8D0C91AB839A2001E0119 /* FiltersViewController.swift */,
 				9221C9221A9F171300DF36F6 /* SettingsViewController.swift */,
 				92D1CEED1A9F38F400CD8BAF /* SettingsView.swift */,
 				92FB2A3E1A614F02009EC409 /* MicSource2.swift */,
@@ -266,6 +269,7 @@
 				924EFD0D1AA08B1600C11B09 /* ControlbarView.swift in Sources */,
 				928A2F511A5BC9AD00F83522 /* dspmath.c in Sources */,
 				92C2B82B1A5801E8008F6A31 /* MicSource.swift in Sources */,
+				92D8D0CA1AB839A2001E0119 /* FiltersViewController.swift in Sources */,
 				9221C9231A9F171300DF36F6 /* SettingsViewController.swift in Sources */,
 				924EFD0F1AA08D5000C11B09 /* ForwardButton.swift in Sources */,
 				924EFD061AA07F2C00C11B09 /* PointerView.swift in Sources */,
