@@ -98,7 +98,7 @@ class Tuner {
         tuningIndex = value
         strings = tuningStrings[tuningIndex]
 
-        sortedStrings = sorted(strings) {self.noteFrequency($0) > self.noteFrequency($1)}
+        sortedStrings = sorted(strings) {self.noteFrequency($0) < self.noteFrequency($1)}
 
         setStringIndex(stringIndex)
 
@@ -150,6 +150,7 @@ class Tuner {
 
         defaults.setInteger(fret, forKey: "fret")
         call("fretChange")
+        call("")
     }
     
     func setFilter(value: String) {
@@ -326,6 +327,8 @@ class Tuner {
 
     func stringPosition() -> Double {
         var pos: Double = soretedStringPosition()
+        println(pos)
+        
         var index: Int = Int(pos + 0.5)
 
         if index < 0 || index >= sortedStrings.count {
@@ -340,17 +343,20 @@ class Tuner {
             return pos
         }
 
+        
         return pos + Double(realIndex! - index)
     }
 
     func soretedStringPosition() -> Double {
         var frst = noteFrequency(sortedStrings.first!)
         var lst = noteFrequency(sortedStrings.last!)
+        
+        NSLog(" %f %f \n", frst, lst)
 
         if frequency > frst {
             var f0 = 0.0
             var pos: Double = -1.0
-            for str in strings {
+            for str in sortedStrings {
                 var f1 = noteFrequency(str)
                 if frequency < f1 {
                     return pos + (frequency - f0) / (f1 - f0)

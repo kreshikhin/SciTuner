@@ -77,8 +77,6 @@ class TubeViewController: UIViewController {
             tube.setNeedsDisplay()
         }
 
-        processing.enableFilter()
-
         tube.onDraw = {(rect: CGRect) -> () in
             glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
             tube.drawPoints(tube.wavePoints, lightPoints: tube.waveLightPoints)
@@ -102,7 +100,19 @@ class TubeViewController: UIViewController {
             panel.targetFrequency!.text = String(format: "%.2fHz", self.tuner.targetFrequency())
         })
         
+        tuner.on("fretChange", {()in
+            panel.targetFrequency!.text = String(format: "%.2fHz", self.tuner.targetFrequency())
+        })
+        
         panel.targetFrequency!.text = String(format: "%.2fHz", self.tuner.targetFrequency())
+        
+        tuner.on("filterChange", {()in
+            if self.tuner.filter == "on" {
+                processing.enableFilter()
+            } else {
+                processing.disableFilter()
+            }
+        })
     }
 
     override func didReceiveMemoryWarning() {
