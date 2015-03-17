@@ -62,7 +62,7 @@ void processing_init(Processing* p, double fd, double fMin, size_t sampleCount, 
     p->subSpectrum = malloc(p->subLength * sizeof(*p->subSpectrum));
     
     p->pointCount = pointCount;
-    p->points = malloc(p->pointCount * sizeof(p->points));
+    p->points = malloc(p->pointCount * sizeof(*p->points));
 
     p->signal = malloc(p->signalLength * sizeof(*p->signal));
     
@@ -285,6 +285,9 @@ void processing_build_standing_wave(Processing* p, float* wave, float* light, si
     
     double shift = waveLength * phase / (2.0 * M_PI);
     
+    // here something wrong !!!
+    // p->previewLength - waveLength * 2 - (size_t)(waveLength - shift) - (size_t)waveLength
+    // p->previewLength - waveLength * 4 + (0 .. waveLength)
     double* shiftedSrc = &p->preview[index - (size_t)(waveLength - shift) - (size_t)waveLength];
     
     approximate_sinc(p->points, shiftedSrc, p->pointCount, 2*waveLength);
