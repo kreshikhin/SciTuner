@@ -27,9 +27,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
         tuner.on("instrumentChange", {()in
             self.tableView!.reloadData()
-            println("wtf in settings?")
-            println(self.tuner.instrument)
-            println(self.tuner.tunings)
         })
         
         self.view.addSubview(tableView!)
@@ -85,8 +82,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         if(indexPath.section == 1){
             tuner.setTuningIndex(indexPath.row)
         }
-
-        println("You selected cell #\(indexPath.row)!")
 
         tableView.reloadData()
     }

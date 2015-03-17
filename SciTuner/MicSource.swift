@@ -78,7 +78,7 @@ class MicSource{
         if sleep {
             return
         }
-        println("inactivate")
+        
         AQRecorderState_deinit(aqData);
         sleep = true;
     }

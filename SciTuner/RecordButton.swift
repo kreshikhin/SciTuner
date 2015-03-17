@@ -53,7 +53,6 @@ class RecordButton: CustomButton{
 
     func click(){
         self.selected = !self.selected
-        println(self.selected)
     }
 
     func isPaused() -> Bool { return self.selected }

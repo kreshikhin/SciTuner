@@ -30,8 +30,6 @@ class PanelView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        println(frame)
-        
         let margin: CGFloat = 10.0;
         let half = frame.size.width / 2;
         let third = (frame.size.width - 2*margin) / 3;

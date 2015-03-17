@@ -196,7 +196,12 @@ class Tuner {
         ])
 
         addInstrument("balalaika", [
-            ("Standard", "g4 d3 g3 b3 d4")
+            ("Standard/Prima", "e4 e4 a4"),
+            ("Bass", "e2 a2 d3"),
+            ("Tenor", "a2 a2 e3"),
+            ("Alto", "e3 e3 a3"),
+            ("Secunda", "a3 a3 d4"),
+            ("Piccolo", "b4 e5 a5")
         ])
 
         addInstrument("ukulele", [

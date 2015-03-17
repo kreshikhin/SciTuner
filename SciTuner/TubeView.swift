@@ -150,7 +150,7 @@ class TubeView: GLKView{
 
         var isCompiled: GLint = 0
         glGetShaderiv(shader, GLenum(GL_COMPILE_STATUS), &isCompiled)
-        NSLog(" is compiled : %i ", isCompiled)
+        //NSLog(" is compiled : %i ", isCompiled)
 
         if isCompiled == 0 {
             var infolen: GLsizei = 0

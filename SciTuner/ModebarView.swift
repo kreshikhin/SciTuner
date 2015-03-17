@@ -72,7 +72,7 @@ class ModebarView: UIView {
         
         var defaultColor = self.tintColor
         
-        fretMode = CustomButton(frame: CGRectMake(5, 5, 110, 20))
+        fretMode = CustomButton(frame: CGRectMake(5, 5, 110, 25))
         fretMode!.setTitle("tune on fret", forState: .Normal)
         fretMode!.titleLabel?.textAlignment = .Left
         fretMode!.setTitleColor(UIColor.whiteColor(), forState: .Normal)
@@ -80,7 +80,7 @@ class ModebarView: UIView {
         fretMode!.backgroundColor = defaultColor
         self.addSubview(fretMode!)
         
-        filterMode = CustomButton(frame: CGRectMake(width-100, 5, 100, 20))
+        filterMode = CustomButton(frame: CGRectMake(width-100, 5, 100, 25))
         filterMode!.setTitle("filter: on", forState: .Normal)
         filterMode!.titleLabel?.textAlignment = .Right
         filterMode!.layer.cornerRadius = 3.0

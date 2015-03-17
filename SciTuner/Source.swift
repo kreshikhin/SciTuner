@@ -25,9 +25,6 @@ class Source{
         
         var interval = Double(sample.count) / discreteFrequency
 
-        print("source freq ")
-        println(interval)
-
         let timer = NSTimer(timeInterval: interval, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
         NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
     }

@@ -50,7 +50,7 @@ class NotebarView: UIView {
                 shift = 0.16666665 + 0.666666 * (position + 100.0) / 200.0;
             }
             
-            var width: CGFloat = frame.size.width;
+            var width: CGFloat = self.frame.size.width;
             pointer!.frame.origin.x = CGFloat(shift) * (width - 2 * margin) + 6;
         }
         get{

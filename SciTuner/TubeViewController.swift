@@ -9,11 +9,11 @@
 import UIKit
 
 class TubeViewController: UIViewController {
-    let instruments = InstrumentsViewController(title: nil, message: nil, preferredStyle: .ActionSheet)
-    let frets = FretsViewController(title: nil, message: nil, preferredStyle: .ActionSheet)
-    let filters = FiltersViewController(title: nil, message: nil, preferredStyle: .ActionSheet)
+    var instruments = InstrumentsViewController(title: nil, message: nil, preferredStyle: .ActionSheet)
+    var frets = FretsViewController(title: nil, message: nil, preferredStyle: .ActionSheet)
+    var filters = FiltersViewController(title: nil, message: nil, preferredStyle: .ActionSheet)
     
-    let tuner = Tuner.sharedInstance
+    var tuner = Tuner.sharedInstance
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,8 +37,6 @@ class TubeViewController: UIViewController {
         let navbarHeight = UIApplication.sharedApplication().statusBarFrame.size.height + (self.navigationController!).navigationBar.frame.size.height
 
         let f = self.view.frame;
-
-        NSLog("%@ %@ %@ %@ %@", navbarHeight, f.origin.x, f.origin.y, f.size.width, f.size.height)
 
         let panelFrame = getOptimalPanelFrame(navbarHeight, size: self.view.frame.size)
         var panel = PanelView(frame: panelFrame)
@@ -115,6 +113,12 @@ class TubeViewController: UIViewController {
                 processing.disableFilter()
             }
         })
+        
+        if self.tuner.filter == "on" {
+            processing.enableFilter()
+        } else {
+            processing.disableFilter()
+        }
         
         tuner.on("statusChange", {()in
             if self.tuner.status == "active" {
