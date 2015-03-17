@@ -158,6 +158,12 @@ class Tuner {
         defaults.setObject(filter, forKey: "filter")
         call("filterChange")
     }
+    
+    var status = "active"
+    func setStatus(value: String){
+        status = value
+        call("statusChange")
+    }
 
     init(){
         addInstrument("guitar", [
@@ -327,7 +333,6 @@ class Tuner {
 
     func stringPosition() -> Double {
         var pos: Double = soretedStringPosition()
-        println(pos)
         
         var index: Int = Int(pos + 0.5)
 
@@ -351,8 +356,6 @@ class Tuner {
         var frst = noteFrequency(sortedStrings.first!)
         var lst = noteFrequency(sortedStrings.last!)
         
-        NSLog(" %f %f \n", frst, lst)
-
         if frequency > frst {
             var f0 = 0.0
             var pos: Double = -1.0

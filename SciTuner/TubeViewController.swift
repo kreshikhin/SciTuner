@@ -59,7 +59,7 @@ class TubeViewController: UIViewController {
         tube.waveLightPoints = [Float](count: Int(processing.pointCount-1)*4*12, repeatedValue: 0)
 
         
-        source.onData = {()in
+        source.onData = {()->Void in
             if self.tuner.isPaused {
                 return
             }
@@ -76,7 +76,9 @@ class TubeViewController: UIViewController {
 
             tube.setNeedsDisplay()
         }
-
+        
+        source.activate()
+        
         tube.onDraw = {(rect: CGRect) -> () in
             glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
             tube.drawPoints(tube.wavePoints, lightPoints: tube.waveLightPoints)
@@ -111,6 +113,14 @@ class TubeViewController: UIViewController {
                 processing.enableFilter()
             } else {
                 processing.disableFilter()
+            }
+        })
+        
+        tuner.on("statusChange", {()in
+            if self.tuner.status == "active" {
+                source.activate()
+            } else {
+                source.inactivate()
             }
         })
     }

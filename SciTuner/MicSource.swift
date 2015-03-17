@@ -13,6 +13,7 @@ import AVFoundation
 
 class MicSource{
     var aqData = AQRecorderState_create()
+    var sleep: Bool = true
     
     var onData: (() -> ()) = { () -> () in
     }
@@ -29,9 +30,20 @@ class MicSource{
     var sample = [Double](count: 2205, repeatedValue: 0)
     var preview = [Double](count: Int(PREVIEW_LENGTH), repeatedValue: 0)
     
+    let sampleRate: Double
+    let sampleCount: Int
+    
     init(sampleRate: Double, sampleCount: Int) {
-        var err: NSError?;
+        self.sampleRate = sampleRate
+        self.sampleCount = sampleCount
+    }
+    
+    func activate(){
+        if !sleep {
+            return
+        }
         
+        var err: NSError?;
         var session = AVAudioSession.sharedInstance()
         
         session.setPreferredSampleRate(44100, error: nil)
@@ -59,14 +71,27 @@ class MicSource{
         
         let timer = NSTimer(timeInterval: interval, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
         NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
+        sleep = false;
+    }
+    
+    func inactivate(){
+        if sleep {
+            return
+        }
+        println("inactivate")
+        AQRecorderState_deinit(aqData);
+        sleep = true;
     }
     
     deinit{
-        AQRecorderState_deinit(aqData);
         AQRecorderState_destroy(aqData);
     }
     
     @objc func update(){
+        if(sleep) {
+            return
+        }
+        
         AQRecorderState_get_samples(aqData, &sample, UInt(sample.count))
         AQRecorderState_get_preview(aqData, &preview, UInt(preview.count))
         onData()
