@@ -122,7 +122,7 @@ class TubeView: GLKView{
         var isLinked: GLint = 0
 
         glGetProgramiv(program, GLenum(GL_LINK_STATUS), &isLinked)
-        NSLog(" linked: %i ", isLinked)
+        //NSLog(" linked: %i ", isLinked)
 
         if isLinked == 0 {
             var infolen: GLsizei = 0

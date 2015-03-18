@@ -63,7 +63,7 @@ void processing_init(Processing* p, double fd, double fMin, size_t sampleCount, 
     
     p->pointCount = pointCount;
     p->points = malloc(p->pointCount * sizeof(*p->points));
-
+    
     p->signal = malloc(p->signalLength * sizeof(*p->signal));
     
     p->previewLength = PREVIEW_LENGTH;
