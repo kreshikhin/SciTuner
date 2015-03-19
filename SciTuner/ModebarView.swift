@@ -85,7 +85,7 @@ class ModebarView: UIView {
         filterMode!.titleLabel?.textAlignment = .Right
         filterMode!.layer.cornerRadius = 3.0
         filterMode!.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        filterMode!.backgroundColor = defaultColor
+        filterMode!.backgroundColor = UIColor.redColor()
         self.addSubview(filterMode!)
         
         tuner.on("fretChange", {()in

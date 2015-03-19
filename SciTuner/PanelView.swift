@@ -73,7 +73,7 @@ class PanelView: UIView {
         notebar = NotebarView(frame: CGRectMake(0, step, half*2, 40))
         stringbar = StringbarView(frame: CGRectMake(0, 2*step, half*2, 40))
         controlbar = ControlbarView(frame: CGRectMake(0, 3*step, half*2, 40))
-        modebar = ModebarView(frame: CGRectMake(0, frame.size.height - 35, half*2, 20))
+        modebar = ModebarView(frame: CGRectMake(0, frame.size.height - 35, half*2, 40))
         
         self.addSubview(notebar!)
         self.addSubview(stringbar!)
