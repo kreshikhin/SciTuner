@@ -2,7 +2,7 @@
 # SciTuner
 
 [![Загрузить из AppStore](http://larchik.kreshikhin.com/download.png)](https://itunes.apple.com/us/app/scituner/id952300084?mt=8)
-[![Поддержать проект](http://larchik.kreshikhin.com/donate2.png)](http://yasobe.ru/na/scituner#form_submit)
+[![Поддержать проект](http://larchik.kreshikhin.com/donate3.png)](http://yasobe.ru/na/scituner#form_submit)
 
 
 SciTuner это гитарный тюнер с визуализацией в режиме реального времени.
@@ -35,4 +35,5 @@ SciTuner presents many useful features:
 ## Документация | Documentation
 
 ## Лицензия | License
-MIT
+
+The MIT License (MIT)
