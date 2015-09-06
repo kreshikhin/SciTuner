@@ -74,7 +74,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
     }
 
-    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(indexPath.section == 0){
             tuner.setPitchIndex(indexPath.row)
         }

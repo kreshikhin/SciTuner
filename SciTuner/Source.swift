@@ -42,8 +42,8 @@ class Source{
         //NSLog("source freq %f ", frequency);
         
         var t2 = dt;
-        source_generate(&sample, UInt(sample.count), &t, dt, frequency)
-        source_generate(&preview, UInt(preview.count), &t2, dt, frequency)
+        source_generate(&sample, size_t(sample.count), &t, dt, frequency)
+        source_generate(&preview, size_t(preview.count), &t2, dt, frequency)
         
         onData()
         

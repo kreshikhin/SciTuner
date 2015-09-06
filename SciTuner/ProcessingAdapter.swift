@@ -15,7 +15,7 @@ class ProcessingAdapter{
     
     init(pointCount: UInt){
         self.pointCount = pointCount
-        processing_init(p, 44100, 16, 32768, pointCount)
+        processing_init(p, 44100.0, 16.0, size_t(32768), size_t(pointCount))
     }
     
     deinit{
@@ -24,11 +24,11 @@ class ProcessingAdapter{
     }
     
     func Push(inout packet: [Double]){
-        processing_push(p, packet, UInt(packet.count))
+        processing_push(p, packet, size_t(packet.count))
     }
     
     func SavePreview(inout packet: [Double]){
-        processing_save_preview(p, packet, UInt(packet.count))
+        processing_save_preview(p, packet, size_t(packet.count))
     }
     
     func Recalculate() {
@@ -36,7 +36,7 @@ class ProcessingAdapter{
     }
     
     func buildSmoothStandingWave(inout wave: [Float], inout light: [Float], length: Int, thickness: Float) {
-        processing_build_standing_wave(p, &wave, &light, UInt(length), thickness)
+        processing_build_standing_wave(p, &wave, &light, size_t(length), thickness)
     }
     
     func getFrequency() -> Double {

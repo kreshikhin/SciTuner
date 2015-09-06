@@ -143,7 +143,7 @@ class TubeView: GLKView{
         var shader = glCreateShader(shaderType)
 
         var cStringSource = (code as NSString).UTF8String
-        let stringfromutf8string = String.fromCString(cStringSource)
+        //let stringfromutf8string = String.fromCString(cStringSource)
 
         glShaderSource(shader, GLsizei(1), &cStringSource, nil)
         glCompileShader(shader);
