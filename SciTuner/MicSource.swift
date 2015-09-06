@@ -62,7 +62,7 @@ class MicSource{
             NSLog("It can't set mode, because %@ ", err!)
         }
         
-        AQRecorderState_init(aqData, sampleRate, UInt(sampleCount))
+        AQRecorderState_init(aqData, sampleRate, size_t(sampleCount))
         
         self.discreteFrequency = Double(sampleRate)
         sample = [Double](count: sampleCount, repeatedValue: 0)
@@ -92,8 +92,8 @@ class MicSource{
             return
         }
         
-        AQRecorderState_get_samples(aqData, &sample, UInt(sample.count))
-        AQRecorderState_get_preview(aqData, &preview, UInt(preview.count))
+        AQRecorderState_get_samples(self.aqData, &sample, size_t(sample.count))
+        AQRecorderState_get_preview(self.aqData, &preview, size_t(preview.count))
         onData()
     }
 }
