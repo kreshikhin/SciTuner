@@ -1,6 +1,5 @@
 
-SciTuner
-========
+# SciTuner
 
 [![Загрузить из AppStore](http://larchik.kreshikhin.com/download.png)](https://itunes.apple.com/us/app/scituner/id952300084?mt=8)
 [![Поддержать проект](http://larchik.kreshikhin.com/donate.png)](http://yasobe.ru/na/scituner#form_submit)
@@ -18,6 +17,9 @@ SciTuner представляет множество полезных функц
 • Позволяет останавливать волну и захваченные значения кнопкой "pause"
 • Работает в шумных условиях
 
+
+## SciTuner (en)
+
 SciTuner is guitar tuner with real-time signal visualization.
 The application uses strong digital processing algorithm for accurate frequency estimation and wave visualization.
 SciTuner presents many useful features:
@@ -30,9 +32,7 @@ SciTuner presents many useful features:
 • Allows to freeze the wave form and values by button "pause"
 • Works in noisy conditions
 
-Докуентация | Documentation
-=============
+## Документация | Documentation
 
-Лицензия | License
-========
+## Лицензия | License
 MIT
