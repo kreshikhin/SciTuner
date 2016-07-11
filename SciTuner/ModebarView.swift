@@ -58,19 +58,19 @@ class ModebarView: UIView {
     var notes: [String] = ["G#4", "A4", "B#4"]
     var tuningMode: UIButton?
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        var width = frame.size.width;
-        var margin: CGFloat = 10;
+        let width = frame.size.width;
+        let margin: CGFloat = 10;
         var left = frame.origin.x + margin;
         var top = frame.origin.y + margin;
         
-        var defaultColor = self.tintColor
+        let defaultColor = self.tintColor
         
         fretMode = CustomButton(frame: CGRectMake(5, 5, 110, 25))
         fretMode!.setTitle("tune on fret", forState: .Normal)

@@ -20,9 +20,9 @@ class FiltersViewController: UIAlertController {
     }
     
     func addFilter(title: String, _ value: String){
-        var action = UIAlertAction(
+        let action = UIAlertAction(
             title: title, style: UIAlertActionStyle.Default,
-            handler: {(action: UIAlertAction?) -> Void in
+            handler: {(action: UIAlertAction) -> Void in
                 self.tuner.setFilter(value)
         })
         

@@ -11,7 +11,7 @@ import UIKit
 import CoreGraphics
 
 class PointerView: UIView{
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -21,7 +21,7 @@ class PointerView: UIView{
     }
     
     override func drawRect(rect: CGRect){
-        var ctx = UIGraphicsGetCurrentContext()
+        let ctx = UIGraphicsGetCurrentContext()
     
         CGContextBeginPath(ctx)
         CGContextMoveToPoint   (ctx, CGRectGetMinX(rect), CGRectGetMinY(rect))  // top left

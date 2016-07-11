@@ -22,9 +22,9 @@ class FretsViewController: UIAlertController {
     }
     
     func addFret(title: String, _ fret: Int){
-        var action = UIAlertAction(
+        let action = UIAlertAction(
             title: title, style: UIAlertActionStyle.Default,
-            handler: {(action: UIAlertAction?) -> Void in
+            handler: {(action: UIAlertAction) -> Void in
                 self.tuner.setFret(fret)
         })
         

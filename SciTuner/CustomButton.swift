@@ -14,33 +14,33 @@ class CustomButton: UIButton {
         super.init(frame: frame)
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches, withEvent: event)
         self.setNeedsDisplay()
     }
     
-    override func touchesCancelled(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
         super.touchesCancelled(touches, withEvent: event)
         self.setNeedsDisplay()
     }
     
-    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesMoved(touches, withEvent: event)
     }
     
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesEnded(touches, withEvent: event)
         self.setNeedsDisplay()
     }
     
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
         //println(point)
-        var margin: CGFloat = 20.0
-        var area = CGRectInset(self.bounds, -margin, -margin);
+        let margin: CGFloat = 20.0
+        let area = CGRectInset(self.bounds, -margin, -margin);
         return CGRectContainsPoint(area, point) ? self : nil;
     }
 }

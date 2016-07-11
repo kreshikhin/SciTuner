@@ -52,7 +52,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell:UITableViewCell = UITableViewCell(style: .Value1, reuseIdentifier: nil)
+        let cell:UITableViewCell = UITableViewCell(style: .Value1, reuseIdentifier: nil)
 
         cell.accessoryType = .None
 

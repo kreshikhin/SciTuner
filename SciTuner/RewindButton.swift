@@ -11,7 +11,7 @@ import UIKit
 import CoreGraphics
 
 class RewindButton: CustomButton{
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -21,7 +21,7 @@ class RewindButton: CustomButton{
     }
     
     override func drawRect(rect: CGRect){
-        var ctx = UIGraphicsGetCurrentContext()
+        let ctx = UIGraphicsGetCurrentContext()
         
         if(!self.highlighted) {
             CGContextSetRGBFillColor(ctx, 0, 0, 0, 1)

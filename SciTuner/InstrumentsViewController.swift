@@ -25,9 +25,9 @@ class InstrumentsViewController: UIAlertController {
     }
     
     func addInstrument(title: String){
-        var action = UIAlertAction(
+        let action = UIAlertAction(
             title: title, style: UIAlertActionStyle.Default,
-            handler: {(action: UIAlertAction?) -> Void in
+            handler: {(action: UIAlertAction) -> Void in
                 self.tuner.setInstrument(title)
         })
         
