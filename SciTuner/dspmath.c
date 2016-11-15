@@ -27,7 +27,7 @@ double get_range_energy(double* s, double freq, double width, double df, size_t 
     int right = (freq + width/2.0) / df;
     
     left = left < 0 ? 0 : left;
-    right = right >= length ? length - 1 : right;
+    right = (right >= length) ? (int)length - 1 : right;
     
     
     double energy = 0;

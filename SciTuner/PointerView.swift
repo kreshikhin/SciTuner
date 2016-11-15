@@ -17,20 +17,20 @@ class PointerView: UIView{
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.whiteColor()
+        self.backgroundColor = UIColor.white
     }
     
-    override func drawRect(rect: CGRect){
+    override func draw(_ rect: CGRect){
         let ctx = UIGraphicsGetCurrentContext()
     
-        CGContextBeginPath(ctx)
-        CGContextMoveToPoint   (ctx, CGRectGetMinX(rect), CGRectGetMinY(rect))  // top left
-        CGContextAddLineToPoint(ctx, CGRectGetMaxX(rect), CGRectGetMinY(rect))  // top right
-        CGContextAddLineToPoint(ctx, CGRectGetMidX(rect), CGRectGetMaxY(rect))  // mid bottom
-        CGContextClosePath(ctx)
+        ctx?.beginPath()
+        ctx?.move   (to: CGPoint(x: rect.minX, y: rect.minY))  // top left
+        ctx?.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))  // top right
+        ctx?.addLine(to: CGPoint(x: rect.midX, y: rect.maxY))  // mid bottom
+        ctx?.closePath()
     
-        CGContextSetRGBFillColor(ctx, 0, 0, 0, 1)
-        CGContextSetRGBStrokeColor(ctx, 1, 1, 1, 1)
-        CGContextFillPath(ctx)
+        ctx?.setFillColor(red: 0, green: 0, blue: 0, alpha: 1)
+        ctx?.setStrokeColor(red: 1, green: 1, blue: 1, alpha: 1)
+        ctx?.fillPath()
     }
 }

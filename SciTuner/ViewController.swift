@@ -11,12 +11,12 @@ import UIKit
 class ViewController: UINavigationController {
     var tube = TubeViewController()
     var settings = SettingsViewController()
-    var defaults = NSUserDefaults.standardUserDefaults()
+    var defaults = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         self.pushViewController(tube, animated: false)
     }
 

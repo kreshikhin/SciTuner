@@ -19,21 +19,21 @@ class ModebarView: UIView {
         set{
             switch newValue {
             case 5:
-                self.fretMode!.setTitle("5th fret", forState: .Normal)
+                self.fretMode!.setTitle("5th fret", for: UIControlState())
                 self.fretMode!.backgroundColor = self.tintColor
-                self.fretMode!.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+                self.fretMode!.setTitleColor(UIColor.white, for: UIControlState())
             case 7:
-                self.fretMode!.setTitle("7th fret", forState: .Normal)
+                self.fretMode!.setTitle("7th fret", for: UIControlState())
                 self.fretMode!.backgroundColor = self.tintColor
-                self.fretMode!.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+                self.fretMode!.setTitleColor(UIColor.white, for: UIControlState())
             case 12:
-                self.fretMode!.setTitle("12th fret", forState: .Normal)
+                self.fretMode!.setTitle("12th fret", for: UIControlState())
                 self.fretMode!.backgroundColor = self.tintColor
-                self.fretMode!.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+                self.fretMode!.setTitleColor(UIColor.white, for: UIControlState())
             default:
-                self.fretMode!.setTitle("tune on fret", forState: .Normal)
+                self.fretMode!.setTitle("tune on fret", for: UIControlState())
                 self.fretMode!.backgroundColor = self.backgroundColor
-                self.fretMode!.setTitleColor(self.tintColor, forState: .Normal)
+                self.fretMode!.setTitleColor(self.tintColor, for: UIControlState())
             }
         }
         get{ return 0 }
@@ -43,13 +43,13 @@ class ModebarView: UIView {
         set{
             switch newValue {
             case "off":
-                self.filterMode!.setTitle("filter: off", forState: .Normal)
+                self.filterMode!.setTitle("filter: off", for: UIControlState())
                 self.filterMode!.backgroundColor = self.tintColor
-                self.filterMode!.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+                self.filterMode!.setTitleColor(UIColor.white, for: UIControlState())
             default:
-                self.filterMode!.setTitle("filter: on", forState: .Normal)
+                self.filterMode!.setTitle("filter: on", for: UIControlState())
                 self.filterMode!.backgroundColor = self.backgroundColor
-                self.filterMode!.setTitleColor(self.tintColor, forState: .Normal)
+                self.filterMode!.setTitleColor(self.tintColor, for: UIControlState())
             }
         }
         get{ return "" }
@@ -66,26 +66,23 @@ class ModebarView: UIView {
         super.init(frame: frame)
         
         let width = frame.size.width;
-        let margin: CGFloat = 10;
-        var left = frame.origin.x + margin;
-        var top = frame.origin.y + margin;
         
         let defaultColor = self.tintColor
         
-        fretMode = CustomButton(frame: CGRectMake(5, 5, 110, 25))
-        fretMode!.setTitle("tune on fret", forState: .Normal)
-        fretMode!.titleLabel?.textAlignment = .Left
-        fretMode!.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        fretMode = CustomButton(frame: CGRect(x: 5, y: 5, width: 110, height: 25))
+        fretMode!.setTitle("tune on fret", for: UIControlState())
+        fretMode!.titleLabel?.textAlignment = .left
+        fretMode!.setTitleColor(UIColor.white, for: UIControlState())
         fretMode!.layer.cornerRadius = 3.0
         fretMode!.backgroundColor = defaultColor
         self.addSubview(fretMode!)
         
-        filterMode = CustomButton(frame: CGRectMake(width-100, 5, 100, 25))
-        filterMode!.setTitle("filter: on", forState: .Normal)
-        filterMode!.titleLabel?.textAlignment = .Right
+        filterMode = CustomButton(frame: CGRect(x: width-100, y: 5, width: 100, height: 25))
+        filterMode!.setTitle("filter: on", for: UIControlState())
+        filterMode!.titleLabel?.textAlignment = .right
         filterMode!.layer.cornerRadius = 3.0
-        filterMode!.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        filterMode!.backgroundColor = UIColor.redColor()
+        filterMode!.setTitleColor(UIColor.white, for: UIControlState())
+        filterMode!.backgroundColor = UIColor.red
         self.addSubview(filterMode!)
         
         tuner.on("fretChange", {()in

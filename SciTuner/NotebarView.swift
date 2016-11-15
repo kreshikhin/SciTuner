@@ -26,7 +26,7 @@ class NotebarView: UIView {
         set{
             var index = 0
             for label in labels {
-                label!.text = newValue[index].uppercaseString
+                label!.text = newValue[index].uppercased()
                 index += 1
             }
         }
@@ -68,30 +68,30 @@ class NotebarView: UIView {
         let width = frame.size.width;
         var notes = ["G#4", "A4", "B#4"]
         
-        let baseline = UIView(frame: CGRectMake(margin, 10, width - 2 * margin, 1))
-        baseline.backgroundColor = UIColor.blackColor()
+        let baseline = UIView(frame: CGRect(x: margin, y: 10, width: width - 2 * margin, height: 1))
+        baseline.backgroundColor = UIColor.black
         
         var step = (width - 2 * margin) / 30;
-        for(var i: CGFloat = 1; i < 30; i++){
-            let line = UIView(frame: CGRectMake(margin + step * i, margin, 1.0 , 4))
-            line.backgroundColor = UIColor.blackColor()
+        for i in 1 ..< 30 {
+            let line = UIView(frame: CGRect(x: margin + step * CGFloat(i), y: margin, width: 1.0 , height: 4))
+            line.backgroundColor = UIColor.black
             self.addSubview(line);
         }
         
         step = (width - 2 * margin) / 3;
-        for(var i: CGFloat = 0; i < 3; i++){
-            let line = UIView(frame: CGRectMake(margin + step * (i + 0.5), margin, 2.0 , 7))
-            line.backgroundColor = UIColor.blackColor()
+        for i in 0 ..< 3 {
+            let line = UIView(frame: CGRect(x: margin + step * (CGFloat(i) + 0.5), y: margin, width: 2.0 , height: 7))
+            line.backgroundColor = UIColor.black
             
             self.addSubview(line);
             
-            let label = UILabel(frame: CGRectMake(margin + step * (i + 0.5) - 9, margin + 7, 40 , 20))
+            let label = UILabel(frame: CGRect(x: margin + step * (CGFloat(i) + 0.5) - 9, y: margin + 7, width: 40 , height: 20))
             label.text = notes[Int(i)];
             labels.append(label)
             self.addSubview(label);
         }
         
-        pointer = PointerView(frame: CGRectMake(margin + width/2, margin - 10, 10, 10))
+        pointer = PointerView(frame: CGRect(x: margin + width/2, y: margin - 10, width: 10, height: 10))
         self.addSubview(pointer!)
         
         self.addSubview(baseline)

@@ -32,11 +32,11 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         self.view.addSubview(tableView!)
     }
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(section == 0){
             return tuner.pitchs.count
         }
@@ -47,25 +47,25 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return 0
     }
 
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections[section]
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell:UITableViewCell = UITableViewCell(style: .Value1, reuseIdentifier: nil)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell:UITableViewCell = UITableViewCell(style: .value1, reuseIdentifier: nil)
 
-        cell.accessoryType = .None
+        cell.accessoryType = .none
 
         if(indexPath.section == 0){
             if(indexPath.row == tuner.pitchIndex){
-                cell.accessoryType = .Checkmark
+                cell.accessoryType = .checkmark
             }
 
             cell.textLabel!.text = tuner.pitchs[indexPath.row]
         }
         if(indexPath.section == 1){
             if(indexPath.row == tuner.tuningIndex){
-                cell.accessoryType = .Checkmark
+                cell.accessoryType = .checkmark
             }
 
             cell.textLabel!.text = tuner.tunings[indexPath.row]
@@ -74,7 +74,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if(indexPath.section == 0){
             tuner.setPitchIndex(indexPath.row)
         }

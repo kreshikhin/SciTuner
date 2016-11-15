@@ -21,8 +21,8 @@ class StringbarView: UIView {
 
     var strings: [String] {
         set{
-            for la in labels { la!.hidden = true }
-            for li in lines { li!.hidden = true }
+            for la in labels { la!.isHidden = true }
+            for li in lines { li!.isHidden = true }
 
             count = newValue.count
             
@@ -31,22 +31,22 @@ class StringbarView: UIView {
             let top = margin;
             let step = (width - 2 * margin) / CGFloat(count);
 
-            for(var i = 0; i < count; i += 1){
+            for i in 0 ..< count {
                 let shift = step * (CGFloat(i) + 0.5)
                 let line = lines[i]!
-                line.frame = CGRectMake(left + shift, top, 3.5 * (1.0 - CGFloat(i) / CGFloat(count)), 7.0)
-                line.hidden = false
+                line.frame = CGRect(x: left + shift, y: top, width: 3.5 * (1.0 - CGFloat(i) / CGFloat(count)), height: 7.0)
+                line.isHidden = false
 
                 let label = labels[i]!
-                label.frame = CGRectMake(left + shift - 9, top + 7, 30 , 20)
-                label.text = newValue[i].uppercaseString
-                label.hidden = false
+                label.frame = CGRect(x: left + shift - 9, y: top + 7, width: 30 , height: 20)
+                label.text = newValue[i].uppercased()
+                label.isHidden = false
                 label.adjustsFontSizeToFitWidth = true
             }
         }
         get {
             var result = [String]()
-            for(var i = 0; i < count; i += 1){
+            for i in 0 ..< count {
                 result.append(labels[i]!.text!)
             }
             return result
@@ -65,8 +65,8 @@ class StringbarView: UIView {
             let step = (width - 2 * margin) / CGFloat(count);
             let shift = step * (CGFloat(newValue) + 0.5)
 
-            underline.frame = CGRectMake(left + shift - 9, top + 25, 20 , 1)
-            underline.hidden = false
+            underline.frame = CGRect(x: left + shift - 9, y: top + 25, width: 20 , height: 1)
+            underline.isHidden = false
         }
         get{
             return 0
@@ -104,19 +104,19 @@ class StringbarView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        underline.backgroundColor = UIColor.blackColor()
-        underline.hidden = true
+        underline.backgroundColor = UIColor.black
+        underline.isHidden = true
         self.addSubview(underline)
 
-        for(var i=0; i < 10; i = i+1) {
+        for _ in 0 ..< 10 {
             let line = UIView()
-            line.backgroundColor = UIColor.blackColor()
-            line.hidden = true
+            line.backgroundColor = UIColor.black
+            line.isHidden = true
             lines.append(line)
             self.addSubview(line)
             
             let label = UILabel()
-            label.hidden = true
+            label.isHidden = true
             labels.append(label)
             self.addSubview(label)
         }
@@ -125,10 +125,10 @@ class StringbarView: UIView {
         let left = margin;
         let top = margin;
 
-        let baseline = UIView(frame: CGRectMake(left, top, width - 2 * margin, 1))
-        baseline.backgroundColor = UIColor.blackColor()
+        let baseline = UIView(frame: CGRect(x: left, y: top, width: width - 2 * margin, height: 1))
+        baseline.backgroundColor = UIColor.black
 
-        pointer = PointerView(frame: CGRectMake(left + width/1.5, top - 10, 10, 10))
+        pointer = PointerView(frame: CGRect(x: left + width/1.5, y: top - 10, width: 10, height: 10))
         self.addSubview(pointer!)
         self.addSubview(baseline)
         

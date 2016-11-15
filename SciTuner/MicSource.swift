@@ -27,8 +27,8 @@ class MicSource{
     var discreteFrequency: Double = 44100
     var t: Double = 0
     
-    var sample = [Double](count: 2205, repeatedValue: 0)
-    var preview = [Double](count: Int(PREVIEW_LENGTH), repeatedValue: 0)
+    var sample = [Double](repeating: 0, count: 2205)
+    var preview = [Double](repeating: 0, count: Int(PREVIEW_LENGTH))
     
     let sampleRate: Double
     let sampleCount: Int
@@ -83,12 +83,12 @@ class MicSource{
         AQRecorderState_init(aqData, sampleRate, size_t(sampleCount))
         
         self.discreteFrequency = Double(sampleRate)
-        sample = [Double](count: sampleCount, repeatedValue: 0)
+        sample = [Double](repeating: 0, count: sampleCount)
         
         let interval = Double(sample.count) / discreteFrequency
         
-        let timer = NSTimer(timeInterval: interval, target: self, selector: #selector(MicSource.update), userInfo: nil, repeats: true)
-        NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
+        let timer = Timer(timeInterval: interval, target: self, selector: #selector(MicSource.update), userInfo: nil, repeats: true)
+        RunLoop.current.add(timer, forMode: RunLoopMode.defaultRunLoopMode)
         sleep = false;
     }
     

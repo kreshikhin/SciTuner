@@ -21,12 +21,12 @@ class InstrumentsViewController: UIAlertController {
         addInstrument("violin")
         //addInstrument("free mode")
         
-        addAction(UIAlertAction(title: "cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+        addAction(UIAlertAction(title: "cancel", style: UIAlertActionStyle.cancel, handler: nil))
     }
     
-    func addInstrument(title: String){
+    func addInstrument(_ title: String){
         let action = UIAlertAction(
-            title: title, style: UIAlertActionStyle.Default,
+            title: title, style: UIAlertActionStyle.default,
             handler: {(action: UIAlertAction) -> Void in
                 self.tuner.setInstrument(title)
         })

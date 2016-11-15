@@ -16,12 +16,12 @@ class FiltersViewController: UIAlertController {
         addFilter("enable filter", "on")
         addFilter("disable filter", "off")
         
-        addAction(UIAlertAction(title: "cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+        addAction(UIAlertAction(title: "cancel", style: UIAlertActionStyle.cancel, handler: nil))
     }
     
-    func addFilter(title: String, _ value: String){
+    func addFilter(_ title: String, _ value: String){
         let action = UIAlertAction(
-            title: title, style: UIAlertActionStyle.Default,
+            title: title, style: UIAlertActionStyle.default,
             handler: {(action: UIAlertAction) -> Void in
                 self.tuner.setFilter(value)
         })

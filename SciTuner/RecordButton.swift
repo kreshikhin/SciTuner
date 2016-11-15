@@ -17,43 +17,44 @@ class RecordButton: CustomButton{
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.whiteColor()
+        self.backgroundColor = UIColor.white
         
-        self.addTarget(self, action: #selector(RecordButton.click), forControlEvents: UIControlEvents.TouchUpInside)
+        self.addTarget(self, action: #selector(RecordButton.click), for: UIControlEvents.touchUpInside)
     }
 
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         let ctx = UIGraphicsGetCurrentContext()
 
-        if(!self.highlighted) {
-            CGContextSetRGBFillColor(ctx, 0, 0, 0, 1)
-            CGContextSetRGBStrokeColor(ctx, 1, 1, 1, 1)
+        if(!self.isHighlighted) {
+            ctx?.setFillColor(red: 0, green: 0, blue: 0, alpha: 1)
+            ctx?.setStrokeColor(red: 1, green: 1, blue: 1, alpha: 1)
         } else {
-            CGContextSetRGBFillColor(ctx, 0.5, 0.5, 0.5, 1)
-            CGContextSetRGBStrokeColor(ctx, 1, 1, 1, 1)
+            ctx?.setFillColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
+            ctx?.setStrokeColor(red: 1, green: 1, blue: 1, alpha: 1)
         }
 
-        let width = CGRectGetWidth(rect)
+        let width = rect.width
 
         if(isPaused()){
-            CGContextAddArc(ctx, CGRectGetMidX(rect), CGRectGetMidY(rect), width/2, 0, 2 * CGFloat(M_PI), 0)
+            let center = CGPoint(x: rect.midX, y: rect.midY)
+            ctx?.addArc(center: center, radius: width/2, startAngle: 0, endAngle: 2 * CGFloat(M_PI), clockwise: false);
         }else{
-            CGContextAddRect(ctx, CGRectMake(
-                CGRectGetMinX(rect), CGRectGetMinY(rect),
-                width/3, CGRectGetHeight(rect)))
+            ctx?.addRect(CGRect(
+                x: rect.minX, y: rect.minY,
+                width: width/3, height: rect.height))
 
 
-            CGContextAddRect(ctx, CGRectMake(
-                CGRectGetMinX(rect) + width*2/3, CGRectGetMinY(rect),
-                width/3, CGRectGetHeight(rect)))
+            ctx?.addRect(CGRect(
+                x: rect.minX + width*2/3, y: rect.minY,
+                width: width/3, height: rect.height))
         }
 
-        CGContextFillPath(ctx)
+        ctx?.fillPath()
     }
 
     func click(){
-        self.selected = !self.selected
+        self.isSelected = !self.isSelected
     }
 
-    func isPaused() -> Bool { return self.selected }
+    func isPaused() -> Bool { return self.isSelected }
 }

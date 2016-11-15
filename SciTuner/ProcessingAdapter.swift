@@ -23,11 +23,11 @@ class ProcessingAdapter{
         processing_destroy(p)
     }
     
-    func Push(inout packet: [Double]){
+    func Push(_ packet: inout [Double]){
         processing_push(p, packet, size_t(packet.count))
     }
     
-    func SavePreview(inout packet: [Double]){
+    func SavePreview(_ packet: inout [Double]){
         processing_save_preview(p, packet, size_t(packet.count))
     }
     
@@ -35,7 +35,7 @@ class ProcessingAdapter{
         processing_recalculate(p)
     }
     
-    func buildSmoothStandingWave(inout wave: [Float], inout light: [Float], length: Int, thickness: Float) {
+    func buildSmoothStandingWave(_ wave: inout [Float], light: inout [Float], length: Int, thickness: Float) {
         processing_build_standing_wave(p, &wave, &light, size_t(length), thickness)
     }
     
@@ -47,7 +47,7 @@ class ProcessingAdapter{
         return processing_get_sub_frequency(p)
     }
     
-    func setTargetFrequency(frequency: Double) {
+    func setTargetFrequency(_ frequency: Double) {
         processing_set_target_frequency(p, frequency)
     }
     

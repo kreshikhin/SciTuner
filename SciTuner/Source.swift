@@ -14,23 +14,23 @@ class Source{
     var discreteFrequency: Double = 44100
     var t: Double = 0
 
-    var sample = [Double](count: 2048, repeatedValue: 0)
-    var preview = [Double](count: 2500, repeatedValue: 0)
+    var sample = [Double](repeating: 0, count: 2048)
+    var preview = [Double](repeating: 0, count: 2500)
     
     var lock = NSLock()
 
     init(sampleRate: Int, sampleCount: Int) {
         self.discreteFrequency = Double(sampleRate)
-        sample = [Double](count: sampleCount, repeatedValue: 0)
+        sample = [Double](repeating: 0, count: sampleCount)
         
         let interval = Double(sample.count) / discreteFrequency
 
-        let timer = NSTimer(timeInterval: interval, target: self, selector: #selector(Source.update), userInfo: nil, repeats: true)
-        NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
+        let timer = Timer(timeInterval: interval, target: self, selector: #selector(Source.update), userInfo: nil, repeats: true)
+        RunLoop.current.add(timer, forMode: RunLoopMode.defaultRunLoopMode)
     }
 
     @objc func update(){
-        if !lock.tryLock() {
+        if !lock.try() {
             return
         }
         

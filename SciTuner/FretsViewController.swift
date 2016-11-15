@@ -18,12 +18,12 @@ class FretsViewController: UIAlertController {
         addFret("12th fret", 12)
         addFret("open strings", 0)
         
-        addAction(UIAlertAction(title: "cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+        addAction(UIAlertAction(title: "cancel", style: UIAlertActionStyle.cancel, handler: nil))
     }
     
-    func addFret(title: String, _ fret: Int){
+    func addFret(_ title: String, _ fret: Int){
         let action = UIAlertAction(
-            title: title, style: UIAlertActionStyle.Default,
+            title: title, style: UIAlertActionStyle.default,
             handler: {(action: UIAlertAction) -> Void in
                 self.tuner.setFret(fret)
         })

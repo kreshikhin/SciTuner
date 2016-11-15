@@ -9,24 +9,12 @@
 import Foundation
 
 class Tuner {
-    let defaults = NSUserDefaults.standardUserDefaults()
-
-    class var sharedInstance: Tuner {
-        struct Static {
-            static var instance: Tuner?
-            static var token: dispatch_once_t = 0
-        }
-
-        dispatch_once(&Static.token) {
-            Static.instance = Tuner()
-        }
-
-        return Static.instance!
-    }
+    static let sharedInstance = Tuner()
+    let defaults = UserDefaults.standard
 
     var bindings: [String:[()->Void]] = [:]
 
-    func on(name: String, _ callback: ()->Void){
+    func on(_ name: String, _ callback: @escaping ()->Void){
         if bindings[name] != nil {
             bindings[name]! += [callback]
         } else {
@@ -34,7 +22,7 @@ class Tuner {
         }
     }
 
-    func call(name: String) {
+    func call(_ name: String) {
         let callbacks = bindings[name]
         if callbacks == nil {
             return
@@ -67,7 +55,7 @@ class Tuner {
     var instruments: [String: [(title: String, strings: [String])]] = [:]
     var filter: String = "on"
 
-    func setInstrument(value: String){
+    func setInstrument(_ value: String){
         if instruments[value] == nil {
             return
         }
@@ -82,7 +70,7 @@ class Tuner {
             tuningStrings.append(tuning.strings)
         }
 
-        let defaultTuning: Int? = defaults.integerForKey(instrument)
+        let defaultTuning: Int? = defaults.integer(forKey: instrument)
         if defaultTuning != nil {
             setTuningIndex(defaultTuning!)
         }else{
@@ -93,19 +81,19 @@ class Tuner {
         call("instrumentChange")
     }
 
-    func setTuningIndex(value: Int) {
-        defaults.setInteger(value, forKey: instrument)
+    func setTuningIndex(_ value: Int) {
+        defaults.set(value, forKey: instrument)
         tuningIndex = value
         strings = tuningStrings[tuningIndex]
 
-        sortedStrings = strings.sort {self.noteFrequency($0) < self.noteFrequency($1)}
+        sortedStrings = strings.sorted {self.noteFrequency($0) < self.noteFrequency($1)}
 
         setStringIndex(stringIndex)
 
         call("tuningChange")
     }
 
-    func setStringIndex(value: Int) {
+    func setStringIndex(_ value: Int) {
         if value < 0 {
             stringIndex = 0
         } else if value >= strings.count {
@@ -114,7 +102,7 @@ class Tuner {
             stringIndex = value
         }
 
-        defaults.setInteger(stringIndex, forKey: "stringIndex")
+        defaults.set(stringIndex, forKey: "stringIndex")
         string = strings[stringIndex]
 
         let n = Double(noteNumber(string))
@@ -123,8 +111,8 @@ class Tuner {
         call("stringChange")
     }
 
-    func setPitchIndex(value: Int) {
-        defaults.setInteger(value, forKey: "pitchIndex")
+    func setPitchIndex(_ value: Int) {
+        defaults.set(value, forKey: "pitchIndex")
         pitchIndex = value
         pitch = pitchValues[pitchIndex]
 
@@ -140,27 +128,27 @@ class Tuner {
         call("pitchChange")
     }
 
-    func setFrequency(value: Double){
+    func setFrequency(_ value: Double){
         frequency = value / fretScale()
         call("frequencyChange")
     }
 
-    func setFret(value: Int) {
+    func setFret(_ value: Int) {
         fret = value
 
-        defaults.setInteger(fret, forKey: "fret")
+        defaults.set(fret, forKey: "fret")
         call("fretChange")
         call("")
     }
     
-    func setFilter(value: String) {
+    func setFilter(_ value: String) {
         filter = value
-        defaults.setObject(filter, forKey: "filter")
+        defaults.set(filter, forKey: "filter")
         call("filterChange")
     }
     
     var status = "active"
-    func setStatus(value: String){
+    func setStatus(_ value: String){
         status = value
         call("statusChange")
     }
@@ -215,42 +203,42 @@ class Tuner {
         //    ("C-minor", "c3 d3 e3 f3 g3 a3 b3")
         //])
 
-        if defaults.stringForKey("instrument") != nil {
-            let value: String? = defaults.stringForKey("instrument")
+        if defaults.string(forKey: "instrument") != nil {
+            let value: String? = defaults.string(forKey: "instrument")
             setInstrument(value!)
         } else {
             setInstrument("guitar")
         }
         
-        if defaults.stringForKey("filter") != nil {
-            let value: String? = defaults.stringForKey("filter")
+        if defaults.string(forKey: "filter") != nil {
+            let value: String? = defaults.string(forKey: "filter")
             setFilter(value!)
         } else {
             setFilter("on")
         }
 
-        setTuningIndex(defaults.integerForKey(instrument))
-        setStringIndex(defaults.integerForKey("stringIndex"))
-        setPitchIndex(defaults.integerForKey("pitchIndex"))
-        setFret(defaults.integerForKey("fret"))
+        setTuningIndex(defaults.integer(forKey: instrument))
+        setStringIndex(defaults.integer(forKey: "stringIndex"))
+        setPitchIndex(defaults.integer(forKey: "pitchIndex"))
+        setFret(defaults.integer(forKey: "fret"))
     }
 
-    func addInstrument(name: String, _ tunings: [(String, String)]){
+    func addInstrument(_ name: String, _ tunings: [(String, String)]){
         var result: [(title: String, strings: [String])] = []
 
         for (title, strings) in tunings {
             let splitStrings: [String] = strings.characters.split {$0 == " "}.map { String($0) }
             let titleStrings: String = splitStrings.map({(note: String) -> String in
-                return note.stringByReplacingOccurrencesOfString("#", withString: "♯", options: NSStringCompareOptions.LiteralSearch, range: nil).uppercaseString
-            }).joinWithSeparator(" ")
+                note.replacingOccurrences(of: "#", with: "♯")
+            }).joined(separator: " ")
             result += [(title: title + " (" + titleStrings + ")", strings: splitStrings)]
         }
 
         instruments[name] = result
     }
 
-    func noteNumber(noteString: String) -> Int {
-        let note = noteString.lowercaseString
+    func noteNumber(_ noteString: String) -> Int {
+        let note = noteString.lowercased()
         var number = 0
         var octave = 0
 
@@ -280,9 +268,9 @@ class Tuner {
         return 12 * octave + number
     }
 
-    func noteString(num: Double) -> String {
+    func noteString(_ num: Double) -> String {
         let noteOctave: Int = Int(num / 12)
-        let noteShift: Int = Int(num % 12)
+        let noteShift: Int = Int(num.truncatingRemainder(dividingBy: 12))
 
         var result = ""
         switch noteShift {
@@ -304,20 +292,20 @@ class Tuner {
         return result + String(noteOctave)
     }
 
-    func noteFrequency(noteString: String) -> Double {
+    func noteFrequency(_ noteString: String) -> Double {
         let n = noteNumber(noteString)
         let b = noteNumber(baseNote)
 
         return baseFrequency * pow(2.0, Double(n - b) / 12.0);
     }
 
-    func frequencyNumber(f: Double) -> Double {
+    func frequencyNumber(_ f: Double) -> Double {
         let b = noteNumber(baseNote);
 
         return 12.0 * log(f / baseFrequency) / log(2) + Double(b);
     }
 
-    func frequencyDistanceNumber(f0: Double, _ f1: Double) -> Double {
+    func frequencyDistanceNumber(_ f0: Double, _ f1: Double) -> Double {
         let n0 = frequencyNumber(f0)
         let n1 = frequencyNumber(f1)
 
@@ -347,7 +335,7 @@ class Tuner {
 
         let name = sortedStrings[index]
 
-        let realIndex: Int? = strings.indexOf(name)
+        let realIndex: Int? = strings.index(of: name)
 
         if realIndex == nil{
             return pos

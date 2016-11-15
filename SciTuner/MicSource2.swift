@@ -31,7 +31,7 @@ class MicSource2{
     var discreteFrequency: Double = 44100
     var t: Double = 0
     
-    var sample = [Double](count: 2205, repeatedValue: 0)
+    var sample = [Double](repeating: 0, count: 2205)
     
     init(sampleRate: Double, sampleCount: Int) {
         var err: NSError?;
@@ -72,12 +72,12 @@ class MicSource2{
         }
         
         self.discreteFrequency = Double(sampleRate)
-        sample = [Double](count: sampleCount, repeatedValue: 0)
+        sample = [Double](repeating: 0, count: sampleCount)
         
         let interval = Double(sample.count) / discreteFrequency
         
-        let timer = NSTimer(timeInterval: interval, target: self, selector: #selector(MicSource2.update), userInfo: nil, repeats: true)
-        NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
+        let timer = Timer(timeInterval: interval, target: self, selector: #selector(MicSource2.update), userInfo: nil, repeats: true)
+        RunLoop.current.add(timer, forMode: RunLoopMode.defaultRunLoopMode)
     }
     
     deinit{

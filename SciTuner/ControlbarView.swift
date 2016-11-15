@@ -20,23 +20,23 @@ class ControlbarView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.backgroundColor = UIColor.whiteColor()
+        self.backgroundColor = UIColor.white
         
         let width = frame.size.width;
         let margin: CGFloat = 10;
         _ = frame.origin.x + margin;
         _ = frame.origin.y + margin;
         
-        let rewind = RewindButton(frame: CGRectMake(width/2 - 60 - 32, 10, 32, 16))
-        rewind.addTarget(self, action: #selector(ControlbarView.prevString), forControlEvents: .TouchUpInside)
+        let rewind = RewindButton(frame: CGRect(x: width/2 - 60 - 32, y: 10, width: 32, height: 16))
+        rewind.addTarget(self, action: #selector(ControlbarView.prevString), for: .touchUpInside)
         self.addSubview(rewind)
         
-        let forward = ForwardButton(frame: CGRectMake(width/2 + 60, 10, 32, 16))
-        forward.addTarget(self, action: #selector(ControlbarView.nextString), forControlEvents: .TouchUpInside)
+        let forward = ForwardButton(frame: CGRect(x: width/2 + 60, y: 10, width: 32, height: 16))
+        forward.addTarget(self, action: #selector(ControlbarView.nextString), for: .touchUpInside)
         self.addSubview(forward)
 
-        let record = RecordButton(frame: CGRectMake(width/2 - 10, 10, 20, 20))
-        record.addTarget(self, action: #selector(ControlbarView.toggle), forControlEvents: .TouchUpInside)
+        let record = RecordButton(frame: CGRect(x: width/2 - 10, y: 10, width: 20, height: 20))
+        record.addTarget(self, action: #selector(ControlbarView.toggle), for: .touchUpInside)
         self.addSubview(record)
     }
     

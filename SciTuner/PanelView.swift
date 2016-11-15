@@ -36,44 +36,44 @@ class PanelView: UIView {
         
         let step = frame.size.height / 5.0;
         
-        target = UILabel(frame: CGRectMake(margin, 2, third, 12))
+        target = UILabel(frame: CGRect(x: margin, y: 2, width: third, height: 12))
         target!.text = "target frequency"
-        target!.font = UIFont.systemFontOfSize(10)
+        target!.font = UIFont.systemFont(ofSize: 10)
         
-        target!.textAlignment = .Left
+        target!.textAlignment = .left
         self.addSubview(target!)
         
-        actual = UILabel(frame: CGRectMake(margin+third, 2, third, 12))
+        actual = UILabel(frame: CGRect(x: margin+third, y: 2, width: third, height: 12))
         actual!.text = "actual frequency"
-        actual!.font = UIFont.systemFontOfSize(10)
-        actual!.textAlignment = .Center
+        actual!.font = UIFont.systemFont(ofSize: 10)
+        actual!.textAlignment = .center
         self.addSubview(actual!)
         
-        deviation = UILabel(frame: CGRectMake(margin+2*third, 2, third, 12))
+        deviation = UILabel(frame: CGRect(x: margin+2*third, y: 2, width: third, height: 12))
         deviation!.text = "deviation"
-        deviation!.font = UIFont.systemFontOfSize(10)
-        deviation!.textAlignment = .Right
+        deviation!.font = UIFont.systemFont(ofSize: 10)
+        deviation!.textAlignment = .right
         self.addSubview(deviation!)
         
-        targetFrequency = UILabel(frame: CGRectMake(margin, 14, third, 20))
+        targetFrequency = UILabel(frame: CGRect(x: margin, y: 14, width: third, height: 20))
         targetFrequency!.text = "440Hz"
-        targetFrequency!.textAlignment = .Left
+        targetFrequency!.textAlignment = .left
         self.addSubview(targetFrequency!)
         
-        actualFrequency = UILabel(frame: CGRectMake(margin+third, 14, third, 20))
+        actualFrequency = UILabel(frame: CGRect(x: margin+third, y: 14, width: third, height: 20))
         actualFrequency!.text = "440Hz"
-        actualFrequency!.textAlignment = .Center
+        actualFrequency!.textAlignment = .center
         self.addSubview(actualFrequency!)
         
-        frequencyDeviation = UILabel(frame: CGRectMake(margin+2*third, 14, third, 20))
+        frequencyDeviation = UILabel(frame: CGRect(x: margin+2*third, y: 14, width: third, height: 20))
         frequencyDeviation!.text = "0c"
-        frequencyDeviation!.textAlignment = .Right
+        frequencyDeviation!.textAlignment = .right
         self.addSubview(frequencyDeviation!)
         
-        notebar = NotebarView(frame: CGRectMake(0, step, half*2, 40))
-        stringbar = StringbarView(frame: CGRectMake(0, 2*step, half*2, 40))
-        controlbar = ControlbarView(frame: CGRectMake(0, 3*step, half*2, 40))
-        modebar = ModebarView(frame: CGRectMake(0, frame.size.height - 35, half*2, 40))
+        notebar = NotebarView(frame: CGRect(x: 0, y: step, width: half*2, height: 40))
+        stringbar = StringbarView(frame: CGRect(x: 0, y: 2*step, width: half*2, height: 40))
+        controlbar = ControlbarView(frame: CGRect(x: 0, y: 3*step, width: half*2, height: 40))
+        modebar = ModebarView(frame: CGRect(x: 0, y: frame.size.height - 35, width: half*2, height: 40))
         
         self.addSubview(notebar!)
         self.addSubview(stringbar!)

@@ -17,34 +17,34 @@ class ForwardButton: CustomButton{
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.whiteColor()
+        self.backgroundColor = UIColor.white
     }
     
-    override func drawRect(rect: CGRect){
+    override func draw(_ rect: CGRect){
         let ctx = UIGraphicsGetCurrentContext()
         
         
-        if(!self.highlighted) {
-            CGContextSetRGBFillColor(ctx, 0, 0, 0, 1)
-            CGContextSetRGBStrokeColor(ctx, 1, 1, 1, 1)
+        if(!self.isHighlighted) {
+            ctx?.setFillColor(red: 0, green: 0, blue: 0, alpha: 1)
+            ctx?.setStrokeColor(red: 1, green: 1, blue: 1, alpha: 1)
         } else {
-            CGContextSetRGBFillColor(ctx, 0.5, 0.5, 0.5, 1)
-            CGContextSetRGBStrokeColor(ctx, 1, 1, 1, 1)
+            ctx?.setFillColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
+            ctx?.setStrokeColor(red: 1, green: 1, blue: 1, alpha: 1)
         }
         
-        CGContextBeginPath(ctx)
-        CGContextMoveToPoint   (ctx, CGRectGetMinX(rect), CGRectGetMaxY(rect))  // left bottom
-        CGContextAddLineToPoint(ctx, CGRectGetMinX(rect), CGRectGetMinY(rect))  // left top
-        CGContextAddLineToPoint(ctx, CGRectGetMidX(rect), CGRectGetMidY(rect))  // mid mid
-        CGContextClosePath(ctx)
+        ctx?.beginPath()
+        ctx?.move   (to: CGPoint(x: rect.minX, y: rect.maxY))  // left bottom
+        ctx?.addLine(to: CGPoint(x: rect.minX, y: rect.minY))  // left top
+        ctx?.addLine(to: CGPoint(x: rect.midX, y: rect.midY))  // mid mid
+        ctx?.closePath()
         
-        CGContextFillPath(ctx)
+        ctx?.fillPath()
         
-        CGContextBeginPath(ctx)
-        CGContextMoveToPoint   (ctx, CGRectGetMidX(rect), CGRectGetMaxY(rect))  // mid bottom
-        CGContextAddLineToPoint(ctx, CGRectGetMidX(rect), CGRectGetMinY(rect))  // mid top
-        CGContextAddLineToPoint(ctx, CGRectGetMaxX(rect), CGRectGetMidY(rect))  // mid right
-        CGContextClosePath(ctx)
-        CGContextFillPath(ctx)
+        ctx?.beginPath()
+        ctx?.move   (to: CGPoint(x: rect.midX, y: rect.maxY))  // mid bottom
+        ctx?.addLine(to: CGPoint(x: rect.midX, y: rect.minY))  // mid top
+        ctx?.addLine(to: CGPoint(x: rect.maxX, y: rect.midY))  // mid right
+        ctx?.closePath()
+        ctx?.fillPath()
     }
 }

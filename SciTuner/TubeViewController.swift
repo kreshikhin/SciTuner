@@ -9,34 +9,32 @@
 import UIKit
 
 class TubeViewController: UIViewController {
-    var instruments = InstrumentsViewController(title: nil, message: nil, preferredStyle: .ActionSheet)
-    var frets = FretsViewController(title: nil, message: nil, preferredStyle: .ActionSheet)
-    var filters = FiltersViewController(title: nil, message: nil, preferredStyle: .ActionSheet)
+    var instruments = InstrumentsViewController(title: nil, message: nil, preferredStyle: .actionSheet)
+    var frets = FretsViewController(title: nil, message: nil, preferredStyle: .actionSheet)
+    var filters = FiltersViewController(title: nil, message: nil, preferredStyle: .actionSheet)
     
     var tuner = Tuner.sharedInstance
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
 
         self.navigationItem.title = "SciTuner"
 
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: tuner.instrument,
-            style: UIBarButtonItemStyle.Plain,
+            style: UIBarButtonItemStyle.plain,
             target: self,
             action: #selector(TubeViewController.showInstruments))
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "settings",
-            style: UIBarButtonItemStyle.Plain,
-            target: self.parentViewController,
-            action: Selector("showSettings"))
+            style: UIBarButtonItemStyle.plain,
+            target: self.parent,
+            action: #selector(ViewController.showSettings))
 
-        let navbarHeight = UIApplication.sharedApplication().statusBarFrame.size.height + (self.navigationController!).navigationBar.frame.size.height
-
-        let f = self.view.frame;
+        let navbarHeight = UIApplication.shared.statusBarFrame.size.height + (self.navigationController!).navigationBar.frame.size.height
 
         let panelFrame = getOptimalPanelFrame(navbarHeight, size: self.view.frame.size)
         let panel = PanelView(frame: panelFrame)
@@ -53,8 +51,8 @@ class TubeViewController: UIViewController {
         let tubeFrame = getOptimalTubeFrame(navbarHeight, size: self.view.frame.size)
         let tube = TubeView(frame: tubeFrame)
 
-        tube.wavePoints = [Float](count: Int(processing.pointCount-1)*2*12, repeatedValue: 0)
-        tube.waveLightPoints = [Float](count: Int(processing.pointCount-1)*4*12, repeatedValue: 0)
+        tube.wavePoints = [Float](repeating: 0, count: Int(processing.pointCount-1)*2*12)
+        tube.waveLightPoints = [Float](repeating: 0, count: Int(processing.pointCount-1)*4*12)
 
         
         source.onData = {()->Void in
@@ -88,8 +86,8 @@ class TubeViewController: UIViewController {
             self.navigationItem.leftBarButtonItem!.title = self.tuner.instrument
         })
         
-        panel.modebar!.fretMode!.addTarget(self, action: #selector(TubeViewController.showFrets), forControlEvents: .TouchUpInside)
-        panel.modebar!.filterMode!.addTarget(self, action: #selector(TubeViewController.showFilters), forControlEvents: .TouchUpInside)
+        panel.modebar!.fretMode!.addTarget(self, action: #selector(TubeViewController.showFrets), for: .touchUpInside)
+        panel.modebar!.filterMode!.addTarget(self, action: #selector(TubeViewController.showFilters), for: .touchUpInside)
         
         tuner.on("frequencyChange", {()in
             panel.actualFrequency!.text = String(format: "%.2fHz", self.tuner.actualFrequency())
@@ -134,35 +132,35 @@ class TubeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    func getOptimalTubeFrame(verticalShift: CGFloat, size: CGSize) -> CGRect {
+    func getOptimalTubeFrame(_ verticalShift: CGFloat, size: CGSize) -> CGRect {
         var h = size.width;
         if size.height < 500 {
             h = 220
         }
-        return CGRectMake(
-            0, verticalShift,
-            size.width, h)
+        return CGRect(
+            x: 0, y: verticalShift,
+            width: size.width, height: h)
     }
 
-    func getOptimalPanelFrame(verticalShift: CGFloat, size: CGSize) -> CGRect {
+    func getOptimalPanelFrame(_ verticalShift: CGFloat, size: CGSize) -> CGRect {
         var h = size.width;
         if size.height < 500 {
             h = 220
         }
-        return CGRectMake(
-            0, verticalShift + h,
-            size.width, size.height - h - verticalShift)
+        return CGRect(
+            x: 0, y: verticalShift + h,
+            width: size.width, height: size.height - h - verticalShift)
     }
 
     func showInstruments() {
-        self.presentViewController(instruments, animated: true, completion: nil)
+        self.present(instruments, animated: true, completion: nil)
     }
     
     func showFrets() {
-        self.presentViewController(self.frets, animated: true, completion: nil)
+        self.present(self.frets, animated: true, completion: nil)
     }
     
     func showFilters() {
-        self.presentViewController(self.filters, animated: true, completion: nil)
+        self.present(self.filters, animated: true, completion: nil)
     }
 }
