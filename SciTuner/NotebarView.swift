@@ -27,7 +27,7 @@ class NotebarView: UIView {
             var index = 0
             for label in labels {
                 label!.text = newValue[index].uppercaseString
-                index++
+                index += 1
             }
         }
     }
@@ -50,7 +50,7 @@ class NotebarView: UIView {
                 shift = 0.16666665 + 0.666666 * (position + 100.0) / 200.0;
             }
             
-            var width: CGFloat = self.frame.size.width;
+            let width: CGFloat = self.frame.size.width;
             pointer!.frame.origin.x = CGFloat(shift) * (width - 2 * margin) + 6;
         }
         get{
@@ -58,34 +58,34 @@ class NotebarView: UIView {
         }
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        var width = frame.size.width;
+        let width = frame.size.width;
         var notes = ["G#4", "A4", "B#4"]
         
-        var baseline = UIView(frame: CGRectMake(margin, 10, width - 2 * margin, 1))
+        let baseline = UIView(frame: CGRectMake(margin, 10, width - 2 * margin, 1))
         baseline.backgroundColor = UIColor.blackColor()
         
         var step = (width - 2 * margin) / 30;
         for(var i: CGFloat = 1; i < 30; i++){
-            var line = UIView(frame: CGRectMake(margin + step * i, margin, 1.0 , 4))
+            let line = UIView(frame: CGRectMake(margin + step * i, margin, 1.0 , 4))
             line.backgroundColor = UIColor.blackColor()
             self.addSubview(line);
         }
         
         step = (width - 2 * margin) / 3;
         for(var i: CGFloat = 0; i < 3; i++){
-            var line = UIView(frame: CGRectMake(margin + step * (i + 0.5), margin, 2.0 , 7))
+            let line = UIView(frame: CGRectMake(margin + step * (i + 0.5), margin, 2.0 , 7))
             line.backgroundColor = UIColor.blackColor()
             
             self.addSubview(line);
             
-            var label = UILabel(frame: CGRectMake(margin + step * (i + 0.5) - 9, margin + 7, 40 , 20))
+            let label = UILabel(frame: CGRectMake(margin + step * (i + 0.5) - 9, margin + 7, 40 , 20))
             label.text = notes[Int(i)];
             labels.append(label)
             self.addSubview(label);

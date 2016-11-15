@@ -23,9 +23,9 @@ class Source{
         self.discreteFrequency = Double(sampleRate)
         sample = [Double](count: sampleCount, repeatedValue: 0)
         
-        var interval = Double(sample.count) / discreteFrequency
+        let interval = Double(sample.count) / discreteFrequency
 
-        let timer = NSTimer(timeInterval: interval, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
+        let timer = NSTimer(timeInterval: interval, target: self, selector: #selector(Source.update), userInfo: nil, repeats: true)
         NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
     }
 
@@ -34,9 +34,9 @@ class Source{
             return
         }
         
-        var dt: Double = Double(1) / discreteFrequency
+        let dt: Double = Double(1) / discreteFrequency
 
-        var df: Double = frequencyDeviation * sin(2 * M_PI * frequency2 * t)
+        let df: Double = frequencyDeviation * sin(2 * M_PI * frequency2 * t)
         frequency = frequency1 + df
         
         //NSLog("source freq %f ", frequency);

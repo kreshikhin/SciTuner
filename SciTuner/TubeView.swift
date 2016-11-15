@@ -26,7 +26,7 @@ class TubeView: GLKView{
     let foreColor: [Float] = [1.0, 1.0, 1.0, 0]
     let backColor: [Float] = [0.0, 0.0, 0.35, 0]
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -92,14 +92,14 @@ class TubeView: GLKView{
 
         glLineWidth(lineWidth)
 
-        var col = glGetUniformLocation(drawingProgram, "color")
+        let col = glGetUniformLocation(drawingProgram, "color")
         glUniform4f(col, foreColor[0], foreColor[1], foreColor[2], 0.0)
         
-        var a_position: GLuint = GLuint(glGetAttribLocation(drawingProgram, "a_position"))
+        let a_position: GLuint = GLuint(glGetAttribLocation(drawingProgram, "a_position"))
         glVertexAttribPointer(a_position, 2, GLenum(GL_FLOAT), GLboolean(0), 0 , points)
         glEnableVertexAttribArray(GLuint(a_position))
         
-        var a_light: GLuint = GLuint(glGetAttribLocation(drawingProgram, "a_light"))
+        let a_light: GLuint = GLuint(glGetAttribLocation(drawingProgram, "a_light"))
         glVertexAttribPointer(a_light, 4, GLenum(GL_FLOAT), GLboolean(0), 0 , lightPoints)
         glEnableVertexAttribArray(GLuint(a_light))
         
@@ -109,10 +109,10 @@ class TubeView: GLKView{
 
 
     func newProgram(vertexCode: String, fragmentCode: String) -> GLuint {
-        var program = glCreateProgram()
+        let program = glCreateProgram()
 
-        var vertexShader = compileShader(vertexCode, shaderType: GLenum(GL_VERTEX_SHADER))
-        var fragmentShader = compileShader(fragmentCode, shaderType: GLenum(GL_FRAGMENT_SHADER))
+        let vertexShader = compileShader(vertexCode, shaderType: GLenum(GL_VERTEX_SHADER))
+        let fragmentShader = compileShader(fragmentCode, shaderType: GLenum(GL_FRAGMENT_SHADER))
 
         glAttachShader(program, vertexShader)
         glAttachShader(program, fragmentShader)
@@ -126,10 +126,10 @@ class TubeView: GLKView{
 
         if isLinked == 0 {
             var infolen: GLsizei = 0
-            var stringLen: GLsizei = 1024
+            let stringLen: GLsizei = 1024
             glGetProgramiv(program, GLenum(GL_INFO_LOG_LENGTH), &infolen)
 
-            var info: [GLchar] = Array(count: Int(stringLen), repeatedValue: GLchar(0))
+            let info: [GLchar] = Array(count: Int(stringLen), repeatedValue: GLchar(0))
             var lenActual: GLsizei = 0
 
             glGetProgramInfoLog(program, stringLen, &lenActual, UnsafeMutablePointer(info))
@@ -140,7 +140,7 @@ class TubeView: GLKView{
     }
 
     func compileShader(code: String, shaderType: GLenum) -> GLuint {
-        var shader = glCreateShader(shaderType)
+        let shader = glCreateShader(shaderType)
 
         var cStringSource = (code as NSString).UTF8String
         //let stringfromutf8string = String.fromCString(cStringSource)
@@ -154,10 +154,10 @@ class TubeView: GLKView{
 
         if isCompiled == 0 {
             var infolen: GLsizei = 0
-            var stringLen: GLsizei = 1024
+            let stringLen: GLsizei = 1024
             glGetShaderiv(shader, GLenum(GL_INFO_LOG_LENGTH), &infolen)
 
-            var info: [GLchar] = Array(count: Int(stringLen), repeatedValue: GLchar(0))
+            let info: [GLchar] = Array(count: Int(stringLen), repeatedValue: GLchar(0))
             var lenActual: GLsizei = 0
 
             glGetShaderInfoLog(shader, stringLen, &lenActual, UnsafeMutablePointer(info))

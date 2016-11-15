@@ -26,7 +26,7 @@ class TubeViewController: UIViewController {
             title: tuner.instrument,
             style: UIBarButtonItemStyle.Plain,
             target: self,
-            action: Selector("showInstruments"))
+            action: #selector(TubeViewController.showInstruments))
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "settings",
@@ -39,19 +39,19 @@ class TubeViewController: UIViewController {
         let f = self.view.frame;
 
         let panelFrame = getOptimalPanelFrame(navbarHeight, size: self.view.frame.size)
-        var panel = PanelView(frame: panelFrame)
+        let panel = PanelView(frame: panelFrame)
         self.view.addSubview(panel)
 
         let sampleRate = 44100
         let sampleCount = 2048
 
         //var source = Source(sampleRate: sampleRate, sampleCount: sampleCount)
-        var source = MicSource(sampleRate: Double(sampleRate), sampleCount: sampleCount)
+        let source = MicSource(sampleRate: Double(sampleRate), sampleCount: sampleCount)
         //var source = MicSource2(sampleRate: Double(sampleRate), sampleCount: sampleCount)
 
-        var processing = ProcessingAdapter(pointCount: 128)
+        let processing = ProcessingAdapter(pointCount: 128)
         let tubeFrame = getOptimalTubeFrame(navbarHeight, size: self.view.frame.size)
-        var tube = TubeView(frame: tubeFrame)
+        let tube = TubeView(frame: tubeFrame)
 
         tube.wavePoints = [Float](count: Int(processing.pointCount-1)*2*12, repeatedValue: 0)
         tube.waveLightPoints = [Float](count: Int(processing.pointCount-1)*4*12, repeatedValue: 0)
@@ -88,8 +88,8 @@ class TubeViewController: UIViewController {
             self.navigationItem.leftBarButtonItem!.title = self.tuner.instrument
         })
         
-        panel.modebar!.fretMode!.addTarget(self, action: Selector("showFrets"), forControlEvents: .TouchUpInside)
-        panel.modebar!.filterMode!.addTarget(self, action: Selector("showFilters"), forControlEvents: .TouchUpInside)
+        panel.modebar!.fretMode!.addTarget(self, action: #selector(TubeViewController.showFrets), forControlEvents: .TouchUpInside)
+        panel.modebar!.filterMode!.addTarget(self, action: #selector(TubeViewController.showFilters), forControlEvents: .TouchUpInside)
         
         tuner.on("frequencyChange", {()in
             panel.actualFrequency!.text = String(format: "%.2fHz", self.tuner.actualFrequency())

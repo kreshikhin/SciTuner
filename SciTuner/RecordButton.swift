@@ -11,7 +11,7 @@ import UIKit
 import CoreGraphics
 
 class RecordButton: CustomButton{
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -19,11 +19,11 @@ class RecordButton: CustomButton{
         super.init(frame: frame)
         self.backgroundColor = UIColor.whiteColor()
         
-        self.addTarget(self, action: Selector("click"), forControlEvents: UIControlEvents.TouchUpInside)
+        self.addTarget(self, action: #selector(RecordButton.click), forControlEvents: UIControlEvents.TouchUpInside)
     }
 
     override func drawRect(rect: CGRect) {
-        var ctx = UIGraphicsGetCurrentContext()
+        let ctx = UIGraphicsGetCurrentContext()
 
         if(!self.highlighted) {
             CGContextSetRGBFillColor(ctx, 0, 0, 0, 1)
@@ -33,7 +33,7 @@ class RecordButton: CustomButton{
             CGContextSetRGBStrokeColor(ctx, 1, 1, 1, 1)
         }
 
-        var width = CGRectGetWidth(rect)
+        let width = CGRectGetWidth(rect)
 
         if(isPaused()){
             CGContextAddArc(ctx, CGRectGetMidX(rect), CGRectGetMidY(rect), width/2, 0, 2 * CGFloat(M_PI), 0)

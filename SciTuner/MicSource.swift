@@ -44,21 +44,39 @@ class MicSource{
         }
         
         var err: NSError?;
-        var session = AVAudioSession.sharedInstance()
+        let session = AVAudioSession.sharedInstance()
         
-        session.setPreferredSampleRate(44100, error: nil)
-        session.setPreferredInputNumberOfChannels(1, error: nil)
-        session.setPreferredOutputNumberOfChannels(1, error: nil)
+        do {
+            try session.setPreferredSampleRate(44100)
+        } catch _ {
+        }
+        do {
+            try session.setPreferredInputNumberOfChannels(1)
+        } catch _ {
+        }
+        do {
+            try session.setPreferredOutputNumberOfChannels(1)
+        } catch _ {
+        }
         
-        if !session.setActive(true, error: &err) {
+        do {
+            try session.setActive(true)
+        } catch let error as NSError {
+            err = error
             NSLog("can't activate session %@ ", err!)
         }
         
-        if !session.setCategory(AVAudioSessionCategoryRecord, error: &err) {
+        do {
+            try session.setCategory(AVAudioSessionCategoryRecord)
+        } catch let error as NSError {
+            err = error
             NSLog("It can't set category, because %@ ", err!)
         }
         
-        if !session.setMode(AVAudioSessionModeMeasurement, error: &err) {
+        do {
+            try session.setMode(AVAudioSessionModeMeasurement)
+        } catch let error as NSError {
+            err = error
             NSLog("It can't set mode, because %@ ", err!)
         }
         
@@ -67,9 +85,9 @@ class MicSource{
         self.discreteFrequency = Double(sampleRate)
         sample = [Double](count: sampleCount, repeatedValue: 0)
         
-        var interval = Double(sample.count) / discreteFrequency
+        let interval = Double(sample.count) / discreteFrequency
         
-        let timer = NSTimer(timeInterval: interval, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
+        let timer = NSTimer(timeInterval: interval, target: self, selector: #selector(MicSource.update), userInfo: nil, repeats: true)
         NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
         sleep = false;
     }
