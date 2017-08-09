@@ -1,0 +1,27 @@
+/* 
+  Localizable.strings
+  SciTuner
+
+  Created by Denis Kreshikhin on 8/9/17.
+  Copyright © 2017 Denis Kreshikhin. All rights reserved.
+*/
+
+"settings" = "настройка";
+"enable filter" = "вкл. фильтр";
+"disable filter" = "выкл. фильтр";
+"оn" = "вкл.";
+"off" = "выкл.";
+"cancel" = "отмена";
+
+// instruments
+"guitar" = "гитара";
+"ukulele" = "укулеле";
+"banjo" = "банджо";
+"balalaika" = "балалайка";
+"cello" = "виолончель";
+"violin" = "скрипка";
+
+//
+"Hz" = "Гц";
+
+
