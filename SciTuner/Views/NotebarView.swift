@@ -96,6 +96,6 @@ class NotebarView: UIView {
         
         self.addSubview(baseline)
         
-        self.notes = self.tuner.notes
+        //self.notes = self.tuner.string
     }
 }

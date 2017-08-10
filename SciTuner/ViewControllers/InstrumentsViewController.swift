@@ -13,21 +13,17 @@ class InstrumentsViewController: UIAlertController {
     let tuner = Tuner.sharedInstance
     
     override func viewDidLoad() {
-        addInstrument("guitar".localized())
-        addInstrument("ukulele".localized())
-        addInstrument("banjo".localized())
-        addInstrument("balalaika".localized())
-        addInstrument("cello".localized())
-        addInstrument("violin".localized())
+        Instrument.all.forEach { self.add(instrument: $0) }
         
         addAction(UIAlertAction(title: "cancel".localized(), style: UIAlertActionStyle.cancel, handler: nil))
     }
     
-    func addInstrument(_ title: String){
+    func add(instrument: Instrument){
         let action = UIAlertAction(
-            title: title, style: UIAlertActionStyle.default,
+            title: instrument.localized(), style: UIAlertActionStyle.default,
             handler: {(action: UIAlertAction) -> Void in
-                self.tuner.setInstrument(title)
+                self.tuner.settings.instrument = instrument
+                self.tuner.updateSettings()
         })
         
         addAction(action)

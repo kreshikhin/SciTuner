@@ -31,11 +31,10 @@ class TubeViewController: UIViewController {
         self.tuner.delegate = self
 
         self.view.backgroundColor = UIColor.white
-
         self.navigationItem.title = "SciTuner".localized()
 
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: tuner.instrument,
+            title: tuner.instrument.localized(),
             style: UIBarButtonItemStyle.plain,
             target: self,
             action: #selector(TubeViewController.showInstruments))
@@ -68,9 +67,10 @@ class TubeViewController: UIViewController {
         
         panel?.targetFrequency!.text = String(format: "%.2f %@", self.tuner.targetFrequency(), "Hz".localized())
         
-        if self.tuner.filter == "on" {
+        switch tuner.filter {
+        case .on:
             processing.enableFilter()
-        } else {
+        case .off:
             processing.disableFilter()
         }
     }
@@ -151,43 +151,35 @@ class TubeViewController: UIViewController {
 }
 
 extension TubeViewController: TunerDelegate {
-    func didInstrumentChange() {
-        self.navigationItem.leftBarButtonItem?.title = self.tuner.instrument
-    }
-    
-    func didFrequencyChange() {
+    func didSettingsUpdate() {
+        // didInstrumentChange
+        self.navigationItem.leftBarButtonItem?.title = self.tuner.settings.instrument.localized()
+        // didFrequencyChange
         self.panel?.actualFrequency?.text = String(format: "%.2f %@", self.tuner.actualFrequency(), "Hz".localized())
         self.panel?.frequencyDeviation!.text = String(format: "%.0fc", self.tuner.frequencyDeviation())
         
         self.panel?.notebar?.pointerPosition = self.tuner.stringPosition()
         self.panel?.notebar?.pointerPosition = self.tuner.frequencyDeviation()
-    }
-    
-    func didTuningChange() {
-        self.panel?.stringbar?.strings = self.tuner.strings
+        //didTuningChange()
+        self.panel?.stringbar?.strings = self.tuner.tuning.strings
         self.panel?.stringbar?.stringIndex = self.tuner.stringIndex
-    }
-    
-    func didStringChange() {
+        //didStringChange()
         self.panel?.targetFrequency?.text = String(format: "%.2f %@", self.tuner.targetFrequency(), "Hz".localized())
         
         self.panel?.stringbar?.stringIndex = self.tuner.stringIndex
-        self.panel?.notebar?.notes = self.tuner.notes
-    }
-    
-    func didPitchChange() {
-    }
-    
-    func didFretChange() {
-        self.panel?.targetFrequency?.text = String(format: "%.2f %@", self.tuner.targetFrequency(), "Hz".localized())
-    }
-    
-    func didFilterChange() {
-        if self.tuner.filter == "on" {
-            self.processing.enableFilter()
-        } else {
-            self.processing.disableFilter()
+        //self.panel?.notebar?.notes = self.tuner.notes
+        // didPitchChange()
+        // didFretChange()
+        // didFilterChange
+        
+        switch self.tuner.settings.filter {
+        case .on: self.processing.enableFilter()
+        case .off: self.processing.disableFilter()
         }
+    }
+    
+    func didFrequencyChange() {
+        self.panel?.targetFrequency?.text = String(format: "%.2f %@", self.tuner.targetFrequency(), "Hz".localized())
     }
     
     func didStatusChange() {

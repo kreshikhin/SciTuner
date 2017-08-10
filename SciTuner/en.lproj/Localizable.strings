@@ -6,8 +6,42 @@
   Copyright © 2017 Denis Kreshikhin. All rights reserved.
 */
 
-"settings" = "настройка";
-"enable filter" = "вкл. фильтр";
-"disable filter" = "выкл. фильтр";
-"оn" = "вкл.";
-"off" = "выкл.";
+"settings" = "settings";
+"enable filter" = "enable filter";
+"disable filter" = "disable filter";
+"оn" = "on";
+"off" = "off";
+
+"standard" = "Standard";
+"new_standard" = "New Standard";
+"russian" = "Russian";
+"drop_d" = "Drop D";
+"drop_c" = "Drop C";
+"drop_g" = "Drop G";
+"open_d" = "Open D";
+"open_c" = "Open C";
+"open_g" = "Open G";
+"lute" = "Lute";
+"irish" = "Irish";
+
+"alternative" = "Alternative";
+
+"tenor" = "Tenor";
+"tenor_alter" = "Tenor alter.";
+
+"standard_prima" = "Standard/Prima";
+"bass" = "Bass";
+"tenor" = "Tenor";
+"alto" = "Alto";
+"secunda" = "Secunda";
+"piccolo" = "Piccolo";
+
+"d_tuning" = "D-tuning";
+
+"free_mode" = "Free mode";
+"octaves" = "Octaves";
+"c_major" = "C-major";
+"c_minor" = "C-minor";
+
+"standard_pitch" = "Default A4=440Hz";
+"scientific_pitch" = "Scientific C4=256Hz";

@@ -13,17 +13,16 @@ class FiltersViewController: UIAlertController {
     let tuner = Tuner.sharedInstance
     
     override func viewDidLoad() {
-        addFilter("enable filter".localized(), "on".localized())
-        addFilter("disable filter".localized(), "off".localized())
+        Filter.allFilters.forEach { self.add(filter: $0) }
         
         addAction(UIAlertAction(title: "cancel".localized(), style: UIAlertActionStyle.cancel, handler: nil))
     }
     
-    func addFilter(_ title: String, _ value: String){
+    func add(filter: Filter){
         let action = UIAlertAction(
-            title: title, style: UIAlertActionStyle.default,
+            title: filter.localized(), style: UIAlertActionStyle.default,
             handler: {(action: UIAlertAction) -> Void in
-                self.tuner.setFilter(value)
+                self.tuner.settings.filter = filter
         })
         
         addAction(action)

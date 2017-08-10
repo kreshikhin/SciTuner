@@ -24,4 +24,35 @@
 //
 "Hz" = "Гц";
 
+"standard" = "Стандартный";
+"new_standard" = "Новый стандартный";
+"russian" = "Русская гитара";
+"drop_d" = "Пониженный D (Drop D)";
+"drop_c" = "Пониженный C (Drop C)";
+"drop_g" = "Пониженный G (Drop G)";
+"open_d" = "Открытый D (Open D)";
+"open_c" = "Открытый C (Open C)";
+"open_g" = "Открытый G (Open G)";
+"lute" = "Лютневый";
+"irish" = "Ирландский";
+
+"alternative" = "Альтернативный";
+
+"tenor" = "Тенор";
+"tenor_alter" = "Тенор, альтернативный";
+
+"standard_prima" = "Стандартный/Прима";
+"bass" = "Басс";
+"tenor" = "Тенор";
+"alto" = "Альт";
+"secunda" = "Секунда";
+"piccolo" = "Пикколо";
+
+"d_tuning" = "Строй D";
+
+"free_mode" = "Свободный режим";
+"octaves" = "Октавы";
+"c_major" = "До мажор";
+"c_minor" = "До минор";
+
 

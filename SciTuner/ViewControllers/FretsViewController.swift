@@ -13,19 +13,17 @@ class FretsViewController: UIAlertController {
     let tuner = Tuner.sharedInstance
     
     override func viewDidLoad() {
-        addFret("5th fret", 5)
-        addFret("7th fret", 7)
-        addFret("12th fret", 12)
-        addFret("open strings", 0)
+        Fret.allFrets.forEach { self.add(fret: $0) }
         
         addAction(UIAlertAction(title: "cancel".localized(), style: UIAlertActionStyle.cancel, handler: nil))
     }
     
-    func addFret(_ title: String, _ fret: Int){
+    func add(fret: Fret){
         let action = UIAlertAction(
-            title: title, style: UIAlertActionStyle.default,
+            title: fret.localized(), style: UIAlertActionStyle.default,
             handler: {(action: UIAlertAction) -> Void in
-                self.tuner.setFret(fret)
+                self.tuner.settings.fret = fret
+                self.tuner.updateSettings()
         })
         
         addAction(action)

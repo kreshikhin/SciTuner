@@ -11,7 +11,6 @@ import UIKit
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let tuner = Tuner.sharedInstance
-    let sections: [String] = ["pitch".localized(), "tuning".localized()]
     
     var tableView: SettingsView?
 
@@ -39,17 +38,20 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(section == 0){
-            return tuner.pitchs.count
+            return Pitch.allPitches.count
         }
         if(section == 1){
-            return tuner.tunings.count
+            return tuner.instrument.tunings().count
         }
 
         return 0
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section]
+        if section == 0 { return "Pitches".localized() }
+        if section == 1 { return "Tunings".localized() }
+        
+        return nil
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -58,18 +60,19 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         cell.accessoryType = .none
 
         if(indexPath.section == 0){
-            if(indexPath.row == tuner.pitchIndex){
+            if(indexPath.row == tuner.pitch.index() ?? 0){
                 cell.accessoryType = .checkmark
             }
 
-            cell.textLabel!.text = tuner.pitchs[indexPath.row]
+            cell.textLabel?.text = Pitch.allPitches[indexPath.row].localized()
         }
+        
         if(indexPath.section == 1){
-            if(indexPath.row == tuner.tuningIndex){
+            if(indexPath.row == tuner.tuning.index(instrument: tuner.instrument)) {
                 cell.accessoryType = .checkmark
             }
 
-            cell.textLabel!.text = tuner.tunings[indexPath.row]
+            cell.textLabel?.text = tuner.instrument.tunings()[indexPath.row].localized()
         }
 
         return cell
@@ -77,11 +80,11 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if(indexPath.section == 0){
-            tuner.setPitchIndex(indexPath.row)
+            tuner.settings.pitch = Pitch.allPitches[indexPath.row]
         }
 
         if(indexPath.section == 1){
-            tuner.setTuningIndex(indexPath.row)
+            tuner.settings.tuning = tuner.instrument.tunings()[indexPath.row]
         }
 
         tableView.reloadData()

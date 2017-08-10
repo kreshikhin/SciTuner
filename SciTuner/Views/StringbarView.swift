@@ -19,7 +19,7 @@ class StringbarView: UIView {
     var lines: [UIView?] = []
     var underline = UIView()
 
-    var strings: [String] {
+    var strings: [Note] {
         set{
             for la in labels { la!.isHidden = true }
             for li in lines { li!.isHidden = true }
@@ -39,15 +39,15 @@ class StringbarView: UIView {
 
                 let label = labels[i]!
                 label.frame = CGRect(x: left + shift - 9, y: top + 7, width: 30 , height: 20)
-                label.text = newValue[i].uppercased()
+                label.text = newValue[i].string
                 label.isHidden = false
                 label.adjustsFontSizeToFitWidth = true
             }
         }
         get {
-            var result = [String]()
+            var result = [Note]()
             for i in 0 ..< count {
-                result.append(labels[i]!.text!)
+                result.append(Note(labels[i]!.text!))
             }
             return result
         }
@@ -132,7 +132,6 @@ class StringbarView: UIView {
         self.addSubview(pointer!)
         self.addSubview(baseline)
         
-        self.strings = self.tuner.strings
         self.stringIndex = self.tuner.stringIndex
     }
 }

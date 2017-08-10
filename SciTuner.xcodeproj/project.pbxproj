@@ -36,6 +36,14 @@
 		923616601F3B5D2E001114F3 /* Tuner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9236165B1F3B5D2E001114F3 /* Tuner.swift */; };
 		923920481A502DFE00ACDC2E /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 920F09721A40A9D000A69F7A /* Accelerate.framework */; };
 		9239204A1A502E0500ACDC2E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 923920491A502E0500ACDC2E /* AVFoundation.framework */; };
+		929E1A0B1F3C769B005561D2 /* Tuning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929E1A0A1F3C769B005561D2 /* Tuning.swift */; };
+		929E1A0F1F3C8B01005561D2 /* NoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929E1A0E1F3C8B01005561D2 /* NoteTests.swift */; };
+		929E1A101F3C8BAF005561D2 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AB42EE1F3BB6D000EBB7E0 /* Note.swift */; };
+		929E1A121F3C9111005561D2 /* Fret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929E1A111F3C9111005561D2 /* Fret.swift */; };
+		92AB42E91F3BA5AE00EBB7E0 /* Instrument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AB42E81F3BA5AE00EBB7E0 /* Instrument.swift */; };
+		92AB42EB1F3BB35900EBB7E0 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AB42EA1F3BB35900EBB7E0 /* Filter.swift */; };
+		92AB42ED1F3BB57500EBB7E0 /* Pitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AB42EC1F3BB57500EBB7E0 /* Pitch.swift */; };
+		92AB42EF1F3BB6D000EBB7E0 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AB42EE1F3BB6D000EBB7E0 /* Note.swift */; };
 		92C2B8251A5801E8008F6A31 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C2B8101A5801E8008F6A31 /* AppDelegate.swift */; };
 		92C2B8261A5801E8008F6A31 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92C2B8111A5801E8008F6A31 /* LaunchScreen.xib */; };
 		92C2B8281A5801E8008F6A31 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92C2B8151A5801E8008F6A31 /* Images.xcassets */; };
@@ -95,6 +103,14 @@
 		9236165A1F3B5D2E001114F3 /* Source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Source.swift; path = Models/Source.swift; sourceTree = "<group>"; };
 		9236165B1F3B5D2E001114F3 /* Tuner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tuner.swift; path = Models/Tuner.swift; sourceTree = "<group>"; };
 		923920491A502E0500ACDC2E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		929E1A0A1F3C769B005561D2 /* Tuning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tuning.swift; path = Models/Tuning.swift; sourceTree = "<group>"; };
+		929E1A0C1F3C7956005561D2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		929E1A0E1F3C8B01005561D2 /* NoteTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoteTests.swift; path = Models/NoteTests.swift; sourceTree = "<group>"; };
+		929E1A111F3C9111005561D2 /* Fret.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fret.swift; path = Models/Fret.swift; sourceTree = "<group>"; };
+		92AB42E81F3BA5AE00EBB7E0 /* Instrument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Instrument.swift; path = Models/Instrument.swift; sourceTree = "<group>"; };
+		92AB42EA1F3BB35900EBB7E0 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Filter.swift; path = Models/Filter.swift; sourceTree = "<group>"; };
+		92AB42EC1F3BB57500EBB7E0 /* Pitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Pitch.swift; path = Models/Pitch.swift; sourceTree = "<group>"; };
+		92AB42EE1F3BB6D000EBB7E0 /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Note.swift; path = Models/Note.swift; sourceTree = "<group>"; };
 		92C2B8101A5801E8008F6A31 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92C2B8121A5801E8008F6A31 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		92C2B8151A5801E8008F6A31 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -186,6 +202,12 @@
 				9236165A1F3B5D2E001114F3 /* Source.swift */,
 				9236165B1F3B5D2E001114F3 /* Tuner.swift */,
 				92CF780E1F3B68B90009EEA9 /* Settings.swift */,
+				92AB42E81F3BA5AE00EBB7E0 /* Instrument.swift */,
+				929E1A0A1F3C769B005561D2 /* Tuning.swift */,
+				92AB42EA1F3BB35900EBB7E0 /* Filter.swift */,
+				92AB42EC1F3BB57500EBB7E0 /* Pitch.swift */,
+				92AB42EE1F3BB6D000EBB7E0 /* Note.swift */,
+				929E1A111F3C9111005561D2 /* Fret.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -200,6 +222,14 @@
 				923616291F3B5CC5001114F3 /* TubeViewController.swift */,
 			);
 			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		929E1A0D1F3C8AE4005561D2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				929E1A0E1F3C8B01005561D2 /* NoteTests.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		92C2B80E1A5801E8008F6A31 /* SciTuner */ = {
@@ -263,6 +293,7 @@
 		92D207501F3B5E4C00C08471 /* SciTunerTests */ = {
 			isa = PBXGroup;
 			children = (
+				929E1A0D1F3C8AE4005561D2 /* Models */,
 				92D207511F3B5E4C00C08471 /* SciTunerTests.swift */,
 				92D207531F3B5E4C00C08471 /* Info.plist */,
 			);
@@ -489,22 +520,28 @@
 			files = (
 				923616501F3B5D1D001114F3 /* PointerView.swift in Sources */,
 				923616301F3B5CDE001114F3 /* ViewController.swift in Sources */,
+				929E1A121F3C9111005561D2 /* Fret.swift in Sources */,
+				929E1A0B1F3C769B005561D2 /* Tuning.swift in Sources */,
 				923616551F3B5D1D001114F3 /* TubeView.swift in Sources */,
 				923616511F3B5D1D001114F3 /* RecordButton.swift in Sources */,
 				9236164D1F3B5D1D001114F3 /* ModebarView.swift in Sources */,
 				92C2B8251A5801E8008F6A31 /* AppDelegate.swift in Sources */,
 				923616531F3B5D1D001114F3 /* SettingsView.swift in Sources */,
+				92AB42E91F3BA5AE00EBB7E0 /* Instrument.swift in Sources */,
 				9236162B1F3B5CC5001114F3 /* FretsViewController.swift in Sources */,
+				92AB42ED1F3BB57500EBB7E0 /* Pitch.swift in Sources */,
 				92CF780D1F3B64650009EEA9 /* String+Localization.swift in Sources */,
 				9236162A1F3B5CC5001114F3 /* FiltersViewController.swift in Sources */,
 				923616541F3B5D1D001114F3 /* StringbarView.swift in Sources */,
 				923616601F3B5D2E001114F3 /* Tuner.swift in Sources */,
+				92AB42EB1F3BB35900EBB7E0 /* Filter.swift in Sources */,
 				9236164F1F3B5D1D001114F3 /* PanelView.swift in Sources */,
 				9236162C1F3B5CC5001114F3 /* InstrumentsViewController.swift in Sources */,
 				9236165F1F3B5D2E001114F3 /* Source.swift in Sources */,
 				9236165C1F3B5D2E001114F3 /* MicSource.swift in Sources */,
 				9236165E1F3B5D2E001114F3 /* ProcessingAdapter.swift in Sources */,
 				9236163A1F3B5CF8001114F3 /* dspmath.c in Sources */,
+				92AB42EF1F3BB6D000EBB7E0 /* Note.swift in Sources */,
 				9236164C1F3B5D1D001114F3 /* ForwardButton.swift in Sources */,
 				9236164E1F3B5D1D001114F3 /* NotebarView.swift in Sources */,
 				9236164A1F3B5D1D001114F3 /* ControlbarView.swift in Sources */,
@@ -525,6 +562,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				92D207521F3B5E4C00C08471 /* SciTunerTests.swift in Sources */,
+				929E1A0F1F3C8B01005561D2 /* NoteTests.swift in Sources */,
+				929E1A101F3C8BAF005561D2 /* Note.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -552,6 +591,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				92CF78081F3B61E10009EEA9 /* ru */,
+				929E1A0C1F3C7956005561D2 /* en */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
