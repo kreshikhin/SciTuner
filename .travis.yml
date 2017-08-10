@@ -4,4 +4,4 @@ xcode_project: SciTuner.xcodeproj # path to your xcodeproj folder
 xcode_scheme: SciTunerTests
 before_install:
   - brew update
-  - brew install xctool
+  - brew outdated xctool || brew upgrade xctool
