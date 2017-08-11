@@ -1,7 +1,7 @@
 
 # SciTuner
 
-![Build Status][travis-image]][travis-url]
+[![Build Status][travis-image]][travis-url]
 
 [FREE Download from Appstore](https://itunes.apple.com/us/app/scituner/id952300084?mt=8)
 
