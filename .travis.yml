@@ -3,7 +3,7 @@ osx_image: xcode8.3
 xcode_project: SciTuner.xcodeproj # path to your xcodeproj folder
 xcode_scheme: SciTunerTests
 script:
-    - xcodebuild clean build -sdk iphonesimulator -workspace SciTuner.xcworkspace -scheme SciTunerTests CODE_SIGNING_REQUIRED=NO
+    - xcodebuild clean build -sdk iphonesimulator -workspace SciTuner.xcworkspace -scheme SciTuner CODE_SIGNING_REQUIRED=NO
 before_install:
   - brew update
   - brew outdated xctool || brew upgrade xctool
