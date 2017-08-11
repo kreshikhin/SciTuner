@@ -1,7 +1,9 @@
 language: objective-c
 osx_image: xcode8.3
-xcode_workspace: SciTuner.xcworkspace # path to your xcodeproj folder
-xcode_scheme: SciTuner
+#xcode_workspace: SciTuner.xcworkspace # path to your xcodeproj folder
+#xcode_scheme: SciTuner
+script:
+ - xcodebuild -workspace SciTuner.xcworkspace -scheme SciTuner -sdk iphonesimulator build test
 before_install:
   - brew update
   - brew outdated xctool || brew upgrade xctool
