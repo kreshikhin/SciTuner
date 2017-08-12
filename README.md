@@ -5,7 +5,7 @@
 [![License: MIT][license-image]][license-url]
 [![Platform][platform-image]][platform-url]
 
-[FREE Download from Appstore](https://itunes.apple.com/us/app/scituner/id952300084?mt=8)
+[![FREE Download from Appstore][appstore-image]](https://itunes.apple.com/us/app/scituner/id952300084?mt=8)
 
 SciTuner is guitar tuner with real-time signal visualization.
 The application uses strong digital processing algorithm for accurate frequency estimation and wave visualization.
@@ -36,3 +36,5 @@ The MIT License (MIT)
 
 [platform-image]: https://img.shields.io/badge/platform-ios-lightgrey.svg?style=flat
 [platform-url]: http://github.com/kreshikhin/scituner
+
+[appstore-image]: https://rawgit.com/kreshikhin/scituner/master/appstore.png
