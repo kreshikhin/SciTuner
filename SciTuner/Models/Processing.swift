@@ -44,11 +44,7 @@ class Processing{
     }
     
     func getFrequency() -> Double {
-        return processing_get_frequency(p)
-    }
-    
-    func getSubFrequency() -> Double {
-        return processing_get_sub_frequency(p)
+        return processing_get_frequency(p) + processing_get_sub_frequency(p)
     }
     
     func setTargetFrequency(_ frequency: Double) {

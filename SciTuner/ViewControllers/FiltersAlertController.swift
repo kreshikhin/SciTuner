@@ -1,5 +1,5 @@
 //
-//  FiltersViewController.swift
+//  FiltersAlertController.swift
 //  SciTuner
 //
 //  Created by Denis Kreshikhin on 17.03.15.
@@ -9,8 +9,12 @@
 import Foundation
 import UIKit
 
-class FiltersViewController: UIAlertController {
-    let tuner = Tuner.sharedInstance
+protocol FiltersAlertControllerDelegate: class {
+    func didChange(filter: Filter)
+}
+
+class FiltersAlertController: UIAlertController {
+    weak var parentDelegate: FiltersAlertControllerDelegate?
     
     override func viewDidLoad() {
         Filter.allFilters.forEach { self.add(filter: $0) }
@@ -22,7 +26,7 @@ class FiltersViewController: UIAlertController {
         let action = UIAlertAction(
             title: filter.localized(), style: UIAlertActionStyle.default,
             handler: {(action: UIAlertAction) -> Void in
-                self.tuner.settings.filter = filter
+                self.parentDelegate?.didChange(filter: filter)
         })
         
         addAction(action)

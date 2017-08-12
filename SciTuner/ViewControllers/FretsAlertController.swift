@@ -1,5 +1,5 @@
 //
-//  FretsViewController.swift
+//  FretsAlertController.swift
 //  SciTuner
 //
 //  Created by Denis Kreshikhin on 08.03.15.
@@ -9,8 +9,12 @@
 import Foundation
 import UIKit
 
-class FretsViewController: UIAlertController {
-    let tuner = Tuner.sharedInstance
+protocol FretsAlertControllerDelegate: class {
+    func didChange(fret: Fret)
+}
+
+class FretsAlertController: UIAlertController {
+    weak var parentDelegate: FretsAlertControllerDelegate?
     
     override func viewDidLoad() {
         Fret.allFrets.forEach { self.add(fret: $0) }
@@ -22,8 +26,7 @@ class FretsViewController: UIAlertController {
         let action = UIAlertAction(
             title: fret.localized(), style: UIAlertActionStyle.default,
             handler: {(action: UIAlertAction) -> Void in
-                self.tuner.settings.fret = fret
-                self.tuner.updateSettings()
+                self.parentDelegate?.didChange(fret: fret)
         })
         
         addAction(action)

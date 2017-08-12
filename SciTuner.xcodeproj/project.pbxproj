@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1221927D269CB6F25DDF0773 /* Pods_SciTuner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E81863D516AD60F020944F0E /* Pods_SciTuner.framework */; };
-		9236162A1F3B5CC5001114F3 /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616251F3B5CC5001114F3 /* FiltersViewController.swift */; };
-		9236162B1F3B5CC5001114F3 /* FretsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616261F3B5CC5001114F3 /* FretsViewController.swift */; };
+		9236162A1F3B5CC5001114F3 /* FiltersAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616251F3B5CC5001114F3 /* FiltersAlertController.swift */; };
+		9236162B1F3B5CC5001114F3 /* FretsAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616261F3B5CC5001114F3 /* FretsAlertController.swift */; };
 		9236162C1F3B5CC5001114F3 /* InstrumentsAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616271F3B5CC5001114F3 /* InstrumentsAlertController.swift */; };
 		9236162D1F3B5CC5001114F3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616281F3B5CC5001114F3 /* SettingsViewController.swift */; };
 		9236162E1F3B5CC5001114F3 /* TunerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616291F3B5CC5001114F3 /* TunerViewController.swift */; };
@@ -73,8 +73,8 @@
 		2FC678D8D67F8A46DC76060D /* Pods_SciTunerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SciTunerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		842FD716FEE0BC57A19ED8E2 /* Pods-SciTunerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SciTunerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SciTunerTests/Pods-SciTunerTests.release.xcconfig"; sourceTree = "<group>"; };
 		920F09721A40A9D000A69F7A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		923616251F3B5CC5001114F3 /* FiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FiltersViewController.swift; path = ViewControllers/FiltersViewController.swift; sourceTree = "<group>"; };
-		923616261F3B5CC5001114F3 /* FretsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FretsViewController.swift; path = ViewControllers/FretsViewController.swift; sourceTree = "<group>"; };
+		923616251F3B5CC5001114F3 /* FiltersAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FiltersAlertController.swift; path = ViewControllers/FiltersAlertController.swift; sourceTree = "<group>"; };
+		923616261F3B5CC5001114F3 /* FretsAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FretsAlertController.swift; path = ViewControllers/FretsAlertController.swift; sourceTree = "<group>"; };
 		923616271F3B5CC5001114F3 /* InstrumentsAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InstrumentsAlertController.swift; path = ViewControllers/InstrumentsAlertController.swift; sourceTree = "<group>"; };
 		923616281F3B5CC5001114F3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = ViewControllers/SettingsViewController.swift; sourceTree = "<group>"; };
 		923616291F3B5CC5001114F3 /* TunerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TunerViewController.swift; path = ViewControllers/TunerViewController.swift; sourceTree = "<group>"; };
@@ -213,8 +213,8 @@
 		92437FF01F3B5BFB00841001 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				923616251F3B5CC5001114F3 /* FiltersViewController.swift */,
-				923616261F3B5CC5001114F3 /* FretsViewController.swift */,
+				923616251F3B5CC5001114F3 /* FiltersAlertController.swift */,
+				923616261F3B5CC5001114F3 /* FretsAlertController.swift */,
 				923616271F3B5CC5001114F3 /* InstrumentsAlertController.swift */,
 				923616281F3B5CC5001114F3 /* SettingsViewController.swift */,
 				923616291F3B5CC5001114F3 /* TunerViewController.swift */,
@@ -527,10 +527,10 @@
 				92C2B8251A5801E8008F6A31 /* AppDelegate.swift in Sources */,
 				923616531F3B5D1D001114F3 /* SettingsView.swift in Sources */,
 				92AB42E91F3BA5AE00EBB7E0 /* Instrument.swift in Sources */,
-				9236162B1F3B5CC5001114F3 /* FretsViewController.swift in Sources */,
+				9236162B1F3B5CC5001114F3 /* FretsAlertController.swift in Sources */,
 				92AB42ED1F3BB57500EBB7E0 /* Pitch.swift in Sources */,
 				92CF780D1F3B64650009EEA9 /* String+Localization.swift in Sources */,
-				9236162A1F3B5CC5001114F3 /* FiltersViewController.swift in Sources */,
+				9236162A1F3B5CC5001114F3 /* FiltersAlertController.swift in Sources */,
 				923616541F3B5D1D001114F3 /* StringbarView.swift in Sources */,
 				923616601F3B5D2E001114F3 /* Tuner.swift in Sources */,
 				92AB42EB1F3BB35900EBB7E0 /* Filter.swift in Sources */,

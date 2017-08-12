@@ -24,11 +24,18 @@ class Tuner {
     var pitch: Pitch { return settings.pitch }
     var tuning: Tuning { return settings.tuning }
     var filter: Filter { return settings.filter }
+    var fret: Fret { return settings.fret }
+    
     var strings: [Note] { return settings.tuning.strings }
     
     var sortedStrings: [Note] = []
 
-    var frequency: Double = 440
+    var frequency: Double {
+        set { originFrequency_ = fret.shiftDown(frequency: newValue) }
+        get { return fret.shiftUp(frequency: originFrequency_) }
+    }
+    
+    private var originFrequency_: Double = 440
 
     var isPaused = false
     let settings = Settings.shared()
@@ -58,11 +65,6 @@ class Tuner {
 
         //delegate?.didStringChange()
     }
-
-    func setFrequency(_ value: Double){
-        frequency = value / fretScale()
-        delegate?.didFrequencyChange()
-    }
     
     var status = "active"
     func setStatus(_ value: String){
@@ -84,10 +86,6 @@ class Tuner {
 
     func targetFrequency() -> Double {
         return pitch.frequency(of: string) * fretScale()
-    }
-
-    func actualFrequency() -> Double {
-        return frequency * fretScale()
     }
 
     func frequencyDeviation() -> Double {

@@ -12,29 +12,29 @@ class FretTests: XCTestCase {
     func testOpenString() {
         let fret: Fret = .openStrings
         
-        XCTAssertEqual(fret.scale(frequency: 100), 100)
-        XCTAssertEqual(fret.origin(of: 100), 100)
+        XCTAssertEqual(fret.shiftUp(frequency: 100), 100)
+        XCTAssertEqual(fret.shiftDown(frequency: 100), 100)
     }
     
     func testFret5() {
         let fret: Fret = .fret5
         
-        XCTAssertEqual(fret.scale(frequency: 100), 150)
-        XCTAssertEqual(fret.origin(of: 150), 100)
+        XCTAssertEqualWithAccuracy(fret.shiftUp(frequency: 100), 133, accuracy: 0.5)
+        XCTAssertEqualWithAccuracy(fret.shiftDown(frequency: 133), 100, accuracy: 0.5)
     }
 
     
     func testFret7() {
         let fret: Fret = .fret7
         
-        XCTAssertEqual(fret.scale(frequency: 100), 170)
-        XCTAssertEqual(fret.origin(of: 170), 100)
+        XCTAssertEqualWithAccuracy(fret.shiftUp(frequency: 100), 150, accuracy: 0.5)
+        XCTAssertEqualWithAccuracy(fret.shiftDown(frequency: 150), 100, accuracy: 0.5)
     }
     
     func testFret12() {
         let fret: Fret = .fret12
         
-        XCTAssertEqual(fret.scale(frequency: 100), 200)
-        XCTAssertEqual(fret.origin(of: 200), 100)
+        XCTAssertEqual(fret.shiftUp(frequency: 100), 200)
+        XCTAssertEqual(fret.shiftDown(frequency: 200), 100)
     }
 }

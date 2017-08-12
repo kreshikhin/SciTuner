@@ -18,8 +18,8 @@ class TunerViewController: UIViewController {
     var settingsViewController = SettingsViewController()
     
     var instrumentsAlertController = InstrumentsAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-    var frets = FretsViewController(title: nil, message: nil, preferredStyle: .actionSheet)
-    var filters = FiltersViewController(title: nil, message: nil, preferredStyle: .actionSheet)
+    var fretsAlertController = FretsAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    var filtersAlertController = FiltersAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     
     var tuner = Tuner.sharedInstance
     
@@ -38,6 +38,8 @@ class TunerViewController: UIViewController {
         self.tuner.delegate = self
         
         self.instrumentsAlertController.parentDelegate = self
+        self.fretsAlertController.parentDelegate = self
+        self.filtersAlertController.parentDelegate = self
 
         self.view.backgroundColor = UIColor.white
         self.navigationItem.title = "SciTuner".localized()
@@ -96,10 +98,6 @@ class TunerViewController: UIViewController {
         }
     }
     
-    func showSettingsViewController() {
-        self.navigationController?.pushViewController(settingsViewController, animated: true)
-    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -125,16 +123,20 @@ class TunerViewController: UIViewController {
             width: size.width, height: size.height - h - verticalShift)
     }
 
+    func showSettingsViewController() {
+        self.navigationController?.pushViewController(settingsViewController, animated: true)
+    }
+    
     func showInstrumentsAlertController() {
         self.present(self.instrumentsAlertController, animated: true, completion: nil)
     }
     
     func showFrets() {
-        self.present(self.frets, animated: true, completion: nil)
+        self.present(self.fretsAlertController, animated: true, completion: nil)
     }
     
     func showFilters() {
-        self.present(self.filters, animated: true, completion: nil)
+        self.present(self.filtersAlertController, animated: true, completion: nil)
     }
 }
 
@@ -143,16 +145,13 @@ extension TunerViewController: TunerDelegate {
         // didInstrumentChange
         
         // didFrequencyChange
-        self.panel?.actualFrequency?.text = String(format: "%.2f %@", self.tuner.actualFrequency(), "Hz".localized())
-        self.panel?.frequencyDeviation!.text = String(format: "%.0fc", self.tuner.frequencyDeviation())
-        
-        self.panel?.notebar?.pointerPosition = self.tuner.stringPosition()
-        self.panel?.notebar?.pointerPosition = self.tuner.frequencyDeviation()
+
         //didTuningChange()
         self.panel?.stringbar?.strings = self.tuner.tuning.strings
         self.panel?.stringbar?.stringIndex = self.tuner.stringIndex
         //didStringChange()
-        self.panel?.targetFrequency?.text = String(format: "%.2f %@", self.tuner.targetFrequency(), "Hz".localized())
+        
+
         
         self.panel?.stringbar?.stringIndex = self.tuner.stringIndex
         //self.panel?.notebar?.notes = self.tuner.notes
@@ -199,9 +198,15 @@ extension TunerViewController: MicrophoneDelegate {
         
         self.processing.buildSmoothStandingWave2(&wavePoints, length: wavePoints.count)
         
-        self.tuner.setFrequency(self.processing.getFrequency() + self.processing.getSubFrequency())
+        self.tuner.frequency = self.processing.getFrequency()
         
         self.tubeScene?.draw(wave: wavePoints)
+        
+        self.panel?.actualFrequency?.text = String(format: "%.2f %@", self.tuner.frequency, "Hz".localized())
+        self.panel?.frequencyDeviation!.text = String(format: "%.0fc", self.tuner.frequencyDeviation())
+        //self.panel?.notebar?.pointerPosition = self.tuner.stringPosition()
+        self.panel?.notebar?.pointerPosition = self.tuner.frequencyDeviation()
+        self.panel?.targetFrequency?.text = String(format: "%.2f %@", self.tuner.targetFrequency(), "Hz".localized())
     }
 }
 
@@ -212,5 +217,21 @@ extension TunerViewController: InstrumentsAlertControllerDelegate {
         }
         
         self.navigationItem.leftBarButtonItem?.title = self.tuner.instrument.localized()
+    }
+}
+
+extension TunerViewController: FretsAlertControllerDelegate {
+    func didChange(fret: Fret) {
+        try! self.realm.write {
+            self.tuner.settings.fret = fret
+        }
+    }
+}
+
+extension TunerViewController: FiltersAlertControllerDelegate {
+    func didChange(filter: Filter) {
+        try! self.realm.write {
+            self.tuner.settings.filter = filter
+        }
     }
 }

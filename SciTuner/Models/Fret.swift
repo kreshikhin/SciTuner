@@ -18,12 +18,12 @@ enum Fret: Int {
     case fret7 = 7
     case fret12 = 12
     
-    func scale(frequency: Double) -> Double {
-        return frequency * pow(2.0, Double(self.rawValue) / 12.0)
+    func shiftDown(frequency: Double) -> Double {
+        return frequency / pow(2.0, Double(self.rawValue) / 12.0)
     }
     
-    func origin(of frequency: Double) -> Double {
-        return frequency / pow(2.0, Double(self.rawValue) / 12.0)
+    func shiftUp(frequency: Double) -> Double {
+        return frequency * pow(2.0, Double(self.rawValue) / 12.0)
     }
     
     func localized() -> String {
