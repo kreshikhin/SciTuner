@@ -2,6 +2,8 @@
 # SciTuner
 
 [![Build Status][travis-image]][travis-url]
+[![License: MIT][license-image]][license-url]
+[![Platform][platform-image]][platform-url]
 
 [FREE Download from Appstore](https://itunes.apple.com/us/app/scituner/id952300084?mt=8)
 
@@ -28,3 +30,9 @@ The MIT License (MIT)
 
 [travis-image]: https://img.shields.io/travis/kreshikhin/scituner/master.svg
 [travis-url]: https://travis-ci.org/kreshikhin/scituner
+
+[license-image]: https://img.shields.io/badge/License-MIT-yellow.svg
+[license-url]: https://opensource.org/licenses/MIT
+
+[platform-image]: https://img.shields.io/badge/platform-ios-lightgrey.svg?style=flat
+[platform-url]: http://github.com/kreshikhin/scituner

@@ -1,5 +1,5 @@
 //
-//  TubeViewController.swift
+//  TunerViewController.swift
 //  SciTuner
 //
 //  Created by Denis Kreshikhin on 25.02.15.
@@ -8,9 +8,16 @@
 
 import UIKit
 import SpriteKit
+import RealmSwift
 
-class TubeViewController: UIViewController {
-    var instruments = InstrumentsViewController(title: nil, message: nil, preferredStyle: .actionSheet)
+class TunerViewController: UIViewController {
+    typealias `Self` = TunerViewController
+    
+    let realm = try! Realm()
+    
+    var settingsViewController = SettingsViewController()
+    
+    var instrumentsAlertController = InstrumentsAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     var frets = FretsViewController(title: nil, message: nil, preferredStyle: .actionSheet)
     var filters = FiltersViewController(title: nil, message: nil, preferredStyle: .actionSheet)
     
@@ -21,14 +28,16 @@ class TubeViewController: UIViewController {
     
     var panel: PanelView?
     
-    let processing = ProcessingAdapter(pointCount: 128)
+    let processing = Processing(pointCount: 128)
     
-    var source: MicSource?
+    var microphone: Microphone?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tuner.delegate = self
+        
+        self.instrumentsAlertController.parentDelegate = self
 
         self.view.backgroundColor = UIColor.white
         self.navigationItem.title = "SciTuner".localized()
@@ -37,13 +46,13 @@ class TubeViewController: UIViewController {
             title: tuner.instrument.localized(),
             style: UIBarButtonItemStyle.plain,
             target: self,
-            action: #selector(TubeViewController.showInstruments))
+            action: #selector(Self.showInstrumentsAlertController))
 
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "settings".localized(),
             style: UIBarButtonItemStyle.plain,
-            target: self.parent,
-            action: #selector(ViewController.showSettings))
+            target: self,
+            action: #selector(Self.showSettingsViewController))
 
         let navbarHeight = UIApplication.shared.statusBarFrame.size.height + (self.navigationController!).navigationBar.frame.size.height
 
@@ -55,30 +64,11 @@ class TubeViewController: UIViewController {
         let sampleRate = 44100
         let sampleCount = 2048
 
-        //let source = Source(sampleRate: sampleRate, sampleCount: sampleCount)
-        source = MicSource(sampleRate: Double(sampleRate), sampleCount: sampleCount)
+        microphone = Microphone(sampleRate: Double(sampleRate), sampleCount: sampleCount)
+        microphone?.delegate = self
         
         let tubeFrame = getOptimalTubeFrame(navbarHeight, size: self.view.frame.size)
-        //showTube(source: source, frame: tubeFrame, proc: processing)
-        showTubeView(source!, frame: tubeFrame, proc: processing)
-        
-        panel?.modebar?.fretMode?.addTarget(self, action: #selector(TubeViewController.showFrets), for: .touchUpInside)
-        panel?.modebar?.filterMode?.addTarget(self, action: #selector(TubeViewController.showFilters), for: .touchUpInside)
-        
-        panel?.targetFrequency!.text = String(format: "%.2f %@", self.tuner.targetFrequency(), "Hz".localized())
-        
-        switch tuner.filter {
-        case .on:
-            processing.enableFilter()
-        case .off:
-            processing.disableFilter()
-        }
-    }
-    
-    func showTubeView<T: MicSource>(_ source: T, frame: CGRect, proc: ProcessingAdapter) {
-        tubeView = SKView(frame: frame)
-        
-        var wavePoints = [Double](repeating: 0, count: Int(proc.pointCount-1))
+        tubeView = SKView(frame: tubeFrame)
         
         if let tb = tubeView {
             self.view.addSubview(tb)
@@ -91,25 +81,23 @@ class TubeViewController: UIViewController {
             tb.ignoresSiblingOrder = true
         }
         
-        source.onData = {()->Void in
-            if self.tuner.isPaused {
-                return
-            }
-            proc.setTargetFrequency(self.tuner.targetFrequency())
-            
-            proc.Push(&source.sample)
-            proc.SavePreview(&source.preview)
-            
-            proc.Recalculate()
-            
-            proc.buildSmoothStandingWave2(&wavePoints, length: wavePoints.count)
-            
-            self.tuner.setFrequency(proc.getFrequency() + proc.getSubFrequency())
-            
-            self.tubeScene?.draw(wave: wavePoints)
-        }
+        microphone?.activate()
         
-        source.activate()
+        panel?.modebar?.fretMode?.addTarget(self, action: #selector(TunerViewController.showFrets), for: .touchUpInside)
+        panel?.modebar?.filterMode?.addTarget(self, action: #selector(TunerViewController.showFilters), for: .touchUpInside)
+        
+        panel?.targetFrequency!.text = String(format: "%.2f %@", self.tuner.targetFrequency(), "Hz".localized())
+        
+        switch tuner.filter {
+        case .on:
+            processing.enableFilter()
+        case .off:
+            processing.disableFilter()
+        }
+    }
+    
+    func showSettingsViewController() {
+        self.navigationController?.pushViewController(settingsViewController, animated: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -137,8 +125,8 @@ class TubeViewController: UIViewController {
             width: size.width, height: size.height - h - verticalShift)
     }
 
-    func showInstruments() {
-        self.present(instruments, animated: true, completion: nil)
+    func showInstrumentsAlertController() {
+        self.present(self.instrumentsAlertController, animated: true, completion: nil)
     }
     
     func showFrets() {
@@ -150,10 +138,10 @@ class TubeViewController: UIViewController {
     }
 }
 
-extension TubeViewController: TunerDelegate {
+extension TunerViewController: TunerDelegate {
     func didSettingsUpdate() {
         // didInstrumentChange
-        self.navigationItem.leftBarButtonItem?.title = self.tuner.settings.instrument.localized()
+        
         // didFrequencyChange
         self.panel?.actualFrequency?.text = String(format: "%.2f %@", self.tuner.actualFrequency(), "Hz".localized())
         self.panel?.frequencyDeviation!.text = String(format: "%.0fc", self.tuner.frequencyDeviation())
@@ -184,9 +172,45 @@ extension TubeViewController: TunerDelegate {
     
     func didStatusChange() {
         if self.tuner.status == "active" {
-            self.source?.activate()
+            self.microphone?.activate()
         } else {
-            self.source?.inactivate()
+            self.microphone?.inactivate()
         }
+    }
+}
+
+extension TunerViewController: MicrophoneDelegate {
+    func microphone(_ microphone: Microphone?, didReceive data: [Double]?) {
+        if self.tuner.isPaused {
+            return
+        }
+        self.processing.setTargetFrequency(self.tuner.targetFrequency())
+        
+        guard let micro = self.microphone else {
+            return
+        }
+        
+        var wavePoints = [Double](repeating: 0, count: Int(self.processing.pointCount-1))
+        
+        self.processing.push(&micro.sample)
+        self.processing.savePreview(&micro.preview)
+        
+        self.processing.recalculate()
+        
+        self.processing.buildSmoothStandingWave2(&wavePoints, length: wavePoints.count)
+        
+        self.tuner.setFrequency(self.processing.getFrequency() + self.processing.getSubFrequency())
+        
+        self.tubeScene?.draw(wave: wavePoints)
+    }
+}
+
+extension TunerViewController: InstrumentsAlertControllerDelegate {
+    func didChange(instrument: Instrument) {
+        try! self.realm.write {
+            self.tuner.settings.instrument = instrument
+        }
+        
+        self.navigationItem.leftBarButtonItem?.title = self.tuner.instrument.localized()
     }
 }

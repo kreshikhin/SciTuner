@@ -77,6 +77,9 @@ void AQRecorderState_init(struct AQRecorderState* aq, double sampleRate, size_t 
     aq->mDataFormat.mFramesPerPacket = 1;
     aq->mDataFormat.mBytesPerPacket = 2;// for linear pcm
     aq->mDataFormat.mBytesPerFrame = 2;
+    
+    aq->callback = NULL;
+    aq->owner = NULL;
 
     AudioQueueNewInput(&aq->mDataFormat,
                        HandleInputBuffer,
@@ -103,6 +106,11 @@ void AQRecorderState_init(struct AQRecorderState* aq, double sampleRate, size_t 
     aq->preview_buffer = Buffer_new(5000);
 
     AudioQueueStart(aq->mQueue, NULL);
+}
+
+void AQRecorderState_set_callback(struct AQRecorderState* aq, const void* owner, const void (*callback)(const void* owner)){
+    aq->owner = owner;
+    aq->callback = callback;
 }
 
 void AQRecorderState_deinit(struct AQRecorderState* aq){
@@ -166,6 +174,9 @@ static void HandleInputBuffer (
     Buffer_write_ints(pAqData->preview_buffer, data, inNumPackets);
     //pAqData->mCurrentPacket += inNumPackets;
 
+    if (pAqData->callback && pAqData->owner) {
+        pAqData->callback(pAqData->owner);
+    }
 
     if (pAqData->mIsRunning == 0) return;
 

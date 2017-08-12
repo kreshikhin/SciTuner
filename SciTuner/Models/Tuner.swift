@@ -39,13 +39,7 @@ class Tuner {
     }
     
     func updateSettings() {
-        let realm = try! Realm()
-        
         sortedStrings = settings.tuning.strings.sorted()
-        
-        try! realm.write {
-            realm.add(settings, update: true)
-        }
     }
 
     func setStringIndex(_ value: Int) {

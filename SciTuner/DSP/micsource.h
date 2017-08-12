@@ -33,12 +33,17 @@ struct AQRecorderState {
     
     Buffer* buffer;
     Buffer* preview_buffer;
+    
+    const void* owner;
+    const void (*callback)(const void* owner);
 };
 
 struct AQRecorderState* AQRecorderState_create();
 void AQRecorderState_init(struct AQRecorderState* aq, double sampleRate, size_t count);
 void AQRecorderState_deinit(struct AQRecorderState* aq);
 void AQRecorderState_destroy(struct AQRecorderState* aq);
+
+void AQRecorderState_set_callback(struct AQRecorderState* aq, const void* owner, const void (*callback)(const void* owner));
 
 bool AQRecorderState_get_samples(struct AQRecorderState* aq, double* dest, size_t count);
 bool AQRecorderState_get_preview(struct AQRecorderState* aq, double* dest, size_t count);

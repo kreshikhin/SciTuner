@@ -1,5 +1,5 @@
 //
-//  MicSource.swift
+//  Microphone.swift
 //  oscituner
 //
 //  Created by Denis Kreshikhin on 28.12.14.
@@ -11,12 +11,16 @@
 import Foundation
 import AVFoundation
 
-class MicSource{
+protocol MicrophoneDelegate: class{
+    func microphone(_ microphone: Microphone?, didReceive data: [Double]?)
+}
+
+@objc
+class Microphone: NSObject{
+    weak var delegate: MicrophoneDelegate?
+    
     var aqData = AQRecorderState_create()
     var sleep: Bool = true
-    
-    var onData: (() -> ()) = { () -> () in
-    }
     
     var frequency: Double = 0
     
@@ -80,15 +84,31 @@ class MicSource{
             NSLog("It can't set mode, because %@ ", err!)
         }
         
-        AQRecorderState_init(aqData, sampleRate, size_t(sampleCount))
+        
         
         self.discreteFrequency = Double(sampleRate)
         sample = [Double](repeating: 0, count: sampleCount)
         
-        let interval = Double(sample.count) / discreteFrequency
+        let callback: @convention (c) (UnsafeRawPointer?) -> Void = { (owner) in
+            guard let opaque = owner else {
+                return
+            }
+            
+            let this = Unmanaged<Microphone>.fromOpaque(opaque).takeUnretainedValue()
+            
+            if(this.sleep) { return }
+            
+            AQRecorderState_get_samples(this.aqData, &this.sample, size_t(this.sample.count))
+            AQRecorderState_get_preview(this.aqData, &this.preview, size_t(this.preview.count))
+            
+            DispatchQueue.main.async {
+                this.delegate?.microphone(this, didReceive: this.sample)
+            }
+        }
         
-        let timer = Timer(timeInterval: interval, target: self, selector: #selector(MicSource.update), userInfo: nil, repeats: true)
-        RunLoop.current.add(timer, forMode: RunLoopMode.defaultRunLoopMode)
+        AQRecorderState_init(aqData, sampleRate, size_t(sampleCount))
+        AQRecorderState_set_callback(aqData, Unmanaged.passUnretained(self).toOpaque(), callback)
+        
         sleep = false;
     }
     
@@ -103,15 +123,5 @@ class MicSource{
     
     deinit{
         AQRecorderState_destroy(aqData);
-    }
-    
-    @objc func update(){
-        if(sleep) {
-            return
-        }
-        
-        AQRecorderState_get_samples(self.aqData, &sample, size_t(sample.count))
-        AQRecorderState_get_preview(self.aqData, &preview, size_t(preview.count))
-        onData()
     }
 }

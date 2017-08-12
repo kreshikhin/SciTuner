@@ -9,19 +9,13 @@
 import UIKit
 
 class ViewController: UINavigationController {
-    var tube = TubeViewController()
-    var settings = SettingsViewController()
-    var defaults = UserDefaults.standard
+    var tunerViewController = TunerViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.view.backgroundColor = UIColor.white
-        self.pushViewController(tube, animated: false)
-    }
-
-    func showSettings(){
-        self.pushViewController(settings, animated: true)
+        self.pushViewController(tunerViewController, animated: false)
     }
 
     override func didReceiveMemoryWarning() {

@@ -10,9 +10,9 @@
 		1221927D269CB6F25DDF0773 /* Pods_SciTuner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E81863D516AD60F020944F0E /* Pods_SciTuner.framework */; };
 		9236162A1F3B5CC5001114F3 /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616251F3B5CC5001114F3 /* FiltersViewController.swift */; };
 		9236162B1F3B5CC5001114F3 /* FretsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616261F3B5CC5001114F3 /* FretsViewController.swift */; };
-		9236162C1F3B5CC5001114F3 /* InstrumentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616271F3B5CC5001114F3 /* InstrumentsViewController.swift */; };
+		9236162C1F3B5CC5001114F3 /* InstrumentsAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616271F3B5CC5001114F3 /* InstrumentsAlertController.swift */; };
 		9236162D1F3B5CC5001114F3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616281F3B5CC5001114F3 /* SettingsViewController.swift */; };
-		9236162E1F3B5CC5001114F3 /* TubeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616291F3B5CC5001114F3 /* TubeViewController.swift */; };
+		9236162E1F3B5CC5001114F3 /* TunerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616291F3B5CC5001114F3 /* TunerViewController.swift */; };
 		923616301F3B5CDE001114F3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9236162F1F3B5CDE001114F3 /* ViewController.swift */; };
 		9236163A1F3B5CF8001114F3 /* dspmath.c in Sources */ = {isa = PBXBuildFile; fileRef = 923616331F3B5CF8001114F3 /* dspmath.c */; };
 		9236163B1F3B5CF8001114F3 /* micsource.c in Sources */ = {isa = PBXBuildFile; fileRef = 923616351F3B5CF8001114F3 /* micsource.c */; };
@@ -29,13 +29,14 @@
 		923616531F3B5D1D001114F3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616471F3B5D1D001114F3 /* SettingsView.swift */; };
 		923616541F3B5D1D001114F3 /* StringbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616481F3B5D1D001114F3 /* StringbarView.swift */; };
 		923616551F3B5D1D001114F3 /* TubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616491F3B5D1D001114F3 /* TubeView.swift */; };
-		9236165C1F3B5D2E001114F3 /* MicSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616571F3B5D2E001114F3 /* MicSource.swift */; };
-		9236165D1F3B5D2E001114F3 /* MicSource2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616581F3B5D2E001114F3 /* MicSource2.swift */; };
-		9236165E1F3B5D2E001114F3 /* ProcessingAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616591F3B5D2E001114F3 /* ProcessingAdapter.swift */; };
-		9236165F1F3B5D2E001114F3 /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9236165A1F3B5D2E001114F3 /* Source.swift */; };
+		9236165C1F3B5D2E001114F3 /* Microphone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616571F3B5D2E001114F3 /* Microphone.swift */; };
+		9236165E1F3B5D2E001114F3 /* Processing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616591F3B5D2E001114F3 /* Processing.swift */; };
 		923616601F3B5D2E001114F3 /* Tuner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9236165B1F3B5D2E001114F3 /* Tuner.swift */; };
 		923920481A502DFE00ACDC2E /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 920F09721A40A9D000A69F7A /* Accelerate.framework */; };
 		9239204A1A502E0500ACDC2E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 923920491A502E0500ACDC2E /* AVFoundation.framework */; };
+		92668DE21F3E4B08002EC3B3 /* FretTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92668DE11F3E4B08002EC3B3 /* FretTests.swift */; };
+		92668DE31F3E4B0C002EC3B3 /* Fret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929E1A111F3C9111005561D2 /* Fret.swift */; };
+		92668DE41F3E4C59002EC3B3 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CF780C1F3B64650009EEA9 /* String+Localization.swift */; };
 		929E1A0B1F3C769B005561D2 /* Tuning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929E1A0A1F3C769B005561D2 /* Tuning.swift */; };
 		929E1A0F1F3C8B01005561D2 /* NoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929E1A0E1F3C8B01005561D2 /* NoteTests.swift */; };
 		929E1A101F3C8BAF005561D2 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AB42EE1F3BB6D000EBB7E0 /* Note.swift */; };
@@ -74,9 +75,9 @@
 		920F09721A40A9D000A69F7A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		923616251F3B5CC5001114F3 /* FiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FiltersViewController.swift; path = ViewControllers/FiltersViewController.swift; sourceTree = "<group>"; };
 		923616261F3B5CC5001114F3 /* FretsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FretsViewController.swift; path = ViewControllers/FretsViewController.swift; sourceTree = "<group>"; };
-		923616271F3B5CC5001114F3 /* InstrumentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InstrumentsViewController.swift; path = ViewControllers/InstrumentsViewController.swift; sourceTree = "<group>"; };
+		923616271F3B5CC5001114F3 /* InstrumentsAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InstrumentsAlertController.swift; path = ViewControllers/InstrumentsAlertController.swift; sourceTree = "<group>"; };
 		923616281F3B5CC5001114F3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = ViewControllers/SettingsViewController.swift; sourceTree = "<group>"; };
-		923616291F3B5CC5001114F3 /* TubeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TubeViewController.swift; path = ViewControllers/TubeViewController.swift; sourceTree = "<group>"; };
+		923616291F3B5CC5001114F3 /* TunerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TunerViewController.swift; path = ViewControllers/TunerViewController.swift; sourceTree = "<group>"; };
 		9236162F1F3B5CDE001114F3 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		923616321F3B5CF8001114F3 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = config.h; path = DSP/config.h; sourceTree = "<group>"; };
 		923616331F3B5CF8001114F3 /* dspmath.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dspmath.c; path = DSP/dspmath.c; sourceTree = "<group>"; };
@@ -97,12 +98,11 @@
 		923616471F3B5D1D001114F3 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = Views/SettingsView.swift; sourceTree = "<group>"; };
 		923616481F3B5D1D001114F3 /* StringbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringbarView.swift; path = Views/StringbarView.swift; sourceTree = "<group>"; };
 		923616491F3B5D1D001114F3 /* TubeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TubeView.swift; path = Views/TubeView.swift; sourceTree = "<group>"; };
-		923616571F3B5D2E001114F3 /* MicSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MicSource.swift; path = Models/MicSource.swift; sourceTree = "<group>"; };
-		923616581F3B5D2E001114F3 /* MicSource2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MicSource2.swift; path = Models/MicSource2.swift; sourceTree = "<group>"; };
-		923616591F3B5D2E001114F3 /* ProcessingAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProcessingAdapter.swift; path = Models/ProcessingAdapter.swift; sourceTree = "<group>"; };
-		9236165A1F3B5D2E001114F3 /* Source.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Source.swift; path = Models/Source.swift; sourceTree = "<group>"; };
+		923616571F3B5D2E001114F3 /* Microphone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Microphone.swift; path = Models/Microphone.swift; sourceTree = "<group>"; };
+		923616591F3B5D2E001114F3 /* Processing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Processing.swift; path = Models/Processing.swift; sourceTree = "<group>"; };
 		9236165B1F3B5D2E001114F3 /* Tuner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tuner.swift; path = Models/Tuner.swift; sourceTree = "<group>"; };
 		923920491A502E0500ACDC2E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		92668DE11F3E4B08002EC3B3 /* FretTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FretTests.swift; path = Models/FretTests.swift; sourceTree = "<group>"; };
 		929E1A0A1F3C769B005561D2 /* Tuning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tuning.swift; path = Models/Tuning.swift; sourceTree = "<group>"; };
 		929E1A0C1F3C7956005561D2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		929E1A0E1F3C8B01005561D2 /* NoteTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoteTests.swift; path = Models/NoteTests.swift; sourceTree = "<group>"; };
@@ -196,10 +196,8 @@
 		923616561F3B5D22001114F3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				923616571F3B5D2E001114F3 /* MicSource.swift */,
-				923616581F3B5D2E001114F3 /* MicSource2.swift */,
-				923616591F3B5D2E001114F3 /* ProcessingAdapter.swift */,
-				9236165A1F3B5D2E001114F3 /* Source.swift */,
+				923616571F3B5D2E001114F3 /* Microphone.swift */,
+				923616591F3B5D2E001114F3 /* Processing.swift */,
 				9236165B1F3B5D2E001114F3 /* Tuner.swift */,
 				92CF780E1F3B68B90009EEA9 /* Settings.swift */,
 				92AB42E81F3BA5AE00EBB7E0 /* Instrument.swift */,
@@ -217,9 +215,9 @@
 			children = (
 				923616251F3B5CC5001114F3 /* FiltersViewController.swift */,
 				923616261F3B5CC5001114F3 /* FretsViewController.swift */,
-				923616271F3B5CC5001114F3 /* InstrumentsViewController.swift */,
+				923616271F3B5CC5001114F3 /* InstrumentsAlertController.swift */,
 				923616281F3B5CC5001114F3 /* SettingsViewController.swift */,
-				923616291F3B5CC5001114F3 /* TubeViewController.swift */,
+				923616291F3B5CC5001114F3 /* TunerViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -228,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				929E1A0E1F3C8B01005561D2 /* NoteTests.swift */,
+				92668DE11F3E4B08002EC3B3 /* FretTests.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -536,16 +535,15 @@
 				923616601F3B5D2E001114F3 /* Tuner.swift in Sources */,
 				92AB42EB1F3BB35900EBB7E0 /* Filter.swift in Sources */,
 				9236164F1F3B5D1D001114F3 /* PanelView.swift in Sources */,
-				9236162C1F3B5CC5001114F3 /* InstrumentsViewController.swift in Sources */,
-				9236165F1F3B5D2E001114F3 /* Source.swift in Sources */,
-				9236165C1F3B5D2E001114F3 /* MicSource.swift in Sources */,
-				9236165E1F3B5D2E001114F3 /* ProcessingAdapter.swift in Sources */,
+				9236162C1F3B5CC5001114F3 /* InstrumentsAlertController.swift in Sources */,
+				9236165C1F3B5D2E001114F3 /* Microphone.swift in Sources */,
+				9236165E1F3B5D2E001114F3 /* Processing.swift in Sources */,
 				9236163A1F3B5CF8001114F3 /* dspmath.c in Sources */,
 				92AB42EF1F3BB6D000EBB7E0 /* Note.swift in Sources */,
 				9236164C1F3B5D1D001114F3 /* ForwardButton.swift in Sources */,
 				9236164E1F3B5D1D001114F3 /* NotebarView.swift in Sources */,
 				9236164A1F3B5D1D001114F3 /* ControlbarView.swift in Sources */,
-				9236162E1F3B5CC5001114F3 /* TubeViewController.swift in Sources */,
+				9236162E1F3B5CC5001114F3 /* TunerViewController.swift in Sources */,
 				9236164B1F3B5D1D001114F3 /* CustomButton.swift in Sources */,
 				9236163B1F3B5CF8001114F3 /* micsource.c in Sources */,
 				92CF780F1F3B68B90009EEA9 /* Settings.swift in Sources */,
@@ -553,7 +551,6 @@
 				92CF78021F3B60C10009EEA9 /* TubeScene.swift in Sources */,
 				9236162D1F3B5CC5001114F3 /* SettingsViewController.swift in Sources */,
 				9236163C1F3B5CF8001114F3 /* processing.c in Sources */,
-				9236165D1F3B5D2E001114F3 /* MicSource2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -563,7 +560,10 @@
 			files = (
 				92D207521F3B5E4C00C08471 /* SciTunerTests.swift in Sources */,
 				929E1A0F1F3C8B01005561D2 /* NoteTests.swift in Sources */,
+				92668DE21F3E4B08002EC3B3 /* FretTests.swift in Sources */,
+				92668DE41F3E4C59002EC3B3 /* String+Localization.swift in Sources */,
 				929E1A101F3C8BAF005561D2 /* Note.swift in Sources */,
+				92668DE31F3E4B0C002EC3B3 /* Fret.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

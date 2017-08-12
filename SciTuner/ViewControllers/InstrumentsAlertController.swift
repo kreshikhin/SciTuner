@@ -1,5 +1,5 @@
 //
-//  InstrumentViewController.swift
+//  InstrumentAlertController.swift
 //  SciTuner
 //
 //  Created by Denis Kreshikhin on 26.02.15.
@@ -9,8 +9,12 @@
 import Foundation
 import UIKit
 
-class InstrumentsViewController: UIAlertController {
-    let tuner = Tuner.sharedInstance
+protocol InstrumentsAlertControllerDelegate: class {
+    func didChange(instrument: Instrument)
+}
+
+class InstrumentsAlertController: UIAlertController {
+    weak var parentDelegate: InstrumentsAlertControllerDelegate?
     
     override func viewDidLoad() {
         Instrument.all.forEach { self.add(instrument: $0) }
@@ -22,8 +26,7 @@ class InstrumentsViewController: UIAlertController {
         let action = UIAlertAction(
             title: instrument.localized(), style: UIAlertActionStyle.default,
             handler: {(action: UIAlertAction) -> Void in
-                self.tuner.settings.instrument = instrument
-                self.tuner.updateSettings()
+                self.parentDelegate?.didChange(instrument: instrument)
         })
         
         addAction(action)

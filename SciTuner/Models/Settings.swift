@@ -10,6 +10,8 @@ import Foundation
 import RealmSwift
 
 class Settings: Object {
+    typealias `Self` = Settings
+    
     dynamic var fret: Fret = .openStrings
     dynamic var stringIndex: Int = 0
     
@@ -41,7 +43,7 @@ class Settings: Object {
     static func shared() -> Settings {
         let realm = try! Realm()
         
-        if let settings = realm.objects(Settings.self).first {
+        if let settings = realm.objects(`Self`.self).first {
             return settings
         }
         

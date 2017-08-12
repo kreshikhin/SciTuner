@@ -9,7 +9,7 @@
 import Foundation
 import Accelerate
 
-class ProcessingAdapter{
+class Processing{
     var p = processing_create();
     let pointCount: UInt
     
@@ -23,15 +23,15 @@ class ProcessingAdapter{
         processing_destroy(p)
     }
     
-    func Push(_ packet: inout [Double]){
+    func push(_ packet: inout [Double]){
         processing_push(p, packet, size_t(packet.count))
     }
     
-    func SavePreview(_ packet: inout [Double]){
+    func savePreview(_ packet: inout [Double]){
         processing_save_preview(p, packet, size_t(packet.count))
     }
     
-    func Recalculate() {
+    func recalculate() {
         processing_recalculate(p)
     }
     
