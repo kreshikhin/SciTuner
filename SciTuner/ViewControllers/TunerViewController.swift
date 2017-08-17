@@ -31,62 +31,34 @@ class TunerViewController: UIViewController {
     let processing = Processing(pointCount: 128)
     
     var microphone: Microphone?
-
+    
+    let stackView = UIStackView()
+    
+    var frequencyBarView: FrequencyBarView?
+    
+    let tuningView = TuningView()
+    let modebar = ModebarView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tuner.delegate = self
+        customizeNavigationBar()
+        addStackView()
+        customizeDelegates()
         
-        self.instrumentsAlertController.parentDelegate = self
-        self.fretsAlertController.parentDelegate = self
-        self.filtersAlertController.parentDelegate = self
-
-        self.view.backgroundColor = UIColor.white
-        self.navigationItem.title = "SciTuner".localized()
-
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: tuner.instrument.localized(),
-            style: UIBarButtonItemStyle.plain,
-            target: self,
-            action: #selector(Self.showInstrumentsAlertController))
-
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "settings".localized(),
-            style: UIBarButtonItemStyle.plain,
-            target: self,
-            action: #selector(Self.showSettingsViewController))
-
-        let navbarHeight = UIApplication.shared.statusBarFrame.size.height + (self.navigationController!).navigationBar.frame.size.height
-
-        let panelFrame = getOptimalPanelFrame(navbarHeight, size: self.view.frame.size)
-        
-        panel = PanelView(frame: panelFrame)
-        self.view.addSubview(panel!)
+        addTubeView()
+        addTuningView()
+        addModeBar()
 
         let sampleRate = 44100
         let sampleCount = 2048
-
         microphone = Microphone(sampleRate: Double(sampleRate), sampleCount: sampleCount)
         microphone?.delegate = self
         
-        let tubeFrame = getOptimalTubeFrame(navbarHeight, size: self.view.frame.size)
-        tubeView = SKView(frame: tubeFrame)
-        
-        if let tb = tubeView {
-            self.view.addSubview(tb)
-            
-            //tb.showsFPS = true
-            //skView.showsNodeCount = true
-            tubeScene = TubeScene(size: tb.bounds.size)
-            tb.presentScene(tubeScene)
-            //mainScene?.clipSceneDelegate = self
-            tb.ignoresSiblingOrder = true
-        }
-        
         microphone?.activate()
         
-        panel?.modebar?.fretMode?.addTarget(self, action: #selector(TunerViewController.showFrets), for: .touchUpInside)
-        panel?.modebar?.filterMode?.addTarget(self, action: #selector(TunerViewController.showFilters), for: .touchUpInside)
+        //frequencyBarView = FrequencyBarView()
+        //stackView.addArrangedSubview(frequencyBarView!)
         
         panel?.targetFrequency!.text = String(format: "%.2f %@", self.tuner.targetFrequency(), "Hz".localized())
         
@@ -98,31 +70,77 @@ class TunerViewController: UIViewController {
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func customizeDelegates() {
+        tuner.delegate = self
+        instrumentsAlertController.parentDelegate = self
+        fretsAlertController.parentDelegate = self
+        filtersAlertController.parentDelegate = self
     }
-
-    func getOptimalTubeFrame(_ verticalShift: CGFloat, size: CGSize) -> CGRect {
-        var h = size.width;
-        if size.height < 500 {
-            h = 220
+    
+    func customizeNavigationBar() {
+        self.view.backgroundColor = UIColor.white
+        self.navigationItem.title = "SciTuner".localized()
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: tuner.instrument.localized(),
+            style: UIBarButtonItemStyle.plain,
+            target: self,
+            action: #selector(Self.showInstrumentsAlertController))
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "settings".localized(),
+            style: UIBarButtonItemStyle.plain,
+            target: self,
+            action: #selector(Self.showSettingsViewController))
+    }
+    
+    func addStackView() {
+        stackView.frame = view.bounds
+        stackView.axis = .vertical
+        stackView.distribution = .equalSpacing
+        
+        view.addSubview(stackView)
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor).isActive = true
+        stackView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        //stackView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+    }
+    
+    func addTubeView() {
+        tubeView = SKView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.width))
+        tubeView?.translatesAutoresizingMaskIntoConstraints = false
+        tubeView?.heightAnchor.constraint(equalTo: tubeView!.widthAnchor, multiplier: 1.0).isActive = true
+        stackView.addArrangedSubview(tubeView!)
+        
+        if let tb = tubeView {
+            //tb.showsFPS = true
+            //skView.showsNodeCount = true
+            tubeScene = TubeScene(size: tb.bounds.size)
+            tb.presentScene(tubeScene)
+            //mainScene?.clipSceneDelegate = self
+            tb.ignoresSiblingOrder = true
+            
+            tubeScene?.customDelegate = self
         }
-        return CGRect(
-            x: 0, y: verticalShift,
-            width: size.width, height: h)
     }
-
-    func getOptimalPanelFrame(_ verticalShift: CGFloat, size: CGSize) -> CGRect {
-        var h = size.width;
-        if size.height < 500 {
-            h = 220
-        }
-        return CGRect(
-            x: 0, y: verticalShift + h,
-            width: size.width, height: size.height - h - verticalShift)
+    
+    func addModeBar() {
+        modebar.fretMode?.addTarget(self, action: #selector(TunerViewController.showFrets), for: .touchUpInside)
+        modebar.filterMode?.addTarget(self, action: #selector(TunerViewController.showFilters), for: .touchUpInside)
+        stackView.addArrangedSubview(modebar)
     }
-
+    
+    func addTuningView() {
+        stackView.addArrangedSubview(tuningView)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tuningView.tuning = tuner.tuning
+    }
+    
     func showSettingsViewController() {
         self.navigationController?.pushViewController(settingsViewController, animated: true)
     }
@@ -137,6 +155,10 @@ class TunerViewController: UIViewController {
     
     func showFilters() {
         self.present(self.filtersAlertController, animated: true, completion: nil)
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
 }
 
@@ -212,11 +234,12 @@ extension TunerViewController: MicrophoneDelegate {
 
 extension TunerViewController: InstrumentsAlertControllerDelegate {
     func didChange(instrument: Instrument) {
-        try! self.realm.write {
-            self.tuner.settings.instrument = instrument
+        try! realm.write {
+            tuner.instrument = instrument
         }
         
-        self.navigationItem.leftBarButtonItem?.title = self.tuner.instrument.localized()
+        tuningView.tuning = tuner.tuning
+        navigationItem.leftBarButtonItem?.title = tuner.instrument.localized()
     }
 }
 
@@ -233,5 +256,11 @@ extension TunerViewController: FiltersAlertControllerDelegate {
         try! self.realm.write {
             self.tuner.settings.filter = filter
         }
+    }
+}
+
+extension TunerViewController: TubeSceneDelegate {
+    func getNotePosition() -> CGFloat {
+        return CGFloat(tuner.notePosition())
     }
 }

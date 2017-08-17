@@ -20,15 +20,36 @@ class Tuner {
     
     static let sharedInstance = Tuner()
     
-    var instrument: Instrument { return settings.instrument }
-    var pitch: Pitch { return settings.pitch }
-    var tuning: Tuning { return settings.tuning }
-    var filter: Filter { return settings.filter }
-    var fret: Fret { return settings.fret }
+    var instrument: Instrument {
+        set{ settings.instrument = newValue }
+        get{ return settings.instrument }
+    }
     
+    var pitch: Pitch {
+        set{ settings.pitch = newValue }
+        get{ return settings.pitch }
+    }
+
+    var tuning: Tuning {
+        set{ settings.tuning = newValue }
+        get{ return settings.tuning }
+    }
+
+    var filter: Filter {
+        set{ settings.filter = newValue }
+        get{ return settings.filter }
+    }
+
+    var fret: Fret {
+        set{ settings.fret = newValue }
+        get{ return settings.fret }
+    }
+
     var strings: [Note] { return settings.tuning.strings }
     
-    var sortedStrings: [Note] = []
+    var sortedStrings: [Note] {
+        return settings.tuning.strings.sorted()
+    }
 
     var frequency: Double {
         set { originFrequency_ = fret.shiftDown(frequency: newValue) }
@@ -43,27 +64,6 @@ class Tuner {
     var stringIndex = 0
     var string: Note {
         return self.tuning.strings[stringIndex]
-    }
-    
-    func updateSettings() {
-        sortedStrings = settings.tuning.strings.sorted()
-    }
-
-    func setStringIndex(_ value: Int) {
-        if value < 0 {
-            stringIndex = 0
-        } else if value >= strings.count {
-            stringIndex = strings.count - 1
-        } else {
-            stringIndex = value
-        }
-
-       // string = strings[stringIndex]
-
-        //let n = Double(noteNumber(string))
-        //notes = [noteString(n-1.0), noteString(n), noteString(n+1.0)]
-
-        //delegate?.didStringChange()
     }
     
     var status = "active"
@@ -92,6 +92,10 @@ class Tuner {
         return 100.0 * (frequency - pitch.frequency(of: string))
     }
 
+    func notePosition() -> Double {
+        return pitch.notePosition(with: frequency)
+    }
+    
     func stringPosition() -> Double {
         let pos: Double = sortedStringPosition()
         
@@ -131,14 +135,6 @@ class Tuner {
         }
 
         return Double(strings.count - 1) * (frequency - frst) / (lst - frst)
-    }
-
-    func nextString() {
-        setStringIndex(stringIndex+1)
-    }
-
-    func prevString() {
-        setStringIndex(stringIndex-1)
     }
 
     func fretScale() -> Double {

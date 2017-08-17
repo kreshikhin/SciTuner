@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Note: Comparable{
+struct Note: Comparable, CustomStringConvertible{
     typealias `Self` = Note
     static let semitoneNames = ["c", "c#", "d", "d#", "e", "f", "f#", "g", "g#", "a", "a#", "b"]
     
@@ -22,6 +22,8 @@ struct Note: Comparable{
     var string: String {
         get { return Self.semitoneNames[semitone] + String(octave) }
     }
+    
+    var description: String { return string }
     
     init(octave: Int, semitone: Int) {
         self.octave = octave

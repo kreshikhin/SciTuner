@@ -8,8 +8,11 @@
 
 import Foundation
 import UIKit
+import RealmSwift
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    let realm = try! Realm()
+    
     let tuner = Tuner.sharedInstance
     
     var tableView: SettingsView?
@@ -80,11 +83,19 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if(indexPath.section == 0){
-            tuner.settings.pitch = Pitch.allPitches[indexPath.row]
+            try! realm.write {
+                tuner.settings.pitch = Pitch.allPitches[indexPath.row]
+            }
+            
         }
 
         if(indexPath.section == 1){
-            tuner.settings.tuning = tuner.instrument.tunings()[indexPath.row]
+            try! realm.write {
+                let tunings = tuner.instrument.tunings()
+                tuner.settings.tuning = tunings[indexPath.row]
+                print(tunings[indexPath.row])
+                print(tuner.settings.tuning, indexPath.row)
+            }
         }
 
         tableView.reloadData()

@@ -11,8 +11,6 @@ import UIKit
 class PanelView: UIView {
     var notebar: NotebarView?
     var stringbar: StringbarView?
-    var controlbar: ControlbarView?
-    var modebar: ModebarView?
     
     var target: UILabel?
     var actual: UILabel?
@@ -72,12 +70,8 @@ class PanelView: UIView {
         
         notebar = NotebarView(frame: CGRect(x: 0, y: step, width: half*2, height: 40))
         stringbar = StringbarView(frame: CGRect(x: 0, y: 2*step, width: half*2, height: 40))
-        controlbar = ControlbarView(frame: CGRect(x: 0, y: 3*step, width: half*2, height: 40))
-        modebar = ModebarView(frame: CGRect(x: 0, y: frame.size.height - 35, width: half*2, height: 40))
         
         self.addSubview(notebar!)
         self.addSubview(stringbar!)
-        self.addSubview(controlbar!)
-        self.addSubview(modebar!)
     }
 }

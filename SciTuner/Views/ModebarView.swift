@@ -53,9 +53,6 @@ class ModebarView: UIView {
         get{ return "" }
     }
     
-    var notes: [String] = ["G#4", "A4", "B#4"]
-    var tuningMode: UIButton?
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -63,11 +60,10 @@ class ModebarView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let width = frame.size.width;
-        
         let defaultColor = self.tintColor
         
-        fretMode = CustomButton(frame: CGRect(x: 5, y: 5, width: 110, height: 25))
+        fretMode = CustomButton()
+        fretMode?.translatesAutoresizingMaskIntoConstraints = false
         fretMode!.setTitle("tune on fret", for: UIControlState())
         fretMode!.titleLabel?.textAlignment = .left
         fretMode!.setTitleColor(UIColor.white, for: UIControlState())
@@ -75,13 +71,27 @@ class ModebarView: UIView {
         fretMode!.backgroundColor = defaultColor
         self.addSubview(fretMode!)
         
-        filterMode = CustomButton(frame: CGRect(x: width-100, y: 5, width: 100, height: 25))
+        fretMode?.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        fretMode?.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        fretMode?.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1.0/3).isActive = true
+        fretMode?.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.1).isActive = true
+        
+        filterMode = CustomButton()
+        filterMode?.translatesAutoresizingMaskIntoConstraints = false
         filterMode!.setTitle("filter: on", for: UIControlState())
         filterMode!.titleLabel?.textAlignment = .right
         filterMode!.layer.cornerRadius = 3.0
         filterMode!.setTitleColor(UIColor.white, for: UIControlState())
         filterMode!.backgroundColor = UIColor.red
         self.addSubview(filterMode!)
+        
+        filterMode?.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        filterMode?.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        filterMode?.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1.0/3).isActive = true
+        filterMode?.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.1).isActive = true
+        
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.1).isActive = true
     }
 }
 

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1221927D269CB6F25DDF0773 /* Pods_SciTuner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E81863D516AD60F020944F0E /* Pods_SciTuner.framework */; };
+		920381B81F446E52005D85F7 /* TuningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920381B71F446E52005D85F7 /* TuningView.swift */; };
 		9236162A1F3B5CC5001114F3 /* FiltersAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616251F3B5CC5001114F3 /* FiltersAlertController.swift */; };
 		9236162B1F3B5CC5001114F3 /* FretsAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616261F3B5CC5001114F3 /* FretsAlertController.swift */; };
 		9236162C1F3B5CC5001114F3 /* InstrumentsAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616271F3B5CC5001114F3 /* InstrumentsAlertController.swift */; };
@@ -17,7 +18,6 @@
 		9236163A1F3B5CF8001114F3 /* dspmath.c in Sources */ = {isa = PBXBuildFile; fileRef = 923616331F3B5CF8001114F3 /* dspmath.c */; };
 		9236163B1F3B5CF8001114F3 /* micsource.c in Sources */ = {isa = PBXBuildFile; fileRef = 923616351F3B5CF8001114F3 /* micsource.c */; };
 		9236163C1F3B5CF8001114F3 /* processing.c in Sources */ = {isa = PBXBuildFile; fileRef = 923616371F3B5CF8001114F3 /* processing.c */; };
-		9236164A1F3B5D1D001114F3 /* ControlbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9236163E1F3B5D1D001114F3 /* ControlbarView.swift */; };
 		9236164B1F3B5D1D001114F3 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9236163F1F3B5D1D001114F3 /* CustomButton.swift */; };
 		9236164C1F3B5D1D001114F3 /* ForwardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616401F3B5D1D001114F3 /* ForwardButton.swift */; };
 		9236164D1F3B5D1D001114F3 /* ModebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616411F3B5D1D001114F3 /* ModebarView.swift */; };
@@ -41,6 +41,7 @@
 		929E1A0F1F3C8B01005561D2 /* NoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929E1A0E1F3C8B01005561D2 /* NoteTests.swift */; };
 		929E1A101F3C8BAF005561D2 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AB42EE1F3BB6D000EBB7E0 /* Note.swift */; };
 		929E1A121F3C9111005561D2 /* Fret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929E1A111F3C9111005561D2 /* Fret.swift */; };
+		92A524511F3F5EF1000AA1B5 /* FrequencyBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A524501F3F5EF1000AA1B5 /* FrequencyBarView.swift */; };
 		92AB42E91F3BA5AE00EBB7E0 /* Instrument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AB42E81F3BA5AE00EBB7E0 /* Instrument.swift */; };
 		92AB42EB1F3BB35900EBB7E0 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AB42EA1F3BB35900EBB7E0 /* Filter.swift */; };
 		92AB42ED1F3BB57500EBB7E0 /* Pitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AB42EC1F3BB57500EBB7E0 /* Pitch.swift */; };
@@ -72,6 +73,7 @@
 		1063225423BBBFE47FAA2342 /* Pods-SciTuner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SciTuner.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SciTuner/Pods-SciTuner.debug.xcconfig"; sourceTree = "<group>"; };
 		2FC678D8D67F8A46DC76060D /* Pods_SciTunerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SciTunerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		842FD716FEE0BC57A19ED8E2 /* Pods-SciTunerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SciTunerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SciTunerTests/Pods-SciTunerTests.release.xcconfig"; sourceTree = "<group>"; };
+		920381B71F446E52005D85F7 /* TuningView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TuningView.swift; path = Views/TuningView.swift; sourceTree = "<group>"; };
 		920F09721A40A9D000A69F7A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		923616251F3B5CC5001114F3 /* FiltersAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FiltersAlertController.swift; path = ViewControllers/FiltersAlertController.swift; sourceTree = "<group>"; };
 		923616261F3B5CC5001114F3 /* FretsAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FretsAlertController.swift; path = ViewControllers/FretsAlertController.swift; sourceTree = "<group>"; };
@@ -86,7 +88,6 @@
 		923616361F3B5CF8001114F3 /* micsource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = micsource.h; path = DSP/micsource.h; sourceTree = "<group>"; };
 		923616371F3B5CF8001114F3 /* processing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = processing.c; path = DSP/processing.c; sourceTree = "<group>"; };
 		923616381F3B5CF8001114F3 /* processing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = processing.h; path = DSP/processing.h; sourceTree = "<group>"; };
-		9236163E1F3B5D1D001114F3 /* ControlbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ControlbarView.swift; path = Views/ControlbarView.swift; sourceTree = "<group>"; };
 		9236163F1F3B5D1D001114F3 /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomButton.swift; path = Views/CustomButton.swift; sourceTree = "<group>"; };
 		923616401F3B5D1D001114F3 /* ForwardButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ForwardButton.swift; path = Views/ForwardButton.swift; sourceTree = "<group>"; };
 		923616411F3B5D1D001114F3 /* ModebarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModebarView.swift; path = Views/ModebarView.swift; sourceTree = "<group>"; };
@@ -107,6 +108,7 @@
 		929E1A0C1F3C7956005561D2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		929E1A0E1F3C8B01005561D2 /* NoteTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoteTests.swift; path = Models/NoteTests.swift; sourceTree = "<group>"; };
 		929E1A111F3C9111005561D2 /* Fret.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fret.swift; path = Models/Fret.swift; sourceTree = "<group>"; };
+		92A524501F3F5EF1000AA1B5 /* FrequencyBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FrequencyBarView.swift; path = Views/FrequencyBarView.swift; sourceTree = "<group>"; };
 		92AB42E81F3BA5AE00EBB7E0 /* Instrument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Instrument.swift; path = Models/Instrument.swift; sourceTree = "<group>"; };
 		92AB42EA1F3BB35900EBB7E0 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Filter.swift; path = Models/Filter.swift; sourceTree = "<group>"; };
 		92AB42EC1F3BB57500EBB7E0 /* Pitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Pitch.swift; path = Models/Pitch.swift; sourceTree = "<group>"; };
@@ -177,9 +179,9 @@
 		9236163D1F3B5D0B001114F3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				9236163E1F3B5D1D001114F3 /* ControlbarView.swift */,
 				9236163F1F3B5D1D001114F3 /* CustomButton.swift */,
 				923616401F3B5D1D001114F3 /* ForwardButton.swift */,
+				92A524501F3F5EF1000AA1B5 /* FrequencyBarView.swift */,
 				923616411F3B5D1D001114F3 /* ModebarView.swift */,
 				923616421F3B5D1D001114F3 /* NotebarView.swift */,
 				923616431F3B5D1D001114F3 /* PanelView.swift */,
@@ -189,6 +191,7 @@
 				923616471F3B5D1D001114F3 /* SettingsView.swift */,
 				923616481F3B5D1D001114F3 /* StringbarView.swift */,
 				923616491F3B5D1D001114F3 /* TubeView.swift */,
+				920381B71F446E52005D85F7 /* TuningView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -524,6 +527,7 @@
 				923616551F3B5D1D001114F3 /* TubeView.swift in Sources */,
 				923616511F3B5D1D001114F3 /* RecordButton.swift in Sources */,
 				9236164D1F3B5D1D001114F3 /* ModebarView.swift in Sources */,
+				92A524511F3F5EF1000AA1B5 /* FrequencyBarView.swift in Sources */,
 				92C2B8251A5801E8008F6A31 /* AppDelegate.swift in Sources */,
 				923616531F3B5D1D001114F3 /* SettingsView.swift in Sources */,
 				92AB42E91F3BA5AE00EBB7E0 /* Instrument.swift in Sources */,
@@ -542,12 +546,12 @@
 				92AB42EF1F3BB6D000EBB7E0 /* Note.swift in Sources */,
 				9236164C1F3B5D1D001114F3 /* ForwardButton.swift in Sources */,
 				9236164E1F3B5D1D001114F3 /* NotebarView.swift in Sources */,
-				9236164A1F3B5D1D001114F3 /* ControlbarView.swift in Sources */,
 				9236162E1F3B5CC5001114F3 /* TunerViewController.swift in Sources */,
 				9236164B1F3B5D1D001114F3 /* CustomButton.swift in Sources */,
 				9236163B1F3B5CF8001114F3 /* micsource.c in Sources */,
 				92CF780F1F3B68B90009EEA9 /* Settings.swift in Sources */,
 				923616521F3B5D1D001114F3 /* RewindButton.swift in Sources */,
+				920381B81F446E52005D85F7 /* TuningView.swift in Sources */,
 				92CF78021F3B60C10009EEA9 /* TubeScene.swift in Sources */,
 				9236162D1F3B5CC5001114F3 /* SettingsViewController.swift in Sources */,
 				9236163C1F3B5CF8001114F3 /* processing.c in Sources */,
@@ -695,6 +699,7 @@
 				DEVELOPMENT_TEAM = FY36GRS4PW;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = scituner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kreshikhin.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = SciTuner;
@@ -715,6 +720,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Denis Kreshikhin (FY36GRS4PW)";
 				DEVELOPMENT_TEAM = FY36GRS4PW;
 				INFOPLIST_FILE = scituner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kreshikhin.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = SciTuner;

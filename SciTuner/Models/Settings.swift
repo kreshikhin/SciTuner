@@ -26,8 +26,8 @@ class Settings: Object {
     }
     
     var tuning: Tuning {
-        set { self.tuning_ = tuning.id }
-        get { return Tuning(instrument: instrument, id: self.tuning_) ?? Tuning(instrument: .guitar)}
+        set { self.tuning_ = newValue.id }
+        get { return Tuning(instrument: instrument, id: self.tuning_) ?? Tuning(standard: instrument)}
     }
     
     var filter: Filter {

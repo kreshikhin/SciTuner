@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Tuning: Equatable{
+struct Tuning: Equatable {
     typealias `Self` = Tuning
     
     let id: String
@@ -43,7 +43,7 @@ struct Tuning: Equatable{
         self = tuning
     }
     
-    init(instrument: Instrument) {
+    init(standard instrument: Instrument) {
         self = instrument.tunings().first!
     }
     
