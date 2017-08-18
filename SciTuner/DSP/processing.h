@@ -74,6 +74,8 @@ void processing_build_standing_wave2(Processing* processing, double* wave, size_
 double processing_get_frequency(Processing* p);
 double processing_get_sub_frequency(Processing* p);
 
+double get_pulsation(Processing* p);
+int processing_get_harmonic_order(Processing* p);
 
 void processing_set_target_frequency(Processing* p, double frequency);
 void processing_enable_filter(Processing* p);

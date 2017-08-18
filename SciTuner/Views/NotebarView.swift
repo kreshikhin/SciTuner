@@ -12,25 +12,10 @@ import UIKit
 class NotebarView: UIView {
     let tuner = Tuner.sharedInstance
     
-    let margin: CGFloat = 10;
+    let margin: CGFloat = 10
     
     var pointer: PointerView?
     var position: Double = 0.0
-    
-    var labels: [UILabel?] = []
-    
-    var notes: [String] {
-        get{
-            return ["", "", ""]
-        }
-        set{
-            var index = 0
-            for label in labels {
-                label!.text = newValue[index].uppercased()
-                index += 1
-            }
-        }
-    }
     
     var pointerPosition: Double {
         set{
@@ -39,19 +24,19 @@ class NotebarView: UIView {
             var shift: Double = 0.0;
             
             if position < -100.0 {
-                shift = 0.16666665 * exp(position/100 + 1.0);
+                shift = 0.16666665 * exp(position/100 + 1.0)
             }
             
             if position > 100.0 {
-                shift = 1.0 - 0.16666665 * exp(-position/100 + 1.0);
+                shift = 1.0 - 0.16666665 * exp(-position/100 + 1.0)
             }
             
             if -100.0 < position && position < 100.0 {
-                shift = 0.16666665 + 0.666666 * (position + 100.0) / 200.0;
+                shift = 0.16666665 + 0.666666 * (position + 100.0) / 200.0
             }
             
-            let width: CGFloat = self.frame.size.width;
-            pointer!.frame.origin.x = CGFloat(shift) * (width - 2 * margin) + 6;
+            let width: CGFloat = frame.size.width;
+            pointer!.frame.origin.x = CGFloat(shift) * (width - 2 * margin) + 6
         }
         get{
             return position
@@ -65,37 +50,29 @@ class NotebarView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let width = frame.size.width;
-        var notes = ["G#4", "A4", "B#4"]
+        let baseline = UIView()
+        baseline.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(baseline)
+        baseline.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+        baseline.topAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        baseline.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
+        baseline.backgroundColor = .black
         
-        let baseline = UIView(frame: CGRect(x: margin, y: 10, width: width - 2 * margin, height: 1))
-        baseline.backgroundColor = UIColor.black
+        let stripe = UIView()
+        stripe.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(stripe)
+        stripe.topAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        stripe.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        stripe.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.1).isActive = true
+        stripe.widthAnchor.constraint(equalToConstant: 3.0).isActive = true
+        stripe.backgroundColor = .black
         
-        var step = (width - 2 * margin) / 30;
-        for i in 1 ..< 30 {
-            let line = UIView(frame: CGRect(x: margin + step * CGFloat(i), y: margin, width: 1.0 , height: 4))
-            line.backgroundColor = UIColor.black
-            self.addSubview(line);
-        }
+        pointer = PointerView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
+        addSubview(pointer!)
         
-        step = (width - 2 * margin) / 3;
-        for i in 0 ..< 3 {
-            let line = UIView(frame: CGRect(x: margin + step * (CGFloat(i) + 0.5), y: margin, width: 2.0 , height: 7))
-            line.backgroundColor = UIColor.black
-            
-            self.addSubview(line);
-            
-            let label = UILabel(frame: CGRect(x: margin + step * (CGFloat(i) + 0.5) - 9, y: margin + 7, width: 40 , height: 20))
-            label.text = notes[Int(i)];
-            labels.append(label)
-            self.addSubview(label);
-        }
+        translatesAutoresizingMaskIntoConstraints = false
+        heightAnchor.constraint(equalTo: widthAnchor, multiplier: 1.0/10.0).isActive = true
         
-        pointer = PointerView(frame: CGRect(x: margin + width/2, y: margin - 10, width: 10, height: 10))
-        self.addSubview(pointer!)
-        
-        self.addSubview(baseline)
-        
-        //self.notes = self.tuner.string
+        backgroundColor = .green
     }
 }

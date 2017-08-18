@@ -12,6 +12,7 @@ import CoreText
 class TuningView: UIView {
     var labels: [UILabel] = []
     let stackView = UIStackView()
+    var noteView = UIView()
     
     var tuning: Tuning? {
         didSet {
@@ -24,6 +25,29 @@ class TuningView: UIView {
                 label.text = note.string
                 labels.append(label)
                 stackView.addArrangedSubview(label)
+            }
+        }
+    }
+    
+    var notePosition: CGFloat = 0 {
+        didSet {
+            let height = frame.size.height / 2
+            
+            if let count = tuning?.strings.count {
+                let step = (frame.width - 2*0) / CGFloat(count)
+                var shift = notePosition + 0.5
+                
+                if notePosition < 0.0 {
+                    shift = 0.5 * exp(notePosition)
+                }
+                
+                if notePosition > CGFloat(count) - 1.0 {
+                    shift = CGFloat(count) - 0.5 * exp(-notePosition+CGFloat(count)-1)
+                }
+                
+                noteView.frame.size = CGSize(width: height, height: height)
+                noteView.center.x = CGFloat(shift) * step + 5.5
+                noteView.center.y = frame.size.height / 2
             }
         }
     }
@@ -49,6 +73,9 @@ class TuningView: UIView {
         
         stackView.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         stackView.isLayoutMarginsRelativeArrangement = true
+        
+        noteView.backgroundColor = .blue
+        addSubview(noteView)
     }
     
     required init?(coder aDecoder: NSCoder) {

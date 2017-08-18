@@ -211,6 +211,46 @@ double processing_get_sub_frequency(Processing* p) {
     return p->peakSubFrequency;
 }
 
+double get_pulsation(Processing* p) {
+    double peak_energy = 0;
+    double energy = 0;
+    size_t m = p->signalLength / 2;
+    
+    for(int i = 0; i < m; i++) {
+        double ei = p->spectrum[i];
+        if(ei > peak_energy) peak_energy = ei;
+        energy += ei;
+    }
+    
+    if(energy == 0) return 1.0;
+    
+    return (double)m * peak_energy / sqrt(energy);
+}
+
+int processing_get_harmonic_order(Processing* p) {
+    const int maxOrder = 3;
+    double eij[maxOrder] = {};
+    
+    for(int i = 1; i <= maxOrder; i++) {
+        for(int j = 1; j <= maxOrder; j++) {
+            double fij = (double)j / (double)i;
+            double position = fij * p->signalLength / (2.0 * p->fd);
+            eij[i] += p->spectrum[(int)position];
+        }
+    }
+    
+    double e0 = 0;
+    int order = 0;
+    
+    for(int i = 1; i <= maxOrder; i++) {
+        if(e0 <= eij[i]) continue;
+        e0 = eij[i];
+        order = i;
+    }
+    
+    return order;
+}
+
 double processing_clarify_peak_frequency_in_range(Processing* p, double range) {
     memcpy(p->subSpectrumReal, p->subSignalReal, p->subLength * sizeof(*p->subSignalReal));
     memcpy(p->subSpectrumImag, p->subSignalImag, p->subLength * sizeof(*p->subSignalImag));
