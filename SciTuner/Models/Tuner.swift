@@ -66,6 +66,8 @@ class Tuner {
         return self.tuning.strings[stringIndex]
     }
     
+    var targetString: Note?
+    
     var status = "active"
     func setStatus(_ value: String){
         status = value
@@ -83,9 +85,28 @@ class Tuner {
 
         return Note(octave: noteOctave, semitone: noteShift).string
     }
+    
+    func updateTargetFrequency() {
+        setTargetFrequency(frequency: frequency)
+    }
+    
+    func setTargetFrequency(frequency: Double) {
+        let f0 = fret.shiftDown(frequency: frequency)
+        
+        targetString = (tuning.strings.min{ (a, b) -> Bool in
+            let fa = self.pitch.frequency(of: a)
+            let fb = self.pitch.frequency(of: b)
+            
+            return abs(fa - f0) > abs(fb - f0)
+        })
+    }
 
-    func targetFrequency() -> Double {
-        return pitch.frequency(of: string) * fretScale()
+    func targetFrequency() -> Double? {
+        guard let ts = targetString else {
+            return nil
+        }
+        
+        return fret.shiftUp(frequency: pitch.frequency(of: ts))
     }
 
     func frequencyDeviation() -> Double {

@@ -62,8 +62,6 @@ class TunerViewController: UIViewController {
         //frequencyBarView = FrequencyBarView()
         //stackView.addArrangedSubview(frequencyBarView!)
         
-        panel?.targetFrequency!.text = String(format: "%.2f %@", tuner.targetFrequency(), "Hz".localized())
-        
         switch tuner.filter {
         case .on:
             processing.enableFilter()
@@ -194,7 +192,7 @@ extension TunerViewController: TunerDelegate {
     }
     
     func didFrequencyChange() {
-        panel?.targetFrequency?.text = String(format: "%.2f %@", tuner.targetFrequency(), "Hz".localized())
+        //panel?.targetFrequency?.text = String(format: "%.2f %@", tuner.targetFrequency(), "Hz".localized())
     }
     
     func didStatusChange() {
@@ -212,7 +210,11 @@ extension TunerViewController: MicrophoneDelegate {
             return
         }
         
-        processing.setTargetFrequency(tuner.targetFrequency())
+
+        
+        if let tf = tuner.targetFrequency() {
+            processing.setTargetFrequency(tf)
+        }
         
         guard let micro = microphone else {
             return
@@ -228,6 +230,7 @@ extension TunerViewController: MicrophoneDelegate {
         processing.buildSmoothStandingWave2(&wavePoints, length: wavePoints.count)
         
         tuner.frequency = processing.getFrequency()
+        tuner.updateTargetFrequency()
         
         tubeScene?.draw(wave: wavePoints)
         
@@ -237,7 +240,6 @@ extension TunerViewController: MicrophoneDelegate {
         notebar.pointerPosition = tuner.frequencyDeviation()
         tuningView.notePosition = CGFloat(tuner.stringPosition())
         
-        panel?.targetFrequency?.text = String(format: "%.2f %@", tuner.targetFrequency(), "Hz".localized())
     }
 }
 

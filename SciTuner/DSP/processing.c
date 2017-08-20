@@ -45,6 +45,7 @@ void processing_init(Processing* p, double fd, double fMin, size_t sampleCount, 
     p->fMin = fMin;
     
     p->targetFrequency = 440;
+    p->targetHarmonic = 1;
     p->filter = false;
     
     p->peakFrequency = 440;
@@ -98,8 +99,9 @@ void processing_deinit(Processing* p){
     free(p->subSpectrum);
 }
 
-void processing_set_target_frequency(Processing* p, double frequency) {
+void processing_set_target_frequency(Processing* p, double frequency, int targetHarmonic) {
     p->targetFrequency = frequency;
+    p->targetHarmonic = targetHarmonic;
 }
 
 void processing_enable_filter(Processing* p) {
@@ -172,7 +174,9 @@ void processing_recalculate(Processing* p){
         double f = p->fd * i / p->signalLength;
         
         if (p->filter) {
-            double df = (f - p->targetFrequency) / p->targetFrequency;
+            double f0 = p->targetFrequency * (double)p->targetHarmonic;
+            
+            double df = (f - f0) / f0;
             if(df < 0){
                 df = 0;
             }
@@ -204,6 +208,7 @@ void processing_recalculate(Processing* p){
 }
 
 double processing_get_frequency(Processing* p) {
+    printf("%f \n", p->peakFrequency);
     return p->peakFrequency;
 }
 
@@ -211,7 +216,7 @@ double processing_get_sub_frequency(Processing* p) {
     return p->peakSubFrequency;
 }
 
-double get_pulsation(Processing* p) {
+double processing_get_pulsation(Processing* p) {
     double peak_energy = 0;
     double energy = 0;
     size_t m = p->signalLength / 2;
@@ -224,29 +229,47 @@ double get_pulsation(Processing* p) {
     
     if(energy == 0) return 1.0;
     
-    return (double)m * peak_energy / sqrt(energy);
+    return (double)peak_energy / sqrt(energy);
 }
 
 int processing_get_harmonic_order(Processing* p) {
-    const int maxOrder = 3;
+    const int maxOrder = 4;
     double eij[maxOrder] = {};
     
-    for(int i = 1; i <= maxOrder; i++) {
-        for(int j = 1; j <= maxOrder; j++) {
-            double fij = (double)j / (double)i;
-            double position = fij * p->signalLength / (2.0 * p->fd);
-            eij[i] += p->spectrum[(int)position];
+    double cutoff = 100; // Hz
+    
+    for(int i = 0; i < maxOrder; i++) {
+        for(int j = 0; j < maxOrder; j++) {
+            double fij = (double)(j + 1) / (double)(i + 1);
+            double position = fij * p->signalLength * p->peakFrequency / p->fd;
+            
+            for(int k = -1; k <= 1; k ++) {
+                if(k < 0) continue;
+                
+                double lowHarmonicGain = (p->peakFrequency < cutoff * maxOrder) && (j < i) ? 1 : 2;
+                
+                eij[i] += lowHarmonicGain * p->spectrum[(int)(position + k)];
+            }
+            
+            printf("%f ", p->spectrum[(int)position]);
         }
+        
+        printf("\n");
     }
+    
+    printf("\n");
     
     double e0 = 0;
-    int order = 0;
+    int order = 1;
     
-    for(int i = 1; i <= maxOrder; i++) {
-        if(e0 <= eij[i]) continue;
+    for(int i = 0; i < maxOrder; i++) {
+        if(e0 >= eij[i]) continue;
         e0 = eij[i];
-        order = i;
+        order = i + 1;
     }
+    
+    printf("order %i \n", order);
+    printf("pulsation %f\n", processing_get_pulsation(p));
     
     return order;
 }

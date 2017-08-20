@@ -23,7 +23,6 @@ SciTuner presents many useful features:
 
 The MIT License (MIT)
 
-
 ## License
 
   [MIT](LICENSE)
