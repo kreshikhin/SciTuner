@@ -61,11 +61,6 @@ class Tuner {
     var isPaused = false
     let settings = Settings.shared()
     
-    var stringIndex = 0
-    var string: Note {
-        return self.tuning.strings[stringIndex]
-    }
-    
     var targetString: Note?
     
     var status = "active"
@@ -97,7 +92,7 @@ class Tuner {
             let fa = self.pitch.frequency(of: a)
             let fb = self.pitch.frequency(of: b)
             
-            return abs(fa - f0) > abs(fb - f0)
+            return abs(fa - f0) < abs(fb - f0)
         })
     }
 
@@ -110,7 +105,12 @@ class Tuner {
     }
 
     func frequencyDeviation() -> Double {
-        return 100.0 * (frequency - pitch.frequency(of: string))
+        if let ts = targetString {
+            print("ts", ts)
+            return 100.0 * (frequency - pitch.frequency(of: ts))
+        }
+        
+        return 0
     }
 
     func notePosition() -> Double {

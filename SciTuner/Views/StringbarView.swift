@@ -131,7 +131,5 @@ class StringbarView: UIView {
         pointer = PointerView(frame: CGRect(x: left + width/1.5, y: top - 10, width: 10, height: 10))
         self.addSubview(pointer!)
         self.addSubview(baseline)
-        
-        self.stringIndex = self.tuner.stringIndex
     }
 }

@@ -174,12 +174,6 @@ extension TunerViewController: TunerDelegate {
 
         //didTuningChange()
         panel?.stringbar?.strings = tuner.tuning.strings
-        panel?.stringbar?.stringIndex = tuner.stringIndex
-        //didStringChange()
-        
-
-        
-        panel?.stringbar?.stringIndex = tuner.stringIndex
         //self.panel?.notebar?.notes = self.tuner.notes
         // didPitchChange()
         // didFretChange()
@@ -238,6 +232,9 @@ extension TunerViewController: MicrophoneDelegate {
         panel?.frequencyDeviation!.text = String(format: "%.0fc", tuner.frequencyDeviation())
         //self.panel?.notebar?.pointerPosition = self.tuner.stringPosition()
         notebar.pointerPosition = tuner.frequencyDeviation()
+        
+        print("f dev:", tuner.frequencyDeviation())
+        
         tuningView.notePosition = CGFloat(tuner.stringPosition())
         
     }
