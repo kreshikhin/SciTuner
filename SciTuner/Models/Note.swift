@@ -12,28 +12,29 @@ struct Note: Comparable, CustomStringConvertible{
     typealias `Self` = Note
     static let semitoneNames = ["c", "c#", "d", "d#", "e", "f", "f#", "g", "g#", "a", "a#", "b"]
     
-    var octave: Int
-    var semitone: Int
+    var number: Int = 0
     
-    var number: Int {
-        get { return 12 * octave + semitone }
-    }
+    var octave: Int { return number / 12 }
+    var semitone: Int { return number % 12 }
     
     var string: String {
         get { return Self.semitoneNames[semitone] + String(octave) }
     }
     
     var description: String { return string }
+
+    init(number: Int) {
+        self.number = number
+    }
     
     init(octave: Int, semitone: Int) {
-        self.octave = octave
-        self.semitone = semitone
+        number = 12 * octave + semitone
     }
     
     init(_ name: String) {
         let lowercased = name.lowercased().trimmingCharacters(in: .whitespaces)
-        octave = 0
-        semitone = 0
+        var semitone = 0
+        var octave = 0
         
         for (i, n) in Self.semitoneNames.enumerated() {
             if lowercased.hasPrefix(n) { semitone = i }
@@ -42,13 +43,19 @@ struct Note: Comparable, CustomStringConvertible{
         for i in 0...8 {
             if lowercased.hasSuffix(String(i)) { octave = i }
         }
+        
+        number = 12 * octave + semitone
     }
     
     static func < (lhs: Self, rhs: Self) -> Bool {
-        return lhs.octave <= rhs.octave && lhs.semitone < rhs.semitone
+        return lhs.number <= rhs.number
     }
     
     static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs.octave == rhs.octave && lhs.semitone == rhs.semitone
+        return lhs.number == rhs.number
+    }
+    
+    static func + (lhs: Self, rhs: Int) -> Note {
+        return Note(number: lhs.number + rhs)
     }
 }

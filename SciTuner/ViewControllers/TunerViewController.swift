@@ -173,7 +173,7 @@ extension TunerViewController: TunerDelegate {
         // didFrequencyChange
 
         //didTuningChange()
-        panel?.stringbar?.strings = tuner.tuning.strings
+        //panel?.stringbar?.strings = tuner.tuning.strings
         //self.panel?.notebar?.notes = self.tuner.notes
         // didPitchChange()
         // didFretChange()
@@ -237,6 +237,13 @@ extension TunerViewController: MicrophoneDelegate {
         
         tuningView.notePosition = CGFloat(tuner.stringPosition())
         
+        if processing.pulsation() > 5 {
+            tuningView.showPointer()
+            notebar.showPointer()
+        } else {
+            tuningView.hidePointer()
+            notebar.hidePointer()
+        }
     }
 }
 

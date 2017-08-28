@@ -19,15 +19,12 @@
 		9236163B1F3B5CF8001114F3 /* micsource.c in Sources */ = {isa = PBXBuildFile; fileRef = 923616351F3B5CF8001114F3 /* micsource.c */; };
 		9236163C1F3B5CF8001114F3 /* processing.c in Sources */ = {isa = PBXBuildFile; fileRef = 923616371F3B5CF8001114F3 /* processing.c */; };
 		9236164B1F3B5D1D001114F3 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9236163F1F3B5D1D001114F3 /* CustomButton.swift */; };
-		9236164C1F3B5D1D001114F3 /* ForwardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616401F3B5D1D001114F3 /* ForwardButton.swift */; };
 		9236164D1F3B5D1D001114F3 /* ModebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616411F3B5D1D001114F3 /* ModebarView.swift */; };
 		9236164E1F3B5D1D001114F3 /* NotebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616421F3B5D1D001114F3 /* NotebarView.swift */; };
 		9236164F1F3B5D1D001114F3 /* PanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616431F3B5D1D001114F3 /* PanelView.swift */; };
 		923616501F3B5D1D001114F3 /* PointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616441F3B5D1D001114F3 /* PointerView.swift */; };
 		923616511F3B5D1D001114F3 /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616451F3B5D1D001114F3 /* RecordButton.swift */; };
-		923616521F3B5D1D001114F3 /* RewindButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616461F3B5D1D001114F3 /* RewindButton.swift */; };
 		923616531F3B5D1D001114F3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616471F3B5D1D001114F3 /* SettingsView.swift */; };
-		923616541F3B5D1D001114F3 /* StringbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616481F3B5D1D001114F3 /* StringbarView.swift */; };
 		923616551F3B5D1D001114F3 /* TubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616491F3B5D1D001114F3 /* TubeView.swift */; };
 		9236165C1F3B5D2E001114F3 /* Microphone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616571F3B5D2E001114F3 /* Microphone.swift */; };
 		9236165E1F3B5D2E001114F3 /* Processing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616591F3B5D2E001114F3 /* Processing.swift */; };
@@ -91,15 +88,12 @@
 		923616371F3B5CF8001114F3 /* processing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = processing.c; path = DSP/processing.c; sourceTree = "<group>"; };
 		923616381F3B5CF8001114F3 /* processing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = processing.h; path = DSP/processing.h; sourceTree = "<group>"; };
 		9236163F1F3B5D1D001114F3 /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomButton.swift; path = Views/CustomButton.swift; sourceTree = "<group>"; };
-		923616401F3B5D1D001114F3 /* ForwardButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ForwardButton.swift; path = Views/ForwardButton.swift; sourceTree = "<group>"; };
 		923616411F3B5D1D001114F3 /* ModebarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModebarView.swift; path = Views/ModebarView.swift; sourceTree = "<group>"; };
 		923616421F3B5D1D001114F3 /* NotebarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotebarView.swift; path = Views/NotebarView.swift; sourceTree = "<group>"; };
 		923616431F3B5D1D001114F3 /* PanelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PanelView.swift; path = Views/PanelView.swift; sourceTree = "<group>"; };
 		923616441F3B5D1D001114F3 /* PointerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PointerView.swift; path = Views/PointerView.swift; sourceTree = "<group>"; };
 		923616451F3B5D1D001114F3 /* RecordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecordButton.swift; path = Views/RecordButton.swift; sourceTree = "<group>"; };
-		923616461F3B5D1D001114F3 /* RewindButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RewindButton.swift; path = Views/RewindButton.swift; sourceTree = "<group>"; };
 		923616471F3B5D1D001114F3 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = Views/SettingsView.swift; sourceTree = "<group>"; };
-		923616481F3B5D1D001114F3 /* StringbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringbarView.swift; path = Views/StringbarView.swift; sourceTree = "<group>"; };
 		923616491F3B5D1D001114F3 /* TubeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TubeView.swift; path = Views/TubeView.swift; sourceTree = "<group>"; };
 		923616571F3B5D2E001114F3 /* Microphone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Microphone.swift; path = Models/Microphone.swift; sourceTree = "<group>"; };
 		923616591F3B5D2E001114F3 /* Processing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Processing.swift; path = Models/Processing.swift; sourceTree = "<group>"; };
@@ -183,16 +177,13 @@
 			isa = PBXGroup;
 			children = (
 				9236163F1F3B5D1D001114F3 /* CustomButton.swift */,
-				923616401F3B5D1D001114F3 /* ForwardButton.swift */,
 				92A524501F3F5EF1000AA1B5 /* FrequencyBarView.swift */,
 				923616411F3B5D1D001114F3 /* ModebarView.swift */,
 				923616421F3B5D1D001114F3 /* NotebarView.swift */,
 				923616431F3B5D1D001114F3 /* PanelView.swift */,
 				923616441F3B5D1D001114F3 /* PointerView.swift */,
 				923616451F3B5D1D001114F3 /* RecordButton.swift */,
-				923616461F3B5D1D001114F3 /* RewindButton.swift */,
 				923616471F3B5D1D001114F3 /* SettingsView.swift */,
-				923616481F3B5D1D001114F3 /* StringbarView.swift */,
 				923616491F3B5D1D001114F3 /* TubeView.swift */,
 				920381B71F446E52005D85F7 /* TuningView.swift */,
 			);
@@ -539,7 +530,6 @@
 				92AB42ED1F3BB57500EBB7E0 /* Pitch.swift in Sources */,
 				92CF780D1F3B64650009EEA9 /* String+Localization.swift in Sources */,
 				9236162A1F3B5CC5001114F3 /* FiltersAlertController.swift in Sources */,
-				923616541F3B5D1D001114F3 /* StringbarView.swift in Sources */,
 				923616601F3B5D2E001114F3 /* Tuner.swift in Sources */,
 				92AB42EB1F3BB35900EBB7E0 /* Filter.swift in Sources */,
 				925021A21F544B3700D44A75 /* Smoothing.swift in Sources */,
@@ -549,13 +539,11 @@
 				9236165E1F3B5D2E001114F3 /* Processing.swift in Sources */,
 				9236163A1F3B5CF8001114F3 /* dspmath.c in Sources */,
 				92AB42EF1F3BB6D000EBB7E0 /* Note.swift in Sources */,
-				9236164C1F3B5D1D001114F3 /* ForwardButton.swift in Sources */,
 				9236164E1F3B5D1D001114F3 /* NotebarView.swift in Sources */,
 				9236162E1F3B5CC5001114F3 /* TunerViewController.swift in Sources */,
 				9236164B1F3B5D1D001114F3 /* CustomButton.swift in Sources */,
 				9236163B1F3B5CF8001114F3 /* micsource.c in Sources */,
 				92CF780F1F3B68B90009EEA9 /* Settings.swift in Sources */,
-				923616521F3B5D1D001114F3 /* RewindButton.swift in Sources */,
 				920381B81F446E52005D85F7 /* TuningView.swift in Sources */,
 				92CF78021F3B60C10009EEA9 /* TubeScene.swift in Sources */,
 				9236162D1F3B5CC5001114F3 /* SettingsViewController.swift in Sources */,

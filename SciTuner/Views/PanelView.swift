@@ -9,9 +9,6 @@
 import UIKit
 
 class PanelView: UIView {
-    var notebar: NotebarView?
-    var stringbar: StringbarView?
-    
     var target: UILabel?
     var actual: UILabel?
     var deviation: UILabel?
@@ -20,7 +17,6 @@ class PanelView: UIView {
     var actualFrequency: UILabel?
     var frequencyDeviation: UILabel?
     
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -28,11 +24,8 @@ class PanelView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let margin: CGFloat = 10.0;
-        let half = frame.size.width / 2;
-        let third = (frame.size.width - 2*margin) / 3;
-        
-        let step = frame.size.height / 5.0;
+        let margin: CGFloat = 10.0
+        let third = (frame.size.width - 2*margin) / 3
         
         target = UILabel(frame: CGRect(x: margin, y: 2, width: third, height: 12))
         target!.text = "target frequency"
@@ -67,11 +60,5 @@ class PanelView: UIView {
         frequencyDeviation!.text = "0c"
         frequencyDeviation!.textAlignment = .right
         self.addSubview(frequencyDeviation!)
-        
-        notebar = NotebarView(frame: CGRect(x: 0, y: step, width: half*2, height: 40))
-        stringbar = StringbarView(frame: CGRect(x: 0, y: 2*step, width: half*2, height: 40))
-        
-        self.addSubview(notebar!)
-        self.addSubview(stringbar!)
     }
 }

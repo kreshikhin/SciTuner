@@ -38,6 +38,14 @@ enum Pitch: String {
         return baseFrequency * pow(2.0, Double(n - b) / 12.0);
     }
     
+    func deviation(note: Note, frequency: Double) -> Double {
+        let f0 = self.frequency(of: note)
+        let neightbor = note + ((frequency > f0) ? 1 : -1 )
+        let fn = self.frequency(of: neightbor)
+        
+        return (frequency - f0) / (fn - f0)
+    }
+    
     func notePosition(with frequency: Double) -> Double {
         let (baseNote, baseFrequency) = self.noteAndFrequency()
         let b = baseNote.number

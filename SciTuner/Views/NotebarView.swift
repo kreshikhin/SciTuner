@@ -74,5 +74,19 @@ class NotebarView: UIView {
         heightAnchor.constraint(equalTo: widthAnchor, multiplier: 1.0/10.0).isActive = true
         
         backgroundColor = .green
+        
+        hidePointer()
+    }
+    
+    func hidePointer(){
+        UIView.animate(withDuration: 0.100) {
+            self.pointer?.alpha = 0.0
+        }
+    }
+    
+    func showPointer(){
+        UIView.animate(withDuration: 0.100) {
+            self.pointer?.alpha = 1.0
+        }
     }
 }

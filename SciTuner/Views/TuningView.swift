@@ -12,7 +12,7 @@ import CoreText
 class TuningView: UIView {
     var labels: [UILabel] = []
     let stackView = UIStackView()
-    var noteView = UIView()
+    var pointerView = UIView()
     
     let defaultMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
     
@@ -59,15 +59,15 @@ class TuningView: UIView {
                     shift = CGFloat(count) - 0.5 * exp(-notePosition+CGFloat(count)-1)
                 }
                 
-                noteView.frame.size = CGSize(width: height, height: height)
+                pointerView.frame.size = CGSize(width: height, height: height)
                 
-                noteView.layer.cornerRadius = height / 2
-                noteView.layer.masksToBounds = true
-                noteView.layer.borderWidth = 2
-                noteView.layer.borderColor = UIColor.white.cgColor
+                pointerView.layer.cornerRadius = height / 2
+                pointerView.layer.masksToBounds = true
+                pointerView.layer.borderWidth = 2
+                pointerView.layer.borderColor = UIColor.white.cgColor
                 
-                noteView.center.x = CGFloat(shift) * step + firstCenterX
-                noteView.center.y = frame.size.height / 2
+                pointerView.center.x = CGFloat(shift) * step + firstCenterX
+                pointerView.center.y = frame.size.height / 2
             }
         }
     }
@@ -94,17 +94,31 @@ class TuningView: UIView {
         stackView.layoutMargins = defaultMargins
         stackView.isLayoutMarginsRelativeArrangement = true
         
-        noteView.backgroundColor = .clear
-        noteView.layer.borderColor = UIColor.white.cgColor
-        noteView.layer.borderWidth = 1
+        pointerView.backgroundColor = .clear
+        pointerView.layer.borderColor = UIColor.white.cgColor
+        pointerView.layer.borderWidth = 1
         
         backgroundColor = .blue
         
-        addSubview(noteView)
+        addSubview(pointerView)
+        
+        hidePointer()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func hidePointer(){
+        UIView.animate(withDuration: 0.100) {
+            self.pointerView.alpha = 0.0
+        }
+    }
+    
+    func showPointer(){
+        UIView.animate(withDuration: 0.100) {
+            self.pointerView.alpha = 1.0
+        }
     }
 
     // Only override draw() if you perform custom drawing.
