@@ -11,6 +11,7 @@ import SpriteKit
 
 protocol TubeSceneDelegate: class {
     func getNotePosition() -> CGFloat
+    func getPulsation() -> CGFloat
 }
 
 class TubeScene: SKScene {
@@ -32,11 +33,19 @@ class TubeScene: SKScene {
         let count: CGFloat = CGFloat(wave.count)
         let n = 5
         
-        var points = [CGPoint](repeating: CGPoint(), count: wave.count / n)
+        var yScale: CGFloat = 1.0
+        
+        if let pulsation = customDelegate?.getPulsation() {
+            if pulsation < 50 {
+                yScale = pulsation / 50.0
+            }
+        }
+        
+        var points = [CGPoint](repeating: CGPoint(), count:  wave.count / n)
         
         for i in 0..<points.count {
             let u = wave[i * n]
-            points[i] =  CGPoint(x: 1.06 * size.width * (CGFloat(i * n) + 0.3) / count, y: (CGFloat(u) + 1) * size.height / 2)
+            points[i] =  CGPoint(x: 1.06 * size.width * (CGFloat(i * n) + 0.3) / count, y:  (yScale * CGFloat(u) + 1) * size.height / 2)
         }
         
         for i in 0..<points.count {

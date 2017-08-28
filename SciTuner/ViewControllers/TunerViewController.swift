@@ -271,4 +271,8 @@ extension TunerViewController: TubeSceneDelegate {
     func getNotePosition() -> CGFloat {
         return CGFloat(tuner.notePosition())
     }
+    
+    func getPulsation() -> CGFloat {
+        return CGFloat(processing.pulsation())
+    }
 }

@@ -14,6 +14,8 @@ class TuningView: UIView {
     let stackView = UIStackView()
     var noteView = UIView()
     
+    let defaultMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+    
     var tuning: Tuning? {
         didSet {
             labels.forEach { $0.removeFromSuperview() }
@@ -24,6 +26,13 @@ class TuningView: UIView {
                 label.backgroundColor = .red
                 label.text = note.string
                 labels.append(label)
+                
+                label.translatesAutoresizingMaskIntoConstraints = false
+                label.heightAnchor.constraint(equalTo: label.widthAnchor).isActive = true
+                
+                label.textColor = UIColor.white
+                label.backgroundColor = UIColor.clear
+                
                 stackView.addArrangedSubview(label)
             }
         }
@@ -33,12 +42,17 @@ class TuningView: UIView {
         didSet {
             let height = frame.size.height / 2
             
+            let firstCenterX = labels.first?.center.x ?? 0
+            let lastCenterX = labels.last?.center.x ?? frame.size.width
+            
             if let count = tuning?.strings.count {
-                let step = (frame.width - 2*0) / CGFloat(count)
-                var shift = notePosition + 0.5
+                let step = (lastCenterX - firstCenterX) / CGFloat(count - 1)
+                var shift = notePosition
+                
+                print("noteposition", notePosition)
                 
                 if notePosition < 0.0 {
-                    shift = 0.5 * exp(notePosition)
+                    shift = 0.5 * exp(notePosition) - 0.5
                 }
                 
                 if notePosition > CGFloat(count) - 1.0 {
@@ -46,7 +60,13 @@ class TuningView: UIView {
                 }
                 
                 noteView.frame.size = CGSize(width: height, height: height)
-                noteView.center.x = CGFloat(shift) * step + 5.5
+                
+                noteView.layer.cornerRadius = height / 2
+                noteView.layer.masksToBounds = true
+                noteView.layer.borderWidth = 2
+                noteView.layer.borderColor = UIColor.white.cgColor
+                
+                noteView.center.x = CGFloat(shift) * step + firstCenterX
                 noteView.center.y = frame.size.height / 2
             }
         }
@@ -71,10 +91,15 @@ class TuningView: UIView {
         stackView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         stackView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         
-        stackView.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        stackView.layoutMargins = defaultMargins
         stackView.isLayoutMarginsRelativeArrangement = true
         
-        noteView.backgroundColor = .blue
+        noteView.backgroundColor = .clear
+        noteView.layer.borderColor = UIColor.white.cgColor
+        noteView.layer.borderWidth = 1
+        
+        backgroundColor = .blue
+        
         addSubview(noteView)
     }
     
