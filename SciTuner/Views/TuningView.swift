@@ -12,7 +12,7 @@ import CoreText
 class TuningView: UIView {
     var labels: [UILabel] = []
     let stackView = UIStackView()
-    var pointerView = UIView()
+    var pointerView = PointerView(frame: CGRect())
     
     let defaultMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
     
@@ -60,11 +60,10 @@ class TuningView: UIView {
                 }
                 
                 pointerView.frame.size = CGSize(width: height, height: height)
-                
                 pointerView.layer.cornerRadius = height / 2
-                pointerView.layer.masksToBounds = true
-                pointerView.layer.borderWidth = 2
-                pointerView.layer.borderColor = UIColor.white.cgColor
+                //pointerView.layer.masksToBounds = true
+                //pointerView.layer.borderWidth = 2
+                //pointerView.layer.borderColor = UIColor.white.cgColor
                 
                 pointerView.center.x = CGFloat(shift) * step + firstCenterX
                 pointerView.center.y = frame.size.height / 2
@@ -94,9 +93,9 @@ class TuningView: UIView {
         stackView.layoutMargins = defaultMargins
         stackView.isLayoutMarginsRelativeArrangement = true
         
-        pointerView.backgroundColor = .clear
-        pointerView.layer.borderColor = UIColor.white.cgColor
-        pointerView.layer.borderWidth = 1
+        //pointerView.backgroundColor = .clear
+        //pointerView.layer.borderColor = UIColor.white.cgColor
+        //pointerView.layer.borderWidth = 1
         
         backgroundColor = .blue
         

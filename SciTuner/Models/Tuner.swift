@@ -117,6 +117,15 @@ class Tuner {
         
         return 0
     }
+    
+    func noteDeviation() -> Double {
+        if let ts = targetString {
+            return 100 * pitch.deviation(note: ts, frequency: frequency)
+        }
+        
+        return 0
+        
+    }
 
     func notePosition() -> Double {
         return pitch.notePosition(with: frequency)

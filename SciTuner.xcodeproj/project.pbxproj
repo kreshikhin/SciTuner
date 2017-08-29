@@ -20,12 +20,10 @@
 		9236163C1F3B5CF8001114F3 /* processing.c in Sources */ = {isa = PBXBuildFile; fileRef = 923616371F3B5CF8001114F3 /* processing.c */; };
 		9236164B1F3B5D1D001114F3 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9236163F1F3B5D1D001114F3 /* CustomButton.swift */; };
 		9236164D1F3B5D1D001114F3 /* ModebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616411F3B5D1D001114F3 /* ModebarView.swift */; };
-		9236164E1F3B5D1D001114F3 /* NotebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616421F3B5D1D001114F3 /* NotebarView.swift */; };
+		9236164E1F3B5D1D001114F3 /* FineTuningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616421F3B5D1D001114F3 /* FineTuningView.swift */; };
 		9236164F1F3B5D1D001114F3 /* PanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616431F3B5D1D001114F3 /* PanelView.swift */; };
 		923616501F3B5D1D001114F3 /* PointerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616441F3B5D1D001114F3 /* PointerView.swift */; };
-		923616511F3B5D1D001114F3 /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616451F3B5D1D001114F3 /* RecordButton.swift */; };
 		923616531F3B5D1D001114F3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616471F3B5D1D001114F3 /* SettingsView.swift */; };
-		923616551F3B5D1D001114F3 /* TubeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616491F3B5D1D001114F3 /* TubeView.swift */; };
 		9236165C1F3B5D2E001114F3 /* Microphone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616571F3B5D2E001114F3 /* Microphone.swift */; };
 		9236165E1F3B5D2E001114F3 /* Processing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923616591F3B5D2E001114F3 /* Processing.swift */; };
 		923616601F3B5D2E001114F3 /* Tuner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9236165B1F3B5D2E001114F3 /* Tuner.swift */; };
@@ -89,12 +87,10 @@
 		923616381F3B5CF8001114F3 /* processing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = processing.h; path = DSP/processing.h; sourceTree = "<group>"; };
 		9236163F1F3B5D1D001114F3 /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomButton.swift; path = Views/CustomButton.swift; sourceTree = "<group>"; };
 		923616411F3B5D1D001114F3 /* ModebarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModebarView.swift; path = Views/ModebarView.swift; sourceTree = "<group>"; };
-		923616421F3B5D1D001114F3 /* NotebarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotebarView.swift; path = Views/NotebarView.swift; sourceTree = "<group>"; };
+		923616421F3B5D1D001114F3 /* FineTuningView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FineTuningView.swift; path = Views/FineTuningView.swift; sourceTree = "<group>"; };
 		923616431F3B5D1D001114F3 /* PanelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PanelView.swift; path = Views/PanelView.swift; sourceTree = "<group>"; };
 		923616441F3B5D1D001114F3 /* PointerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PointerView.swift; path = Views/PointerView.swift; sourceTree = "<group>"; };
-		923616451F3B5D1D001114F3 /* RecordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecordButton.swift; path = Views/RecordButton.swift; sourceTree = "<group>"; };
 		923616471F3B5D1D001114F3 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = Views/SettingsView.swift; sourceTree = "<group>"; };
-		923616491F3B5D1D001114F3 /* TubeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TubeView.swift; path = Views/TubeView.swift; sourceTree = "<group>"; };
 		923616571F3B5D2E001114F3 /* Microphone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Microphone.swift; path = Models/Microphone.swift; sourceTree = "<group>"; };
 		923616591F3B5D2E001114F3 /* Processing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Processing.swift; path = Models/Processing.swift; sourceTree = "<group>"; };
 		9236165B1F3B5D2E001114F3 /* Tuner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tuner.swift; path = Models/Tuner.swift; sourceTree = "<group>"; };
@@ -179,12 +175,10 @@
 				9236163F1F3B5D1D001114F3 /* CustomButton.swift */,
 				92A524501F3F5EF1000AA1B5 /* FrequencyBarView.swift */,
 				923616411F3B5D1D001114F3 /* ModebarView.swift */,
-				923616421F3B5D1D001114F3 /* NotebarView.swift */,
+				923616421F3B5D1D001114F3 /* FineTuningView.swift */,
 				923616431F3B5D1D001114F3 /* PanelView.swift */,
 				923616441F3B5D1D001114F3 /* PointerView.swift */,
-				923616451F3B5D1D001114F3 /* RecordButton.swift */,
 				923616471F3B5D1D001114F3 /* SettingsView.swift */,
-				923616491F3B5D1D001114F3 /* TubeView.swift */,
 				920381B71F446E52005D85F7 /* TuningView.swift */,
 			);
 			name = Views;
@@ -519,8 +513,6 @@
 				923616301F3B5CDE001114F3 /* ViewController.swift in Sources */,
 				929E1A121F3C9111005561D2 /* Fret.swift in Sources */,
 				929E1A0B1F3C769B005561D2 /* Tuning.swift in Sources */,
-				923616551F3B5D1D001114F3 /* TubeView.swift in Sources */,
-				923616511F3B5D1D001114F3 /* RecordButton.swift in Sources */,
 				9236164D1F3B5D1D001114F3 /* ModebarView.swift in Sources */,
 				92A524511F3F5EF1000AA1B5 /* FrequencyBarView.swift in Sources */,
 				92C2B8251A5801E8008F6A31 /* AppDelegate.swift in Sources */,
@@ -539,7 +531,7 @@
 				9236165E1F3B5D2E001114F3 /* Processing.swift in Sources */,
 				9236163A1F3B5CF8001114F3 /* dspmath.c in Sources */,
 				92AB42EF1F3BB6D000EBB7E0 /* Note.swift in Sources */,
-				9236164E1F3B5D1D001114F3 /* NotebarView.swift in Sources */,
+				9236164E1F3B5D1D001114F3 /* FineTuningView.swift in Sources */,
 				9236162E1F3B5CC5001114F3 /* TunerViewController.swift in Sources */,
 				9236164B1F3B5D1D001114F3 /* CustomButton.swift in Sources */,
 				9236163B1F3B5CF8001114F3 /* micsource.c in Sources */,

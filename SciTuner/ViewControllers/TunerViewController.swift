@@ -38,10 +38,12 @@ class TunerViewController: UIViewController {
     
     let tuningView = TuningView()
     let modebar = ModebarView()
-    let notebar = NotebarView()
+    let fineTuningView = FineTuningView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = .blue
         
         customizeNavigationBar()
         addStackView()
@@ -78,7 +80,6 @@ class TunerViewController: UIViewController {
     }
     
     func customizeNavigationBar() {
-        self.view.backgroundColor = UIColor.white
         self.navigationItem.title = "SciTuner".localized()
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(
@@ -133,7 +134,7 @@ class TunerViewController: UIViewController {
     }
     
     func addNoteBar() {
-        stackView.addArrangedSubview(notebar)
+        stackView.addArrangedSubview(fineTuningView)
     }
     
     func addTuningView() {
@@ -231,7 +232,7 @@ extension TunerViewController: MicrophoneDelegate {
         panel?.actualFrequency?.text = String(format: "%.2f %@", tuner.frequency, "Hz".localized())
         panel?.frequencyDeviation!.text = String(format: "%.0fc", tuner.frequencyDeviation())
         //self.panel?.notebar?.pointerPosition = self.tuner.stringPosition()
-        notebar.pointerPosition = tuner.frequencyDeviation()
+        fineTuningView.pointerPosition = tuner.noteDeviation()
         
         print("f dev:", tuner.frequencyDeviation())
         
@@ -239,10 +240,10 @@ extension TunerViewController: MicrophoneDelegate {
         
         if processing.pulsation() > 5 {
             tuningView.showPointer()
-            notebar.showPointer()
+            fineTuningView.showPointer()
         } else {
             tuningView.hidePointer()
-            notebar.hidePointer()
+            fineTuningView.hidePointer()
         }
     }
 }

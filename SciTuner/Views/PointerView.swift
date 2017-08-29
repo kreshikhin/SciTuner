@@ -17,20 +17,13 @@ class PointerView: UIView{
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.white
-    }
-    
-    override func draw(_ rect: CGRect){
-        let ctx = UIGraphicsGetCurrentContext()
-    
-        ctx?.beginPath()
-        ctx?.move   (to: CGPoint(x: rect.minX, y: rect.minY))  // top left
-        ctx?.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))  // top right
-        ctx?.addLine(to: CGPoint(x: rect.midX, y: rect.maxY))  // mid bottom
-        ctx?.closePath()
-    
-        ctx?.setFillColor(red: 0, green: 0, blue: 0, alpha: 1)
-        ctx?.setStrokeColor(red: 1, green: 1, blue: 1, alpha: 1)
-        ctx?.fillPath()
+        
+        backgroundColor = .clear
+        layer.borderColor = UIColor.white.cgColor
+        
+        layer.cornerRadius = frame.height / 2
+        layer.masksToBounds = true
+        layer.borderWidth = 2
+        layer.borderColor = UIColor.white.cgColor
     }
 }
