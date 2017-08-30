@@ -60,15 +60,13 @@ class ModebarView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let defaultColor = self.tintColor
-        
         fretMode = CustomButton()
         fretMode?.translatesAutoresizingMaskIntoConstraints = false
         fretMode!.setTitle("tune on fret", for: UIControlState())
         fretMode!.titleLabel?.textAlignment = .left
         fretMode!.setTitleColor(UIColor.white, for: UIControlState())
         fretMode!.layer.cornerRadius = 3.0
-        fretMode!.backgroundColor = defaultColor
+        fretMode!.backgroundColor = Style.highlighted1
         self.addSubview(fretMode!)
         
         fretMode?.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
@@ -82,7 +80,7 @@ class ModebarView: UIView {
         filterMode!.titleLabel?.textAlignment = .right
         filterMode!.layer.cornerRadius = 3.0
         filterMode!.setTitleColor(UIColor.white, for: UIControlState())
-        filterMode!.backgroundColor = UIColor.red
+        filterMode!.backgroundColor = Style.highlighted0
         self.addSubview(filterMode!)
         
         filterMode?.topAnchor.constraint(equalTo: self.topAnchor).isActive = true

@@ -20,23 +20,34 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView = SettingsView(frame: self.view.frame)
-
-        self.navigationItem.title = "settings".localized()
+        tableView = SettingsView(frame: view.frame)
+        navigationItem.title = "settings".localized()
 
         tableView?.delegate = self;
         tableView?.dataSource = self;
         
-        self.view.addSubview(tableView!)
+        tableView?.backgroundColor = Style.background
+        tableView?.backgroundView?.backgroundColor = Style.background
+        
+        view.backgroundColor = Style.background
+        
+        view.addSubview(tableView!)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tableView?.reloadData()
+        
+        tableView?.reloadData()
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int){
+        view.tintColor = Style.tint
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.textColor = Style.text
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -77,6 +88,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
             cell.textLabel?.text = tuner.instrument.tunings()[indexPath.row].localized()
         }
+        
+        cell.textLabel?.textColor = Style.text
+        cell.tintColor = Style.text
+        cell.backgroundColor = Style.background
+        
+        cell.selectedBackgroundView = UIView()
+        cell.selectedBackgroundView?.backgroundColor = Style.highlighted1
 
         return cell
     }

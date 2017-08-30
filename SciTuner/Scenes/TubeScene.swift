@@ -21,12 +21,14 @@ class TubeScene: SKScene {
     var lastPoints = [CGPoint]()
     
     override func didMove(to view: SKView) {
-        self.backgroundColor = UIColor(red: 0, green: 0, blue: 0.35, alpha: 1)
+        backgroundColor = Style.waveBackground
+        
         waveNode.fillColor = .clear
         waveNode.strokeColor = .white
         waveNode.lineWidth = 3
         waveNode.glowWidth = 1
-        self.addChild(waveNode)
+        
+        addChild(waveNode)
     }
     
     func draw(wave: [Double]) {

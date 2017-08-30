@@ -43,7 +43,7 @@ class TunerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .blue
+        view.backgroundColor = Style.background
         
         customizeNavigationBar()
         addStackView()

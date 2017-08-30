@@ -59,8 +59,6 @@ class FineTuningView: UIView {
         
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalTo: widthAnchor, multiplier: 1.0/10.0).isActive = true
-        
-        backgroundColor = .blue
     }
     
     func addZeroView() {

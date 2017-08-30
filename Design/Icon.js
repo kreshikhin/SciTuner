@@ -16,7 +16,7 @@ ctx.fillStyle = '#0b3954';
 ctx.fillRect(0, 0, width, height);
 
 ctx.strokeStyle = '#a8d0db';
-ctx.lineWidth = 15;
+ctx.lineWidth = 20;
 
 for(var i = 0; i < width; i ++) {
     var t = i / width;

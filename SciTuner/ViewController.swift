@@ -14,8 +14,13 @@ class ViewController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = UIColor.white
-        self.pushViewController(tunerViewController, animated: false)
+        view.backgroundColor = Style.background
+        
+        pushViewController(tunerViewController, animated: false)
+        
+        UINavigationBar.appearance().tintColor = Style.text
+        UINavigationBar.appearance().barTintColor = Style.background
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: Style.text]
     }
 
     override func didReceiveMemoryWarning() {

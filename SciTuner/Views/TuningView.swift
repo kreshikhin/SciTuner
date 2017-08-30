@@ -1,5 +1,5 @@
 //
-//  TuningView
+//  TuningView.swift
 //  SciTuner
 //
 //  Created by Denis Kreshikhin on 8/16/17.
@@ -61,9 +61,6 @@ class TuningView: UIView {
                 
                 pointerView.frame.size = CGSize(width: height, height: height)
                 pointerView.layer.cornerRadius = height / 2
-                //pointerView.layer.masksToBounds = true
-                //pointerView.layer.borderWidth = 2
-                //pointerView.layer.borderColor = UIColor.white.cgColor
                 
                 pointerView.center.x = CGFloat(shift) * step + firstCenterX
                 pointerView.center.y = frame.size.height / 2
@@ -80,8 +77,6 @@ class TuningView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.2).isActive = true
         
-        stackView.backgroundColor = .cyan
-        
         addSubview(stackView)
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -92,12 +87,6 @@ class TuningView: UIView {
         
         stackView.layoutMargins = defaultMargins
         stackView.isLayoutMarginsRelativeArrangement = true
-        
-        //pointerView.backgroundColor = .clear
-        //pointerView.layer.borderColor = UIColor.white.cgColor
-        //pointerView.layer.borderWidth = 1
-        
-        backgroundColor = .blue
         
         addSubview(pointerView)
         
@@ -119,9 +108,4 @@ class TuningView: UIView {
             self.pointerView.alpha = 1.0
         }
     }
-
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    //override func draw(_ rect: CGRect) {
-    //}
 }
