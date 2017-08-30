@@ -111,7 +111,6 @@ class Tuner {
 
     func frequencyDeviation() -> Double {
         if let ts = targetString {
-            print("ts", ts)
             return 100.0 * (frequency - pitch.frequency(of: ts))
         }
         

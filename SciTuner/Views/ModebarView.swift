@@ -10,47 +10,36 @@ import Foundation
 import UIKit
 
 class ModebarView: UIView {
-    var fretMode: UIButton?
-    var filterMode: UIButton?
+    let fretMode = CustomButton()
+    let filterMode = CustomButton()
     
-    var fret: Int {
-        set{
-            switch newValue {
-            case 5:
-                self.fretMode!.setTitle("5th fret", for: UIControlState())
-                self.fretMode!.backgroundColor = self.tintColor
-                self.fretMode!.setTitleColor(UIColor.white, for: UIControlState())
-            case 7:
-                self.fretMode!.setTitle("7th fret", for: UIControlState())
-                self.fretMode!.backgroundColor = self.tintColor
-                self.fretMode!.setTitleColor(UIColor.white, for: UIControlState())
-            case 12:
-                self.fretMode!.setTitle("12th fret", for: UIControlState())
-                self.fretMode!.backgroundColor = self.tintColor
-                self.fretMode!.setTitleColor(UIColor.white, for: UIControlState())
-            default:
-                self.fretMode!.setTitle("tune on fret", for: UIControlState())
-                self.fretMode!.backgroundColor = self.backgroundColor
-                self.fretMode!.setTitleColor(self.tintColor, for: UIControlState())
+    var fret: Fret = .openStrings {
+        didSet{
+            if fret == .openStrings {
+                fretMode.backgroundColor = .clear
+                fretMode.setTitleColor(.white, for: UIControlState())
+                fretMode.setTitle("tune on fret", for: UIControlState())
+                return
             }
+            
+            fretMode.backgroundColor = Style.highlighted0
+            fretMode.setTitleColor(.white, for: UIControlState())
+            fretMode.setTitle(fret.localized(), for: UIControlState())
         }
-        get{ return 0 }
     }
     
-    var filter: String {
-        set{
-            switch newValue {
-            case "off":
-                self.filterMode!.setTitle("filter: off", for: UIControlState())
-                self.filterMode!.backgroundColor = self.tintColor
-                self.filterMode!.setTitleColor(UIColor.white, for: UIControlState())
-            default:
-                self.filterMode!.setTitle("filter: on", for: UIControlState())
-                self.filterMode!.backgroundColor = self.backgroundColor
-                self.filterMode!.setTitleColor(self.tintColor, for: UIControlState())
+    var filter: Filter = .on {
+        didSet{
+            if filter == .on {
+                filterMode.backgroundColor = .clear
+                filterMode.setTitleColor(.white, for: UIControlState())
+            } else {
+                filterMode.backgroundColor = Style.highlighted1
+                filterMode.setTitleColor(.white, for: UIControlState())
             }
+            
+            filterMode.setTitle("filter: ".localized() + filter.localized(), for: UIControlState())
         }
-        get{ return "" }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -60,36 +49,39 @@ class ModebarView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        fretMode = CustomButton()
-        fretMode?.translatesAutoresizingMaskIntoConstraints = false
-        fretMode!.setTitle("tune on fret", for: UIControlState())
-        fretMode!.titleLabel?.textAlignment = .left
-        fretMode!.setTitleColor(UIColor.white, for: UIControlState())
-        fretMode!.layer.cornerRadius = 3.0
-        fretMode!.backgroundColor = Style.highlighted1
-        self.addSubview(fretMode!)
+        addFretModeButton()
+        addFilterModeButton()
         
-        fretMode?.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        fretMode?.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        fretMode?.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1.0/3).isActive = true
-        fretMode?.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.1).isActive = true
+        translatesAutoresizingMaskIntoConstraints = false
+        heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.1).isActive = true
+    }
+    
+    func addFretModeButton() {
+        fretMode.translatesAutoresizingMaskIntoConstraints = false
+        fretMode.titleLabel?.textAlignment = .left
+        fretMode.layer.cornerRadius = 3.0
         
-        filterMode = CustomButton()
-        filterMode?.translatesAutoresizingMaskIntoConstraints = false
-        filterMode!.setTitle("filter: on", for: UIControlState())
-        filterMode!.titleLabel?.textAlignment = .right
-        filterMode!.layer.cornerRadius = 3.0
-        filterMode!.setTitleColor(UIColor.white, for: UIControlState())
-        filterMode!.backgroundColor = Style.highlighted0
-        self.addSubview(filterMode!)
+        fret = .openStrings
+        addSubview(fretMode)
         
-        filterMode?.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        filterMode?.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        filterMode?.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1.0/3).isActive = true
-        filterMode?.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.1).isActive = true
+        fretMode.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        fretMode.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        fretMode.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1.0/3).isActive = true
+        fretMode.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.1).isActive = true
+    }
+    
+    func addFilterModeButton() {
+        filterMode.translatesAutoresizingMaskIntoConstraints = false
+        filterMode.titleLabel?.textAlignment = .right
+        filterMode.layer.cornerRadius = 3.0
         
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.1).isActive = true
+        filter = .off
+        addSubview(filterMode)
+        
+        filterMode.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        filterMode.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+        filterMode.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1.0/3).isActive = true
+        filterMode.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 0.1).isActive = true
     }
 }
 

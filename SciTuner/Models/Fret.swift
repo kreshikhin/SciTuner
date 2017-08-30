@@ -33,4 +33,6 @@ enum Fret: Int {
             return String(format: "%ith fret", self.rawValue).localized()
         }
     }
+    
+    var description : String { return localized() }
 }

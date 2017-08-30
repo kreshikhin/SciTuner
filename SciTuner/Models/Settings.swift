@@ -32,7 +32,7 @@ class Settings: Object {
     
     var filter: Filter {
         set { self.filter_ = newValue.rawValue }
-        get { return Filter(rawValue: self.filter_) ?? .off }
+        get { return Filter(rawValue: self.filter_) ?? .on }
     }
     
     private dynamic var pitch_: String = Pitch.standard.rawValue

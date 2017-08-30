@@ -61,15 +61,15 @@ class TunerViewController: UIViewController {
         
         microphone?.activate()
         
-        //frequencyBarView = FrequencyBarView()
-        //stackView.addArrangedSubview(frequencyBarView!)
-        
         switch tuner.filter {
         case .on:
             processing.enableFilter()
         case .off:
             processing.disableFilter()
         }
+        
+        modebar.fret = tuner.fret
+        modebar.filter = tuner.filter
     }
     
     func customizeDelegates() {
@@ -128,8 +128,8 @@ class TunerViewController: UIViewController {
     }
     
     func addModeBar() {
-        modebar.fretMode?.addTarget(self, action: #selector(TunerViewController.showFrets), for: .touchUpInside)
-        modebar.filterMode?.addTarget(self, action: #selector(TunerViewController.showFilters), for: .touchUpInside)
+        modebar.fretMode.addTarget(self, action: #selector(TunerViewController.showFrets), for: .touchUpInside)
+        modebar.filterMode.addTarget(self, action: #selector(TunerViewController.showFilters), for: .touchUpInside)
         stackView.addArrangedSubview(modebar)
     }
     
@@ -234,7 +234,7 @@ extension TunerViewController: MicrophoneDelegate {
         //self.panel?.notebar?.pointerPosition = self.tuner.stringPosition()
         fineTuningView.pointerPosition = tuner.noteDeviation()
         
-        print("f dev:", tuner.frequencyDeviation())
+        //print("f dev:", tuner.frequencyDeviation())
         
         tuningView.notePosition = CGFloat(tuner.stringPosition())
         
@@ -264,6 +264,8 @@ extension TunerViewController: FretsAlertControllerDelegate {
         try! realm.write {
             tuner.settings.fret = fret
         }
+        
+        modebar.fret = fret
     }
 }
 
@@ -272,6 +274,8 @@ extension TunerViewController: FiltersAlertControllerDelegate {
         try! realm.write {
             tuner.settings.filter = filter
         }
+        
+        modebar.filter = filter
     }
 }
 

@@ -208,7 +208,6 @@ void processing_recalculate(Processing* p){
 }
 
 double processing_get_frequency(Processing* p) {
-    printf("%f \n", p->peakFrequency);
     return p->peakFrequency;
 }
 
@@ -251,13 +250,13 @@ int processing_get_harmonic_order(Processing* p) {
                 eij[i] += lowHarmonicGain * p->spectrum[(int)(position + k)];
             }
             
-            printf("%f ", p->spectrum[(int)position]);
+            //printf("%f ", p->spectrum[(int)position]);
         }
         
-        printf("\n");
+        //printf("\n");
     }
     
-    printf("\n");
+    //printf("\n");
     
     double e0 = 0;
     int order = 1;
@@ -268,8 +267,8 @@ int processing_get_harmonic_order(Processing* p) {
         order = i + 1;
     }
     
-    printf("order %i \n", order);
-    printf("pulsation %f\n", processing_get_pulsation(p));
+    //printf("order %i \n", order);
+    //printf("pulsation %f\n", processing_get_pulsation(p));
     
     return order;
 }

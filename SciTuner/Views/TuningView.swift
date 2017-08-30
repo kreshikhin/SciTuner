@@ -49,7 +49,7 @@ class TuningView: UIView {
                 let step = (lastCenterX - firstCenterX) / CGFloat(count - 1)
                 var shift = notePosition
                 
-                print("noteposition", notePosition)
+                //print("noteposition", notePosition)
                 
                 if notePosition < 0.0 {
                     shift = 0.5 * exp(notePosition) - 0.5
