@@ -10,7 +10,6 @@
 #define SciTuner_config_h
 
 #define SIGNAL_LENGTH 32768
-#define PREVIEW_LENGTH 5000
 #define SUBSIGNAL_LENGTH 16
 
 #endif

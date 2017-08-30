@@ -22,17 +22,8 @@ class Microphone: NSObject{
     var aqData = AQRecorderState_create()
     var sleep: Bool = true
     
-    var frequency: Double = 0
-    
-    var frequency1: Double = 400.625565
-    var frequency2: Double = 0.05
-    
-    var frequencyDeviation: Double = 50.0
-    var discreteFrequency: Double = 44100
-    var t: Double = 0
-    
-    var sample = [Double](repeating: 0, count: 2205)
-    var preview = [Double](repeating: 0, count: Int(PREVIEW_LENGTH))
+    var sample: [Double]
+    var preview: [Double]
     
     let sampleRate: Double
     let sampleCount: Int
@@ -40,6 +31,9 @@ class Microphone: NSObject{
     init(sampleRate: Double, sampleCount: Int) {
         self.sampleRate = sampleRate
         self.sampleCount = sampleCount
+        
+        sample = [Double](repeating: 0, count: sampleCount)
+        preview = [Double](repeating: 0, count: Settings.previewLength)
     }
     
     func activate(){
@@ -51,7 +45,7 @@ class Microphone: NSObject{
         let session = AVAudioSession.sharedInstance()
         
         do {
-            try session.setPreferredSampleRate(44100)
+            try session.setPreferredSampleRate(sampleRate)
         } catch _ {
         }
         do {
@@ -83,11 +77,6 @@ class Microphone: NSObject{
             err = error
             NSLog("It can't set mode, because %@ ", err!)
         }
-        
-        
-        
-        self.discreteFrequency = Double(sampleRate)
-        sample = [Double](repeating: 0, count: sampleCount)
         
         let callback: @convention (c) (UnsafeRawPointer?) -> Void = { (owner) in
             guard let opaque = owner else {

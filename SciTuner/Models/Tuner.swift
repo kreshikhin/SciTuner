@@ -68,11 +68,8 @@ class Tuner {
     
     var targetString: Note?
     
-    var status = "active"
-    func setStatus(_ value: String){
-        status = value
-        
-        delegate?.didStatusChange()
+    var isActive = true {
+        didSet { delegate?.didStatusChange() }
     }
     
     func noteNumber(_ noteString: String) -> Int {

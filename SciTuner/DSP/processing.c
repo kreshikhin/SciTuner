@@ -40,7 +40,7 @@ void processing_destroy(Processing* p){
     free(p);
 }
 
-void processing_init(Processing* p, double fd, double fMin, size_t sampleCount, size_t pointCount) {
+void processing_init(Processing* p, double fd, double fMin, size_t sampleCount, size_t pointCount, size_t previewLength) {
     p->fd = fd;
     p->fMin = fMin;
     
@@ -67,7 +67,7 @@ void processing_init(Processing* p, double fd, double fMin, size_t sampleCount, 
     
     p->signal = malloc(p->signalLength * sizeof(*p->signal));
     
-    p->previewLength = PREVIEW_LENGTH;
+    p->previewLength = previewLength;
     p->preview = malloc(p->previewLength * sizeof(*p->preview));
 
     memset(p->signal, 0, p->signalLength * sizeof(*p->signal));

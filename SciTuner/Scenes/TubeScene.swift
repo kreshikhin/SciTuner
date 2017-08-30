@@ -20,6 +20,8 @@ class TubeScene: SKScene {
     var waveNode = SKShapeNode()
     var lastPoints = [CGPoint]()
     
+    let gradient = SKSpriteNode(imageNamed: "Gradient")
+    
     override func didMove(to view: SKView) {
         backgroundColor = Style.waveBackground
         
@@ -28,7 +30,13 @@ class TubeScene: SKScene {
         waveNode.lineWidth = 3
         waveNode.glowWidth = 1
         
+        gradient.position.x = size.width / 2
+        gradient.position.y = size.height / 2
+        
+        gradient.size = size
+        
         addChild(waveNode)
+        addChild(gradient)
     }
     
     func draw(wave: [Double]) {

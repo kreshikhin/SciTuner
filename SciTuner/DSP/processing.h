@@ -63,7 +63,7 @@ void source_generate(double* dest, size_t count, double* t, double dt, double fr
 Processing* processing_create();
 void processing_destroy(Processing* p);
 
-void processing_init(Processing* processing, double fd, double fMin, size_t pointCount, size_t points);
+void processing_init(Processing* processing, double fd, double fMin, size_t pointCount, size_t points, size_t previewLength);
 
 void processing_push(Processing* processing, const double* packetBuffer, size_t length);
 void processing_save_preview(Processing* p, const double* packet, size_t packetLength);

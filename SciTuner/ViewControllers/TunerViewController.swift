@@ -28,7 +28,7 @@ class TunerViewController: UIViewController {
     
     var panel: PanelView?
     
-    let processing = Processing(pointCount: 128)
+    let processing = Processing(pointCount: Settings.processingPointCount)
     
     var microphone: Microphone?
     
@@ -54,11 +54,8 @@ class TunerViewController: UIViewController {
         addTuningView()
         addModeBar()
 
-        let sampleRate = 44100
-        let sampleCount = 2048
-        microphone = Microphone(sampleRate: Double(sampleRate), sampleCount: sampleCount)
+        microphone = Microphone(sampleRate: Settings.sampleRate, sampleCount: Settings.sampleCount)
         microphone?.delegate = self
-        
         microphone?.activate()
         
         switch tuner.filter {
@@ -106,7 +103,6 @@ class TunerViewController: UIViewController {
         stackView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
         stackView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor).isActive = true
         stackView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        //stackView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
     }
     
     func addTubeView() {
@@ -116,11 +112,9 @@ class TunerViewController: UIViewController {
         stackView.addArrangedSubview(tubeView!)
         
         if let tb = tubeView {
-            //tb.showsFPS = true
-            //skView.showsNodeCount = true
+            tb.showsFPS = Settings.showFPS
             tubeScene = TubeScene(size: tb.bounds.size)
             tb.presentScene(tubeScene)
-            //mainScene?.clipSceneDelegate = self
             tb.ignoresSiblingOrder = true
             
             tubeScene?.customDelegate = self
@@ -169,17 +163,6 @@ class TunerViewController: UIViewController {
 
 extension TunerViewController: TunerDelegate {
     func didSettingsUpdate() {
-        // didInstrumentChange
-        
-        // didFrequencyChange
-
-        //didTuningChange()
-        //panel?.stringbar?.strings = tuner.tuning.strings
-        //self.panel?.notebar?.notes = self.tuner.notes
-        // didPitchChange()
-        // didFretChange()
-        // didFilterChange
-        
         switch tuner.settings.filter {
         case .on: processing.enableFilter()
         case .off: processing.disableFilter()
@@ -191,7 +174,7 @@ extension TunerViewController: TunerDelegate {
     }
     
     func didStatusChange() {
-        if tuner.status == "active" {
+        if tuner.isActive {
             microphone?.activate()
         } else {
             microphone?.inactivate()
@@ -204,8 +187,6 @@ extension TunerViewController: MicrophoneDelegate {
         if tuner.isPaused {
             return
         }
-        
-
         
         if let tf = tuner.targetFrequency() {
             processing.setTargetFrequency(tf)
