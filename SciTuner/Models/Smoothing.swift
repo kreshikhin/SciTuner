@@ -9,12 +9,13 @@
 import Foundation
 
 class Smoothing{
+    typealias `Self` = Smoothing
     typealias Filter = (Double) -> Double
     var filters = [Filter]()
   
     init(n: UInt, cutoff: Double, resonance: Double){
-        filters.append(createMedianFilter(n: 5))
-        filters.append(createLowpassFilter(cutoff: cutoff, resonance: resonance))
+        filters.append(Self.createMedianFilter(n: 5))
+        filters.append(Self.createLowpassFilter(cutoff: cutoff, resonance: resonance))
     }
     
     func handle(x: Double) -> Double {
@@ -27,7 +28,7 @@ class Smoothing{
         return result
     }
     
-    func createMedianFilter(n: UInt) -> Smoothing.Filter {
+    static func createMedianFilter(n: UInt) -> Smoothing.Filter {
         var values = [Double]()
         let m: Int = Int(n | 1)
         
@@ -42,7 +43,7 @@ class Smoothing{
         }
     }
     
-    func createLowpassFilter(cutoff: Double, resonance: Double) -> Smoothing.Filter {
+    static func createLowpassFilter(cutoff: Double, resonance: Double) -> Smoothing.Filter {
         let resonance = max(0.0, resonance) // can't go negative
         let g = pow(10.0, 0.05 * resonance)
         let d = sqrt((4.0 - sqrt(16.0 - 16.0 / (g * g))) / 2.0)
