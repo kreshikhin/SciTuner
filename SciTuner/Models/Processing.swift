@@ -17,7 +17,7 @@ class Processing{
     
     init(pointCount: UInt){
         self.pointCount = pointCount
-        processing_init(p, Settings.sampleRate, 16.0, size_t(32768), size_t(pointCount), size_t(Settings.previewLength))
+        processing_init(p, Settings.sampleRate, Settings.fMin, size_t(Settings.spectrumLength), size_t(pointCount), size_t(Settings.previewLength))
     }
     
     deinit{

@@ -4,4 +4,3 @@
 
 #include "processing.h"
 #include "micsource.h"
-#include "config.h"

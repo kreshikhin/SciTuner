@@ -51,7 +51,6 @@ class Tuner {
         return settings.tuning.strings.sorted()
     }
 
-    
     private let frequencySmoothing = Smoothing(n: 10, cutoff: 0.5, resonance: 1.1)
     
     var frequency: Double {

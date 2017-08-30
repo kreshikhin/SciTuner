@@ -8,7 +8,6 @@
 
 #include "processing.h"
 #include "dspmath.h"
-#include "config.h"
 
 #include <stdlib.h>
 #include <math.h>

@@ -15,10 +15,10 @@ class Settings: Object {
     static let processingPointCount: UInt = 128
     static let sampleRate: Double = 44100
     static let sampleCount: Int = 2048
-    
+    static let spectrumLength: Int = 32768
     static let showFPS = true
-    
     static let previewLength: Int = 5000
+    static let fMin: Double = 16.0
     
     dynamic var fret: Fret = .openStrings
     dynamic var stringIndex: Int = 0

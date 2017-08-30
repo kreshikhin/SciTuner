@@ -84,7 +84,6 @@
 		923616281F3B5CC5001114F3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = ViewControllers/SettingsViewController.swift; sourceTree = "<group>"; };
 		923616291F3B5CC5001114F3 /* TunerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TunerViewController.swift; path = ViewControllers/TunerViewController.swift; sourceTree = "<group>"; };
 		9236162F1F3B5CDE001114F3 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		923616321F3B5CF8001114F3 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = config.h; path = DSP/config.h; sourceTree = "<group>"; };
 		923616331F3B5CF8001114F3 /* dspmath.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dspmath.c; path = DSP/dspmath.c; sourceTree = "<group>"; };
 		923616341F3B5CF8001114F3 /* dspmath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dspmath.h; path = DSP/dspmath.h; sourceTree = "<group>"; };
 		923616351F3B5CF8001114F3 /* micsource.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = micsource.c; path = DSP/micsource.c; sourceTree = "<group>"; };
@@ -172,7 +171,6 @@
 		923616311F3B5CE9001114F3 /* DSP */ = {
 			isa = PBXGroup;
 			children = (
-				923616321F3B5CF8001114F3 /* config.h */,
 				923616331F3B5CF8001114F3 /* dspmath.c */,
 				923616341F3B5CF8001114F3 /* dspmath.h */,
 				923616351F3B5CF8001114F3 /* micsource.c */,
