@@ -51,6 +51,8 @@
 		92C2B8281A5801E8008F6A31 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92C2B8151A5801E8008F6A31 /* Images.xcassets */; };
 		92C2B8291A5801E8008F6A31 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92C2B8161A5801E8008F6A31 /* Info.plist */; };
 		92C9C77C1F575DD20062CB86 /* SmoothingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C9C77B1F575DD20062CB86 /* SmoothingTests.swift */; };
+		92C9C77E1F576EA40062CB86 /* PitchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C9C77D1F576EA40062CB86 /* PitchTests.swift */; };
+		92C9C77F1F576ECB0062CB86 /* Pitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AB42EC1F3BB57500EBB7E0 /* Pitch.swift */; };
 		92CF78021F3B60C10009EEA9 /* TubeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CF78011F3B60C10009EEA9 /* TubeScene.swift */; };
 		92CF78071F3B61E10009EEA9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92CF78091F3B61E10009EEA9 /* Localizable.strings */; };
 		92CF780D1F3B64650009EEA9 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CF780C1F3B64650009EEA9 /* String+Localization.swift */; };
@@ -118,6 +120,7 @@
 		92C2B8161A5801E8008F6A31 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92C4EF0C1A3A11C800ECD2C7 /* SciTuner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SciTuner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92C9C77B1F575DD20062CB86 /* SmoothingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SmoothingTests.swift; path = Models/SmoothingTests.swift; sourceTree = "<group>"; };
+		92C9C77D1F576EA40062CB86 /* PitchTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PitchTests.swift; path = Models/PitchTests.swift; sourceTree = "<group>"; };
 		92CF77FF1F3B60870009EEA9 /* scituner-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "scituner-Bridging-Header.h"; sourceTree = "<group>"; };
 		92CF78011F3B60C10009EEA9 /* TubeScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TubeScene.swift; path = Scenes/TubeScene.swift; sourceTree = "<group>"; };
 		92CF78051F3B61B00009EEA9 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -235,6 +238,7 @@
 				929E1A0E1F3C8B01005561D2 /* NoteTests.swift */,
 				92668DE11F3E4B08002EC3B3 /* FretTests.swift */,
 				92C9C77B1F575DD20062CB86 /* SmoothingTests.swift */,
+				92C9C77D1F576EA40062CB86 /* PitchTests.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -569,8 +573,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				92D207521F3B5E4C00C08471 /* SciTunerTests.swift in Sources */,
+				92C9C77E1F576EA40062CB86 /* PitchTests.swift in Sources */,
 				929E1A0F1F3C8B01005561D2 /* NoteTests.swift in Sources */,
 				92C9C77C1F575DD20062CB86 /* SmoothingTests.swift in Sources */,
+				92C9C77F1F576ECB0062CB86 /* Pitch.swift in Sources */,
 				92668DE21F3E4B08002EC3B3 /* FretTests.swift in Sources */,
 				92668DE41F3E4C59002EC3B3 /* String+Localization.swift in Sources */,
 				925021A31F544B3700D44A75 /* Smoothing.swift in Sources */,

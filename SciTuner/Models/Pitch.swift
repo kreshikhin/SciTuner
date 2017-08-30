@@ -43,7 +43,7 @@ enum Pitch: String {
         let neightbor = note + ((frequency > f0) ? 1 : -1 )
         let fn = self.frequency(of: neightbor)
         
-        return (frequency - f0) / (fn - f0)
+        return (frequency - f0) / abs(fn - f0)
     }
     
     func notePosition(with frequency: Double) -> Double {
@@ -52,7 +52,4 @@ enum Pitch: String {
         
         return 12.0 * log(frequency / baseFrequency) / log(2) + Double(b)
     }
-    
-    //func note(with frequency: Double) -> Note {
-    //}
 }

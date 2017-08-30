@@ -47,6 +47,9 @@
                <Test
                   Identifier = "SciTunerTests">
                </Test>
+               <Test
+                  Identifier = "SmoothingTests">
+               </Test>
             </SkippedTests>
          </TestableReference>
       </Testables>
