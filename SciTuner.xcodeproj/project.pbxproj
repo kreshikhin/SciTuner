@@ -63,7 +63,6 @@
 		92CF78071F3B61E10009EEA9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 92CF78091F3B61E10009EEA9 /* Localizable.strings */; };
 		92CF780D1F3B64650009EEA9 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CF780C1F3B64650009EEA9 /* String+Localization.swift */; };
 		92CF780F1F3B68B90009EEA9 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CF780E1F3B68B90009EEA9 /* Settings.swift */; };
-		92D207521F3B5E4C00C08471 /* SciTunerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D207511F3B5E4C00C08471 /* SciTunerTests.swift */; };
 		ADC496E492F5F24E33CDF86D /* Pods_SciTunerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FC678D8D67F8A46DC76060D /* Pods_SciTunerTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -137,7 +136,6 @@
 		92CF780C1F3B64650009EEA9 /* String+Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Localization.swift"; path = "Helpers/String+Localization.swift"; sourceTree = "<group>"; };
 		92CF780E1F3B68B90009EEA9 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = Models/Settings.swift; sourceTree = "<group>"; };
 		92D2074F1F3B5E4C00C08471 /* SciTunerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SciTunerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		92D207511F3B5E4C00C08471 /* SciTunerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SciTunerTests.swift; sourceTree = "<group>"; };
 		92D207531F3B5E4C00C08471 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE64AFB17F3CE1AECDF1FEF6 /* Pods-SciTunerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SciTunerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SciTunerTests/Pods-SciTunerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E81863D516AD60F020944F0E /* Pods_SciTuner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SciTuner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -319,7 +317,6 @@
 			isa = PBXGroup;
 			children = (
 				929E1A0D1F3C8AE4005561D2 /* Models */,
-				92D207511F3B5E4C00C08471 /* SciTunerTests.swift */,
 				92D207531F3B5E4C00C08471 /* Info.plist */,
 			);
 			path = SciTunerTests;
@@ -585,7 +582,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				926629B21F5837FE000B6DCD /* Tuning.swift in Sources */,
-				92D207521F3B5E4C00C08471 /* SciTunerTests.swift in Sources */,
 				926629B31F58388F000B6DCD /* Instrument.swift in Sources */,
 				92C9C77E1F576EA40062CB86 /* PitchTests.swift in Sources */,
 				926629B11F583773000B6DCD /* TuningTests.swift in Sources */,

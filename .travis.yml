@@ -6,3 +6,5 @@ before_install:
   - brew update
   - brew outdated xctool || brew upgrade xctool
   - pod install
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
