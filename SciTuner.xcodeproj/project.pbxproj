@@ -41,6 +41,8 @@
 		92668DE31F3E4B0C002EC3B3 /* Fret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929E1A111F3C9111005561D2 /* Fret.swift */; };
 		92668DE41F3E4C59002EC3B3 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CF780C1F3B64650009EEA9 /* String+Localization.swift */; };
 		9277AAF61F5846A4005A608C /* InstrumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277AAF51F5846A4005A608C /* InstrumentTests.swift */; };
+		9277AAFA1F5847E2005A608C /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AB42EA1F3BB35900EBB7E0 /* Filter.swift */; };
+		9277AAFC1F5847F1005A608C /* FilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277AAFB1F5847F1005A608C /* FilterTests.swift */; };
 		929E1A0B1F3C769B005561D2 /* Tuning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929E1A0A1F3C769B005561D2 /* Tuning.swift */; };
 		929E1A0F1F3C8B01005561D2 /* NoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929E1A0E1F3C8B01005561D2 /* NoteTests.swift */; };
 		929E1A101F3C8BAF005561D2 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AB42EE1F3BB6D000EBB7E0 /* Note.swift */; };
@@ -111,6 +113,7 @@
 		926629B01F583773000B6DCD /* TuningTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TuningTests.swift; path = Models/TuningTests.swift; sourceTree = "<group>"; };
 		92668DE11F3E4B08002EC3B3 /* FretTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FretTests.swift; path = Models/FretTests.swift; sourceTree = "<group>"; };
 		9277AAF51F5846A4005A608C /* InstrumentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InstrumentTests.swift; path = Models/InstrumentTests.swift; sourceTree = "<group>"; };
+		9277AAFB1F5847F1005A608C /* FilterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilterTests.swift; path = Models/FilterTests.swift; sourceTree = "<group>"; };
 		929E1A0A1F3C769B005561D2 /* Tuning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tuning.swift; path = Models/Tuning.swift; sourceTree = "<group>"; };
 		929E1A0C1F3C7956005561D2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		929E1A0E1F3C8B01005561D2 /* NoteTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoteTests.swift; path = Models/NoteTests.swift; sourceTree = "<group>"; };
@@ -247,6 +250,7 @@
 				92C9C77D1F576EA40062CB86 /* PitchTests.swift */,
 				926629B01F583773000B6DCD /* TuningTests.swift */,
 				9277AAF51F5846A4005A608C /* InstrumentTests.swift */,
+				9277AAFB1F5847F1005A608C /* FilterTests.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -591,9 +595,11 @@
 				92C9C77F1F576ECB0062CB86 /* Pitch.swift in Sources */,
 				92668DE21F3E4B08002EC3B3 /* FretTests.swift in Sources */,
 				92668DE41F3E4C59002EC3B3 /* String+Localization.swift in Sources */,
+				9277AAFC1F5847F1005A608C /* FilterTests.swift in Sources */,
 				925021A31F544B3700D44A75 /* Smoothing.swift in Sources */,
 				929E1A101F3C8BAF005561D2 /* Note.swift in Sources */,
 				92668DE31F3E4B0C002EC3B3 /* Fret.swift in Sources */,
+				9277AAFA1F5847E2005A608C /* Filter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
