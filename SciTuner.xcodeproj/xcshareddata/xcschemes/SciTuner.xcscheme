@@ -37,20 +37,6 @@
                BlueprintName = "SciTunerTests"
                ReferencedContainer = "container:SciTuner.xcodeproj">
             </BuildableReference>
-            <SkippedTests>
-               <Test
-                  Identifier = "FretTests">
-               </Test>
-               <Test
-                  Identifier = "NoteTests">
-               </Test>
-               <Test
-                  Identifier = "SciTunerTests">
-               </Test>
-               <Test
-                  Identifier = "SmoothingTests">
-               </Test>
-            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>
