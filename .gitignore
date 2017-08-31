@@ -30,3 +30,5 @@ Podfile.lock
 Pods
 
 todo
+
+*.coverage.txt
