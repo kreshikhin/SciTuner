@@ -1,8 +1,11 @@
 language: objective-c
 osx_image: xcode8.3
 script:
- - xcodebuild -workspace SciTuner.xcworkspace -scheme SciTuner -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.3.1' build test
+  - xcodebuild -workspace SciTuner.xcworkspace -scheme SciTuner -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.3.1' build test
 before_install:
-  - brew update
-  - brew outdated xctool || brew upgrade xctool
+#  - brew update
+#  - brew outdated xctool || brew upgrade xctool
+#  - gem install xcov --no-ri --no-rdoc --no-document
   - pod install
+#after_success:
+#  - xcov -w SciTuner.xcworkspace -s SciTuner xcov_output --coveralls_service_name travis-ci
