@@ -39,6 +39,16 @@
                ReferencedContainer = "container:SciTuner.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "92404A541F5AE4D10058D89E"
+               BuildableName = "SciTunerUITests.xctest"
+               BlueprintName = "SciTunerUITests"
+               ReferencedContainer = "container:SciTuner.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

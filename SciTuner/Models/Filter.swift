@@ -12,7 +12,7 @@ enum Filter: String {
     typealias `Self` = Filter
     case on = "on", off = "off"
     
-    static let allFilters: [Self] = [.on, .off]
+    static let allFilters: [Self] = [.off, .on]
     
     func localized() -> String {
         return self.rawValue.localized()

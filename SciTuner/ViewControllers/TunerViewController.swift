@@ -253,6 +253,7 @@ extension TunerViewController: FretsAlertControllerDelegate {
 extension TunerViewController: FiltersAlertControllerDelegate {
     func didChange(filter: Filter) {
         try! realm.write {
+            print("app", tuner.settings)
             tuner.settings.filter = filter
         }
         

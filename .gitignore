@@ -32,3 +32,4 @@ Pods
 todo
 
 *.coverage.txt
+xcov_report

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import RealmSwift
 
 @objc
 enum Fret: Int {

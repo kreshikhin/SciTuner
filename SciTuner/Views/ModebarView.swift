@@ -38,7 +38,7 @@ class ModebarView: UIView {
                 filterMode.setTitleColor(.white, for: UIControlState())
             }
             
-            filterMode.setTitle("filter: ".localized() + filter.localized(), for: UIControlState())
+            filterMode.setTitle("filter".localized() + ": " + filter.localized(), for: UIControlState())
         }
     }
     
