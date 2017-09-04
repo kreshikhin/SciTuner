@@ -44,6 +44,7 @@
 		92668DE21F3E4B08002EC3B3 /* FretTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92668DE11F3E4B08002EC3B3 /* FretTests.swift */; };
 		92668DE31F3E4B0C002EC3B3 /* Fret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929E1A111F3C9111005561D2 /* Fret.swift */; };
 		92668DE41F3E4C59002EC3B3 /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CF780C1F3B64650009EEA9 /* String+Localization.swift */; };
+		9267C2461F5DBB1C005AD9B0 /* InstrumentsAlertControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9267C2451F5DBB1C005AD9B0 /* InstrumentsAlertControllerTests.swift */; };
 		9277AAF61F5846A4005A608C /* InstrumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277AAF51F5846A4005A608C /* InstrumentTests.swift */; };
 		9277AAFA1F5847E2005A608C /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AB42EA1F3BB35900EBB7E0 /* Filter.swift */; };
 		9277AAFC1F5847F1005A608C /* FilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9277AAFB1F5847F1005A608C /* FilterTests.swift */; };
@@ -135,6 +136,7 @@
 		925021A11F544B3700D44A75 /* Smoothing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Smoothing.swift; path = Models/Smoothing.swift; sourceTree = "<group>"; };
 		926629B01F583773000B6DCD /* TuningTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TuningTests.swift; path = Models/TuningTests.swift; sourceTree = "<group>"; };
 		92668DE11F3E4B08002EC3B3 /* FretTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FretTests.swift; path = Models/FretTests.swift; sourceTree = "<group>"; };
+		9267C2451F5DBB1C005AD9B0 /* InstrumentsAlertControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentsAlertControllerTests.swift; sourceTree = "<group>"; };
 		9277AAF51F5846A4005A608C /* InstrumentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InstrumentTests.swift; path = Models/InstrumentTests.swift; sourceTree = "<group>"; };
 		9277AAFB1F5847F1005A608C /* FilterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilterTests.swift; path = Models/FilterTests.swift; sourceTree = "<group>"; };
 		929E1A0A1F3C769B005561D2 /* Tuning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tuning.swift; path = Models/Tuning.swift; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 			children = (
 				92404A601F5AE4FB0058D89E /* FiltersAlertControllerTests.swift */,
 				92FA15B41F5B6982000C421D /* FretsAlertControllerTests.swift */,
+				9267C2451F5DBB1C005AD9B0 /* InstrumentsAlertControllerTests.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -682,6 +685,7 @@
 				92404A611F5AE4FB0058D89E /* FiltersAlertControllerTests.swift in Sources */,
 				92EB7F5A1F5B003900C65BDE /* UIColor+Hex.swift in Sources */,
 				92EB7F591F5B003900C65BDE /* String+Localization.swift in Sources */,
+				9267C2461F5DBB1C005AD9B0 /* InstrumentsAlertControllerTests.swift in Sources */,
 				92FA15B51F5B6982000C421D /* FretsAlertControllerTests.swift in Sources */,
 				92404A581F5AE4D10058D89E /* SciTunerUITests.swift in Sources */,
 			);
