@@ -26,15 +26,11 @@ class TunerViewController: UIViewController {
     var tubeView: SKView?
     var tubeScene: TubeScene?
     
-    var panel: PanelView?
-    
     let processing = Processing(pointCount: Settings.processingPointCount)
     
     var microphone: Microphone?
     
     let stackView = UIStackView()
-    
-    var frequencyBarView: FrequencyBarView?
     
     let tuningView = TuningView()
     let modebar = ModebarView()
@@ -163,7 +159,7 @@ class TunerViewController: UIViewController {
 
 extension TunerViewController: TunerDelegate {
     func didSettingsUpdate() {
-        switch tuner.settings.filter {
+        switch tuner.filter {
         case .on: processing.enableFilter()
         case .off: processing.disableFilter()
         }
@@ -210,8 +206,8 @@ extension TunerViewController: MicrophoneDelegate {
         
         tubeScene?.draw(wave: wavePoints)
         
-        panel?.actualFrequency?.text = String(format: "%.2f %@", tuner.frequency, "Hz".localized())
-        panel?.frequencyDeviation!.text = String(format: "%.0fc", tuner.frequencyDeviation())
+        //panel?.actualFrequency?.text = String(format: "%.2f %@", tuner.frequency, "Hz".localized())
+        //panel?.frequencyDeviation!.text = String(format: "%.0fc", tuner.frequencyDeviation())
         //self.panel?.notebar?.pointerPosition = self.tuner.stringPosition()
         fineTuningView.pointerPosition = tuner.noteDeviation()
         
@@ -243,7 +239,7 @@ extension TunerViewController: InstrumentsAlertControllerDelegate {
 extension TunerViewController: FretsAlertControllerDelegate {
     func didChange(fret: Fret) {
         try! realm.write {
-            tuner.settings.fret = fret
+            tuner.fret = fret
         }
         
         modebar.fret = fret
@@ -253,8 +249,7 @@ extension TunerViewController: FretsAlertControllerDelegate {
 extension TunerViewController: FiltersAlertControllerDelegate {
     func didChange(filter: Filter) {
         try! realm.write {
-            print("app", tuner.settings)
-            tuner.settings.filter = filter
+            tuner.filter = filter
         }
         
         modebar.filter = filter

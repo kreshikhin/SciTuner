@@ -37,10 +37,6 @@ class Processing{
         processing_recalculate(p)
     }
     
-    func buildSmoothStandingWave(_ wave: inout [Float], light: inout [Float], length: Int, thickness: Float) {
-        processing_build_standing_wave(p, &wave, &light, size_t(length), thickness)
-    }
-    
     func buildSmoothStandingWave2(_ wave: inout [Double], length: Int) {
         processing_build_standing_wave2(p, &wave, size_t(length))
     }

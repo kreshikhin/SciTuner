@@ -69,7 +69,6 @@ void processing_push(Processing* processing, const double* packetBuffer, size_t 
 void processing_save_preview(Processing* p, const double* packet, size_t packetLength);
 
 void processing_recalculate(Processing* processing);
-void processing_build_standing_wave(Processing* processing, float* wave, float* light, size_t length, float thickness);
 void processing_build_standing_wave2(Processing* processing, double* wave, size_t length);
 
 double processing_get_frequency(Processing* p);
@@ -83,8 +82,6 @@ void processing_enable_filter(Processing* p);
 void processing_disable_filter(Processing* p);
 
 void processing_deinit(Processing* processing);
-
-int transform_radix2(double real[], double imag[], size_t n);
 
 size_t reverse_bits(size_t x, unsigned int n);
 size_t ceil2(double value);

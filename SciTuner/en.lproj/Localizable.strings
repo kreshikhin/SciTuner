@@ -6,6 +6,8 @@
   Copyright © 2017 Denis Kreshikhin. All rights reserved.
 */
 
+"test string" = "localized test string";
+
 "settings" = "settings";
 "enable filter" = "enable filter";
 "disable filter" = "disable filter";

@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import SciTuner
 
 class FretTests: XCTestCase {
     func testOpenString() {
@@ -36,5 +37,11 @@ class FretTests: XCTestCase {
         
         XCTAssertEqual(fret.shiftUp(frequency: 100), 200)
         XCTAssertEqual(fret.shiftDown(frequency: 200), 100)
+    }
+    
+    func testDescription() {
+        let fret: Fret = .fret12
+        
+        XCTAssertEqual(fret.description, "12th fret")
     }
 }

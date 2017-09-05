@@ -38,7 +38,6 @@ class CustomButton: UIButton {
     }
     
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        //println(point)
         let margin: CGFloat = 20.0
         let area = self.bounds.insetBy(dx: -margin, dy: -margin);
         return area.contains(point) ? self : nil;

@@ -17,7 +17,7 @@ protocol TunerDelegate: class {
 
 class Tuner {
     weak var delegate: TunerDelegate?
-    
+    private let settings = Settings.shared()
     static let sharedInstance = Tuner()
     
     var instrument: Instrument {
@@ -63,23 +63,11 @@ class Tuner {
     private var originFrequency_: Double = 440
 
     var isPaused = false
-    let settings = Settings.shared()
     
     var targetString: Note?
     
     var isActive = true {
         didSet { delegate?.didStatusChange() }
-    }
-    
-    func noteNumber(_ noteString: String) -> Int {
-        return Note(noteString).number
-    }
-
-    func noteString(_ num: Double) -> String {
-        let noteOctave: Int = Int(num / 12)
-        let noteShift: Int = Int(num.truncatingRemainder(dividingBy: 12))
-
-        return Note(octave: noteOctave, semitone: noteShift).string
     }
     
     func updateTargetFrequency() {
@@ -103,14 +91,6 @@ class Tuner {
         }
         
         return fret.shiftUp(frequency: pitch.frequency(of: ts))
-    }
-
-    func frequencyDeviation() -> Double {
-        if let ts = targetString {
-            return 100.0 * (frequency - pitch.frequency(of: ts))
-        }
-        
-        return 0
     }
     
     func noteDeviation() -> Double {
@@ -165,9 +145,5 @@ class Tuner {
         }
 
         return Double(strings.count - 1) * (frequency - frst) / (lst - frst)
-    }
-
-    func fretScale() -> Double {
-        return pow(2.0, Double(settings.fret.rawValue) / 12.0)
     }
 }

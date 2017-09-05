@@ -51,6 +51,8 @@ class Settings: Object {
     static func shared() -> Settings {
         let realm = try! Realm()
         
+        print("SHARED")
+        
         if let settings = realm.objects(`Self`.self).first {
             return settings
         }
@@ -62,9 +64,5 @@ class Settings: Object {
         }
         
         return settings
-    }
-    
-    func primaryKey() -> String {
-        return "settings"
     }
 }

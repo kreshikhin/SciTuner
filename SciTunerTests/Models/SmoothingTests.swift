@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import SciTuner
 
 class SmoothingTests: XCTestCase {
     func testMedianFilter() {

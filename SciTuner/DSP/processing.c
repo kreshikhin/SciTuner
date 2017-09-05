@@ -14,7 +14,7 @@
 #include <string.h> /* memset */
 #include <unistd.h> /* close */
 
-double processing_detect_undertone(Processing* p, double f0);
+//double processing_detect_undertone(Processing* p, double f0);
 
 float* build_edge(float* dest, float x0, float y0, float x1, float y1, float thickness);
 float* write_point2D(float* dest, float x, float y);
@@ -301,80 +301,6 @@ double processing_clarify_peak_frequency_in_range(Processing* p, double range) {
     return range * subPeakIndex / p->subLength;
 }
 
-double processing_detect_undertone(Processing* p, double f0) {
-    double* s = p->spectrum;
-    
-    double df =  p->fd / (2.0 * p->signalLength);
-    size_t length = p->signalLength;
-    
-    double delta = get_peak_width(s, f0, df, length);
-    
-    double e0 = get_range_energy(s, f0, delta, df, length);
-    
-    if (e0 == 0) {
-        e0 = 1;
-    }
-    
-    double e1 = get_range_energy(s, f0/2.0, delta, df, length) / e0;
-    
-    if (e1 > 0.1) {
-        return 2;
-    }
-    
-    return 1;
-}
-
-void processing_build_standing_wave(Processing* p, float* wave, float* light, size_t length, float thickness) {
-    double f = p->peakFrequency;
-    if(f < 40) f = 40;
-    if(f > 16000) f = 16000;
-    
-    double waveLength = p->fd / f;
-    
-    size_t index = p->previewLength - waveLength * 2;
-    
-    double* src = &p->preview[index];
-    
-    double re = 0; double im = 0;
-    for (size_t i = 0; i < waveLength*2; i++) {
-        double t = (double)2.0 * M_PI * i / waveLength;
-        re += src[i] * cos(t);
-        im += src[i] * sin(t);
-    }
-    
-    double phase = get_phase(re, im);
-    
-    double shift = waveLength * phase / (2.0 * M_PI);
-    
-    // here something wrong !!!
-    // p->previewLength - waveLength * 2 - (size_t)(waveLength - shift) - (size_t)waveLength
-    // p->previewLength - waveLength * 4 + (0 .. waveLength)
-    double* shiftedSrc = &p->preview[index - (size_t)(waveLength - shift) - (size_t)waveLength];
-    
-    approximate_sinc(p->points, shiftedSrc, p->pointCount, 2*waveLength);
-    double avr = data_avr(p->points, p->pointCount);
-    data_shift(p->points, p->pointCount, -avr);
-    double dev = data_dev(p->points, p->pointCount);
-    if(dev != 0){
-        data_scale(p->points, p->pointCount, 0.2/dev);
-    }
-    
-    double dx = (double)2.0 / p->pointCount;
-    float* dest = wave;
-    for (size_t j = 0; j < p->pointCount-1; j ++) {
-        float x0 = dx * j - 1.0;
-        float y0 = p->points[j];
-        float x1 = dx*(j + 1) - 1.0;
-        float y1 = p->points[j+1];
-        
-        dest = build_edge(dest, x0, y0, x1, y1, thickness);
-        
-        for (int i = 0; i < 12; i++) {
-            light = write_point4D(light, x0, y0, x1, y1);
-        }
-    }
-}
-
 void processing_build_standing_wave2(Processing* p, double* wave, size_t length) {
     double f = p->peakFrequency;
     if(f < 40) f = 40;
@@ -413,49 +339,6 @@ void processing_build_standing_wave2(Processing* p, double* wave, size_t length)
     memcpy(wave, p->points, sizeof(*wave) * length);
 }
 
-float* build_edge(float* dest, float x0, float y0, float x1, float y1, float thickness) {
-    
-    x0 -= thickness;
-    x1 += thickness;
-    
-    float dy = 2.0 * thickness + fabs(y1 - y0);
-    
-    // triangle 0 (left top)
-    dest = write_point2D(dest, x0, y0);
-    dest = write_point2D(dest, x0, y0+dy);
-    dest = write_point2D(dest, x1, y1+dy);
-    
-    // triangle 1
-    dest = write_point2D(dest, x0, y0);
-    dest = write_point2D(dest, x1, y1+dy);
-    dest = write_point2D(dest, x1, y1);
-    // triangle 2
-    dest = write_point2D(dest, x0, y0);
-    dest = write_point2D(dest, x1, y1);
-    dest = write_point2D(dest, x1, y1-dy);
-    // triangle 3
-    dest = write_point2D(dest, x0, y0);
-    dest = write_point2D(dest, x1, y1-dy);
-    dest = write_point2D(dest, x0, y0-dy);
-    
-    return dest;
-}
-
-float* write_point2D(float* dest, float x, float y) {
-    dest[0] = x;
-    dest[1] = y;
-    
-    return dest + 2;
-}
-
-float* write_point4D(float* dest, float x, float y, float z, float d) {
-    dest[0] = x;
-    dest[1] = y;
-    dest[2] = z;
-    dest[3] = d;
-    
-    return dest + 4;
-}
 
 double data_avr(double* data, size_t length) {
     double avr = 0;
@@ -501,14 +384,6 @@ double data_min(double* data, size_t length) {
 
 double data_dev(double* data, size_t length) {
     return (data_max(data, length) - data_min(data, length)) / 2.0;
-}
-
-double data_avr2(double* data, size_t length) {
-    double avr2 = 0;
-    for (size_t i = 0; i < length; i++) {
-        avr2 += data[i] * data[i];
-    }
-    return avr2 / length;
 }
 
 void data_append_and_shift(double* data, size_t length, double value){

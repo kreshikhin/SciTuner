@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import SciTuner
 
 class PitchTests: XCTestCase {
     func testScientificPitch() {
@@ -41,5 +42,11 @@ class PitchTests: XCTestCase {
         
         let deltaC5b = Pitch.scientific.deviation(note: Note("C5"), frequency: 483.2636480930270)
         XCTAssertEqualWithAccuracy(deltaC5b, -1.0, accuracy: 0.01)
+    }
+    
+    func testNotePosition() {
+        let pitch = Pitch.scientific
+        
+        XCTAssertEqual(pitch.notePosition(with: 256.0), 48.0)
     }
 }

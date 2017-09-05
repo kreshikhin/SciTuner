@@ -1,14 +1,14 @@
 //
-//  SciTunerUITests.swift
-//  SciTunerUITests
+//  SettingsViewControllerTests.swift
+//  SciTuner
 //
-//  Created by Denis Kreshikhin on 9/2/17.
+//  Created by Denis Kreshikhin on 9/5/17.
 //  Copyright © 2017 Denis Kreshikhin. All rights reserved.
 //
 
 import XCTest
 
-class SciTunerUITests: XCTestCase {
+class SettingsViewControllerTests: XCTestCase {
         
     override func setUp() {
         super.setUp()
@@ -28,17 +28,13 @@ class SciTunerUITests: XCTestCase {
         super.tearDown()
     }
     
-    func testCustomButton() {
+    func testPitchChange() {
         let app = XCUIApplication()
-        let tuneOnFretButton = app.buttons["tune on fret"]
-        tuneOnFretButton.swipeRight()
+        app.navigationBars["SciTuner"].buttons["settings"].tap()
         
-        let cancelButton = app.sheets.buttons["cancel"]
-        cancelButton.tap()
-        tuneOnFretButton.swipeRight()
-        cancelButton.tap()
-        
-        let element = app.otherElements.containing(.navigationBar, identifier:"SciTuner").children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element
-        element.swipeLeft()
+        let tablesQuery = app.tables
+        tablesQuery.staticTexts["Default A4=440Hz"].tap()
+        tablesQuery.staticTexts["Scientific C4=256Hz"].tap()
     }
+    
 }

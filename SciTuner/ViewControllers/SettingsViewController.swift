@@ -15,16 +15,16 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     let tuner = Tuner.sharedInstance
     
-    var tableView: SettingsView?
+    var tableView: UITableView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView = SettingsView(frame: view.frame)
+        tableView = UITableView(frame: view.frame)
         navigationItem.title = "settings".localized()
 
-        tableView?.delegate = self;
-        tableView?.dataSource = self;
+        tableView?.delegate = self
+        tableView?.dataSource = self
         
         tableView?.backgroundColor = Style.background
         tableView?.backgroundView?.backgroundColor = Style.background
@@ -102,7 +102,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if(indexPath.section == 0){
             try! realm.write {
-                tuner.settings.pitch = Pitch.allPitches[indexPath.row]
+                tuner.pitch = Pitch.allPitches[indexPath.row]
             }
             
         }
@@ -110,9 +110,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         if(indexPath.section == 1){
             try! realm.write {
                 let tunings = tuner.instrument.tunings()
-                tuner.settings.tuning = tunings[indexPath.row]
+                tuner.tuning = tunings[indexPath.row]
                 print(tunings[indexPath.row])
-                print(tuner.settings.tuning, indexPath.row)
+                print(tuner.tuning, indexPath.row)
             }
         }
 
