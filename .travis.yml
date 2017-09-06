@@ -5,7 +5,7 @@ script:
 before_install:
 #  - brew update
 #  - brew outdated xctool || brew upgrade xctool
-#  - gem install xcov --no-ri --no-rdoc --no-document
+  - gem install xcov --no-ri --no-rdoc --no-document
   - pod install
 after_success:
   - xcov -w SciTuner.xcworkspace -s SciTuner xcov_output --coveralls_service_name travis-ci
