@@ -39,9 +39,11 @@ void processing_destroy(Processing* p){
     free(p);
 }
 
-void processing_init(Processing* p, double fd, double fMin, size_t sampleCount, size_t pointCount, size_t previewLength) {
+void processing_init(Processing* p, double fd, size_t sampleCount, size_t pointCount, size_t previewLength) {
     p->fd = fd;
-    p->fMin = fMin;
+    
+    p->fmin = 16.0;
+    p->fmax = fd / 2;
     
     p->targetFrequency = 440;
     p->targetHarmonic = 1;
@@ -111,6 +113,11 @@ void processing_disable_filter(Processing* p) {
     p->filter = false;
 }
 
+void processing_set_band(Processing* p, double fmin, double fmax) {
+    p->fmin = fmin;
+    p->fmax = fmax;
+}
+
 
 void processing_push(Processing* p, const double* packet, size_t packetLength) {
     long int shift = p->signalLength - packetLength;
@@ -152,6 +159,8 @@ void processing_save_preview(Processing* p, const double* packet, size_t packetL
            packetLength * sizeof(*p->preview));
 }
 
+void print_subtones(Processing* p);
+
 void processing_recalculate(Processing* p){
     memcpy(p->real, p->signal, p->signalLength * sizeof(*p->signal));
     memset(p->imag, 0, p->signalLength* sizeof(*p->signal));
@@ -168,11 +177,24 @@ void processing_recalculate(Processing* p){
     double peakFrequency = 0;
     size_t peakIndex = 1;
     
-    for(size_t i = 1; i < p->signalLength / 2; i ++){
-        double spectrumValue = p->spectrum[i];
+    double pulsation = processing_get_pulsation(p);
+    
+    for(int i = 1; i < p->signalLength / 2; i ++){
+        double spectrumValue = 0;
+        
+        for(int k = -1; k <= 1; k++) {
+            if((i + k) < 0) continue;
+            
+            spectrumValue += p->spectrum[i + k] / 3.0;
+        }
+        
         double f = p->fd * i / p->signalLength;
         
-        if (p->filter) {
+        
+        
+        /*spectrumValue *= processing_filter_gain(p, f);
+        
+        if (p->filter && (pulsation > 10)) {
             double f0 = p->targetFrequency * (double)p->targetHarmonic;
             
             double df = (f - f0) / f0;
@@ -180,10 +202,10 @@ void processing_recalculate(Processing* p){
                 df = 0;
             }
             spectrumValue *= exp(- 10.0 * df * df);
-        }
+        }*/
         
         if (spectrumValue > peak) {
-            peak = p->spectrum[i];
+            peak = spectrumValue;
             peakIndex = i;
             peakFrequency = f;
         }
@@ -204,6 +226,8 @@ void processing_recalculate(Processing* p){
     
     double range = (double)p->fd / p->signalLength;
     p->peakSubFrequency = processing_clarify_peak_frequency_in_range(p, range);
+    
+    print_subtones(p);
 }
 
 double processing_get_frequency(Processing* p) {
@@ -220,14 +244,82 @@ double processing_get_pulsation(Processing* p) {
     size_t m = p->signalLength / 2;
     
     for(int i = 0; i < m; i++) {
-        double ei = p->spectrum[i];
+        double f = p->fd * i / p->signalLength;
+        double ei = p->spectrum[i]; //* processing_filter_gain(p, f);
         if(ei > peak_energy) peak_energy = ei;
         energy += ei;
     }
     
     if(energy == 0) return 1.0;
     
-    return (double)peak_energy / sqrt(energy);
+    return (double)m * peak_energy / energy;
+}
+
+double processing_filter_gain(Processing* p, double f) {
+    if(!p->filter) return 1.0;
+    
+    if ((f >= p->fmin ) || (f <= p->fmax)) return 1.0;
+    
+    return 0;
+}
+
+
+void print_subtones(Processing* p) {
+    const static size_t n = 10;
+    static double factors[n] = {0.25, 1.0/3.0, 0.5, 2.0/3.0, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0};
+    static double e[n] = {};
+    
+    double f = p->peakFrequency;
+    
+    for(int i = 0; i < n; i ++) {
+        double factor = factors[i];
+        double position = factor *  p->signalLength * f / p->fd;
+        
+        double ei = 0;
+        
+        for(int k = -1; k <= 1; k ++) {
+            if((position + k) < 0) continue;
+            
+            ei += p->spectrum[(int)(position + k)] / 3.0;
+        }
+        
+        e[i] = ei;
+    }
+    
+    // E2=82.41Hz, A2=110Hz, D3=146.8Hz, G3=196Hz, B3=246.9Hz, E4=329.6Hz.
+    int order = round(5.0 * p->peakFrequency / 330);
+    if (order%5 != 0) return;
+    if (order == 0) return;
+    
+    order /= 5;
+    
+    double emax = 0.0;
+    for(int i = 0; i < n; i ++) {
+        if(emax > e[i]) continue;
+        emax = e[i];
+    }
+    
+    if(emax == 0.0) emax = 1.0;
+    
+    printf("{\"f\": [");
+    for(int i = 0; i < n; i ++) {
+        e[i] /= emax;
+        //if(i==5) printf("!");
+        
+        if(e[i] < 0.0001) {
+            printf("%.2f", 0.0);
+        } else {
+            printf("%.2f", (log10(e[i]) + 4.0) / 4.0);
+        }
+        
+        if(i < n - 1) printf(", ");
+    }
+    
+    double pulsation = log10(processing_get_pulsation(p)) / 4.0;
+    if (pulsation > 1) pulsation = 1.0;
+    if (pulsation < 0) pulsation = 0;
+    
+    printf("], \"o\": %d, \"p\": %.2f},\n", order, pulsation);
 }
 
 int processing_get_harmonic_order(Processing* p) {
@@ -239,12 +331,15 @@ int processing_get_harmonic_order(Processing* p) {
     for(int i = 0; i < maxOrder; i++) {
         for(int j = 0; j < maxOrder; j++) {
             double fij = (double)(j + 1) / (double)(i + 1);
-            double position = fij * p->signalLength * p->peakFrequency / p->fd;
+            double f = fij * p->peakFrequency;
+            double position = p->signalLength * f / p->fd;
             
             for(int k = -1; k <= 1; k ++) {
                 if(k < 0) continue;
                 
                 double lowHarmonicGain = (p->peakFrequency < cutoff * maxOrder) && (j < i) ? 1 : 2;
+                
+                //lowHarmonicGain *= processing_filter_gain(p, f);
                 
                 eij[i] += lowHarmonicGain * p->spectrum[(int)(position + k)];
             }
@@ -267,7 +362,10 @@ int processing_get_harmonic_order(Processing* p) {
     }
     
     //printf("order %i \n", order);
+    //printf("pf %f\n", p->peakFrequency);
     //printf("pulsation %f\n", processing_get_pulsation(p));
+    
+    //print_subtones(p);
     
     return order;
 }

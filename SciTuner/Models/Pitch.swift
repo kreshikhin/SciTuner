@@ -52,4 +52,21 @@ enum Pitch: String {
         
         return 12.0 * log(frequency / baseFrequency) / log(2) + Double(b)
     }
+    
+    func band(of tuning: Tuning) -> (fmin: Double, fmax: Double) {
+        let sorted = tuning.strings.sorted()
+        
+        guard let lownote = sorted.first else {
+            return (0, Settings.fMax)
+        }
+        
+        guard let highnote = sorted.last else {
+            return (0, Settings.fMax)
+        }
+        
+        let fmin = frequency(of: lownote) * 0.618
+        let fmax = frequency(of: highnote) * 1.618
+        
+        return (fmin, fmax)
+    }
 }

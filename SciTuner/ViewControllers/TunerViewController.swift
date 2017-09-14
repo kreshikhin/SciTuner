@@ -194,6 +194,9 @@ extension TunerViewController: MicrophoneDelegate {
         
         var wavePoints = [Double](repeating: 0, count: Int(processing.pointCount-1))
         
+        let band = tuner.band()
+        processing.setBand(fmin: band.fmin, fmax: band.fmax)
+        
         processing.push(&micro.sample)
         processing.savePreview(&micro.preview)
         
@@ -215,7 +218,7 @@ extension TunerViewController: MicrophoneDelegate {
         
         tuningView.notePosition = CGFloat(tuner.stringPosition())
         
-        if processing.pulsation() > 5 {
+        if processing.pulsation() > 3 {
             tuningView.showPointer()
             fineTuningView.showPointer()
         } else {

@@ -16,6 +16,9 @@ typedef struct{
     double fd;
     double fMin;
     
+    double fmin;
+    double fmax;
+    
     bool filter;
     double targetFrequency;
     int targetHarmonic;
@@ -63,7 +66,7 @@ void source_generate(double* dest, size_t count, double* t, double dt, double fr
 Processing* processing_create();
 void processing_destroy(Processing* p);
 
-void processing_init(Processing* processing, double fd, double fMin, size_t pointCount, size_t points, size_t previewLength);
+void processing_init(Processing* processing, double fd, size_t pointCount, size_t points, size_t previewLength);
 
 void processing_push(Processing* processing, const double* packetBuffer, size_t length);
 void processing_save_preview(Processing* p, const double* packet, size_t packetLength);
@@ -77,9 +80,14 @@ double processing_get_sub_frequency(Processing* p);
 double processing_get_pulsation(Processing* p);
 int processing_get_harmonic_order(Processing* p);
 
+void processing_get_subtones(Processing* p, double* subtones, size_t n);
+
 void processing_set_target_frequency(Processing* p, double frequency, int harmonic);
 void processing_enable_filter(Processing* p);
 void processing_disable_filter(Processing* p);
+double processing_filter_gain(Processing* p, double f);
+
+void processing_set_band(Processing* p, double fmin, double fmax);
 
 void processing_deinit(Processing* processing);
 

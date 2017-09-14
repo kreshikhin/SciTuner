@@ -49,4 +49,15 @@ class PitchTests: XCTestCase {
         
         XCTAssertEqual(pitch.notePosition(with: 256.0), 48.0)
     }
+    
+    func testBand() {
+        let tuning = Tuning.guitarTunings.first
+        let pitch = Pitch.scientific
+        
+        let band = pitch.band(of: tuning!)
+        
+        XCTAssertEqual(pitch.frequency(of: tuning!.strings.sorted().first!) * 0.618, band.fmin)
+        XCTAssertEqual(pitch.frequency(of: tuning!.strings.sorted().last!) * 1.618, band.fmax)
+        
+    }
 }

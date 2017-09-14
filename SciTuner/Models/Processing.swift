@@ -17,7 +17,7 @@ class Processing{
     
     init(pointCount: UInt){
         self.pointCount = pointCount
-        processing_init(p, Settings.sampleRate, Settings.fMin, size_t(Settings.spectrumLength), size_t(pointCount), size_t(Settings.previewLength))
+        processing_init(p, Settings.sampleRate, size_t(Settings.spectrumLength), size_t(pointCount), size_t(Settings.previewLength))
     }
     
     deinit{
@@ -49,7 +49,11 @@ class Processing{
     }
     
     func setTargetFrequency(_ frequency: Double) {
-        processing_set_target_frequency(p, frequency, Int32(harmonic));
+        processing_set_target_frequency(p, frequency, Int32(harmonic))
+    }
+    
+    func setBand(fmin: Double, fmax: Double) {
+        processing_set_band(p, fmin, fmax)
     }
     
     func enableFilter(){

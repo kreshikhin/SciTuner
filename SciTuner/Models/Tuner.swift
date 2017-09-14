@@ -146,4 +146,8 @@ class Tuner {
 
         return Double(strings.count - 1) * (frequency - frst) / (lst - frst)
     }
+    
+    func band() -> (fmin: Double, fmax: Double) {
+        return pitch.band(of: tuning)
+    }
 }

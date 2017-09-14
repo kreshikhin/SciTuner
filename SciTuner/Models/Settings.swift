@@ -18,7 +18,9 @@ class Settings: Object {
     static let spectrumLength: Int = 32768
     static let showFPS = true
     static let previewLength: Int = 5000
+    
     static let fMin: Double = 16.0
+    static let fMax: Double = Self.sampleRate / 2.0
     
     dynamic var fret: Fret = .openStrings
     dynamic var stringIndex: Int = 0
