@@ -5,8 +5,6 @@ platform :ios, 9.0
 use_frameworks!
 
 pod 'RealmSwift'
-#pod 'MLPNeuralNet', '~> 1.0'
-
 target 'SciTunerTests' do
     pod 'RealmSwift'
 end
