@@ -23,8 +23,7 @@ SciTuner presents many useful features:
 
 ## Screenshots
 
-[[https://github.com/kreshikhin/scituner/blob/master/Readme/screenshots_small.png|alt=screenshots]]
-
+![Screenshots][screenshots-image]
 
 ## License
 
@@ -40,3 +39,4 @@ SciTuner presents many useful features:
 [platform-url]: http://github.com/kreshikhin/scituner
 
 [appstore-image]: https://rawgit.com/kreshikhin/scituner/master/appstore.png
+[screenshots-image]: https://github.com/kreshikhin/scituner/blob/master/Readme/screenshots_small.png
