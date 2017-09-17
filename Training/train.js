@@ -63,6 +63,9 @@ function train(level){
         })
     })
 
+    fs.writeFileSync('_nn' + parseInt(level) + '.json', JSON.stringify(net.toJSON(), null, 2))
+    fs.writeFileSync('nn' + parseInt(level) + '.txt', net.toFunction().toString())
+
     fs.writeFileSync('nn' + parseInt(level) + '.json', JSON.stringify({
         layers: layers,
         weights: weights
@@ -71,4 +74,5 @@ function train(level){
     //console.log(net.toFunction().toString())
 }
 
-[1.5, 2.5, 3.5].forEach(train);
+[1.5].forEach(train);
+//[1.5, 2.5, 3.5].forEach(train);

@@ -19,24 +19,28 @@ class HarmonicDetector {
         
         func calculate(input: [Double]) -> Double {
             var offset = 0
-            var result: [Double] = [0]
+            var result: [Double] = input
+            
+            print("weights \(weights.count)")
             
             for count in layers {
-                result = calculateLayer(input: input, weights: weights[0..<count * (input.count + 1)])
-                
-                offset += count * (input.count + 1)
+                let l = count * (result.count + 1)
+                print("offset \(offset) l \(l)")
+                result = calculateLayer(input: result, weights: [Double](weights[offset..<offset+l]))
+                offset += l
             }
             
             return result[0]
         }
         
-        func calculateLayer(input: [Double], weights: ArraySlice<Double>) -> [Double] {
+        func calculateLayer(input: [Double], weights: [Double]) -> [Double] {
             print("input", input.count)
             print("weights", weights.count)
             
             let count = weights.count / (1 + input.count)
             var result = [Double](repeating: 0, count: count)
             
+            print("result \(result) weight0 \(weights[0])")
             for i in 0..<count {
                 result[i] = weights[0]
                 
