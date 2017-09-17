@@ -1,13 +1,10 @@
 
-# SciTuner
+# SciTuner 2.0
 
 [![Build Status][travis-image]][travis-url]
 [![License: MIT][license-image]][license-url]
 [![Platform][platform-image]][platform-url]
-
 [![Coverage Status](https://coveralls.io/repos/github/kreshikhin/scituner/badge.svg?branch=master)](https://coveralls.io/github/kreshikhin/scituner?branch=master)
-
-[![FREE Download from Appstore][appstore-image]](https://itunes.apple.com/us/app/scituner/id952300084?mt=8)
 
 SciTuner is guitar tuner with real-time signal visualization.
 The application uses strong digital processing algorithm for accurate frequency estimation and wave visualization.
@@ -24,6 +21,12 @@ SciTuner presents many useful features:
 ## Screenshots
 
 ![Screenshots][screenshots-image]
+
+## Previous version (SciTuner 1.0)
+
+The previous version of SciTuner is available on AppStore.
+
+[![FREE Download from Appstore][appstore-image]](https://itunes.apple.com/us/app/scituner/id952300084?mt=8)
 
 ## License
 
