@@ -7,7 +7,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/kreshikhin/scituner/badge.svg?branch=master)](https://coveralls.io/github/kreshikhin/scituner?branch=master)
 
 SciTuner is guitar tuner with real-time signal visualization.
-The application uses strong digital processing algorithm for accurate frequency estimation and wave visualization.
+The application uses digital signal processing algorithm for accurate frequency estimation and wave visualization.
 SciTuner presents many useful features:
 
 - Works with guitars, ukuleles, banjos, violins and some other instruments
