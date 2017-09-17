@@ -23,7 +23,7 @@ class HarmonicDetector {
             
             for count in layers {
                 let l = count * (result.count + 1)
-                result = calculateLayer(input: result, weights: [Double](weights[offset..<offset+l]))
+                result = activateLayer(input: result, weights: [Double](weights[offset..<offset+l]))
                 offset += l
             }
             
@@ -50,7 +50,7 @@ class HarmonicDetector {
     var networks = [Network]()
     
     init() {
-        ["nn1", "nn2", "nn3"].forEach { (name) in
+        ["nn3", "nn2", "nn1"].forEach { (name) in
             if let network = Self.load(network: name) {
                 networks.append(network)
             }
@@ -105,14 +105,13 @@ class HarmonicDetector {
         input.append(pulsation)
         
         for (i, network) in networks.enumerated() {
-            let result = network.calculate(input: input)
-            print("result", result)
+            let result = network.activate(input: input)
             
-            if result < 0.5 {
-                return i + 1
+            if result > 0.5 {
+                return networks.count - i + 1
             }
         }
         
-        return 4
+        return 1
     }
 }

@@ -78,7 +78,7 @@ double processing_get_frequency(Processing* p);
 double processing_get_sub_frequency(Processing* p);
 
 double processing_get_pulsation(Processing* p);
-int processing_get_harmonic_order(Processing* p);
+void processing_get_harmonics(Processing* p, double *harmonics, size_t n, double* normed_pulsation);
 
 void processing_get_subtones(Processing* p, double* subtones, size_t n);
 

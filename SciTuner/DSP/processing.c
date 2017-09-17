@@ -287,7 +287,7 @@ void print_subtones(Processing* p) {
     }
     
     // E2=82.41Hz, A2=110Hz, D3=146.8Hz, G3=196Hz, B3=246.9Hz, E4=329.6Hz.
-    int order = round(5.0 * p->peakFrequency / 330);
+    int order = round(5.0 * p->peakFrequency / 82.42);
     if (order%5 != 0) return;
     if (order == 0) return;
     
@@ -322,52 +322,50 @@ void print_subtones(Processing* p) {
     printf("], \"o\": %d, \"p\": %.2f},\n", order, pulsation);
 }
 
-int processing_get_harmonic_order(Processing* p) {
-    const int maxOrder = 4;
-    double eij[maxOrder] = {};
+void processing_get_harmonics(Processing* p, double *harmonics, size_t n, double* normed_pulsation) {
+    const static size_t nf = 10;
+    static double factors[nf] = {0.25, 1.0/3.0, 0.5, 2.0/3.0, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0};
     
-    double cutoff = 100; // Hz
+    double f = p->peakFrequency;
     
-    for(int i = 0; i < maxOrder; i++) {
-        for(int j = 0; j < maxOrder; j++) {
-            double fij = (double)(j + 1) / (double)(i + 1);
-            double f = fij * p->peakFrequency;
-            double position = p->signalLength * f / p->fd;
+    for(int i = 0; i < n && i < nf; i ++) {
+        double factor = factors[i];
+        double position = factor *  p->signalLength * f / p->fd;
+        
+        double ei = 0;
+        
+        for(int k = -1; k <= 1; k ++) {
+            if((position + k) < 0) continue;
             
-            for(int k = -1; k <= 1; k ++) {
-                if(k < 0) continue;
-                
-                double lowHarmonicGain = (p->peakFrequency < cutoff * maxOrder) && (j < i) ? 1 : 2;
-                
-                //lowHarmonicGain *= processing_filter_gain(p, f);
-                
-                eij[i] += lowHarmonicGain * p->spectrum[(int)(position + k)];
-            }
-            
-            //printf("%f ", p->spectrum[(int)position]);
+            ei += p->spectrum[(int)(position + k)] / 3.0;
         }
         
-        //printf("\n");
+        harmonics[i] = ei;
     }
     
-    //printf("\n");
-    
-    double e0 = 0;
-    int order = 1;
-    
-    for(int i = 0; i < maxOrder; i++) {
-        if(e0 >= eij[i]) continue;
-        e0 = eij[i];
-        order = i + 1;
+    double emax = 0.0;
+    for(int i = 0; i < n; i ++) {
+        if(emax > harmonics[i]) continue;
+        emax = harmonics[i];
     }
     
-    //printf("order %i \n", order);
-    //printf("pf %f\n", p->peakFrequency);
-    //printf("pulsation %f\n", processing_get_pulsation(p));
+    if(emax == 0.0) emax = 1.0;
     
-    //print_subtones(p);
+    for(int i = 0; i < n && i < nf; i ++) {
+        harmonics[i] /= emax;
+        
+        if(harmonics[i] < 0.0001) {
+            harmonics[i] = 0;
+        } else {
+            harmonics[i] = (log10(harmonics[i]) + 4.0) / 4.0;
+        }
+    }
     
-    return order;
+    double pulsation = log10(processing_get_pulsation(p)) / 4.0;
+    if (pulsation > 1) pulsation = 1.0;
+    if (pulsation < 0) pulsation = 0;
+    
+    *normed_pulsation = pulsation;
 }
 
 double processing_clarify_peak_frequency_in_range(Processing* p, double range) {

@@ -14,6 +14,7 @@ class Processing{
     let pointCount: UInt
     
     var harmonic: Int = 1
+    let detector = HarmonicDetector()
     
     init(pointCount: UInt){
         self.pointCount = pointCount
@@ -42,10 +43,20 @@ class Processing{
     }
     
     func getFrequency() -> Double {
-        harmonic = Int(processing_get_harmonic_order(p))
+        harmonic = getHarmonicOrder()
+        let f = processing_get_frequency(p)
+        print("order", harmonic, "freq", f)
         let frequency = (processing_get_frequency(p) + processing_get_sub_frequency(p)) / Double(harmonic)
         
         return frequency
+    }
+    
+    func getHarmonicOrder() -> Int {
+        var harmonics = [Double](repeating: 0, count: 10)
+        var pulsation: Double = 0
+        processing_get_harmonics(p, &harmonics, harmonics.count, &pulsation)
+        print(harmonics)
+        return detector.detect(subtones: harmonics, pulsation: pulsation)
     }
     
     func setTargetFrequency(_ frequency: Double) {

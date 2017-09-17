@@ -19,7 +19,8 @@ function verify(level){
             input.push(sample.p)
 
             samples.push({
-                input: input,
+                //input: input,
+                input: input.slice(0).map(x => x + Math.random() / 5),
                 output: [output]
             })
         })

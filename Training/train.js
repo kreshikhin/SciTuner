@@ -7,15 +7,19 @@ let datasets = files.filter(file => file.match(/^dataset.*json$/));
 function train(level){
     let samples = [];
     let net = new brain.NeuralNetwork();
+    let balance = 0;
 
     datasets.forEach(dataset => {
+        console.log('reading..', dataset);
         let data = fs.readFileSync(dataset);
         let parsed = JSON.parse(data);
         parsed.samples.filter(sample => {
-            return true; //sample.o > level - 1;
+            return true; //sample.o < level + 1;
         }).forEach(sample => {
             let output = sample.o > level ? 1.0 : 0.0;
             let input = sample.f;
+
+            balance += output - 0.5;
 
             input.push(sample.p)
 
@@ -27,7 +31,7 @@ function train(level){
     })
 
     net.train(samples, {
-      errorThresh: 0.0001,  // error threshold to reach
+      errorThresh: 0.00001,  // error threshold to reach
       iterations: 10000,   // maximum training iterations
       log: true,           // console.log() progress periodically
       logPeriod: 500,       // number of iterations between logging
@@ -74,7 +78,8 @@ function train(level){
     }, null, 2))
 
     //console.log(net.toFunction().toString())
+    console.log("balance", balance / samples.length);
 }
 
-//[1.5].forEach(train);
-[1.5, 2.5, 3.5].forEach(train);
+//[2.5].forEach(train);
+[3.5, 2.5, 1.5].forEach(train);
