@@ -11,7 +11,9 @@ function train(level){
     datasets.forEach(dataset => {
         let data = fs.readFileSync(dataset);
         let parsed = JSON.parse(data);
-        parsed.samples.forEach(sample => {
+        parsed.samples.filter(sample => {
+            return true; //sample.o > level - 1;
+        }).forEach(sample => {
             let output = sample.o > level ? 1.0 : 0.0;
             let input = sample.f;
 
@@ -74,5 +76,5 @@ function train(level){
     //console.log(net.toFunction().toString())
 }
 
-[1.5].forEach(train);
-//[1.5, 2.5, 3.5].forEach(train);
+//[1.5].forEach(train);
+[1.5, 2.5, 3.5].forEach(train);

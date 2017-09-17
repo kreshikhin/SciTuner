@@ -48,6 +48,7 @@
 		925216621F6D7639008D035B /* dataset_196hz.json in Resources */ = {isa = PBXBuildFile; fileRef = 9252165D1F6D7639008D035B /* dataset_196hz.json */; };
 		925216631F6D7639008D035B /* dataset_147hz.json in Resources */ = {isa = PBXBuildFile; fileRef = 9252165E1F6D7639008D035B /* dataset_147hz.json */; };
 		925216641F6D7639008D035B /* dataset_110hz.json in Resources */ = {isa = PBXBuildFile; fileRef = 9252165F1F6D7639008D035B /* dataset_110hz.json */; };
+		9256D3761F6EBE65000C5456 /* dataset_82hz.json in Resources */ = {isa = PBXBuildFile; fileRef = 9256D3751F6EBE65000C5456 /* dataset_82hz.json */; };
 		926629B11F583773000B6DCD /* TuningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926629B01F583773000B6DCD /* TuningTests.swift */; };
 		92668DE21F3E4B08002EC3B3 /* FretTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92668DE11F3E4B08002EC3B3 /* FretTests.swift */; };
 		9267C2461F5DBB1C005AD9B0 /* InstrumentsAlertControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9267C2451F5DBB1C005AD9B0 /* InstrumentsAlertControllerTests.swift */; };
@@ -141,6 +142,7 @@
 		9252165D1F6D7639008D035B /* dataset_196hz.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = dataset_196hz.json; path = Training/dataset_196hz.json; sourceTree = SOURCE_ROOT; };
 		9252165E1F6D7639008D035B /* dataset_147hz.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = dataset_147hz.json; path = Training/dataset_147hz.json; sourceTree = SOURCE_ROOT; };
 		9252165F1F6D7639008D035B /* dataset_110hz.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = dataset_110hz.json; path = Training/dataset_110hz.json; sourceTree = SOURCE_ROOT; };
+		9256D3751F6EBE65000C5456 /* dataset_82hz.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = dataset_82hz.json; path = Training/dataset_82hz.json; sourceTree = SOURCE_ROOT; };
 		926629B01F583773000B6DCD /* TuningTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TuningTests.swift; path = Models/TuningTests.swift; sourceTree = "<group>"; };
 		92668DE11F3E4B08002EC3B3 /* FretTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FretTests.swift; path = Models/FretTests.swift; sourceTree = "<group>"; };
 		9267C2451F5DBB1C005AD9B0 /* InstrumentsAlertControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentsAlertControllerTests.swift; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 				9252165D1F6D7639008D035B /* dataset_196hz.json */,
 				9252165E1F6D7639008D035B /* dataset_147hz.json */,
 				9252165F1F6D7639008D035B /* dataset_110hz.json */,
+				9256D3751F6EBE65000C5456 /* dataset_82hz.json */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -581,6 +584,7 @@
 				920CBFD51F6C6751001BCC16 /* nn2.json in Resources */,
 				925216621F6D7639008D035B /* dataset_196hz.json in Resources */,
 				925216631F6D7639008D035B /* dataset_147hz.json in Resources */,
+				9256D3761F6EBE65000C5456 /* dataset_82hz.json in Resources */,
 				925216641F6D7639008D035B /* dataset_110hz.json in Resources */,
 				920CBFD41F6C6751001BCC16 /* nn3.json in Resources */,
 				925216611F6D7639008D035B /* dataset_247hz.json in Resources */,

@@ -17,15 +17,12 @@ class HarmonicDetector {
         var layers: [Int]
         var weights: [Double]
         
-        func calculate(input: [Double]) -> Double {
+        func activate(input: [Double]) -> Double {
             var offset = 0
             var result: [Double] = input
             
-            print("weights \(weights.count)")
-            
             for count in layers {
                 let l = count * (result.count + 1)
-                print("offset \(offset) l \(l)")
                 result = calculateLayer(input: result, weights: [Double](weights[offset..<offset+l]))
                 offset += l
             }
@@ -33,31 +30,20 @@ class HarmonicDetector {
             return result[0]
         }
         
-        func calculateLayer(input: [Double], weights: [Double]) -> [Double] {
-            print("input", input.count)
-            print("weights", weights.count)
-            
-            let count = weights.count / (1 + input.count)
+        func activateLayer(input: [Double], weights: [Double]) -> [Double] {
+            let step = 1 + input.count
+            let count = weights.count / step
             var result = [Double](repeating: 0, count: count)
             
-            print("result \(result) weight0 \(weights[0])")
             for i in 0..<count {
-                result[i] = weights[0]
+                result[i] = weights[i*step]
                 
                 for (k, v) in input.enumerated() {
-                    result[i] += v * weights[k + 1]
+                    result[i] += v * weights[i*step + k + 1]
                 }
             }
             
-            return result.map{ sigmoid(x: $0) }
-        }
-        
-        func sigmoid(x: Double) -> Double {
-            return 1 / (exp(-x) + 1)
-        }
-        
-        func tansig(x: Double) -> Double {
-            return 2.0 / (1.0 + exp(-2.0 * x)) - 1.0
+            return result.map{ 1 / (exp(-$0) + 1) }
         }
     }
     
@@ -69,6 +55,8 @@ class HarmonicDetector {
                 networks.append(network)
             }
         }
+        
+        print(networks)
     }
     
     static func load(network: String) -> Network? {
@@ -120,11 +108,11 @@ class HarmonicDetector {
             let result = network.calculate(input: input)
             print("result", result)
             
-            if result > 0.5 {
-                return i + 2
+            if result < 0.5 {
+                return i + 1
             }
         }
         
-        return 1
+        return 4
     }
 }

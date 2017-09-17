@@ -15,7 +15,7 @@ class HarmonicDetectorTests: XCTestCase {
     var dataset: [(input: [Double], pulsation: Double, output: Int)] = []
     
     override func setUp() {
-        let files = [330, 247, 196, 147, 110].map { (n) -> String in
+        let files = [330, 247, 196, 147, 110, 82].map { (n) -> String in
             return "dataset_\(n)hz"
         }
         
@@ -98,7 +98,9 @@ class HarmonicDetectorTests: XCTestCase {
             }
         }
         
-        XCTAssertGreaterThan(passes / (passes + errors), 0.9)
+        print(passes + errors)
+        print("errors:", errors / (passes + errors))
+        XCTAssertGreaterThan(passes / (passes + errors), 0.99)
     }
     
 }
