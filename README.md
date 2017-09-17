@@ -21,9 +21,10 @@ SciTuner presents many useful features:
 - Allows to freeze the wave form and values by button "pause"
 - Works in noisy conditions
 
-## License
+## Screenshots
 
-The MIT License (MIT)
+[[https://github.com/kreshikhin/scituner/blob/master/Readme/screenshots_small.png|alt=screenshots]]
+
 
 ## License
 
