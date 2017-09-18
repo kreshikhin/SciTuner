@@ -28,12 +28,16 @@ The previous version of SciTuner 1.1 is available on AppStore. SciTuner 2.0 is c
 
 ![Screenshots][screenshots-image]
 
-## How it works
+## How It Works
 
 The main controller is TunerViewController. This controller works with three models object `Tuner`, `Processing` and `Microphone`.
 `Processing` receives sound data from `Microphone` through controller and calculates power spectrum by `FFT`.
 Spectrum is used for estimation greatest peak position in frequency domain. Because a guitar sound may have many harmonics, it's necessary also detect harmonic order. Artificial Neural Network is used for this purposes by activating an input layer with spectrum powers taken on special frequencies (1/4, 1/3, 1/2, 2/3, 3/4, 1, 3/2, 2, 3, 4) relative to greatest peak.
 
+So the result frequency divided by its harmonic order is used for estimation position of a note on the scale with selected pitch and tuning.
+This position is showed on display by `TuningView` and `FineTuningView`.
+
+Also `Processing` allows to take preview data with standing wave effect by phase shifting with value of a greatest frequency peak.
 
 ![Screenshots][uml-image]
 
