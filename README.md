@@ -30,6 +30,11 @@ The previous version of SciTuner 1.1 is available on AppStore. SciTuner 2.0 is c
 
 ## How it works
 
+The main controller is TunerViewController. This controller works with three models object `Tuner`, `Processing` and `Microphone`.
+`Processing` receives sound data from `Microphone` through controller and calculates power spectrum by `FFT`.
+Spectrum is used for estimation greatest peak position in frequency domain. Because a guitar sound may have many harmonics, it's necessary also detect harmonic order. Artificial Neural Network is used for this purposes by activating an input layer with spectrum powers taken on special frequencies (1/4, 1/3, 1/2, 2/3, 3/4, 1, 3/2, 2, 3, 4) relative to greatest peak.
+
+
 ![Screenshots][uml-image]
 
 ## License
@@ -45,6 +50,6 @@ The previous version of SciTuner 1.1 is available on AppStore. SciTuner 2.0 is c
 [platform-image]: https://img.shields.io/badge/platform-ios-lightgrey.svg?style=flat
 [platform-url]: http://github.com/kreshikhin/scituner
 
-[appstore-image]: https://rawgit.com/kreshikhin/scituner/master/Docs/appstore.png
+[appstore-image]: https://github.com/kreshikhin/scituner/blob/master/Docs/appstore.png
 [screenshots-image]: https://github.com/kreshikhin/scituner/blob/master/Docs/screenshots_small.png
 [uml-image]: https://github.com/kreshikhin/scituner/blob/master/Docs/uml.png
