@@ -37,7 +37,7 @@ Spectrum is used for estimation greatest peak position in frequency domain. Beca
 So the result frequency divided by its harmonic order is used for estimation position of a note on the scale with selected pitch and tuning.
 This position is showed on display by `TuningView` and `FineTuningView`.
 
-Also `Processing` allows to take preview data with standing wave effect by phase shifting with value of a greatest frequency peak.
+Also `Processing` allows to take preview data with standing wave effect by phase shifting with value of a greatest frequency peak. This wave is showed by `SKView` and `TubeScene`.
 
 ![Screenshots][uml-image]
 
